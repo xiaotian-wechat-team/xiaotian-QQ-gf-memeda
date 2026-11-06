@@ -1,0 +1,2044 @@
+{
+ "version": 1,
+ "groups": [
+  "camera_device",
+  "lighting_flash",
+  "blur_focus",
+  "grain_noise",
+  "framing_composition",
+  "lens_artifact",
+  "color_film"
+ ],
+ "notes": "权重网络式采样：score=log(weight)+vec·(scene_vec-0.5)*2+tag 命中+时段匹配；softmax(T) 采样 0~3 个，每组最多一个、exclusive 键互斥、ban_tags 硬禁。所有模糊只作用于背景/肢体，不糊脸。",
+ "sources": [
+  "X 公开帖子中的通用短语（direct flash / motion blur / film grain / candid smartphone snapshot / handheld camera shake / imperfect autofocus / 手机随手拍 / 无滤镜无修图 / 背景大幅虚化 / 白平衡中性不偏黄 / 光线只来自窗户 / 保留毛孔）",
+  "hedra.com 写实提示词指南",
+  "techpresso 一次性相机提示词",
+  "PromptHero CCD/直闪示例",
+  "r/Bard boring reality 示例"
+ ],
+ "modifiers": [
+  {
+   "id": "iphone_snapshot",
+   "group": "camera_device",
+   "en": "casual iPhone snapshot, straight out of camera, no retouching",
+   "zh": "iPhone 随手拍，直出无修图",
+   "weight": 1.6,
+   "time": "any",
+   "tags": [
+    "daily",
+    "campus",
+    "city",
+    "food",
+    "date"
+   ],
+   "vec": {
+    "formality": -0.3,
+    "coziness": 0.2
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "device"
+   ]
+  },
+  {
+   "id": "phone_main_cam",
+   "group": "camera_device",
+   "en": "shot on a smartphone main camera, natural HDR, slightly flat contrast",
+   "zh": "手机主摄拍摄，自然 HDR，对比度略平",
+   "weight": 1.4,
+   "time": "any",
+   "tags": [],
+   "vec": {
+    "formality": -0.2
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "device"
+   ]
+  },
+  {
+   "id": "friend_took_it",
+   "group": "camera_device",
+   "en": "photo taken by a friend on her phone, unposed moment",
+   "zh": "朋友用手机帮她拍的，没摆拍的瞬间",
+   "weight": 1.3,
+   "time": "any",
+   "tags": [
+    "party",
+    "travel",
+    "date",
+    "sport",
+    "campus"
+   ],
+   "vec": {
+    "trendiness": 0.1
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "device"
+   ]
+  },
+  {
+   "id": "front_cam_selfie",
+   "group": "camera_device",
+   "en": "front-camera selfie at arm's length, slight wide-angle perspective on the background",
+   "zh": "前置摄像头伸手自拍，背景略有广角透视",
+   "weight": 1.2,
+   "time": "any",
+   "tags": [
+    "dorm",
+    "home",
+    "travel",
+    "date",
+    "food"
+   ],
+   "vec": {
+    "coziness": 0.3,
+    "formality": -0.3
+   },
+   "ban_tags": [
+    "sport_action"
+   ],
+   "exclusive": [
+    "device",
+    "selfie"
+   ]
+  },
+  {
+   "id": "mirror_selfie",
+   "group": "camera_device",
+   "en": "mirror selfie holding the phone at chest level, phone held low so it never covers her face",
+   "zh": "对镜自拍，手机举在胸前，不挡脸",
+   "weight": 1.2,
+   "time": "any",
+   "tags": [
+    "dorm",
+    "home",
+    "fitting",
+    "gym",
+    "mirror"
+   ],
+   "vec": {
+    "coziness": 0.4,
+    "outdoor": -0.8,
+    "trendiness": 0.2
+   },
+   "ban_tags": [
+    "sacred",
+    "formal",
+    "sport_action",
+    "water"
+   ],
+   "exclusive": [
+    "device",
+    "selfie",
+    "framing_pose"
+   ]
+  },
+  {
+   "id": "elevator_mirror",
+   "group": "camera_device",
+   "en": "elevator mirror selfie, fluorescent light, slightly smudged mirror",
+   "zh": "电梯镜子自拍，日光灯，镜面有点指印",
+   "weight": 0.6,
+   "time": "any",
+   "tags": [
+    "city",
+    "date",
+    "mirror"
+   ],
+   "vec": {
+    "outdoor": -0.9,
+    "trendiness": 0.3
+   },
+   "ban_tags": [
+    "sacred",
+    "formal",
+    "water",
+    "nature"
+   ],
+   "exclusive": [
+    "device",
+    "selfie",
+    "framing_pose"
+   ]
+  },
+  {
+   "id": "ultrawide_05x",
+   "group": "camera_device",
+   "en": "0.5x ultrawide phone shot, slight edge distortion on the surroundings, her face kept away from the frame edge",
+   "zh": "手机 0.5x 超广角，周围有轻微边缘畸变，脸不放在画面边缘",
+   "weight": 1.0,
+   "time": "any",
+   "tags": [
+    "travel",
+    "city",
+    "beach",
+    "party",
+    "nature",
+    "spot"
+   ],
+   "vec": {
+    "outdoor": 0.4,
+    "trendiness": 0.4
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "device",
+    "lens_wide"
+   ]
+  },
+  {
+   "id": "disposable_cam",
+   "group": "camera_device",
+   "en": "disposable camera photo, cheap plastic lens look",
+   "zh": "一次性胶片相机拍的，廉价塑料镜头感",
+   "weight": 1.0,
+   "time": "any",
+   "tags": [
+    "party",
+    "travel",
+    "beach",
+    "night",
+    "date"
+   ],
+   "vec": {
+    "trendiness": 0.3,
+    "formality": -0.4
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "device",
+    "film_stock"
+   ]
+  },
+  {
+   "id": "ccd_camera",
+   "group": "camera_device",
+   "en": "early-2000s CCD compact digital camera look, slightly cool colors",
+   "zh": "2000 年代初 CCD 卡片机质感，色调略冷",
+   "weight": 1.1,
+   "time": "any",
+   "tags": [
+    "party",
+    "night",
+    "campus",
+    "city",
+    "travel"
+   ],
+   "vec": {
+    "trendiness": 0.5,
+    "formality": -0.3
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "device"
+   ]
+  },
+  {
+   "id": "point_and_shoot",
+   "group": "camera_device",
+   "en": "point-and-shoot compact camera snapshot",
+   "zh": "傻瓜相机抓拍",
+   "weight": 0.9,
+   "time": "any",
+   "tags": [
+    "travel",
+    "party",
+    "daily"
+   ],
+   "vec": {
+    "formality": -0.2
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "device"
+   ]
+  },
+  {
+   "id": "film_35mm",
+   "group": "camera_device",
+   "en": "35mm film camera snapshot",
+   "zh": "35mm 胶片机随手拍",
+   "weight": 1.0,
+   "time": "any",
+   "tags": [
+    "travel",
+    "city",
+    "date",
+    "nature"
+   ],
+   "vec": {
+    "trendiness": 0.2
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "device",
+    "film_stock"
+   ]
+  },
+  {
+   "id": "polaroid",
+   "group": "camera_device",
+   "en": "instant film photo look, soft focus, muted colors",
+   "zh": "拍立得质感，柔焦，颜色发灰",
+   "weight": 0.6,
+   "time": "any",
+   "tags": [
+    "party",
+    "date",
+    "home"
+   ],
+   "vec": {
+    "coziness": 0.3
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "device",
+    "film_stock"
+   ]
+  },
+  {
+   "id": "old_android",
+   "group": "camera_device",
+   "en": "photo from an older budget Android phone, mushy detail in shadows",
+   "zh": "老款千元安卓机拍的，暗部细节糊成一片",
+   "weight": 0.5,
+   "time": "any",
+   "tags": [
+    "daily",
+    "night"
+   ],
+   "vec": {
+    "formality": -0.5
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "device"
+   ]
+  },
+  {
+   "id": "dslr_kit",
+   "group": "camera_device",
+   "en": "amateur DSLR with kit lens, auto mode",
+   "zh": "业余单反套机镜头，自动挡",
+   "weight": 0.6,
+   "time": "any",
+   "tags": [
+    "travel",
+    "sport",
+    "concert"
+   ],
+   "vec": {
+    "outdoor": 0.3
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "device"
+   ]
+  },
+  {
+   "id": "live_photo_frame",
+   "group": "camera_device",
+   "en": "a frame grabbed from an iPhone Live Photo, slightly soft",
+   "zh": "从 iPhone 实况照片里截出来的一帧，略软",
+   "weight": 0.7,
+   "time": "any",
+   "tags": [
+    "sport",
+    "dance",
+    "party"
+   ],
+   "vec": {
+    "sportiness": 0.4
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "device"
+   ]
+  },
+  {
+   "id": "video_still",
+   "group": "camera_device",
+   "en": "still frame pulled from a phone video, mild compression",
+   "zh": "手机视频截图，带轻微压缩",
+   "weight": 0.6,
+   "time": "any",
+   "tags": [
+    "sport",
+    "dance",
+    "concert"
+   ],
+   "vec": {
+    "sportiness": 0.4
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "device",
+    "jpeg"
+   ]
+  },
+  {
+   "id": "webcam_like",
+   "group": "camera_device",
+   "en": "laptop webcam-like image quality, soft and slightly noisy",
+   "zh": "像笔记本摄像头的画质，偏软带噪点",
+   "weight": 0.3,
+   "time": "any",
+   "tags": [
+    "dorm",
+    "home"
+   ],
+   "vec": {
+    "coziness": 0.5,
+    "outdoor": -0.9
+   },
+   "ban_tags": [
+    "sport_action",
+    "water",
+    "nature"
+   ],
+   "exclusive": [
+    "device"
+   ]
+  },
+  {
+   "id": "direct_flash",
+   "group": "lighting_flash",
+   "en": "harsh direct on-camera flash, bright hotspot, background falling into darkness",
+   "zh": "直闪：机顶闪光灯直打，亮斑明显，背景掉进暗处",
+   "weight": 1.6,
+   "time": "night",
+   "tags": [
+    "night",
+    "party",
+    "ktv",
+    "bar",
+    "indoor",
+    "concert"
+   ],
+   "vec": {
+    "outdoor": -0.3,
+    "trendiness": 0.3
+   },
+   "ban_tags": [
+    "formal",
+    "sacred",
+    "theater",
+    "museum"
+   ],
+   "exclusive": [
+    "flash",
+    "light_main"
+   ]
+  },
+  {
+   "id": "flash_daylight",
+   "group": "lighting_flash",
+   "en": "on-camera flash used in daylight, flat fill on her, hard shadow behind",
+   "zh": "白天也开了闪光灯，人物被压平补光，身后硬阴影",
+   "weight": 0.6,
+   "time": "day",
+   "tags": [
+    "city",
+    "travel",
+    "party"
+   ],
+   "vec": {
+    "trendiness": 0.4
+   },
+   "ban_tags": [
+    "formal",
+    "sacred",
+    "theater",
+    "museum",
+    "water"
+   ],
+   "exclusive": [
+    "flash",
+    "light_main"
+   ]
+  },
+  {
+   "id": "flash_shadow_wall",
+   "group": "lighting_flash",
+   "en": "flash casting a hard shadow on the wall behind her",
+   "zh": "闪光灯在身后墙上投出硬阴影",
+   "weight": 0.9,
+   "time": "any",
+   "tags": [
+    "indoor",
+    "party",
+    "dorm",
+    "home",
+    "ktv"
+   ],
+   "vec": {
+    "outdoor": -0.6
+   },
+   "ban_tags": [
+    "formal",
+    "sacred",
+    "theater",
+    "museum",
+    "water"
+   ],
+   "exclusive": [
+    "flash",
+    "light_main"
+   ]
+  },
+  {
+   "id": "flash_overexposed_skin",
+   "group": "lighting_flash",
+   "en": "flash slightly overexposing the skin, shiny highlights on forehead",
+   "zh": "闪光让皮肤稍过曝，额头有油光高光",
+   "weight": 0.6,
+   "time": "night",
+   "tags": [
+    "party",
+    "ktv",
+    "bar",
+    "night"
+   ],
+   "vec": {},
+   "ban_tags": [
+    "formal",
+    "sacred",
+    "theater",
+    "museum",
+    "water"
+   ],
+   "exclusive": [
+    "flash",
+    "light_main"
+   ]
+  },
+  {
+   "id": "redeye_subtle",
+   "group": "lighting_flash",
+   "en": "very faint red-eye from flash, eye shape and color otherwise unchanged",
+   "zh": "闪光带来极轻微红眼，眼型和瞳色不变",
+   "weight": 0.25,
+   "time": "night",
+   "tags": [
+    "party",
+    "night"
+   ],
+   "vec": {},
+   "ban_tags": [
+    "formal",
+    "sacred",
+    "theater",
+    "museum",
+    "water"
+   ],
+   "exclusive": [
+    "flash",
+    "light_main"
+   ]
+  },
+  {
+   "id": "flash_bounce_ceiling",
+   "group": "lighting_flash",
+   "en": "flash bounced off a low ceiling, slightly uneven light",
+   "zh": "闪光打天花板反射，光线略不均",
+   "weight": 0.4,
+   "time": "any",
+   "tags": [
+    "indoor",
+    "home",
+    "party"
+   ],
+   "vec": {
+    "outdoor": -0.6
+   },
+   "ban_tags": [
+    "formal",
+    "sacred",
+    "theater",
+    "museum",
+    "water"
+   ],
+   "exclusive": [
+    "flash",
+    "light_main"
+   ]
+  },
+  {
+   "id": "slight_overexposure",
+   "group": "lighting_flash",
+   "en": "slightly overexposed, highlights a bit blown",
+   "zh": "画面稍微过曝，高光有点溢出",
+   "weight": 1.2,
+   "time": "day",
+   "tags": [
+    "beach",
+    "outdoor",
+    "travel",
+    "snow",
+    "summer"
+   ],
+   "vec": {
+    "outdoor": 0.5,
+    "warmth": 0.3
+   },
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "harsh_noon_sun",
+   "group": "lighting_flash",
+   "en": "harsh midday sun, hard shadows under the nose and chin, squinting slightly",
+   "zh": "正午硬光，鼻下下巴有硬阴影，微微眯眼",
+   "weight": 1.0,
+   "time": "day",
+   "tags": [
+    "beach",
+    "outdoor",
+    "sport",
+    "travel",
+    "nature"
+   ],
+   "vec": {
+    "outdoor": 0.8,
+    "warmth": 0.4
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "light_main"
+   ]
+  },
+  {
+   "id": "harsh_shadows",
+   "group": "lighting_flash",
+   "en": "harsh shadows from a single light source",
+   "zh": "单一光源投下的硬阴影",
+   "weight": 1.0,
+   "time": "any",
+   "tags": [
+    "outdoor",
+    "city",
+    "indoor"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "window_light",
+   "group": "lighting_flash",
+   "en": "light only from a window, clear soft shadows",
+   "zh": "光只从窗户进来，阴影清晰",
+   "weight": 1.3,
+   "time": "day",
+   "tags": [
+    "home",
+    "dorm",
+    "campus",
+    "date",
+    "food",
+    "museum",
+    "formal"
+   ],
+   "vec": {
+    "outdoor": -0.6,
+    "coziness": 0.3
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "light_main"
+   ]
+  },
+  {
+   "id": "backlit_sun",
+   "group": "lighting_flash",
+   "en": "backlit by the low sun, hair rim-lit, face slightly underexposed but readable",
+   "zh": "低角度逆光，发丝金边，脸略暗但看得清",
+   "weight": 1.1,
+   "time": "day",
+   "tags": [
+    "outdoor",
+    "beach",
+    "travel",
+    "nature",
+    "date"
+   ],
+   "vec": {
+    "outdoor": 0.7
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "light_main"
+   ]
+  },
+  {
+   "id": "golden_hour",
+   "group": "lighting_flash",
+   "en": "golden hour warm light, long shadows",
+   "zh": "黄昏暖光，影子拉长",
+   "weight": 1.1,
+   "time": "day",
+   "tags": [
+    "outdoor",
+    "travel",
+    "beach",
+    "date",
+    "nature",
+    "city"
+   ],
+   "vec": {
+    "outdoor": 0.7
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "light_main"
+   ]
+  },
+  {
+   "id": "neon_street",
+   "group": "lighting_flash",
+   "en": "night street neon signs casting colored light, wet reflections",
+   "zh": "夜晚街头霓虹，彩色灯光和湿地反光",
+   "weight": 1.2,
+   "time": "night",
+   "tags": [
+    "night",
+    "city",
+    "street",
+    "bar",
+    "date"
+   ],
+   "vec": {
+    "outdoor": 0.4,
+    "trendiness": 0.5
+   },
+   "ban_tags": [
+    "sacred",
+    "nature"
+   ],
+   "exclusive": [
+    "light_main"
+   ]
+  },
+  {
+   "id": "fluorescent",
+   "group": "lighting_flash",
+   "en": "flat overhead fluorescent light, slight green tint",
+   "zh": "头顶日光灯平光，略偏绿",
+   "weight": 0.9,
+   "time": "any",
+   "tags": [
+    "campus",
+    "dorm",
+    "indoor",
+    "gym",
+    "classroom"
+   ],
+   "vec": {
+    "outdoor": -0.7,
+    "formality": -0.1
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "light_main"
+   ]
+  },
+  {
+   "id": "tungsten_warm",
+   "group": "lighting_flash",
+   "en": "warm tungsten indoor light, uncorrected white balance",
+   "zh": "室内钨丝灯暖光，白平衡没校正",
+   "weight": 1.0,
+   "time": "night",
+   "tags": [
+    "home",
+    "food",
+    "bar",
+    "date",
+    "indoor"
+   ],
+   "vec": {
+    "outdoor": -0.6,
+    "coziness": 0.4
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "light_main"
+   ]
+  },
+  {
+   "id": "mixed_light",
+   "group": "lighting_flash",
+   "en": "mixed lighting from street lamps and shop windows",
+   "zh": "路灯和橱窗光混合",
+   "weight": 0.9,
+   "time": "night",
+   "tags": [
+    "city",
+    "street",
+    "night",
+    "date"
+   ],
+   "vec": {
+    "outdoor": 0.4
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "light_main"
+   ]
+  },
+  {
+   "id": "stage_lights",
+   "group": "lighting_flash",
+   "en": "colored stage lights and haze in the background",
+   "zh": "背景有彩色舞台灯和烟雾",
+   "weight": 1.0,
+   "time": "night",
+   "tags": [
+    "concert",
+    "ktv",
+    "party",
+    "livehouse"
+   ],
+   "vec": {
+    "trendiness": 0.4
+   },
+   "ban_tags": [
+    "sacred",
+    "formal"
+   ],
+   "exclusive": [
+    "light_main"
+   ]
+  },
+  {
+   "id": "overcast_flat",
+   "group": "lighting_flash",
+   "en": "overcast sky, flat soft light, muted contrast",
+   "zh": "阴天，平光柔和，反差低",
+   "weight": 1.0,
+   "time": "day",
+   "tags": [
+    "outdoor",
+    "city",
+    "travel",
+    "nature",
+    "campus"
+   ],
+   "vec": {
+    "outdoor": 0.5
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "light_main"
+   ]
+  },
+  {
+   "id": "dappled_shade",
+   "group": "lighting_flash",
+   "en": "dappled sunlight through leaves on her shoulders and the ground",
+   "zh": "树叶间漏下的光斑落在肩膀和地面",
+   "weight": 0.9,
+   "time": "day",
+   "tags": [
+    "nature",
+    "campus",
+    "park",
+    "outdoor"
+   ],
+   "vec": {
+    "outdoor": 0.7
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "light_main"
+   ]
+  },
+  {
+   "id": "phone_screen_glow",
+   "group": "lighting_flash",
+   "en": "lit mostly by the phone screen glow and a dim lamp",
+   "zh": "主要被手机屏幕光和一盏昏暗台灯照亮",
+   "weight": 0.5,
+   "time": "night",
+   "tags": [
+    "dorm",
+    "home"
+   ],
+   "vec": {
+    "coziness": 0.7,
+    "outdoor": -0.9
+   },
+   "ban_tags": [
+    "sport_action",
+    "formal",
+    "sacred"
+   ],
+   "exclusive": [
+    "light_main"
+   ]
+  },
+  {
+   "id": "car_interior_night",
+   "group": "lighting_flash",
+   "en": "dim car interior light at night, streetlights passing",
+   "zh": "夜里车内昏暗，路灯一闪而过",
+   "weight": 0.4,
+   "time": "night",
+   "tags": [
+    "city",
+    "date",
+    "travel"
+   ],
+   "vec": {},
+   "ban_tags": [
+    "sacred",
+    "water"
+   ],
+   "exclusive": [
+    "light_main"
+   ]
+  },
+  {
+   "id": "motion_blur_limbs",
+   "group": "blur_focus",
+   "en": "slight motion blur on her moving arms and hair, face sharp",
+   "zh": "手臂和头发有轻微运动模糊，脸是清楚的",
+   "weight": 1.4,
+   "time": "any",
+   "tags": [
+    "sport",
+    "dance",
+    "party",
+    "concert"
+   ],
+   "vec": {
+    "sportiness": 0.8
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "motion"
+   ]
+  },
+  {
+   "id": "motion_blur_bg_people",
+   "group": "blur_focus",
+   "en": "passers-by in the background motion-blurred, she is sharp",
+   "zh": "背景路人运动模糊，她本人清晰",
+   "weight": 1.2,
+   "time": "any",
+   "tags": [
+    "city",
+    "street",
+    "travel",
+    "night",
+    "spot"
+   ],
+   "vec": {
+    "outdoor": 0.5
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "motion"
+   ]
+  },
+  {
+   "id": "panning_blur",
+   "group": "blur_focus",
+   "en": "panning shot, background streaked, her face in focus",
+   "zh": "追焦拍摄，背景拉丝，脸在焦内",
+   "weight": 0.8,
+   "time": "any",
+   "tags": [
+    "sport",
+    "bike",
+    "run"
+   ],
+   "vec": {
+    "sportiness": 0.9
+   },
+   "ban_tags": [
+    "formal",
+    "sacred"
+   ],
+   "exclusive": [
+    "motion"
+   ]
+  },
+  {
+   "id": "camera_shake_slight",
+   "group": "blur_focus",
+   "en": "slight handheld camera shake on the edges of the frame, face still recognizable and sharp",
+   "zh": "画面边缘有轻微手抖，脸仍清楚可辨",
+   "weight": 0.9,
+   "time": "any",
+   "tags": [
+    "night",
+    "party",
+    "concert",
+    "ktv"
+   ],
+   "vec": {
+    "formality": -0.3
+   },
+   "ban_tags": [
+    "formal"
+   ],
+   "exclusive": [
+    "motion"
+   ]
+  },
+  {
+   "id": "hair_whip",
+   "group": "blur_focus",
+   "en": "hair whipping in motion blur while she turns, face sharp",
+   "zh": "转身时头发甩动模糊，脸清楚",
+   "weight": 0.8,
+   "time": "any",
+   "tags": [
+    "dance",
+    "beach",
+    "outdoor",
+    "party"
+   ],
+   "vec": {
+    "sportiness": 0.5
+   },
+   "ban_tags": [
+    "formal",
+    "sacred"
+   ],
+   "exclusive": [
+    "motion"
+   ]
+  },
+  {
+   "id": "shallow_dof",
+   "group": "blur_focus",
+   "en": "focus on her, wide aperture, background heavily blurred",
+   "zh": "焦点在人物，大光圈，背景大幅虚化",
+   "weight": 1.4,
+   "time": "any",
+   "tags": [
+    "date",
+    "city",
+    "campus",
+    "food",
+    "nature"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": [
+    "dof"
+   ]
+  },
+  {
+   "id": "deep_focus",
+   "group": "blur_focus",
+   "en": "everything in focus, background as sharp as her (boring reality)",
+   "zh": "全景深，背景和人一样清楚（无聊现实感）",
+   "weight": 1.0,
+   "time": "any",
+   "tags": [
+    "daily",
+    "travel",
+    "spot",
+    "campus"
+   ],
+   "vec": {
+    "outdoor": 0.3
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "dof"
+   ]
+  },
+  {
+   "id": "foreground_blur",
+   "group": "blur_focus",
+   "en": "out-of-focus foreground object partly framing the shot, not covering her face",
+   "zh": "前景有虚化的物体半挡画面，不挡脸",
+   "weight": 1.0,
+   "time": "any",
+   "tags": [
+    "food",
+    "date",
+    "nature",
+    "city",
+    "concert"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": [
+    "fg"
+   ]
+  },
+  {
+   "id": "missed_focus_bg",
+   "group": "blur_focus",
+   "en": "autofocus slightly missed onto the background, she is just a touch soft but facial features clear",
+   "zh": "对焦稍微跑到背景，人略软但五官清晰",
+   "weight": 0.4,
+   "time": "any",
+   "tags": [
+    "daily",
+    "night",
+    "party"
+   ],
+   "vec": {
+    "formality": -0.4
+   },
+   "ban_tags": [
+    "formal"
+   ],
+   "exclusive": [
+    "dof"
+   ]
+  },
+  {
+   "id": "long_exposure_lights",
+   "group": "blur_focus",
+   "en": "light trails from passing cars behind her, she holds still and stays sharp",
+   "zh": "身后车流光轨，她站定保持清楚",
+   "weight": 0.6,
+   "time": "any",
+   "tags": [
+    "night",
+    "city",
+    "street"
+   ],
+   "vec": {
+    "outdoor": 0.6
+   },
+   "ban_tags": [
+    "sacred",
+    "nature"
+   ],
+   "exclusive": [
+    "motion"
+   ]
+  },
+  {
+   "id": "water_splash_freeze",
+   "group": "blur_focus",
+   "en": "water droplets frozen mid-air around her",
+   "zh": "她周围水花被凝固在空中",
+   "weight": 0.6,
+   "time": "any",
+   "tags": [
+    "water",
+    "beach",
+    "pool"
+   ],
+   "vec": {
+    "water": 0.9
+   },
+   "ban_tags": [
+    "formal",
+    "sacred"
+   ],
+   "exclusive": [
+    "motion"
+   ]
+  },
+  {
+   "id": "film_grain",
+   "group": "grain_noise",
+   "en": "visible film grain",
+   "zh": "明显的胶片颗粒",
+   "weight": 1.3,
+   "time": "any",
+   "tags": [
+    "travel",
+    "date",
+    "city",
+    "nature"
+   ],
+   "vec": {
+    "trendiness": 0.2
+   },
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "high_iso_noise",
+   "group": "grain_noise",
+   "en": "high ISO noise in the shadows, phone night mode",
+   "zh": "暗部有高 ISO 噪点，手机夜景模式",
+   "weight": 1.4,
+   "time": "night",
+   "tags": [
+    "night",
+    "ktv",
+    "bar",
+    "concert",
+    "indoor"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "grain_in_shadows",
+   "group": "grain_noise",
+   "en": "grain mostly in the shadows, highlights clean",
+   "zh": "颗粒主要在暗部，亮部干净",
+   "weight": 0.9,
+   "time": "any",
+   "tags": [],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "jpeg_compression",
+   "group": "grain_noise",
+   "en": "slight JPEG compression artifacts, like a photo sent over chat apps",
+   "zh": "轻微 JPEG 压缩痕迹，像聊天软件传过的图",
+   "weight": 1.1,
+   "time": "any",
+   "tags": [
+    "daily",
+    "dorm",
+    "party"
+   ],
+   "vec": {
+    "formality": -0.3
+   },
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "noise_reduction_smear",
+   "group": "grain_noise",
+   "en": "phone noise reduction smearing fine texture in the dark background",
+   "zh": "手机降噪把暗背景细节抹糊了",
+   "weight": 0.7,
+   "time": "night",
+   "tags": [
+    "night",
+    "indoor",
+    "city"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "ccd_noise",
+   "group": "grain_noise",
+   "en": "CCD color noise and slight vertical banding in the dark areas",
+   "zh": "CCD 彩色噪点，暗处有轻微竖条纹",
+   "weight": 0.5,
+   "time": "night",
+   "tags": [
+    "party",
+    "night"
+   ],
+   "vec": {
+    "trendiness": 0.3
+   },
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "skin_texture",
+   "group": "grain_noise",
+   "en": "natural skin texture with visible pores, no beauty filter",
+   "zh": "保留皮肤毛孔和真实质感，没有美颜",
+   "weight": 1.5,
+   "time": "any",
+   "tags": [],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "dust_specks",
+   "group": "grain_noise",
+   "en": "a few dust specks and scan marks like a scanned print",
+   "zh": "几粒灰尘和扫描痕迹，像扫描的冲洗照片",
+   "weight": 0.4,
+   "time": "any",
+   "tags": [
+    "travel",
+    "date"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": [
+    "film_stock"
+   ]
+  },
+  {
+   "id": "off_center_candid",
+   "group": "framing_composition",
+   "en": "off-center candid framing, subject placed on the left third",
+   "zh": "偏离中心的抓拍构图，人物在左三分之一",
+   "weight": 1.5,
+   "time": "any",
+   "tags": [
+    "daily",
+    "travel",
+    "city",
+    "campus"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": [
+    "comp"
+   ]
+  },
+  {
+   "id": "tilted_frame",
+   "group": "framing_composition",
+   "en": "framing slightly tilted, horizon not level",
+   "zh": "画面略微倾斜，地平线不平",
+   "weight": 1.2,
+   "time": "any",
+   "tags": [
+    "party",
+    "travel",
+    "city",
+    "night"
+   ],
+   "vec": {
+    "formality": -0.3
+   },
+   "ban_tags": [
+    "formal"
+   ],
+   "exclusive": [
+    "comp"
+   ]
+  },
+  {
+   "id": "cropped_awkwardly",
+   "group": "framing_composition",
+   "en": "awkwardly cropped at the edges, part of her shoulder cut off, face fully in frame",
+   "zh": "边缘裁得有点随意，肩膀被切掉一点，脸完整",
+   "weight": 0.9,
+   "time": "any",
+   "tags": [
+    "daily",
+    "party",
+    "dorm"
+   ],
+   "vec": {
+    "formality": -0.4
+   },
+   "ban_tags": [
+    "formal"
+   ],
+   "exclusive": [
+    "comp"
+   ]
+  },
+  {
+   "id": "low_angle",
+   "group": "framing_composition",
+   "en": "low-angle shot from about waist height, looking slightly up",
+   "zh": "大约腰部高度的低机位，略仰拍",
+   "weight": 1.0,
+   "time": "any",
+   "tags": [
+    "sport",
+    "travel",
+    "city",
+    "outdoor",
+    "spot"
+   ],
+   "vec": {
+    "outdoor": 0.4
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "angle"
+   ]
+  },
+  {
+   "id": "high_angle",
+   "group": "framing_composition",
+   "en": "slightly high angle, phone held above",
+   "zh": "略俯拍，手机举在上方",
+   "weight": 0.9,
+   "time": "any",
+   "tags": [
+    "food",
+    "date",
+    "dorm",
+    "home",
+    "party"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": [
+    "angle"
+   ]
+  },
+  {
+   "id": "eye_level_snap",
+   "group": "framing_composition",
+   "en": "eye-level snapshot from across the table",
+   "zh": "坐对面平视随手拍",
+   "weight": 1.0,
+   "time": "any",
+   "tags": [
+    "food",
+    "date",
+    "cafe"
+   ],
+   "vec": {
+    "coziness": 0.3
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "angle"
+   ]
+  },
+  {
+   "id": "wide_env",
+   "group": "framing_composition",
+   "en": "wide environmental shot, she is small in the frame, scene dominates",
+   "zh": "远景环境人像，人物在画面里较小，场景为主",
+   "weight": 1.0,
+   "time": "any",
+   "tags": [
+    "travel",
+    "spot",
+    "nature",
+    "beach",
+    "snow"
+   ],
+   "vec": {
+    "outdoor": 0.8
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "comp",
+    "dist"
+   ]
+  },
+  {
+   "id": "waist_up",
+   "group": "framing_composition",
+   "en": "casual waist-up shot, a bit too much headroom",
+   "zh": "随意的半身照，头顶留白有点多",
+   "weight": 1.0,
+   "time": "any",
+   "tags": [
+    "daily",
+    "campus",
+    "city"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": [
+    "comp",
+    "dist"
+   ]
+  },
+  {
+   "id": "photobomb_bg",
+   "group": "framing_composition",
+   "en": "strangers and everyday clutter visible in the background",
+   "zh": "背景里有路人和日常杂物",
+   "weight": 1.2,
+   "time": "any",
+   "tags": [
+    "city",
+    "travel",
+    "spot",
+    "campus",
+    "party",
+    "food"
+   ],
+   "vec": {
+    "outdoor": 0.3
+   },
+   "ban_tags": [
+    "sacred"
+   ],
+   "exclusive": [
+    "clutter"
+   ]
+  },
+  {
+   "id": "lived_in_clutter",
+   "group": "framing_composition",
+   "en": "lived-in clutter around: bags, cups, cables",
+   "zh": "周围有生活痕迹：包、杯子、数据线",
+   "weight": 1.0,
+   "time": "any",
+   "tags": [
+    "dorm",
+    "home",
+    "food",
+    "classroom"
+   ],
+   "vec": {
+    "coziness": 0.6,
+    "outdoor": -0.6
+   },
+   "ban_tags": [
+    "sacred"
+   ],
+   "exclusive": [
+    "clutter"
+   ]
+  },
+  {
+   "id": "over_shoulder",
+   "group": "framing_composition",
+   "en": "shot from behind a friend's shoulder, shoulder blurred in foreground",
+   "zh": "从朋友肩后拍过去，前景肩膀虚化",
+   "weight": 0.6,
+   "time": "any",
+   "tags": [
+    "date",
+    "party",
+    "food"
+   ],
+   "vec": {},
+   "ban_tags": [
+    "formal"
+   ],
+   "exclusive": [
+    "fg"
+   ]
+  },
+  {
+   "id": "caught_mid_laugh",
+   "group": "framing_composition",
+   "en": "caught mid-laugh, not looking at camera",
+   "zh": "抓拍到她正在笑，没看镜头",
+   "weight": 1.1,
+   "time": "any",
+   "tags": [
+    "party",
+    "date",
+    "travel",
+    "food"
+   ],
+   "vec": {
+    "formality": -0.3
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "pose"
+   ]
+  },
+  {
+   "id": "looking_back",
+   "group": "framing_composition",
+   "en": "glancing back over her shoulder at the camera",
+   "zh": "回头看向镜头",
+   "weight": 0.9,
+   "time": "any",
+   "tags": [
+    "travel",
+    "city",
+    "beach",
+    "date"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": [
+    "pose"
+   ]
+  },
+  {
+   "id": "vertical_phone",
+   "group": "framing_composition",
+   "en": "vertical phone framing, subject not perfectly centered",
+   "zh": "竖屏手机构图，人物没完全居中",
+   "weight": 1.2,
+   "time": "any",
+   "tags": [],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "feet_cut",
+   "group": "framing_composition",
+   "en": "framing cuts off at the knees, casual",
+   "zh": "构图在膝盖处被截断，很随意",
+   "weight": 0.5,
+   "time": "any",
+   "tags": [
+    "daily",
+    "city"
+   ],
+   "vec": {},
+   "ban_tags": [
+    "formal"
+   ],
+   "exclusive": [
+    "dist"
+   ]
+  },
+  {
+   "id": "lens_flare",
+   "group": "lens_artifact",
+   "en": "sun lens flare streaking from the corner",
+   "zh": "太阳光从角落打出镜头眩光",
+   "weight": 1.2,
+   "time": "day",
+   "tags": [
+    "outdoor",
+    "beach",
+    "travel",
+    "nature",
+    "sport"
+   ],
+   "vec": {
+    "outdoor": 0.8
+   },
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "dirty_lens_haze",
+   "group": "lens_artifact",
+   "en": "slightly dirty phone lens, soft haze around bright lights",
+   "zh": "手机镜头有点脏，亮处有一圈雾化光晕",
+   "weight": 1.0,
+   "time": "any",
+   "tags": [
+    "night",
+    "city",
+    "party",
+    "concert"
+   ],
+   "vec": {
+    "formality": -0.3
+   },
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "smudge_glow",
+   "group": "lens_artifact",
+   "en": "lens smudge bloom around street lights",
+   "zh": "镜头指纹让路灯周围泛光",
+   "weight": 0.8,
+   "time": "night",
+   "tags": [
+    "night",
+    "city",
+    "street"
+   ],
+   "vec": {
+    "outdoor": 0.4
+   },
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "chromatic_aberration",
+   "group": "lens_artifact",
+   "en": "subtle chromatic aberration on high-contrast edges",
+   "zh": "高反差边缘有轻微紫边",
+   "weight": 0.8,
+   "time": "any",
+   "tags": [
+    "outdoor",
+    "city"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "vignette_light",
+   "group": "lens_artifact",
+   "en": "light natural vignette in the corners",
+   "zh": "四角有轻微自然暗角",
+   "weight": 0.8,
+   "time": "any",
+   "tags": [],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "halation",
+   "group": "lens_artifact",
+   "en": "halation glow around highlights",
+   "zh": "高光周围有光晕溢出",
+   "weight": 0.7,
+   "time": "any",
+   "tags": [
+    "night",
+    "film",
+    "date"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "no_timestamp",
+   "group": "lens_artifact",
+   "en": "no date stamp, no watermark, no text overlay",
+   "zh": "没有日期水印、没有文字",
+   "weight": 1.0,
+   "time": "any",
+   "tags": [],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "window_reflection",
+   "group": "lens_artifact",
+   "en": "faint reflections from shooting through glass",
+   "zh": "隔着玻璃拍，有淡淡反光",
+   "weight": 0.6,
+   "time": "any",
+   "tags": [
+    "cafe",
+    "car",
+    "city",
+    "museum",
+    "food"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "ghosting_flare",
+   "group": "lens_artifact",
+   "en": "small green ghost flare from a bright light source",
+   "zh": "强光源带出小绿点鬼影",
+   "weight": 0.5,
+   "time": "night",
+   "tags": [
+    "night",
+    "concert",
+    "city"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": []
+  },
+  {
+   "id": "barrel_distortion",
+   "group": "lens_artifact",
+   "en": "mild barrel distortion near the frame edges, face undistorted",
+   "zh": "画面边缘轻微桶形畸变，脸不变形",
+   "weight": 0.5,
+   "time": "any",
+   "tags": [
+    "travel",
+    "city",
+    "party"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": [
+    "lens_wide"
+   ]
+  },
+  {
+   "id": "rain_drops_lens",
+   "group": "lens_artifact",
+   "en": "a few raindrops on the lens edge, blurring a corner",
+   "zh": "镜头边缘有几颗雨滴，糊了一个角",
+   "weight": 0.4,
+   "time": "any",
+   "tags": [
+    "rain",
+    "city",
+    "street",
+    "night"
+   ],
+   "vec": {
+    "outdoor": 0.7
+   },
+   "ban_tags": [
+    "sacred"
+   ],
+   "exclusive": []
+  },
+  {
+   "id": "neutral_wb",
+   "group": "color_film",
+   "en": "true-to-life colors, neutral white balance, no yellow cast",
+   "zh": "色彩真实，白平衡中性，不偏黄",
+   "weight": 1.4,
+   "time": "any",
+   "tags": [],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": [
+    "wb"
+   ]
+  },
+  {
+   "id": "no_filter",
+   "group": "color_film",
+   "en": "no filter, no color grading, unedited",
+   "zh": "无滤镜，无调色，未修图",
+   "weight": 1.4,
+   "time": "any",
+   "tags": [],
+   "vec": {
+    "formality": -0.1
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "grade"
+   ]
+  },
+  {
+   "id": "portra_400",
+   "group": "color_film",
+   "en": "Kodak Portra 400 film colors, warm skin tones",
+   "zh": "柯达 Portra 400 色调，肤色偏暖",
+   "weight": 1.0,
+   "time": "day",
+   "tags": [
+    "travel",
+    "date",
+    "nature",
+    "beach"
+   ],
+   "vec": {
+    "outdoor": 0.4
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "grade",
+    "film_stock"
+   ]
+  },
+  {
+   "id": "portra_800_night",
+   "group": "color_film",
+   "en": "Kodak Portra 800 at night, warm and grainy",
+   "zh": "夜里的柯达 Portra 800，暖调有颗粒",
+   "weight": 0.6,
+   "time": "night",
+   "tags": [
+    "night",
+    "city",
+    "date"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": [
+    "grade",
+    "film_stock"
+   ]
+  },
+  {
+   "id": "fuji_greens",
+   "group": "color_film",
+   "en": "Fujifilm-like greens and cool shadows",
+   "zh": "富士胶片的绿色和偏冷暗部",
+   "weight": 0.9,
+   "time": "day",
+   "tags": [
+    "nature",
+    "campus",
+    "travel",
+    "park"
+   ],
+   "vec": {
+    "outdoor": 0.6
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "grade",
+    "film_stock"
+   ]
+  },
+  {
+   "id": "washed_out",
+   "group": "color_film",
+   "en": "washed-out, low-contrast colors",
+   "zh": "颜色发灰，低对比",
+   "weight": 0.9,
+   "time": "any",
+   "tags": [
+    "daily",
+    "ccd",
+    "party"
+   ],
+   "vec": {
+    "formality": -0.2
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "grade"
+   ]
+  },
+  {
+   "id": "faded_print",
+   "group": "color_film",
+   "en": "faded old print colors, slightly magenta",
+   "zh": "褪色老照片，略偏品红",
+   "weight": 0.4,
+   "time": "any",
+   "tags": [
+    "travel",
+    "home"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": [
+    "grade",
+    "film_stock"
+   ]
+  },
+  {
+   "id": "cool_wb_flash",
+   "group": "color_film",
+   "en": "slightly cool white balance from flash",
+   "zh": "闪光让白平衡略偏冷",
+   "weight": 0.5,
+   "time": "night",
+   "tags": [
+    "party",
+    "ktv",
+    "night"
+   ],
+   "vec": {},
+   "ban_tags": [
+    "formal",
+    "sacred",
+    "theater",
+    "museum"
+   ],
+   "exclusive": [
+    "wb"
+   ]
+  },
+  {
+   "id": "warm_cast_indoor",
+   "group": "color_film",
+   "en": "slight warm cast from indoor bulbs, not corrected",
+   "zh": "室内灯泡带来轻微暖色偏，未校正",
+   "weight": 0.7,
+   "time": "night",
+   "tags": [
+    "home",
+    "food",
+    "bar"
+   ],
+   "vec": {
+    "coziness": 0.4
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "wb"
+   ]
+  },
+  {
+   "id": "muted_low_sat",
+   "group": "color_film",
+   "en": "muted, low-saturation colors",
+   "zh": "低饱和、偏淡的颜色",
+   "weight": 0.9,
+   "time": "any",
+   "tags": [
+    "city",
+    "campus",
+    "nature"
+   ],
+   "vec": {},
+   "ban_tags": [],
+   "exclusive": [
+    "grade"
+   ]
+  },
+  {
+   "id": "vivid_phone",
+   "group": "color_film",
+   "en": "punchy smartphone auto-processing, slightly oversharpened",
+   "zh": "手机自动处理色彩偏艳，略过锐",
+   "weight": 0.7,
+   "time": "day",
+   "tags": [
+    "food",
+    "travel",
+    "beach"
+   ],
+   "vec": {
+    "trendiness": 0.2
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "grade"
+   ]
+  },
+  {
+   "id": "bw_candid",
+   "group": "color_film",
+   "en": "black-and-white candid photo",
+   "zh": "黑白抓拍",
+   "weight": 0.3,
+   "time": "any",
+   "tags": [
+    "city",
+    "street",
+    "rain"
+   ],
+   "vec": {
+    "formality": 0.1
+   },
+   "ban_tags": [
+    "party"
+   ],
+   "exclusive": [
+    "grade",
+    "wb"
+   ]
+  },
+  {
+   "id": "blue_hour",
+   "group": "color_film",
+   "en": "blue hour ambient tones",
+   "zh": "蓝调时刻的环境色",
+   "weight": 0.8,
+   "time": "night",
+   "tags": [
+    "city",
+    "travel",
+    "beach"
+   ],
+   "vec": {
+    "outdoor": 0.6
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "grade"
+   ]
+  },
+  {
+   "id": "snow_overexpose",
+   "group": "color_film",
+   "en": "bright snow pushing exposure, cool tones",
+   "zh": "雪地反光把曝光顶高，冷色调",
+   "weight": 0.8,
+   "time": "day",
+   "tags": [
+    "snow",
+    "ski"
+   ],
+   "vec": {
+    "warmth": -0.8,
+    "outdoor": 0.8
+   },
+   "ban_tags": [],
+   "exclusive": [
+    "grade"
+   ]
+  }
+ ]
+}

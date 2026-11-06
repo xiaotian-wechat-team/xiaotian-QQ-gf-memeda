@@ -1,0 +1,10 @@
+---
+description: xiaotian-wechat 项目概述
+alwaysApply: true
+---
+- 数字生命「小甜」：WDA 操作 iPhone 微信，只自动回复联系人 demo_contact（小熊）。
+- Python 一律 /opt/homebrew/bin/python3.13；代码在 src/，从 src/ 目录运行。
+- 人格/记忆在 ~/digital-life（SOUL/USER/MEMORY/STATE/diary）；demo_contact 专属在 contacts/demo_contact，其他联系人禁止读写。
+- 聊天页消息 label 格式 "发送者,文本"，"我"=自己；昵称匹配先 norm() 去组合字符（U+20D5）。
+- 不要随意真实发消息；测试用 daemon.py --dry-run。所有 iPhone 操作未来走同一个任务队列防抢屏。
+- LLM 后端可插拔（brain.BACKENDS），默认 cursor-agent -p --trust。

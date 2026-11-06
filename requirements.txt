@@ -1,0 +1,13 @@
+mem0ai==2.2.1
+sentence-transformers
+qdrant-client
+pyobjc-framework-Vision; sys_platform == "darwin"
+pyobjc-framework-Quartz; sys_platform == "darwin"
+pyobjc-framework-Cocoa; sys_platform == "darwin"
+Pillow
+weixin-ilink[qr]>=0.3.5
+websocket-client>=1.8
+websockets>=12
+mlx-whisper>=0.4.3; sys_platform == "darwin"
+# Scene reference library perceptual deduplication
+ImageHash>=4.3,<5

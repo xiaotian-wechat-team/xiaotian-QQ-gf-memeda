@@ -1,0 +1,12248 @@
+{
+"dims": [
+"formality",
+"exposure",
+"trendiness",
+"sportiness",
+"coziness",
+"warmth",
+"outdoor",
+"water"
+],
+"scenes": [
+{
+"id": "campus-001",
+"name": "上课/排练",
+"category": "校园日常",
+"aliases": [
+"上课",
+"排练",
+"练功",
+"基训",
+"把杆",
+"舞蹈房",
+"排练厅"
+],
+"hint": "练功服或舞蹈T恤配阔腿裤，头发扎起",
+"vec": {
+"formality": 0.3,
+"exposure": 0.2,
+"trendiness": 0.3,
+"sportiness": 0.9,
+"coziness": 0.3,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "campus-002",
+"name": "见老师/学生会正式场合",
+"category": "校园日常",
+"aliases": [
+"见老师",
+"学生会",
+"正式",
+"答辩",
+"例会",
+"面试",
+"汇报"
+],
+"hint": "衬衫或针织开衫配半身长裙，干净利落",
+"vec": {
+"formality": 0.9,
+"exposure": 0.05,
+"trendiness": 0.4,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "campus-003",
+"name": "朋友聚会",
+"category": "校园日常",
+"aliases": [
+"聚会",
+"聚餐",
+"室友",
+"闺蜜",
+"生日"
+],
+"hint": "好看的日常款，配饰亮一点",
+"vec": {
+"formality": 0.3,
+"exposure": 0.5,
+"trendiness": 0.8,
+"sportiness": 0.15,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "campus-004",
+"name": "约会",
+"category": "校园日常",
+"aliases": [
+"烛光",
+"晚餐约"
+],
+"hint": "精心打扮的约会装，妆容精致",
+"vec": {
+"formality": 0.45,
+"exposure": 0.8,
+"trendiness": 0.85,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "campus-005",
+"name": "准备见他",
+"category": "校园日常",
+"aliases": [
+"见面",
+"来找你",
+"去找你",
+"马上到",
+"等我",
+"见你"
+],
+"hint": "出门见他前精心挑过的一身，头发妆容认真",
+"vec": {
+"formality": 0.35,
+"exposure": 0.75,
+"trendiness": 0.8,
+"sportiness": 0.1,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "campus-006",
+"name": "和他在一起(居家/独处)",
+"category": "校园日常",
+"aliases": [
+"和他在一起",
+"居家",
+"在你家",
+"一起在家",
+"窝在一起",
+"我们家"
+],
+"hint": "柔软舒服的家居服或宽松毛衣",
+"vec": {
+"formality": 0.05,
+"exposure": 0.7,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.85,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "campus-007",
+"name": "宅宿舍/睡前",
+"category": "校园日常",
+"aliases": [
+"宅",
+"宿舍",
+"睡前",
+"被窝",
+"追剧",
+"洗完澡"
+],
+"hint": "宽松睡衣或家居服，素颜",
+"vec": {
+"formality": 0.0,
+"exposure": 0.25,
+"trendiness": 0.15,
+"sportiness": 0.1,
+"coziness": 0.95,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "campus-008",
+"name": "外出日常",
+"category": "校园日常",
+"aliases": [
+"日常",
+"外出",
+"出门"
+],
+"hint": "日常休闲搭配",
+"vec": {
+"formality": 0.25,
+"exposure": 0.35,
+"trendiness": 0.6,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.6,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "campus-009",
+"name": "图书馆自习",
+"category": "校园日常",
+"aliases": [
+"图书馆",
+"自习"
+],
+"hint": "卫衣或针织衫配牛仔裤，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.2,
+"trendiness": 0.4,
+"sportiness": 0.4,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "campus-010",
+"name": "食堂吃饭",
+"category": "校园日常",
+"aliases": [
+"食堂"
+],
+"hint": "卫衣或针织衫配牛仔裤，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.2,
+"trendiness": 0.4,
+"sportiness": 0.4,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "campus-011",
+"name": "上大课",
+"category": "校园日常",
+"aliases": [
+"大课",
+"阶梯教室"
+],
+"hint": "卫衣或针织衫配牛仔裤，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.2,
+"trendiness": 0.4,
+"sportiness": 0.4,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "campus-012",
+"name": "期末复习",
+"category": "校园日常",
+"aliases": [
+"期末",
+"复习周"
+],
+"hint": "卫衣或针织衫配牛仔裤，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.2,
+"trendiness": 0.4,
+"sportiness": 0.4,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "campus-013",
+"name": "社团活动",
+"category": "校园日常",
+"aliases": [
+"社团"
+],
+"hint": "卫衣或针织衫配牛仔裤，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.2,
+"trendiness": 0.4,
+"sportiness": 0.4,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "campus-014",
+"name": "影像社拍片",
+"category": "校园日常",
+"aliases": [
+"影像社",
+"拍片"
+],
+"hint": "卫衣或针织衫配牛仔裤，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.2,
+"trendiness": 0.4,
+"sportiness": 0.4,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "campus-015",
+"name": "晨跑打卡",
+"category": "校园日常",
+"aliases": [
+"晨跑"
+],
+"hint": "运动外套配运动裤，跑鞋",
+"vec": {
+"formality": 0.3,
+"exposure": 0.2,
+"trendiness": 0.4,
+"sportiness": 0.4,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "campus-016",
+"name": "军训",
+"category": "校园日常",
+"aliases": [],
+"hint": "军训服，帽子，防晒",
+"vec": {
+"formality": 0.3,
+"exposure": 0.2,
+"trendiness": 0.4,
+"sportiness": 0.4,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "campus-017",
+"name": "宿舍夜聊",
+"category": "校园日常",
+"aliases": [
+"夜聊"
+],
+"hint": "睡衣家居服",
+"vec": {
+"formality": 0.3,
+"exposure": 0.2,
+"trendiness": 0.4,
+"sportiness": 0.4,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "campus-018",
+"name": "洗衣房",
+"category": "校园日常",
+"aliases": [
+"洗衣"
+],
+"hint": "宽松T恤家居裤",
+"vec": {
+"formality": 0.3,
+"exposure": 0.2,
+"trendiness": 0.4,
+"sportiness": 0.4,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "campus-019",
+"name": "取快递",
+"category": "校园日常",
+"aliases": [
+"快递",
+"驿站"
+],
+"hint": "卫衣或针织衫配牛仔裤，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.2,
+"trendiness": 0.4,
+"sportiness": 0.4,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "campus-020",
+"name": "校园散步",
+"category": "校园日常",
+"aliases": [
+"操场散步",
+"校园"
+],
+"hint": "卫衣或针织衫配牛仔裤，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.2,
+"trendiness": 0.4,
+"sportiness": 0.4,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "campus-021",
+"name": "教学楼走廊",
+"category": "校园日常",
+"aliases": [],
+"hint": "卫衣或针织衫配牛仔裤，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.2,
+"trendiness": 0.4,
+"sportiness": 0.4,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "campus-022",
+"name": "琴房练琴",
+"category": "校园日常",
+"aliases": [
+"琴房"
+],
+"hint": "针织衫配长裙",
+"vec": {
+"formality": 0.3,
+"exposure": 0.2,
+"trendiness": 0.4,
+"sportiness": 0.4,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "campus-023",
+"name": "汇报演出后台",
+"category": "校园日常",
+"aliases": [
+"后台",
+"汇报演出"
+],
+"hint": "演出前的简洁外套，里面是演出服，头发盘起",
+"vec": {
+"formality": 0.9,
+"exposure": 0.05,
+"trendiness": 0.4,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "campus-024",
+"name": "主持晚会",
+"category": "校园日常",
+"aliases": [
+"主持",
+"晚会"
+],
+"hint": "得体的主持礼服长裙，款式端庄",
+"vec": {
+"formality": 0.9,
+"exposure": 0.05,
+"trendiness": 0.4,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "campus-025",
+"name": "迎新晚会",
+"category": "校园日常",
+"aliases": [],
+"hint": "衬衫/西装外套配长裙或西裤，干净利落",
+"vec": {
+"formality": 0.9,
+"exposure": 0.05,
+"trendiness": 0.4,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "campus-026",
+"name": "开学典礼",
+"category": "校园日常",
+"aliases": [
+"典礼"
+],
+"hint": "衬衫/西装外套配长裙或西裤，干净利落",
+"vec": {
+"formality": 0.9,
+"exposure": 0.05,
+"trendiness": 0.4,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "campus-027",
+"name": "毕业典礼",
+"category": "校园日常",
+"aliases": [
+"毕业照"
+],
+"hint": "学士服或得体连衣裙",
+"vec": {
+"formality": 0.9,
+"exposure": 0.05,
+"trendiness": 0.4,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "campus-028",
+"name": "学术讲座",
+"category": "校园日常",
+"aliases": [
+"讲座",
+"论坛"
+],
+"hint": "衬衫/西装外套配长裙或西裤，干净利落",
+"vec": {
+"formality": 0.9,
+"exposure": 0.05,
+"trendiness": 0.4,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "campus-029",
+"name": "导师面谈",
+"category": "校园日常",
+"aliases": [
+"导师",
+"办公室"
+],
+"hint": "衬衫/西装外套配长裙或西裤，干净利落",
+"vec": {
+"formality": 0.9,
+"exposure": 0.05,
+"trendiness": 0.4,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "campus-030",
+"name": "奖学金答辩",
+"category": "校园日常",
+"aliases": [
+"奖学金"
+],
+"hint": "衬衫/西装外套配长裙或西裤，干净利落",
+"vec": {
+"formality": 0.9,
+"exposure": 0.05,
+"trendiness": 0.4,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "campus-031",
+"name": "实习面试",
+"category": "校园日常",
+"aliases": [
+"面试",
+"实习"
+],
+"hint": "衬衫/西装外套配长裙或西裤，干净利落",
+"vec": {
+"formality": 0.9,
+"exposure": 0.05,
+"trendiness": 0.4,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "campus-032",
+"name": "社团招新摆摊",
+"category": "校园日常",
+"aliases": [
+"招新",
+"百团大战"
+],
+"hint": "社团T恤配半身裙",
+"vec": {
+"formality": 0.9,
+"exposure": 0.05,
+"trendiness": 0.4,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "campus-033",
+"name": "和室友逛超市",
+"category": "校园日常",
+"aliases": [
+"超市"
+],
+"hint": "舒服又上镜的日常款",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "campus-034",
+"name": "奶茶店",
+"category": "校园日常",
+"aliases": [
+"奶茶"
+],
+"hint": "舒服又上镜的日常款",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "campus-035",
+"name": "咖啡店",
+"category": "校园日常",
+"aliases": [
+"咖啡",
+"探店"
+],
+"hint": "舒服又上镜的日常款",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "campus-036",
+"name": "下雨天出门",
+"category": "校园日常",
+"aliases": [
+"下雨",
+"雨天"
+],
+"hint": "风衣或防水外套，雨靴，带伞",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "campus-037",
+"name": "大风降温",
+"category": "校园日常",
+"aliases": [
+"降温",
+"大风"
+],
+"hint": "厚外套围巾",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "campus-038",
+"name": "回家过节",
+"category": "校园日常",
+"aliases": [
+"回家",
+"放假"
+],
+"hint": "舒服的毛衣大衣，拖着行李箱",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "campus-039",
+"name": "坐高铁",
+"category": "校园日常",
+"aliases": [
+"高铁",
+"火车"
+],
+"hint": "宽松舒适的出行装",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "campus-040",
+"name": "机场候机",
+"category": "校园日常",
+"aliases": [
+"机场",
+"候机",
+"登机"
+],
+"hint": "舒适的旅行套装，小行李箱",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "campus-041",
+"name": "去车站接他",
+"category": "校园日常",
+"aliases": [
+"接他",
+"接站"
+],
+"hint": "精心但不刻意的一身",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "campus-042",
+"name": "送他走",
+"category": "校园日常",
+"aliases": [
+"送他",
+"送别"
+],
+"hint": "精心但不刻意的一身",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "campus-043",
+"name": "视频通话前",
+"category": "校园日常",
+"aliases": [
+"视频",
+"视频通话"
+],
+"hint": "在宿舍认真搭的上衣，头发梳好",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "campus-044",
+"name": "纪念日",
+"category": "校园日常",
+"aliases": [
+"周年"
+],
+"hint": "精心但不刻意的一身",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "campus-045",
+"name": "他生日",
+"category": "校园日常",
+"aliases": [
+"你生日",
+"生日惊喜"
+],
+"hint": "精心但不刻意的一身",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "campus-046",
+"name": "情人节",
+"category": "校园日常",
+"aliases": [
+"七夕",
+"520"
+],
+"hint": "精心但不刻意的一身",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "sport-001",
+"name": "跑步",
+"category": "体育",
+"aliases": [
+"慢跑",
+"夜跑"
+],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-002",
+"name": "马拉松",
+"category": "体育",
+"aliases": [
+"半马",
+"全马"
+],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-003",
+"name": "越野跑",
+"category": "体育",
+"aliases": [
+"越野"
+],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-004",
+"name": "竞走",
+"category": "体育",
+"aliases": [],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-005",
+"name": "田径",
+"category": "体育",
+"aliases": [
+"田径场",
+"操场跑圈"
+],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-006",
+"name": "跳远",
+"category": "体育",
+"aliases": [],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-007",
+"name": "跳高",
+"category": "体育",
+"aliases": [],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-008",
+"name": "飞盘",
+"category": "体育",
+"aliases": [],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-009",
+"name": "腰旗橄榄球",
+"category": "体育",
+"aliases": [
+"橄榄球"
+],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-010",
+"name": "足球",
+"category": "体育",
+"aliases": [
+"踢球",
+"足球场"
+],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-011",
+"name": "棒球",
+"category": "体育",
+"aliases": [],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-012",
+"name": "垒球",
+"category": "体育",
+"aliases": [],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-013",
+"name": "板球",
+"category": "体育",
+"aliases": [],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-014",
+"name": "定向越野",
+"category": "体育",
+"aliases": [
+"定向"
+],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-015",
+"name": "铁人三项",
+"category": "体育",
+"aliases": [
+"铁三"
+],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-016",
+"name": "滑板",
+"category": "体育",
+"aliases": [
+"板子"
+],
+"hint": "宽松T恤配工装裤，帆布鞋，棒球帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-017",
+"name": "轮滑",
+"category": "体育",
+"aliases": [
+"溜冰"
+],
+"hint": "运动外套配短裙裤，护具",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-018",
+"name": "长板",
+"category": "体育",
+"aliases": [],
+"hint": "宽松T恤配阔腿裤，鞋子平底",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-019",
+"name": "陆冲",
+"category": "体育",
+"aliases": [],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-020",
+"name": "射箭",
+"category": "体育",
+"aliases": [
+"射箭馆"
+],
+"hint": "运动背心外搭衬衫，护臂",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-021",
+"name": "高尔夫",
+"category": "体育",
+"aliases": [
+"挥杆"
+],
+"hint": "Polo衫配百褶短裙，遮阳帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-022",
+"name": "马术",
+"category": "体育",
+"aliases": [
+"骑马"
+],
+"hint": "马术外套配马裤和长靴",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-023",
+"name": "赛艇",
+"category": "体育",
+"aliases": [],
+"hint": "速干运动上衣配运动短裤/紧身裤，跑鞋，马尾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-024",
+"name": "打网球",
+"category": "体育",
+"aliases": [
+"网球"
+],
+"hint": "防晒运动衣、运动短裙或短裤，护腕，遮阳帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-025",
+"name": "匹克球",
+"category": "体育",
+"aliases": [],
+"hint": "防晒运动衣、运动短裙或短裤，护腕，遮阳帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-026",
+"name": "户外篮球",
+"category": "体育",
+"aliases": [
+"篮球",
+"投篮"
+],
+"hint": "防晒运动衣、运动短裙或短裤，护腕，遮阳帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-027",
+"name": "排球",
+"category": "体育",
+"aliases": [],
+"hint": "防晒运动衣、运动短裙或短裤，护腕，遮阳帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-028",
+"name": "沙滩排球",
+"category": "体育",
+"aliases": [
+"沙排"
+],
+"hint": "运动背心配运动短裤，防晒，沙滩",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-029",
+"name": "门球",
+"category": "体育",
+"aliases": [],
+"hint": "防晒运动衣、运动短裙或短裤，护腕，遮阳帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-030",
+"name": "毽子",
+"category": "体育",
+"aliases": [
+"踢毽子"
+],
+"hint": "防晒运动衣、运动短裙或短裤，护腕，遮阳帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-031",
+"name": "跳绳",
+"category": "体育",
+"aliases": [],
+"hint": "防晒运动衣、运动短裙或短裤，护腕，遮阳帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.95,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-032",
+"name": "爬山",
+"category": "体育",
+"aliases": [
+"登山",
+"徒步",
+"爬香山",
+"香山",
+"上山"
+],
+"hint": "冲锋衣或软壳外套，速干裤，登山鞋，双肩包",
+"vec": {
+"formality": 0.1,
+"exposure": 0.25,
+"trendiness": 0.45,
+"sportiness": 0.85,
+"coziness": 0.25,
+"warmth": 0.35,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-033",
+"name": "徒步穿越",
+"category": "体育",
+"aliases": [
+"重装",
+"穿越"
+],
+"hint": "冲锋衣或软壳外套，速干裤，登山鞋，双肩包",
+"vec": {
+"formality": 0.1,
+"exposure": 0.25,
+"trendiness": 0.45,
+"sportiness": 0.85,
+"coziness": 0.25,
+"warmth": 0.35,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-034",
+"name": "攀岩",
+"category": "体育",
+"aliases": [],
+"hint": "贴身运动背心配攀岩裤，粉袋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.25,
+"trendiness": 0.45,
+"sportiness": 0.85,
+"coziness": 0.25,
+"warmth": 0.35,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-035",
+"name": "溯溪",
+"category": "体育",
+"aliases": [],
+"hint": "速干衣裤，溯溪鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.25,
+"trendiness": 0.45,
+"sportiness": 0.85,
+"coziness": 0.25,
+"warmth": 0.35,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-036",
+"name": "登顶看日出",
+"category": "体育",
+"aliases": [
+"看日出",
+"日出"
+],
+"hint": "冲锋衣或软壳外套，速干裤，登山鞋，双肩包",
+"vec": {
+"formality": 0.1,
+"exposure": 0.25,
+"trendiness": 0.45,
+"sportiness": 0.85,
+"coziness": 0.25,
+"warmth": 0.35,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-037",
+"name": "骑行",
+"category": "体育",
+"aliases": [
+"骑车",
+"单车",
+"骑自行车"
+],
+"hint": "冲锋衣或软壳外套，速干裤，登山鞋，双肩包",
+"vec": {
+"formality": 0.1,
+"exposure": 0.25,
+"trendiness": 0.45,
+"sportiness": 0.85,
+"coziness": 0.25,
+"warmth": 0.35,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-038",
+"name": "公路车",
+"category": "体育",
+"aliases": [
+"公路自行车",
+"环湖骑"
+],
+"hint": "冲锋衣或软壳外套，速干裤，登山鞋，双肩包",
+"vec": {
+"formality": 0.1,
+"exposure": 0.25,
+"trendiness": 0.45,
+"sportiness": 0.85,
+"coziness": 0.25,
+"warmth": 0.35,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-039",
+"name": "山地车",
+"category": "体育",
+"aliases": [
+"山地自行车"
+],
+"hint": "冲锋衣或软壳外套，速干裤，登山鞋，双肩包",
+"vec": {
+"formality": 0.1,
+"exposure": 0.25,
+"trendiness": 0.45,
+"sportiness": 0.85,
+"coziness": 0.25,
+"warmth": 0.35,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-040",
+"name": "露营徒步",
+"category": "体育",
+"aliases": [
+"徒步露营"
+],
+"hint": "冲锋衣或软壳外套，速干裤，登山鞋，双肩包",
+"vec": {
+"formality": 0.1,
+"exposure": 0.25,
+"trendiness": 0.45,
+"sportiness": 0.85,
+"coziness": 0.25,
+"warmth": 0.35,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-041",
+"name": "越野车",
+"category": "体育",
+"aliases": [
+"卡丁车"
+],
+"hint": "工装外套配长裤",
+"vec": {
+"formality": 0.1,
+"exposure": 0.25,
+"trendiness": 0.45,
+"sportiness": 0.85,
+"coziness": 0.25,
+"warmth": 0.35,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-042",
+"name": "滑翔伞",
+"category": "体育",
+"aliases": [
+"滑翔"
+],
+"hint": "贴身运动服外加冲锋衣，头盔",
+"vec": {
+"formality": 0.1,
+"exposure": 0.25,
+"trendiness": 0.45,
+"sportiness": 0.85,
+"coziness": 0.25,
+"warmth": 0.35,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-043",
+"name": "跳伞",
+"category": "体育",
+"aliases": [],
+"hint": "连体跳伞服，护目镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.25,
+"trendiness": 0.45,
+"sportiness": 0.85,
+"coziness": 0.25,
+"warmth": 0.35,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-044",
+"name": "蹦极",
+"category": "体育",
+"aliases": [],
+"hint": "运动服，系安全带",
+"vec": {
+"formality": 0.1,
+"exposure": 0.25,
+"trendiness": 0.45,
+"sportiness": 0.85,
+"coziness": 0.25,
+"warmth": 0.35,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-045",
+"name": "高空滑索",
+"category": "体育",
+"aliases": [
+"滑索"
+],
+"hint": "冲锋衣或软壳外套，速干裤，登山鞋，双肩包",
+"vec": {
+"formality": 0.1,
+"exposure": 0.25,
+"trendiness": 0.45,
+"sportiness": 0.85,
+"coziness": 0.25,
+"warmth": 0.35,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-046",
+"name": "钓鱼",
+"category": "体育",
+"aliases": [
+"路亚"
+],
+"hint": "渔夫帽，防晒衣，工装裤",
+"vec": {
+"formality": 0.1,
+"exposure": 0.25,
+"trendiness": 0.45,
+"sportiness": 0.85,
+"coziness": 0.25,
+"warmth": 0.35,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-047",
+"name": "健身房",
+"category": "体育",
+"aliases": [
+"健身",
+"撸铁",
+"练腿"
+],
+"hint": "宽松运动T恤配运动长裤或瑜伽裤，运动鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-048",
+"name": "普拉提",
+"category": "体育",
+"aliases": [],
+"hint": "宽松运动T恤配运动长裤或瑜伽裤，运动鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-049",
+"name": "有氧操",
+"category": "体育",
+"aliases": [],
+"hint": "宽松运动T恤配运动长裤或瑜伽裤，运动鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-050",
+"name": "动感单车",
+"category": "体育",
+"aliases": [
+"单车课"
+],
+"hint": "宽松运动T恤配运动长裤或瑜伽裤，运动鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-051",
+"name": "搏击操",
+"category": "体育",
+"aliases": [
+"搏击",
+"拳击",
+"泰拳"
+],
+"hint": "宽松运动T恤配运动长裤或瑜伽裤，运动鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-052",
+"name": "跆拳道",
+"category": "体育",
+"aliases": [],
+"hint": "道服系腰带",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-053",
+"name": "空手道",
+"category": "体育",
+"aliases": [],
+"hint": "道服",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-054",
+"name": "柔道",
+"category": "体育",
+"aliases": [],
+"hint": "柔道服",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-055",
+"name": "击剑",
+"category": "体育",
+"aliases": [],
+"hint": "击剑服",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-056",
+"name": "羽毛球",
+"category": "体育",
+"aliases": [],
+"hint": "运动T恤配百褶运动裙，羽毛球鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-057",
+"name": "乒乓球",
+"category": "体育",
+"aliases": [
+"乒乓"
+],
+"hint": "宽松运动T恤配运动长裤或瑜伽裤，运动鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-058",
+"name": "壁球",
+"category": "体育",
+"aliases": [],
+"hint": "宽松运动T恤配运动长裤或瑜伽裤，运动鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-059",
+"name": "室内篮球",
+"category": "体育",
+"aliases": [
+"篮球馆"
+],
+"hint": "宽松运动T恤配运动长裤或瑜伽裤，运动鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-060",
+"name": "室内攀岩",
+"category": "体育",
+"aliases": [
+"抱石"
+],
+"hint": "宽松运动T恤配运动长裤或瑜伽裤，运动鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-061",
+"name": "蹦床",
+"category": "体育",
+"aliases": [
+"蹦床公园"
+],
+"hint": "宽松运动T恤配运动长裤或瑜伽裤，运动鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-062",
+"name": "保龄球",
+"category": "体育",
+"aliases": [
+"保龄"
+],
+"hint": "休闲T恤配直筒裤",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-063",
+"name": "台球",
+"category": "体育",
+"aliases": [
+"桌球"
+],
+"hint": "针织背心配长裤，干净利落",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-064",
+"name": "飞镖",
+"category": "体育",
+"aliases": [],
+"hint": "休闲衬衫配牛仔裤",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-065",
+"name": "跳舞机",
+"category": "体育",
+"aliases": [],
+"hint": "宽松运动T恤配运动长裤或瑜伽裤，运动鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-066",
+"name": "射击馆",
+"category": "体育",
+"aliases": [],
+"hint": "简洁长袖配长裤",
+"vec": {
+"formality": 0.1,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.92,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-067",
+"name": "瑜伽",
+"category": "体育",
+"aliases": [
+"冥想"
+],
+"hint": "柔软瑜伽服、宽松罩衫，赤脚或软底鞋，头发低丸子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.45,
+"sportiness": 0.75,
+"coziness": 0.5,
+"warmth": 0.6,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-068",
+"name": "空中瑜伽",
+"category": "体育",
+"aliases": [],
+"hint": "贴身瑜伽服，外搭薄开衫",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.45,
+"sportiness": 0.75,
+"coziness": 0.5,
+"warmth": 0.6,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-069",
+"name": "拉伸",
+"category": "体育",
+"aliases": [
+"开肩",
+"开胯"
+],
+"hint": "柔软瑜伽服、宽松罩衫，赤脚或软底鞋，头发低丸子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.45,
+"sportiness": 0.75,
+"coziness": 0.5,
+"warmth": 0.6,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-070",
+"name": "芭蕾课",
+"category": "体育",
+"aliases": [
+"芭蕾"
+],
+"hint": "练功服，裹身小开衫，芭蕾舞鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.45,
+"sportiness": 0.75,
+"coziness": 0.5,
+"warmth": 0.6,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-071",
+"name": "现代舞课",
+"category": "体育",
+"aliases": [
+"现代舞"
+],
+"hint": "柔软瑜伽服、宽松罩衫，赤脚或软底鞋，头发低丸子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.45,
+"sportiness": 0.75,
+"coziness": 0.5,
+"warmth": 0.6,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-072",
+"name": "爵士舞课",
+"category": "体育",
+"aliases": [
+"爵士舞"
+],
+"hint": "宽松卫衣配紧身裤，球鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.45,
+"sportiness": 0.75,
+"coziness": 0.5,
+"warmth": 0.6,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-073",
+"name": "街舞课",
+"category": "体育",
+"aliases": [
+"街舞",
+"hiphop"
+],
+"hint": "oversize T恤配工装裤，球鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.45,
+"sportiness": 0.75,
+"coziness": 0.5,
+"warmth": 0.6,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-074",
+"name": "民族舞课",
+"category": "体育",
+"aliases": [
+"民族舞",
+"古典舞"
+],
+"hint": "练功服配纱裙",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.45,
+"sportiness": 0.75,
+"coziness": 0.5,
+"warmth": 0.6,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-075",
+"name": "太极",
+"category": "体育",
+"aliases": [],
+"hint": "宽松太极服",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.45,
+"sportiness": 0.75,
+"coziness": 0.5,
+"warmth": 0.6,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-076",
+"name": "八段锦",
+"category": "体育",
+"aliases": [],
+"hint": "宽松运动服",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.45,
+"sportiness": 0.75,
+"coziness": 0.5,
+"warmth": 0.6,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-077",
+"name": "冥想课",
+"category": "体育",
+"aliases": [],
+"hint": "柔软瑜伽服、宽松罩衫，赤脚或软底鞋，头发低丸子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.45,
+"sportiness": 0.75,
+"coziness": 0.5,
+"warmth": 0.6,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-078",
+"name": "舞蹈比赛",
+"category": "体育",
+"aliases": [],
+"hint": "演出服外搭长款外套，后台准备",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.45,
+"sportiness": 0.75,
+"coziness": 0.5,
+"warmth": 0.6,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-079",
+"name": "游泳",
+"category": "体育",
+"aliases": [
+"游泳池",
+"泳池",
+"游个泳",
+"去游泳"
+],
+"hint": "运动款连体泳衣外披防晒衫或浴巾，泳帽泳镜，大方自然",
+"vec": {
+"formality": 0.05,
+"exposure": 0.5,
+"trendiness": 0.4,
+"sportiness": 0.9,
+"coziness": 0.2,
+"warmth": 0.9,
+"outdoor": 0.6,
+"water": 1.0
+},
+"cap": 2,
+"hint_safe": "在泳池/水边，穿防晒长袖和运动短裤，只拍上半身"
+},
+{
+"id": "sport-080",
+"name": "水上乐园",
+"category": "体育",
+"aliases": [
+"玩水"
+],
+"hint": "运动款连体泳衣配防晒冲浪衣与短裤",
+"vec": {
+"formality": 0.05,
+"exposure": 0.5,
+"trendiness": 0.4,
+"sportiness": 0.9,
+"coziness": 0.2,
+"warmth": 0.9,
+"outdoor": 0.6,
+"water": 1.0
+},
+"cap": 2,
+"hint_safe": "在泳池/水边，穿防晒长袖和运动短裤，只拍上半身"
+},
+{
+"id": "sport-081",
+"name": "冲浪",
+"category": "体育",
+"aliases": [
+"冲个浪"
+],
+"hint": "长袖冲浪服配冲浪短裤",
+"vec": {
+"formality": 0.05,
+"exposure": 0.5,
+"trendiness": 0.4,
+"sportiness": 0.9,
+"coziness": 0.2,
+"warmth": 0.9,
+"outdoor": 0.6,
+"water": 1.0
+},
+"cap": 2,
+"hint_safe": "在泳池/水边，穿防晒长袖和运动短裤，只拍上半身"
+},
+{
+"id": "sport-082",
+"name": "桨板",
+"category": "体育",
+"aliases": [
+"SUP"
+],
+"hint": "长袖防晒冲浪服配运动短裤",
+"vec": {
+"formality": 0.05,
+"exposure": 0.5,
+"trendiness": 0.4,
+"sportiness": 0.9,
+"coziness": 0.2,
+"warmth": 0.9,
+"outdoor": 0.6,
+"water": 1.0
+},
+"cap": 2,
+"hint_safe": "在泳池/水边，穿防晒长袖和运动短裤，只拍上半身"
+},
+{
+"id": "sport-083",
+"name": "皮划艇",
+"category": "体育",
+"aliases": [
+"划船"
+],
+"hint": "速干衣、救生衣、短裤",
+"vec": {
+"formality": 0.05,
+"exposure": 0.5,
+"trendiness": 0.4,
+"sportiness": 0.9,
+"coziness": 0.2,
+"warmth": 0.9,
+"outdoor": 0.6,
+"water": 1.0
+},
+"cap": 2,
+"hint_safe": "在泳池/水边，穿防晒长袖和运动短裤，只拍上半身"
+},
+{
+"id": "sport-084",
+"name": "潜水",
+"category": "体育",
+"aliases": [
+"浮潜"
+],
+"hint": "长袖潜水服，面镜",
+"vec": {
+"formality": 0.05,
+"exposure": 0.5,
+"trendiness": 0.4,
+"sportiness": 0.9,
+"coziness": 0.2,
+"warmth": 0.9,
+"outdoor": 0.6,
+"water": 1.0
+},
+"cap": 2,
+"hint_safe": "在泳池/水边，穿防晒长袖和运动短裤，只拍上半身"
+},
+{
+"id": "sport-085",
+"name": "帆船",
+"category": "体育",
+"aliases": [],
+"hint": "防晒长袖配短裤，帆布鞋",
+"vec": {
+"formality": 0.05,
+"exposure": 0.5,
+"trendiness": 0.4,
+"sportiness": 0.9,
+"coziness": 0.2,
+"warmth": 0.9,
+"outdoor": 0.6,
+"water": 1.0
+},
+"cap": 2,
+"hint_safe": "在泳池/水边，穿防晒长袖和运动短裤，只拍上半身"
+},
+{
+"id": "sport-086",
+"name": "水上摩托",
+"category": "体育",
+"aliases": [],
+"hint": "运动款连体泳衣外披防晒衫或浴巾，泳帽泳镜，大方自然",
+"vec": {
+"formality": 0.05,
+"exposure": 0.5,
+"trendiness": 0.4,
+"sportiness": 0.9,
+"coziness": 0.2,
+"warmth": 0.9,
+"outdoor": 0.6,
+"water": 1.0
+},
+"cap": 2,
+"hint_safe": "在泳池/水边，穿防晒长袖和运动短裤，只拍上半身"
+},
+{
+"id": "sport-087",
+"name": "温泉",
+"category": "体育",
+"aliases": [
+"泡温泉"
+],
+"hint": "浴袍或温泉馆提供的和式浴衣",
+"vec": {
+"formality": 0.05,
+"exposure": 0.5,
+"trendiness": 0.4,
+"sportiness": 0.9,
+"coziness": 0.2,
+"warmth": 0.9,
+"outdoor": 0.6,
+"water": 1.0
+},
+"cap": 2,
+"hint_safe": "在泳池/水边，穿防晒长袖和运动短裤，只拍上半身"
+},
+{
+"id": "sport-088",
+"name": "滑雪",
+"category": "体育",
+"aliases": [
+"滑雪场",
+"双板",
+"单板",
+"崇礼"
+],
+"hint": "滑雪服、滑雪裤、头盔雪镜、手套，保暖",
+"vec": {
+"formality": 0.1,
+"exposure": 0.1,
+"trendiness": 0.55,
+"sportiness": 0.9,
+"coziness": 0.3,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "sport-089",
+"name": "滑冰",
+"category": "体育",
+"aliases": [
+"溜冰场",
+"冰场"
+],
+"hint": "修身毛衣配保暖裤，手套围巾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.1,
+"trendiness": 0.55,
+"sportiness": 0.9,
+"coziness": 0.3,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "sport-090",
+"name": "花样滑冰",
+"category": "体育",
+"aliases": [],
+"hint": "长袖滑冰裙配厚连裤袜，外搭羽绒短外套",
+"vec": {
+"formality": 0.1,
+"exposure": 0.1,
+"trendiness": 0.55,
+"sportiness": 0.9,
+"coziness": 0.3,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "sport-091",
+"name": "冰球",
+"category": "体育",
+"aliases": [],
+"hint": "滑雪服、滑雪裤、头盔雪镜、手套，保暖",
+"vec": {
+"formality": 0.1,
+"exposure": 0.1,
+"trendiness": 0.55,
+"sportiness": 0.9,
+"coziness": 0.3,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "sport-092",
+"name": "雪地徒步",
+"category": "体育",
+"aliases": [
+"雪地"
+],
+"hint": "滑雪服、滑雪裤、头盔雪镜、手套，保暖",
+"vec": {
+"formality": 0.1,
+"exposure": 0.1,
+"trendiness": 0.55,
+"sportiness": 0.9,
+"coziness": 0.3,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "sport-093",
+"name": "打雪仗",
+"category": "体育",
+"aliases": [
+"雪仗",
+"堆雪人"
+],
+"hint": "羽绒服、毛线帽、围巾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.1,
+"trendiness": 0.55,
+"sportiness": 0.9,
+"coziness": 0.3,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "sport-094",
+"name": "冰上自行车",
+"category": "体育",
+"aliases": [],
+"hint": "滑雪服、滑雪裤、头盔雪镜、手套，保暖",
+"vec": {
+"formality": 0.1,
+"exposure": 0.1,
+"trendiness": 0.55,
+"sportiness": 0.9,
+"coziness": 0.3,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "sport-095",
+"name": "雪橇",
+"category": "体育",
+"aliases": [
+"雪圈",
+"滑雪圈"
+],
+"hint": "滑雪服、滑雪裤、头盔雪镜、手套，保暖",
+"vec": {
+"formality": 0.1,
+"exposure": 0.1,
+"trendiness": 0.55,
+"sportiness": 0.9,
+"coziness": 0.3,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "sport-096",
+"name": "冬泳",
+"category": "体育",
+"aliases": [],
+"hint": "保暖外套里是运动连体泳衣，岸边",
+"vec": {
+"formality": 0.1,
+"exposure": 0.1,
+"trendiness": 0.55,
+"sportiness": 0.9,
+"coziness": 0.3,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "sport-097",
+"name": "看球赛",
+"category": "体育",
+"aliases": [
+"看比赛",
+"球赛",
+"看球"
+],
+"hint": "球队应援T恤配牛仔短裙",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-098",
+"name": "看篮球比赛",
+"category": "体育",
+"aliases": [
+"CBA",
+"NBA"
+],
+"hint": "休闲运动风，棒球帽",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-099",
+"name": "看网球比赛",
+"category": "体育",
+"aliases": [
+"网球公开赛"
+],
+"hint": "休闲运动风，棒球帽",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-100",
+"name": "电竞比赛",
+"category": "体育",
+"aliases": [
+"电竞",
+"LPL"
+],
+"hint": "休闲运动风，棒球帽",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-101",
+"name": "运动会",
+"category": "体育",
+"aliases": [],
+"hint": "班服配运动裤",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "sport-102",
+"name": "啦啦队",
+"category": "体育",
+"aliases": [
+"啦啦操"
+],
+"hint": "啦啦队服（长袖款），双马尾",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-001",
+"name": "KTV",
+"category": "娱乐",
+"aliases": [
+"唱歌",
+"K歌",
+"ktv"
+],
+"hint": "出片的夜晚造型：亮色上衣/小裙子，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-002",
+"name": "蹦迪",
+"category": "娱乐",
+"aliases": [
+"夜店"
+],
+"hint": "闪亮上衣配阔腿裤，有造型感、得体",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-003",
+"name": "Livehouse",
+"category": "娱乐",
+"aliases": [
+"livehouse",
+"现场"
+],
+"hint": "出片的夜晚造型：亮色上衣/小裙子，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-004",
+"name": "演唱会",
+"category": "娱乐",
+"aliases": [
+"看演唱会"
+],
+"hint": "应援色T恤配短裙，荧光棒",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-005",
+"name": "音乐节",
+"category": "娱乐",
+"aliases": [],
+"hint": "印花上衣配牛仔短裤，渔夫帽，防晒",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-006",
+"name": "酒吧小酌",
+"category": "娱乐",
+"aliases": [
+"酒吧",
+"清吧",
+"小酌"
+],
+"hint": "出片的夜晚造型：亮色上衣/小裙子，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-007",
+"name": "爵士酒吧",
+"category": "娱乐",
+"aliases": [
+"爵士"
+],
+"hint": "小黑裙配耳环",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-008",
+"name": "脱口秀",
+"category": "娱乐",
+"aliases": [
+"开放麦"
+],
+"hint": "出片的夜晚造型：亮色上衣/小裙子，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-009",
+"name": "话剧",
+"category": "娱乐",
+"aliases": [
+"看话剧"
+],
+"hint": "针织连衣裙配风衣",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-010",
+"name": "音乐剧",
+"category": "娱乐",
+"aliases": [],
+"hint": "出片的夜晚造型：亮色上衣/小裙子，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-011",
+"name": "歌剧",
+"category": "娱乐",
+"aliases": [
+"歌剧院"
+],
+"hint": "得体长裙，小外套",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-012",
+"name": "芭蕾舞剧",
+"category": "娱乐",
+"aliases": [
+"看芭蕾"
+],
+"hint": "优雅长裙，盘发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-013",
+"name": "舞剧",
+"category": "娱乐",
+"aliases": [
+"看舞剧"
+],
+"hint": "出片的夜晚造型：亮色上衣/小裙子，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-014",
+"name": "交响音乐会",
+"category": "娱乐",
+"aliases": [
+"音乐会",
+"交响乐"
+],
+"hint": "黑色系连衣裙，简洁配饰",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-015",
+"name": "相声",
+"category": "娱乐",
+"aliases": [],
+"hint": "出片的夜晚造型：亮色上衣/小裙子，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-016",
+"name": "跨年夜",
+"category": "娱乐",
+"aliases": [
+"跨年",
+"倒计时"
+],
+"hint": "出片的夜晚造型：亮色上衣/小裙子，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-017",
+"name": "万圣节派对",
+"category": "娱乐",
+"aliases": [
+"万圣节",
+"cos"
+],
+"hint": "可爱主题装扮（巫师帽/猫耳），款式得体",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-018",
+"name": "圣诞派对",
+"category": "娱乐",
+"aliases": [
+"圣诞"
+],
+"hint": "红色针织裙，毛绒配饰",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-019",
+"name": "生日派对",
+"category": "娱乐",
+"aliases": [
+"生日会",
+"派对"
+],
+"hint": "派对小礼裙",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-020",
+"name": "年会",
+"category": "娱乐",
+"aliases": [],
+"hint": "得体小礼服",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.9,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "fun-021",
+"name": "剧本杀",
+"category": "娱乐",
+"aliases": [],
+"hint": "根据剧本角色挑的复古一身",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-022",
+"name": "密室逃脱",
+"category": "娱乐",
+"aliases": [
+"密室"
+],
+"hint": "方便活动的卫衣和裤子",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-023",
+"name": "桌游",
+"category": "娱乐",
+"aliases": [
+"狼人杀"
+],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-024",
+"name": "电玩城",
+"category": "娱乐",
+"aliases": [
+"抓娃娃"
+],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-025",
+"name": "VR体验",
+"category": "娱乐",
+"aliases": [
+"VR"
+],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-026",
+"name": "看电影",
+"category": "娱乐",
+"aliases": [
+"电影院",
+"电影"
+],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-027",
+"name": "私人影院",
+"category": "娱乐",
+"aliases": [],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-028",
+"name": "漫展",
+"category": "娱乐",
+"aliases": [],
+"hint": "二次元风格日常装，选日常可穿的角色",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-029",
+"name": "cosplay",
+"category": "娱乐",
+"aliases": [
+"cos"
+],
+"hint": "角色服装，选保守款",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-030",
+"name": "汉服游园",
+"category": "娱乐",
+"aliases": [
+"汉服"
+],
+"hint": "飘逸的汉服，发簪",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-031",
+"name": "JK制服拍照",
+"category": "娱乐",
+"aliases": [
+"JK"
+],
+"hint": "JK制服配过膝袜",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-032",
+"name": "Lolita茶会",
+"category": "娱乐",
+"aliases": [
+"洛丽塔",
+"lolita"
+],
+"hint": "甜美款Lo裙配小皮鞋",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-033",
+"name": "手作DIY",
+"category": "娱乐",
+"aliases": [
+"手工",
+"DIY",
+"陶艺"
+],
+"hint": "围裙，袖子挽起",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-034",
+"name": "陶艺课",
+"category": "娱乐",
+"aliases": [
+"拉坯"
+],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-035",
+"name": "做蛋糕",
+"category": "娱乐",
+"aliases": [
+"烘焙",
+"做甜品"
+],
+"hint": "围裙配针织衫",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-036",
+"name": "插花课",
+"category": "娱乐",
+"aliases": [
+"插花",
+"花艺"
+],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-037",
+"name": "调香课",
+"category": "娱乐",
+"aliases": [
+"调香"
+],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-038",
+"name": "画画",
+"category": "娱乐",
+"aliases": [
+"画室",
+"油画"
+],
+"hint": "宽松衬衫当罩衫",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-039",
+"name": "书法课",
+"category": "娱乐",
+"aliases": [
+"书法"
+],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-040",
+"name": "拼图乐高",
+"category": "娱乐",
+"aliases": [
+"乐高"
+],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-041",
+"name": "猫咖",
+"category": "娱乐",
+"aliases": [
+"撸猫"
+],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-042",
+"name": "狗咖",
+"category": "娱乐",
+"aliases": [
+"撸狗"
+],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-043",
+"name": "网咖",
+"category": "娱乐",
+"aliases": [
+"网吧"
+],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-044",
+"name": "麻将",
+"category": "娱乐",
+"aliases": [
+"打麻将"
+],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-045",
+"name": "棋牌室",
+"category": "娱乐",
+"aliases": [],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-046",
+"name": "射箭馆体验",
+"category": "娱乐",
+"aliases": [],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-047",
+"name": "攀岩馆体验",
+"category": "娱乐",
+"aliases": [],
+"hint": "舒服好看的休闲搭配",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-048",
+"name": "游乐园",
+"category": "娱乐",
+"aliases": [
+"欢乐谷"
+],
+"hint": "方便活动的出游装，运动鞋，小背包",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-049",
+"name": "迪士尼",
+"category": "娱乐",
+"aliases": [],
+"hint": "发箍配可爱连衣裙，舒服的鞋",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-050",
+"name": "环球影城",
+"category": "娱乐",
+"aliases": [
+"哈利波特"
+],
+"hint": "学院风毛衣配百褶裙",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-051",
+"name": "海洋馆",
+"category": "娱乐",
+"aliases": [
+"水族馆"
+],
+"hint": "方便活动的出游装，运动鞋，小背包",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-052",
+"name": "动物园",
+"category": "娱乐",
+"aliases": [
+"熊猫"
+],
+"hint": "方便活动的出游装，运动鞋，小背包",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-053",
+"name": "植物园",
+"category": "娱乐",
+"aliases": [
+"温室"
+],
+"hint": "方便活动的出游装，运动鞋，小背包",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-054",
+"name": "野餐",
+"category": "娱乐",
+"aliases": [
+"草坪"
+],
+"hint": "碎花长裙配草帽，野餐布",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-055",
+"name": "放风筝",
+"category": "娱乐",
+"aliases": [
+"风筝"
+],
+"hint": "方便活动的出游装，运动鞋，小背包",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-056",
+"name": "公园散步",
+"category": "娱乐",
+"aliases": [
+"公园"
+],
+"hint": "方便活动的出游装，运动鞋，小背包",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-057",
+"name": "看花",
+"category": "娱乐",
+"aliases": [
+"赏花",
+"樱花",
+"桃花",
+"花海"
+],
+"hint": "浅色碎花裙",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-058",
+"name": "看红叶",
+"category": "娱乐",
+"aliases": [
+"红叶",
+"赏枫"
+],
+"hint": "暖色针织开衫配长裙",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-059",
+"name": "看烟花",
+"category": "娱乐",
+"aliases": [
+"烟花"
+],
+"hint": "厚外套围巾，暖色系",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-060",
+"name": "庙会",
+"category": "娱乐",
+"aliases": [
+"逛庙会"
+],
+"hint": "红色毛衣大衣，喜庆",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-061",
+"name": "灯会",
+"category": "娱乐",
+"aliases": [
+"元宵",
+"赏灯"
+],
+"hint": "方便活动的出游装，运动鞋，小背包",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-062",
+"name": "夜市",
+"category": "娱乐",
+"aliases": [
+"小吃街"
+],
+"hint": "方便活动的出游装，运动鞋，小背包",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-063",
+"name": "早市",
+"category": "娱乐",
+"aliases": [
+"菜市场"
+],
+"hint": "宽松卫衣配直筒裤",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-064",
+"name": "跳蚤市集",
+"category": "娱乐",
+"aliases": [
+"市集",
+"集市",
+"创意市集"
+],
+"hint": "方便活动的出游装，运动鞋，小背包",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-065",
+"name": "露天电影",
+"category": "娱乐",
+"aliases": [
+"露天"
+],
+"hint": "方便活动的出游装，运动鞋，小背包",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-066",
+"name": "城市骑行",
+"category": "娱乐",
+"aliases": [
+"citywalk",
+"漫步"
+],
+"hint": "方便活动的出游装，运动鞋，小背包",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-067",
+"name": "摄影外拍",
+"category": "娱乐",
+"aliases": [
+"外拍",
+"约拍",
+"拍写真"
+],
+"hint": "上镜的主题搭配",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-068",
+"name": "赶海",
+"category": "娱乐",
+"aliases": [],
+"hint": "防晒衣配短裤，雨靴",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-069",
+"name": "看展",
+"category": "娱乐",
+"aliases": [
+"展览",
+"美术馆",
+"艺术展"
+],
+"hint": "文艺干净的一身：针织衫、长裙或直筒裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.25,
+"trendiness": 0.7,
+"sportiness": 0.1,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-070",
+"name": "博物馆",
+"category": "娱乐",
+"aliases": [],
+"hint": "文艺干净的一身：针织衫、长裙或直筒裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.25,
+"trendiness": 0.7,
+"sportiness": 0.1,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-071",
+"name": "画廊",
+"category": "娱乐",
+"aliases": [],
+"hint": "文艺干净的一身：针织衫、长裙或直筒裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.25,
+"trendiness": 0.7,
+"sportiness": 0.1,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-072",
+"name": "798艺术区",
+"category": "娱乐",
+"aliases": [
+"798"
+],
+"hint": "文艺干净的一身：针织衫、长裙或直筒裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.25,
+"trendiness": 0.7,
+"sportiness": 0.1,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-073",
+"name": "书店",
+"category": "娱乐",
+"aliases": [
+"逛书店"
+],
+"hint": "宽松毛衣配长裙",
+"vec": {
+"formality": 0.35,
+"exposure": 0.25,
+"trendiness": 0.7,
+"sportiness": 0.1,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-074",
+"name": "咖啡探店",
+"category": "娱乐",
+"aliases": [
+"探店",
+"咖啡馆"
+],
+"hint": "文艺干净的一身：针织衫、长裙或直筒裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.25,
+"trendiness": 0.7,
+"sportiness": 0.1,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-075",
+"name": "茶馆",
+"category": "娱乐",
+"aliases": [
+"喝茶"
+],
+"hint": "素雅的新中式上衣",
+"vec": {
+"formality": 0.35,
+"exposure": 0.25,
+"trendiness": 0.7,
+"sportiness": 0.1,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-076",
+"name": "黑胶唱片店",
+"category": "娱乐",
+"aliases": [],
+"hint": "文艺干净的一身：针织衫、长裙或直筒裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.25,
+"trendiness": 0.7,
+"sportiness": 0.1,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-077",
+"name": "古着店",
+"category": "娱乐",
+"aliases": [
+"古着"
+],
+"hint": "复古格纹外套",
+"vec": {
+"formality": 0.35,
+"exposure": 0.25,
+"trendiness": 0.7,
+"sportiness": 0.1,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-078",
+"name": "买花",
+"category": "娱乐",
+"aliases": [
+"花店"
+],
+"hint": "文艺干净的一身：针织衫、长裙或直筒裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.25,
+"trendiness": 0.7,
+"sportiness": 0.1,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-079",
+"name": "品酒会",
+"category": "娱乐",
+"aliases": [
+"品酒"
+],
+"hint": "简约小礼裙",
+"vec": {
+"formality": 0.35,
+"exposure": 0.25,
+"trendiness": 0.7,
+"sportiness": 0.1,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-080",
+"name": "读书会",
+"category": "娱乐",
+"aliases": [],
+"hint": "文艺干净的一身：针织衫、长裙或直筒裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.25,
+"trendiness": 0.7,
+"sportiness": 0.1,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-081",
+"name": "讲座沙龙",
+"category": "娱乐",
+"aliases": [
+"沙龙"
+],
+"hint": "文艺干净的一身：针织衫、长裙或直筒裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.25,
+"trendiness": 0.7,
+"sportiness": 0.1,
+"coziness": 0.4,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-082",
+"name": "追剧",
+"category": "娱乐",
+"aliases": [
+"刷剧",
+"看综艺"
+],
+"hint": "宽松家居服、毛茸茸拖鞋",
+"vec": {
+"formality": 0.05,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.85,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-083",
+"name": "打游戏",
+"category": "娱乐",
+"aliases": [
+"开黑",
+"switch"
+],
+"hint": "宽松家居服、毛茸茸拖鞋",
+"vec": {
+"formality": 0.05,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.85,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-084",
+"name": "看书",
+"category": "娱乐",
+"aliases": [
+"看小说"
+],
+"hint": "宽松家居服、毛茸茸拖鞋",
+"vec": {
+"formality": 0.05,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.85,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-085",
+"name": "做饭",
+"category": "娱乐",
+"aliases": [
+"下厨"
+],
+"hint": "家居服配围裙",
+"vec": {
+"formality": 0.05,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.85,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-086",
+"name": "点外卖",
+"category": "娱乐",
+"aliases": [],
+"hint": "宽松家居服、毛茸茸拖鞋",
+"vec": {
+"formality": 0.05,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.85,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-087",
+"name": "煲电话粥",
+"category": "娱乐",
+"aliases": [
+"打电话"
+],
+"hint": "宽松家居服、毛茸茸拖鞋",
+"vec": {
+"formality": 0.05,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.85,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-088",
+"name": "大扫除",
+"category": "娱乐",
+"aliases": [
+"收拾"
+],
+"hint": "旧T恤配家居裤，头发绑起",
+"vec": {
+"formality": 0.05,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.85,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-089",
+"name": "敷面膜",
+"category": "娱乐",
+"aliases": [
+"护肤",
+"面膜"
+],
+"hint": "宽松家居服、毛茸茸拖鞋",
+"vec": {
+"formality": 0.05,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.85,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-090",
+"name": "睡懒觉",
+"category": "娱乐",
+"aliases": [
+"赖床"
+],
+"hint": "宽松家居服、毛茸茸拖鞋",
+"vec": {
+"formality": 0.05,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.85,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "fun-091",
+"name": "生病在宿舍",
+"category": "娱乐",
+"aliases": [
+"生病",
+"感冒",
+"发烧"
+],
+"hint": "厚睡衣外搭开衫，素颜",
+"vec": {
+"formality": 0.05,
+"exposure": 0.35,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.85,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "date-001",
+"name": "烛光晚餐",
+"category": "约会",
+"aliases": [
+"西餐",
+"晚餐"
+],
+"hint": "精致约会装：修身针织裙或缎面半裙，小高跟，妆容精致",
+"vec": {
+"formality": 0.6,
+"exposure": 0.7,
+"trendiness": 0.9,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-002",
+"name": "高空餐厅",
+"category": "约会",
+"aliases": [
+"景观餐厅",
+"高空"
+],
+"hint": "精致约会装：修身针织裙或缎面半裙，小高跟，妆容精致",
+"vec": {
+"formality": 0.6,
+"exposure": 0.7,
+"trendiness": 0.9,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-003",
+"name": "法餐",
+"category": "约会",
+"aliases": [],
+"hint": "精致约会装：修身针织裙或缎面半裙，小高跟，妆容精致",
+"vec": {
+"formality": 0.6,
+"exposure": 0.7,
+"trendiness": 0.9,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-004",
+"name": "日料约会",
+"category": "约会",
+"aliases": [
+"日料",
+"omakase"
+],
+"hint": "精致约会装：修身针织裙或缎面半裙，小高跟，妆容精致",
+"vec": {
+"formality": 0.6,
+"exposure": 0.7,
+"trendiness": 0.9,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-005",
+"name": "纪念日晚餐",
+"category": "约会",
+"aliases": [
+"周年晚餐"
+],
+"hint": "精致约会装：修身针织裙或缎面半裙，小高跟，妆容精致",
+"vec": {
+"formality": 0.6,
+"exposure": 0.7,
+"trendiness": 0.9,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-006",
+"name": "酒店下午茶",
+"category": "约会",
+"aliases": [
+"下午茶"
+],
+"hint": "精致约会装：修身针织裙或缎面半裙，小高跟，妆容精致",
+"vec": {
+"formality": 0.6,
+"exposure": 0.7,
+"trendiness": 0.9,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-007",
+"name": "看夜景",
+"category": "约会",
+"aliases": [
+"夜景",
+"观景台"
+],
+"hint": "精致约会装：修身针织裙或缎面半裙，小高跟，妆容精致",
+"vec": {
+"formality": 0.6,
+"exposure": 0.7,
+"trendiness": 0.9,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-008",
+"name": "江边散步",
+"category": "约会",
+"aliases": [
+"江边",
+"河边"
+],
+"hint": "精致约会装：修身针织裙或缎面半裙，小高跟，妆容精致",
+"vec": {
+"formality": 0.6,
+"exposure": 0.7,
+"trendiness": 0.9,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-009",
+"name": "游船夜游",
+"category": "约会",
+"aliases": [
+"夜游",
+"游船"
+],
+"hint": "精致约会装：修身针织裙或缎面半裙，小高跟，妆容精致",
+"vec": {
+"formality": 0.6,
+"exposure": 0.7,
+"trendiness": 0.9,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-010",
+"name": "音乐会约会",
+"category": "约会",
+"aliases": [
+"听音乐会"
+],
+"hint": "精致约会装：修身针织裙或缎面半裙，小高跟，妆容精致",
+"vec": {
+"formality": 0.6,
+"exposure": 0.7,
+"trendiness": 0.9,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-011",
+"name": "话剧约会",
+"category": "约会",
+"aliases": [
+"一起看话剧"
+],
+"hint": "精致约会装：修身针织裙或缎面半裙，小高跟，妆容精致",
+"vec": {
+"formality": 0.6,
+"exposure": 0.7,
+"trendiness": 0.9,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-012",
+"name": "拍情侣写真",
+"category": "约会",
+"aliases": [
+"情侣照",
+"写真"
+],
+"hint": "精致约会装：修身针织裙或缎面半裙，小高跟，妆容精致",
+"vec": {
+"formality": 0.6,
+"exposure": 0.7,
+"trendiness": 0.9,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-013",
+"name": "跨年约会",
+"category": "约会",
+"aliases": [
+"一起跨年"
+],
+"hint": "精致约会装：修身针织裙或缎面半裙，小高跟，妆容精致",
+"vec": {
+"formality": 0.6,
+"exposure": 0.7,
+"trendiness": 0.9,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-014",
+"name": "情人节约会",
+"category": "约会",
+"aliases": [],
+"hint": "精致约会装：修身针织裙或缎面半裙，小高跟，妆容精致",
+"vec": {
+"formality": 0.6,
+"exposure": 0.7,
+"trendiness": 0.9,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-015",
+"name": "七夕约会",
+"category": "约会",
+"aliases": [
+"七夕"
+],
+"hint": "精致约会装：修身针织裙或缎面半裙，小高跟，妆容精致",
+"vec": {
+"formality": 0.6,
+"exposure": 0.7,
+"trendiness": 0.9,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-016",
+"name": "圣诞约会",
+"category": "约会",
+"aliases": [
+"平安夜"
+],
+"hint": "红色针织裙配大衣",
+"vec": {
+"formality": 0.6,
+"exposure": 0.7,
+"trendiness": 0.9,
+"sportiness": 0.05,
+"coziness": 0.1,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-017",
+"name": "看电影约会",
+"category": "约会",
+"aliases": [
+"一起看电影",
+"看电影去"
+],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-018",
+"name": "逛街",
+"category": "约会",
+"aliases": [
+"逛商场",
+"购物"
+],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-019",
+"name": "吃火锅",
+"category": "约会",
+"aliases": [
+"火锅"
+],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-020",
+"name": "吃烤肉",
+"category": "约会",
+"aliases": [
+"烤肉"
+],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-021",
+"name": "咖啡约会",
+"category": "约会",
+"aliases": [
+"喝咖啡"
+],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-022",
+"name": "奶茶约会",
+"category": "约会",
+"aliases": [],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-023",
+"name": "逛夜市约会",
+"category": "约会",
+"aliases": [
+"一起逛夜市"
+],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-024",
+"name": "压马路",
+"category": "约会",
+"aliases": [
+"散步"
+],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-025",
+"name": "书店约会",
+"category": "约会",
+"aliases": [],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-026",
+"name": "看展约会",
+"category": "约会",
+"aliases": [
+"一起看展"
+],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-027",
+"name": "抓娃娃约会",
+"category": "约会",
+"aliases": [],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-028",
+"name": "密室约会",
+"category": "约会",
+"aliases": [],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-029",
+"name": "吃路边摊",
+"category": "约会",
+"aliases": [],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-030",
+"name": "做手工约会",
+"category": "约会",
+"aliases": [
+"一起做手工"
+],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-031",
+"name": "猫咖约会",
+"category": "约会",
+"aliases": [],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-032",
+"name": "拍大头贴",
+"category": "约会",
+"aliases": [
+"大头贴"
+],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-033",
+"name": "买衣服",
+"category": "约会",
+"aliases": [
+"试衣服"
+],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-034",
+"name": "逛宜家",
+"category": "约会",
+"aliases": [
+"宜家"
+],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-035",
+"name": "逛超市约会",
+"category": "约会",
+"aliases": [
+"一起逛超市"
+],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-036",
+"name": "初次约会",
+"category": "约会",
+"aliases": [
+"第一次约会",
+"初次见面"
+],
+"hint": "温柔干净的连衣裙，淡妆",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-037",
+"name": "异地见面",
+"category": "约会",
+"aliases": [
+"异地",
+"见面那天",
+"奔现"
+],
+"hint": "最好看的那套，认真打扮",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-038",
+"name": "惊喜见面",
+"category": "约会",
+"aliases": [
+"惊喜"
+],
+"hint": "甜美但不刻意：针织上衣配半身裙或牛仔裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.65,
+"trendiness": 0.85,
+"sportiness": 0.15,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.4,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-039",
+"name": "公园野餐约会",
+"category": "约会",
+"aliases": [
+"一起野餐"
+],
+"hint": "轻松的出游约会装，好走的鞋",
+"vec": {
+"formality": 0.25,
+"exposure": 0.6,
+"trendiness": 0.8,
+"sportiness": 0.4,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-040",
+"name": "骑车约会",
+"category": "约会",
+"aliases": [
+"一起骑车"
+],
+"hint": "轻松的出游约会装，好走的鞋",
+"vec": {
+"formality": 0.25,
+"exposure": 0.6,
+"trendiness": 0.8,
+"sportiness": 0.4,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-041",
+"name": "爬山约会",
+"category": "约会",
+"aliases": [
+"一起爬山"
+],
+"hint": "情侣运动风，冲锋衣配运动裤",
+"vec": {
+"formality": 0.25,
+"exposure": 0.6,
+"trendiness": 0.8,
+"sportiness": 0.4,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-042",
+"name": "海边约会",
+"category": "约会",
+"aliases": [],
+"hint": "飘逸长裙配草帽",
+"vec": {
+"formality": 0.25,
+"exposure": 0.6,
+"trendiness": 0.8,
+"sportiness": 0.4,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-043",
+"name": "看日落",
+"category": "约会",
+"aliases": [
+"日落",
+"晚霞"
+],
+"hint": "轻松的出游约会装，好走的鞋",
+"vec": {
+"formality": 0.25,
+"exposure": 0.6,
+"trendiness": 0.8,
+"sportiness": 0.4,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-044",
+"name": "游乐园约会",
+"category": "约会",
+"aliases": [
+"一起去游乐园"
+],
+"hint": "轻松的出游约会装，好走的鞋",
+"vec": {
+"formality": 0.25,
+"exposure": 0.6,
+"trendiness": 0.8,
+"sportiness": 0.4,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-045",
+"name": "看樱花约会",
+"category": "约会",
+"aliases": [],
+"hint": "轻松的出游约会装，好走的鞋",
+"vec": {
+"formality": 0.25,
+"exposure": 0.6,
+"trendiness": 0.8,
+"sportiness": 0.4,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-046",
+"name": "雪天约会",
+"category": "约会",
+"aliases": [
+"下雪",
+"初雪"
+],
+"hint": "白色羽绒服配毛线帽和围巾",
+"vec": {
+"formality": 0.25,
+"exposure": 0.6,
+"trendiness": 0.8,
+"sportiness": 0.4,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-047",
+"name": "雨天约会",
+"category": "约会",
+"aliases": [
+"雨中",
+"撑伞"
+],
+"hint": "风衣配短靴",
+"vec": {
+"formality": 0.25,
+"exposure": 0.6,
+"trendiness": 0.8,
+"sportiness": 0.4,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-048",
+"name": "自驾约会",
+"category": "约会",
+"aliases": [
+"兜风"
+],
+"hint": "轻松的出游约会装，好走的鞋",
+"vec": {
+"formality": 0.25,
+"exposure": 0.6,
+"trendiness": 0.8,
+"sportiness": 0.4,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-049",
+"name": "露营约会",
+"category": "约会",
+"aliases": [
+"一起露营"
+],
+"hint": "格纹衬衫配工装裤",
+"vec": {
+"formality": 0.25,
+"exposure": 0.6,
+"trendiness": 0.8,
+"sportiness": 0.4,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-050",
+"name": "短途旅行",
+"category": "约会",
+"aliases": [
+"周末旅行",
+"短途"
+],
+"hint": "轻松的出游约会装，好走的鞋",
+"vec": {
+"formality": 0.25,
+"exposure": 0.6,
+"trendiness": 0.8,
+"sportiness": 0.4,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-051",
+"name": "一起做饭",
+"category": "约会",
+"aliases": [
+"一起下厨"
+],
+"hint": "家居服配围裙",
+"vec": {
+"formality": 0.05,
+"exposure": 0.65,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.9,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-052",
+"name": "窝沙发看电影",
+"category": "约会",
+"aliases": [
+"沙发",
+"投影"
+],
+"hint": "柔软居家：宽松毛衣或家居裙",
+"vec": {
+"formality": 0.05,
+"exposure": 0.65,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.9,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-053",
+"name": "一起打游戏",
+"category": "约会",
+"aliases": [],
+"hint": "柔软居家：宽松毛衣或家居裙",
+"vec": {
+"formality": 0.05,
+"exposure": 0.65,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.9,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-054",
+"name": "给他过生日",
+"category": "约会",
+"aliases": [
+"准备惊喜"
+],
+"hint": "温柔的针织裙",
+"vec": {
+"formality": 0.05,
+"exposure": 0.65,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.9,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-055",
+"name": "早上一起吃早餐",
+"category": "约会",
+"aliases": [
+"早餐",
+"早安"
+],
+"hint": "柔软居家：宽松毛衣或家居裙",
+"vec": {
+"formality": 0.05,
+"exposure": 0.65,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.9,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-056",
+"name": "他来宿舍楼下",
+"category": "约会",
+"aliases": [
+"楼下"
+],
+"hint": "随手披的外套配家居裤",
+"vec": {
+"formality": 0.05,
+"exposure": 0.65,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.9,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-057",
+"name": "生病照顾",
+"category": "约会",
+"aliases": [
+"照顾你",
+"照顾他"
+],
+"hint": "柔软居家：宽松毛衣或家居裙",
+"vec": {
+"formality": 0.05,
+"exposure": 0.65,
+"trendiness": 0.4,
+"sportiness": 0.1,
+"coziness": 0.9,
+"warmth": 0.6,
+"outdoor": 0.0,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "date-058",
+"name": "见家长",
+"category": "约会",
+"aliases": [
+"见你爸妈",
+"见父母"
+],
+"hint": "端庄得体：素色连衣裙或针织套装，领口规矩，裙过膝",
+"vec": {
+"formality": 0.85,
+"exposure": 0.05,
+"trendiness": 0.45,
+"sportiness": 0.05,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "date-059",
+"name": "拜年",
+"category": "约会",
+"aliases": [
+"过年"
+],
+"hint": "红色系端庄毛衣裙",
+"vec": {
+"formality": 0.85,
+"exposure": 0.05,
+"trendiness": 0.45,
+"sportiness": 0.05,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "date-060",
+"name": "参加婚礼",
+"category": "约会",
+"aliases": [
+"婚礼",
+"当伴娘"
+],
+"hint": "浅色得体礼服裙，不与新娘撞色",
+"vec": {
+"formality": 0.85,
+"exposure": 0.05,
+"trendiness": 0.45,
+"sportiness": 0.05,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "date-061",
+"name": "家庭聚餐",
+"category": "约会",
+"aliases": [
+"家宴",
+"年夜饭"
+],
+"hint": "端庄得体：素色连衣裙或针织套装，领口规矩，裙过膝",
+"vec": {
+"formality": 0.85,
+"exposure": 0.05,
+"trendiness": 0.45,
+"sportiness": 0.05,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "date-062",
+"name": "见他朋友",
+"category": "约会",
+"aliases": [
+"见你朋友"
+],
+"hint": "干净大方的连衣裙",
+"vec": {
+"formality": 0.85,
+"exposure": 0.05,
+"trendiness": 0.45,
+"sportiness": 0.05,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "date-063",
+"name": "陪长辈喝茶",
+"category": "约会",
+"aliases": [
+"长辈"
+],
+"hint": "端庄得体：素色连衣裙或针织套装，领口规矩，裙过膝",
+"vec": {
+"formality": 0.85,
+"exposure": 0.05,
+"trendiness": 0.45,
+"sportiness": 0.05,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.1,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "trip-001",
+"name": "海边",
+"category": "旅游",
+"aliases": [
+"沙滩",
+"海滩",
+"看海"
+],
+"hint": "度假风：飘逸长裙或防晒衬衫配短裤，草帽墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "trip-002",
+"name": "海岛度假",
+"category": "旅游",
+"aliases": [
+"海岛",
+"度假"
+],
+"hint": "度假风：飘逸长裙或防晒衬衫配短裤，草帽墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "trip-003",
+"name": "沙滩漫步",
+"category": "旅游",
+"aliases": [],
+"hint": "度假风：飘逸长裙或防晒衬衫配短裤，草帽墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "trip-004",
+"name": "椰林",
+"category": "旅游",
+"aliases": [],
+"hint": "度假风：飘逸长裙或防晒衬衫配短裤，草帽墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "trip-005",
+"name": "海边日落",
+"category": "旅游",
+"aliases": [],
+"hint": "度假风：飘逸长裙或防晒衬衫配短裤，草帽墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "trip-006",
+"name": "游艇出海",
+"category": "旅游",
+"aliases": [
+"游艇",
+"出海"
+],
+"hint": "度假风：飘逸长裙或防晒衬衫配短裤，草帽墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "trip-007",
+"name": "浮潜一日游",
+"category": "旅游",
+"aliases": [],
+"hint": "度假风：飘逸长裙或防晒衬衫配短裤，草帽墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "trip-008",
+"name": "海边民宿",
+"category": "旅游",
+"aliases": [],
+"hint": "度假风：飘逸长裙或防晒衬衫配短裤，草帽墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "trip-009",
+"name": "露营",
+"category": "旅游",
+"aliases": [
+"营地",
+"帐篷"
+],
+"hint": "格纹衬衫配工装裤，渔夫帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-010",
+"name": "房车旅行",
+"category": "旅游",
+"aliases": [
+"房车"
+],
+"hint": "户外旅行装：防晒外套、长裤、徒步鞋、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-011",
+"name": "自驾",
+"category": "旅游",
+"aliases": [
+"自驾游"
+],
+"hint": "舒适的休闲装，墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-012",
+"name": "草原",
+"category": "旅游",
+"aliases": [
+"骑马"
+],
+"hint": "长裙配防风外套",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-013",
+"name": "森林",
+"category": "旅游",
+"aliases": [
+"林间"
+],
+"hint": "户外旅行装：防晒外套、长裤、徒步鞋、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-014",
+"name": "湖边",
+"category": "旅游",
+"aliases": [
+"湖畔"
+],
+"hint": "户外旅行装：防晒外套、长裤、徒步鞋、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-015",
+"name": "峡谷",
+"category": "旅游",
+"aliases": [],
+"hint": "户外旅行装：防晒外套、长裤、徒步鞋、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-016",
+"name": "瀑布",
+"category": "旅游",
+"aliases": [],
+"hint": "户外旅行装：防晒外套、长裤、徒步鞋、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-017",
+"name": "沙漠",
+"category": "旅游",
+"aliases": [
+"骑骆驼"
+],
+"hint": "长袖防晒长裙配纱巾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-018",
+"name": "戈壁徒步",
+"category": "旅游",
+"aliases": [],
+"hint": "户外旅行装：防晒外套、长裤、徒步鞋、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-019",
+"name": "高原",
+"category": "旅游",
+"aliases": [
+"藏区"
+],
+"hint": "冲锋衣配抓绒，防晒帽，墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-020",
+"name": "星空露营",
+"category": "旅游",
+"aliases": [
+"看星星",
+"星空"
+],
+"hint": "户外旅行装：防晒外套、长裤、徒步鞋、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-021",
+"name": "田园乡村",
+"category": "旅游",
+"aliases": [
+"乡村",
+"农家乐"
+],
+"hint": "户外旅行装：防晒外套、长裤、徒步鞋、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-022",
+"name": "采摘",
+"category": "旅游",
+"aliases": [
+"摘草莓"
+],
+"hint": "户外旅行装：防晒外套、长裤、徒步鞋、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-023",
+"name": "花田",
+"category": "旅游",
+"aliases": [
+"薰衣草"
+],
+"hint": "户外旅行装：防晒外套、长裤、徒步鞋、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-024",
+"name": "梯田",
+"category": "旅游",
+"aliases": [],
+"hint": "户外旅行装：防晒外套、长裤、徒步鞋、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-025",
+"name": "茶园",
+"category": "旅游",
+"aliases": [
+"茶山"
+],
+"hint": "户外旅行装：防晒外套、长裤、徒步鞋、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-026",
+"name": "竹林",
+"category": "旅游",
+"aliases": [],
+"hint": "户外旅行装：防晒外套、长裤、徒步鞋、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-027",
+"name": "自然保护区",
+"category": "旅游",
+"aliases": [
+"观鸟"
+],
+"hint": "户外旅行装：防晒外套、长裤、徒步鞋、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-028",
+"name": "城市漫游",
+"category": "旅游",
+"aliases": [
+"city walk"
+],
+"hint": "城市旅行穿搭：好看好走，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-029",
+"name": "特种兵旅行",
+"category": "旅游",
+"aliases": [
+"特种兵"
+],
+"hint": "城市旅行穿搭：好看好走，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-030",
+"name": "美食之旅",
+"category": "旅游",
+"aliases": [
+"美食",
+"吃吃喝喝"
+],
+"hint": "城市旅行穿搭：好看好走，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-031",
+"name": "购物之旅",
+"category": "旅游",
+"aliases": [
+"免税店",
+"买买买"
+],
+"hint": "城市旅行穿搭：好看好走，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-032",
+"name": "主题乐园游",
+"category": "旅游",
+"aliases": [],
+"hint": "城市旅行穿搭：好看好走，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-033",
+"name": "网红打卡",
+"category": "旅游",
+"aliases": [
+"网红"
+],
+"hint": "城市旅行穿搭：好看好走，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-034",
+"name": "博物馆之旅",
+"category": "旅游",
+"aliases": [],
+"hint": "城市旅行穿搭：好看好走，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-035",
+"name": "夜游城市",
+"category": "旅游",
+"aliases": [],
+"hint": "城市旅行穿搭：好看好走，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-036",
+"name": "毕业旅行",
+"category": "旅游",
+"aliases": [],
+"hint": "城市旅行穿搭：好看好走，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-037",
+"name": "闺蜜旅行",
+"category": "旅游",
+"aliases": [
+"闺蜜游"
+],
+"hint": "城市旅行穿搭：好看好走，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-038",
+"name": "跟团游",
+"category": "旅游",
+"aliases": [
+"跟团"
+],
+"hint": "城市旅行穿搭：好看好走，帆布包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-039",
+"name": "出差",
+"category": "旅游",
+"aliases": [],
+"hint": "简约衬衫配西裤",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "trip-040",
+"name": "古镇",
+"category": "旅游",
+"aliases": [
+"水乡"
+],
+"hint": "新中式或棉麻长裙，平底鞋，油纸伞",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "trip-041",
+"name": "古城",
+"category": "旅游",
+"aliases": [],
+"hint": "新中式或棉麻长裙，平底鞋，油纸伞",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "trip-042",
+"name": "老街",
+"category": "旅游",
+"aliases": [
+"胡同"
+],
+"hint": "针织开衫配直筒裤",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "trip-043",
+"name": "四合院",
+"category": "旅游",
+"aliases": [],
+"hint": "新中式或棉麻长裙，平底鞋，油纸伞",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "trip-044",
+"name": "园林",
+"category": "旅游",
+"aliases": [],
+"hint": "新中式或棉麻长裙，平底鞋，油纸伞",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "trip-045",
+"name": "江南水乡",
+"category": "旅游",
+"aliases": [
+"江南"
+],
+"hint": "新中式或棉麻长裙，平底鞋，油纸伞",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "trip-046",
+"name": "民宿",
+"category": "旅游",
+"aliases": [],
+"hint": "新中式或棉麻长裙，平底鞋，油纸伞",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "trip-047",
+"name": "窑洞",
+"category": "旅游",
+"aliases": [],
+"hint": "新中式或棉麻长裙，平底鞋，油纸伞",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "trip-048",
+"name": "土楼",
+"category": "旅游",
+"aliases": [],
+"hint": "新中式或棉麻长裙，平底鞋，油纸伞",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "trip-049",
+"name": "吊脚楼",
+"category": "旅游",
+"aliases": [],
+"hint": "新中式或棉麻长裙，平底鞋，油纸伞",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "trip-050",
+"name": "水上市场",
+"category": "旅游",
+"aliases": [],
+"hint": "新中式或棉麻长裙，平底鞋，油纸伞",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "trip-051",
+"name": "雪乡",
+"category": "旅游",
+"aliases": [
+"东北"
+],
+"hint": "厚羽绒服、毛线帽、围巾、雪地靴，暖色系",
+"vec": {
+"formality": 0.2,
+"exposure": 0.1,
+"trendiness": 0.65,
+"sportiness": 0.5,
+"coziness": 0.4,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1,
+"climate": true
+},
+{
+"id": "trip-052",
+"name": "冰雪大世界",
+"category": "旅游",
+"aliases": [
+"冰雕",
+"冰灯"
+],
+"hint": "厚羽绒服、毛线帽、围巾、雪地靴，暖色系",
+"vec": {
+"formality": 0.2,
+"exposure": 0.1,
+"trendiness": 0.65,
+"sportiness": 0.5,
+"coziness": 0.4,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1,
+"climate": true
+},
+{
+"id": "trip-053",
+"name": "极光",
+"category": "旅游",
+"aliases": [
+"看极光"
+],
+"hint": "厚羽绒服、毛线帽、围巾、雪地靴，暖色系",
+"vec": {
+"formality": 0.2,
+"exposure": 0.1,
+"trendiness": 0.65,
+"sportiness": 0.5,
+"coziness": 0.4,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1,
+"climate": true
+},
+{
+"id": "trip-054",
+"name": "雪山",
+"category": "旅游",
+"aliases": [],
+"hint": "厚羽绒服、毛线帽、围巾、雪地靴，暖色系",
+"vec": {
+"formality": 0.2,
+"exposure": 0.1,
+"trendiness": 0.65,
+"sportiness": 0.5,
+"coziness": 0.4,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1,
+"climate": true
+},
+{
+"id": "trip-055",
+"name": "冰川",
+"category": "旅游",
+"aliases": [],
+"hint": "厚羽绒服、毛线帽、围巾、雪地靴，暖色系",
+"vec": {
+"formality": 0.2,
+"exposure": 0.1,
+"trendiness": 0.65,
+"sportiness": 0.5,
+"coziness": 0.4,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1,
+"climate": true
+},
+{
+"id": "trip-056",
+"name": "冬季旅行",
+"category": "旅游",
+"aliases": [
+"冬天旅行"
+],
+"hint": "厚羽绒服、毛线帽、围巾、雪地靴，暖色系",
+"vec": {
+"formality": 0.2,
+"exposure": 0.1,
+"trendiness": 0.65,
+"sportiness": 0.5,
+"coziness": 0.4,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1,
+"climate": true
+},
+{
+"id": "trip-057",
+"name": "寺庙",
+"category": "旅游",
+"aliases": [
+"拜佛",
+"烧香"
+],
+"hint": "素色长袖针织配长裙",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "trip-058",
+"name": "祈福",
+"category": "旅游",
+"aliases": [
+"还愿"
+],
+"hint": "素色长袖长裤或过膝长裙，不露肩不露膝，安静端庄",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "trip-059",
+"name": "道观",
+"category": "旅游",
+"aliases": [],
+"hint": "素色长袖长裤或过膝长裙，不露肩不露膝，安静端庄",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "trip-060",
+"name": "教堂",
+"category": "旅游",
+"aliases": [],
+"hint": "简洁长裙外搭开衫",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "trip-061",
+"name": "清真寺",
+"category": "旅游",
+"aliases": [],
+"hint": "长袖长裙，备好头巾",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "trip-062",
+"name": "陵园祭扫",
+"category": "旅游",
+"aliases": [
+"扫墓",
+"清明"
+],
+"hint": "深色朴素外套配长裤",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "country-001",
+"name": "日本",
+"category": "旅游国家",
+"aliases": [
+"东京",
+"大阪",
+"京都"
+],
+"hint": "樱花季针织开衫配长裙，京都可以租和服",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-002",
+"name": "韩国",
+"category": "旅游国家",
+"aliases": [
+"首尔",
+"釜山"
+],
+"hint": "韩系修身针织配半裙，小白鞋",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-003",
+"name": "新加坡",
+"category": "旅游国家",
+"aliases": [],
+"hint": "轻薄连衣裙，室内备薄开衫",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-004",
+"name": "泰国",
+"category": "旅游国家",
+"aliases": [
+"曼谷",
+"普吉",
+"清迈"
+],
+"hint": "轻薄长裙，进寺庙备长裤和披肩",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-005",
+"name": "越南",
+"category": "旅游国家",
+"aliases": [
+"岘港",
+"河内"
+],
+"hint": "轻薄连衣裙，可以试穿奥黛",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-006",
+"name": "马来西亚",
+"category": "旅游国家",
+"aliases": [
+"吉隆坡",
+"沙巴"
+],
+"hint": "轻薄长袖长裙，进清真寺盖头巾",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-007",
+"name": "印尼巴厘岛",
+"category": "旅游国家",
+"aliases": [
+"巴厘岛",
+"印尼"
+],
+"hint": "热带度假：轻薄长裙/防晒衬衫，草帽墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-008",
+"name": "菲律宾",
+"category": "旅游国家",
+"aliases": [
+"长滩岛"
+],
+"hint": "热带度假：轻薄长裙/防晒衬衫，草帽墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-009",
+"name": "马尔代夫",
+"category": "旅游国家",
+"aliases": [],
+"hint": "飘逸长裙配草帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-010",
+"name": "斯里兰卡",
+"category": "旅游国家",
+"aliases": [],
+"hint": "棉麻长裙，进寺庙光脚、遮肩",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-011",
+"name": "柬埔寨",
+"category": "旅游国家",
+"aliases": [
+"吴哥窟"
+],
+"hint": "长袖长裤，参观吴哥要遮肩遮膝",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-012",
+"name": "老挝",
+"category": "旅游国家",
+"aliases": [],
+"hint": "宽松长裙配披肩",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-013",
+"name": "斐济",
+"category": "旅游国家",
+"aliases": [],
+"hint": "热带度假：轻薄长裙/防晒衬衫，草帽墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-014",
+"name": "大溪地",
+"category": "旅游国家",
+"aliases": [],
+"hint": "热带度假：轻薄长裙/防晒衬衫，草帽墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-015",
+"name": "夏威夷",
+"category": "旅游国家",
+"aliases": [],
+"hint": "碎花长裙，花环",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-016",
+"name": "墨西哥坎昆",
+"category": "旅游国家",
+"aliases": [
+"坎昆",
+"墨西哥"
+],
+"hint": "热带度假：轻薄长裙/防晒衬衫，草帽墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-017",
+"name": "古巴",
+"category": "旅游国家",
+"aliases": [],
+"hint": "复古碎花裙",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-018",
+"name": "巴西",
+"category": "旅游国家",
+"aliases": [
+"里约"
+],
+"hint": "热带度假：轻薄长裙/防晒衬衫，草帽墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-019",
+"name": "毛里求斯",
+"category": "旅游国家",
+"aliases": [],
+"hint": "热带度假：轻薄长裙/防晒衬衫，草帽墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-020",
+"name": "塞舌尔",
+"category": "旅游国家",
+"aliases": [],
+"hint": "热带度假：轻薄长裙/防晒衬衫，草帽墨镜",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.95,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-021",
+"name": "法国",
+"category": "旅游国家",
+"aliases": [
+"巴黎",
+"普罗旺斯"
+],
+"hint": "法式条纹衫配风衣，红唇贝雷帽",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-022",
+"name": "意大利",
+"category": "旅游国家",
+"aliases": [
+"罗马",
+"米兰",
+"威尼斯"
+],
+"hint": "亚麻衬衫配长裙，进教堂遮肩遮膝",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-023",
+"name": "西班牙",
+"category": "旅游国家",
+"aliases": [
+"巴塞罗那",
+"马德里"
+],
+"hint": "亮色连衣裙，草编包",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-024",
+"name": "葡萄牙",
+"category": "旅游国家",
+"aliases": [
+"里斯本"
+],
+"hint": "欧式优雅：风衣/针织配半裙或直筒裤，乐福鞋",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-025",
+"name": "希腊",
+"category": "旅游国家",
+"aliases": [
+"圣托里尼"
+],
+"hint": "白色长裙配草帽，蓝白背景",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-026",
+"name": "英国",
+"category": "旅游国家",
+"aliases": [
+"伦敦"
+],
+"hint": "风衣配格纹围巾，带伞",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-027",
+"name": "爱尔兰",
+"category": "旅游国家",
+"aliases": [],
+"hint": "防风外套配毛衣",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-028",
+"name": "德国",
+"category": "旅游国家",
+"aliases": [
+"柏林"
+],
+"hint": "简约大衣配直筒裤",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-029",
+"name": "奥地利",
+"category": "旅游国家",
+"aliases": [
+"维也纳"
+],
+"hint": "优雅大衣配长裙，听音乐会",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-030",
+"name": "瑞士",
+"category": "旅游国家",
+"aliases": [
+"少女峰"
+],
+"hint": "防风外套配毛衣，山里要保暖",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-031",
+"name": "荷兰",
+"category": "旅游国家",
+"aliases": [
+"阿姆斯特丹"
+],
+"hint": "风衣配牛仔裤，骑车方便",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-032",
+"name": "比利时",
+"category": "旅游国家",
+"aliases": [],
+"hint": "欧式优雅：风衣/针织配半裙或直筒裤，乐福鞋",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-033",
+"name": "捷克",
+"category": "旅游国家",
+"aliases": [
+"布拉格"
+],
+"hint": "复古格纹大衣配长靴",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-034",
+"name": "匈牙利",
+"category": "旅游国家",
+"aliases": [
+"布达佩斯"
+],
+"hint": "欧式优雅：风衣/针织配半裙或直筒裤，乐福鞋",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-035",
+"name": "克罗地亚",
+"category": "旅游国家",
+"aliases": [],
+"hint": "轻薄长裙，海边小镇",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-036",
+"name": "土耳其",
+"category": "旅游国家",
+"aliases": [
+"伊斯坦布尔",
+"卡帕多奇亚"
+],
+"hint": "长裙配丝巾，进清真寺包头遮肩",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-037",
+"name": "俄罗斯",
+"category": "旅游国家",
+"aliases": [
+"莫斯科"
+],
+"hint": "长款大衣配皮帽，保暖",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-038",
+"name": "波兰",
+"category": "旅游国家",
+"aliases": [],
+"hint": "欧式优雅：风衣/针织配半裙或直筒裤，乐福鞋",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-039",
+"name": "丹麦",
+"category": "旅游国家",
+"aliases": [
+"哥本哈根"
+],
+"hint": "欧式优雅：风衣/针织配半裙或直筒裤，乐福鞋",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-040",
+"name": "瑞典",
+"category": "旅游国家",
+"aliases": [],
+"hint": "欧式优雅：风衣/针织配半裙或直筒裤，乐福鞋",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-041",
+"name": "挪威",
+"category": "旅游国家",
+"aliases": [],
+"hint": "防风羽绒配毛线帽",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-042",
+"name": "芬兰",
+"category": "旅游国家",
+"aliases": [],
+"hint": "厚羽绒、毛线帽，雪地靴",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.45,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-043",
+"name": "冰岛",
+"category": "旅游国家",
+"aliases": [],
+"hint": "防风防水外套配抓绒，登山靴，看极光",
+"vec": {
+"formality": 0.2,
+"exposure": 0.1,
+"trendiness": 0.65,
+"sportiness": 0.5,
+"coziness": 0.4,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1,
+"climate": true
+},
+{
+"id": "country-044",
+"name": "南极",
+"category": "旅游国家",
+"aliases": [],
+"hint": "专业极地防寒服",
+"vec": {
+"formality": 0.2,
+"exposure": 0.1,
+"trendiness": 0.65,
+"sportiness": 0.5,
+"coziness": 0.4,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1,
+"climate": true
+},
+{
+"id": "country-045",
+"name": "格陵兰",
+"category": "旅游国家",
+"aliases": [],
+"hint": "极寒保暖：长款羽绒服、毛线帽、围巾手套、雪地靴",
+"vec": {
+"formality": 0.2,
+"exposure": 0.1,
+"trendiness": 0.65,
+"sportiness": 0.5,
+"coziness": 0.4,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1,
+"climate": true
+},
+{
+"id": "country-046",
+"name": "阿拉斯加",
+"category": "旅游国家",
+"aliases": [],
+"hint": "极寒保暖：长款羽绒服、毛线帽、围巾手套、雪地靴",
+"vec": {
+"formality": 0.2,
+"exposure": 0.1,
+"trendiness": 0.65,
+"sportiness": 0.5,
+"coziness": 0.4,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1,
+"climate": true
+},
+{
+"id": "country-047",
+"name": "芬兰拉普兰",
+"category": "旅游国家",
+"aliases": [
+"拉普兰",
+"圣诞老人村"
+],
+"hint": "极寒保暖：长款羽绒服、毛线帽、围巾手套、雪地靴",
+"vec": {
+"formality": 0.2,
+"exposure": 0.1,
+"trendiness": 0.65,
+"sportiness": 0.5,
+"coziness": 0.4,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1,
+"climate": true
+},
+{
+"id": "country-048",
+"name": "加拿大黄刀镇",
+"category": "旅游国家",
+"aliases": [
+"黄刀镇"
+],
+"hint": "极寒保暖：长款羽绒服、毛线帽、围巾手套、雪地靴",
+"vec": {
+"formality": 0.2,
+"exposure": 0.1,
+"trendiness": 0.65,
+"sportiness": 0.5,
+"coziness": 0.4,
+"warmth": 0.05,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 1,
+"climate": true
+},
+{
+"id": "country-049",
+"name": "美国",
+"category": "旅游国家",
+"aliases": [
+"纽约",
+"洛杉矶"
+],
+"hint": "纽约大衣配牛仔裤，洛杉矶T恤配短裙",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-050",
+"name": "加拿大",
+"category": "旅游国家",
+"aliases": [
+"温哥华",
+"多伦多"
+],
+"hint": "格纹衬衫配防风外套",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-051",
+"name": "澳大利亚",
+"category": "旅游国家",
+"aliases": [
+"悉尼",
+"墨尔本"
+],
+"hint": "防晒衬衫配短裤",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-052",
+"name": "新西兰",
+"category": "旅游国家",
+"aliases": [
+"皇后镇"
+],
+"hint": "冲锋衣配运动裤，户外",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-053",
+"name": "阿根廷",
+"category": "旅游国家",
+"aliases": [],
+"hint": "都市休闲：牛仔外套/卫衣配直筒裤，球鞋",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-054",
+"name": "智利",
+"category": "旅游国家",
+"aliases": [],
+"hint": "都市休闲：牛仔外套/卫衣配直筒裤，球鞋",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-055",
+"name": "秘鲁",
+"category": "旅游国家",
+"aliases": [
+"马丘比丘"
+],
+"hint": "户外冲锋衣配徒步鞋",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-056",
+"name": "南非",
+"category": "旅游国家",
+"aliases": [
+"开普敦"
+],
+"hint": "都市休闲：牛仔外套/卫衣配直筒裤，球鞋",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-057",
+"name": "中国香港",
+"category": "旅游国家",
+"aliases": [
+"香港"
+],
+"hint": "都市感修身穿搭，轻薄",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-058",
+"name": "中国澳门",
+"category": "旅游国家",
+"aliases": [
+"澳门"
+],
+"hint": "都市休闲：牛仔外套/卫衣配直筒裤，球鞋",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-059",
+"name": "中国台湾",
+"category": "旅游国家",
+"aliases": [
+"台湾",
+"台北",
+"垦丁"
+],
+"hint": "清爽T恤配牛仔短裙",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-060",
+"name": "阿联酋迪拜",
+"category": "旅游国家",
+"aliases": [
+"迪拜",
+"阿联酋"
+],
+"hint": "长袖长裙配丝巾，奢华但保守",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.8,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0,
+"climate": true
+},
+{
+"id": "country-061",
+"name": "沙特",
+"category": "旅游国家",
+"aliases": [],
+"hint": "长袖长裙或长裤，遮肩遮膝，备头巾",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.8,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0,
+"climate": true
+},
+{
+"id": "country-062",
+"name": "卡塔尔",
+"category": "旅游国家",
+"aliases": [],
+"hint": "长袖长裙或长裤，遮肩遮膝，备头巾",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.8,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0,
+"climate": true
+},
+{
+"id": "country-063",
+"name": "摩洛哥",
+"category": "旅游国家",
+"aliases": [
+"马拉喀什"
+],
+"hint": "长袖长裙，色彩鲜艳的头巾",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.8,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0,
+"climate": true
+},
+{
+"id": "country-064",
+"name": "埃及",
+"category": "旅游国家",
+"aliases": [
+"金字塔"
+],
+"hint": "宽松亚麻长袖长裙，防晒帽",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.8,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0,
+"climate": true
+},
+{
+"id": "country-065",
+"name": "约旦",
+"category": "旅游国家",
+"aliases": [
+"佩特拉"
+],
+"hint": "长袖长裙或长裤，遮肩遮膝，备头巾",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.8,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0,
+"climate": true
+},
+{
+"id": "country-066",
+"name": "伊朗",
+"category": "旅游国家",
+"aliases": [],
+"hint": "长袖长裙或长裤，遮肩遮膝，备头巾",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.8,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0,
+"climate": true
+},
+{
+"id": "country-067",
+"name": "印度",
+"category": "旅游国家",
+"aliases": [],
+"hint": "长袖长裙或纱丽式长裙，遮肩",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.8,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0,
+"climate": true
+},
+{
+"id": "country-068",
+"name": "尼泊尔",
+"category": "旅游国家",
+"aliases": [],
+"hint": "长裙配披肩，徒步要冲锋衣",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.8,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0,
+"climate": true
+},
+{
+"id": "country-069",
+"name": "不丹",
+"category": "旅游国家",
+"aliases": [],
+"hint": "长袖长裙或长裤，遮肩遮膝，备头巾",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.8,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0,
+"climate": true
+},
+{
+"id": "country-070",
+"name": "梵蒂冈",
+"category": "旅游国家",
+"aliases": [],
+"hint": "遮肩遮膝的素色长裙",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.8,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0,
+"climate": true
+},
+{
+"id": "country-071",
+"name": "以色列",
+"category": "旅游国家",
+"aliases": [],
+"hint": "长袖长裙或长裤，遮肩遮膝，备头巾",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.8,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0,
+"climate": true
+},
+{
+"id": "country-072",
+"name": "肯尼亚",
+"category": "旅游国家",
+"aliases": [
+"动物大迁徙",
+"safari"
+],
+"hint": "卡其色防晒衬衫配长裤，宽檐帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-073",
+"name": "坦桑尼亚",
+"category": "旅游国家",
+"aliases": [],
+"hint": "草原户外：防晒长袖、长裤、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-074",
+"name": "蒙古国",
+"category": "旅游国家",
+"aliases": [
+"蒙古"
+],
+"hint": "防风外套配长裙，草原",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-075",
+"name": "哈萨克斯坦",
+"category": "旅游国家",
+"aliases": [],
+"hint": "草原户外：防晒长袖、长裤、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "country-076",
+"name": "格鲁吉亚",
+"category": "旅游国家",
+"aliases": [],
+"hint": "草原户外：防晒长袖、长裤、帽子",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2,
+"climate": true
+},
+{
+"id": "spot-001",
+"name": "三里屯",
+"category": "旅游景点",
+"aliases": [
+"太古里"
+],
+"hint": "潮流时髦的出街一身，外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-002",
+"name": "工体",
+"category": "旅游景点",
+"aliases": [
+"工人体育场"
+],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-003",
+"name": "国贸",
+"category": "旅游景点",
+"aliases": [
+"CBD"
+],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-004",
+"name": "外滩",
+"category": "旅游景点",
+"aliases": [],
+"hint": "风衣配连衣裙，夜景出片",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-005",
+"name": "南京路",
+"category": "旅游景点",
+"aliases": [],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-006",
+"name": "新天地",
+"category": "旅游景点",
+"aliases": [],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-007",
+"name": "武康路",
+"category": "旅游景点",
+"aliases": [
+"安福路"
+],
+"hint": "法式衬衫配半裙",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-008",
+"name": "太古里成都",
+"category": "旅游景点",
+"aliases": [
+"春熙路",
+"成都太古里"
+],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-009",
+"name": "解放碑",
+"category": "旅游景点",
+"aliases": [
+"洪崖洞"
+],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-010",
+"name": "天河",
+"category": "旅游景点",
+"aliases": [
+"珠江新城"
+],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-011",
+"name": "广州塔",
+"category": "旅游景点",
+"aliases": [
+"小蛮腰"
+],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-012",
+"name": "深圳湾",
+"category": "旅游景点",
+"aliases": [
+"欢乐海岸"
+],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-013",
+"name": "西湖夜游",
+"category": "旅游景点",
+"aliases": [],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-014",
+"name": "秦淮河",
+"category": "旅游景点",
+"aliases": [
+"夫子庙"
+],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-015",
+"name": "五道营胡同",
+"category": "旅游景点",
+"aliases": [
+"五道营"
+],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-016",
+"name": "鼓楼大街",
+"category": "旅游景点",
+"aliases": [
+"鼓楼"
+],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-017",
+"name": "蓝色港湾",
+"category": "旅游景点",
+"aliases": [
+"蓝港"
+],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-018",
+"name": "合生汇",
+"category": "旅游景点",
+"aliases": [],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-019",
+"name": "东京涩谷",
+"category": "旅游景点",
+"aliases": [
+"涩谷",
+"原宿"
+],
+"hint": "日系街头潮流穿搭",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-020",
+"name": "首尔明洞",
+"category": "旅游景点",
+"aliases": [
+"明洞",
+"弘大"
+],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-021",
+"name": "时代广场",
+"category": "旅游景点",
+"aliases": [],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-022",
+"name": "香港尖沙咀",
+"category": "旅游景点",
+"aliases": [
+"尖沙咀",
+"维港"
+],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-023",
+"name": "澳门威尼斯人",
+"category": "旅游景点",
+"aliases": [],
+"hint": "城市夜晚出街：时髦外套配短裙或阔腿裤，精致妆发",
+"vec": {
+"formality": 0.3,
+"exposure": 0.6,
+"trendiness": 0.95,
+"sportiness": 0.15,
+"coziness": 0.15,
+"warmth": 0.55,
+"outdoor": 0.2,
+"water": 0.0
+},
+"cap": 3
+},
+{
+"id": "spot-024",
+"name": "故宫",
+"category": "旅游景点",
+"aliases": [
+"紫禁城"
+],
+"hint": "新中式上衣配长裙，红墙出片",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-025",
+"name": "颐和园",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-026",
+"name": "天坛",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-027",
+"name": "圆明园",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-028",
+"name": "景山",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-029",
+"name": "北海公园",
+"category": "旅游景点",
+"aliases": [
+"北海"
+],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-030",
+"name": "什刹海",
+"category": "旅游景点",
+"aliases": [
+"后海"
+],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-031",
+"name": "南锣鼓巷",
+"category": "旅游景点",
+"aliases": [
+"南锣"
+],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-032",
+"name": "前门",
+"category": "旅游景点",
+"aliases": [
+"大栅栏"
+],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-033",
+"name": "恭王府",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-034",
+"name": "雍和宫",
+"category": "旅游景点",
+"aliases": [],
+"hint": "素色长袖长裙，安静端庄",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-035",
+"name": "西安城墙",
+"category": "旅游景点",
+"aliases": [
+"西安",
+"城墙",
+"大唐不夜城"
+],
+"hint": "唐风汉服或长裙",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-036",
+"name": "兵马俑",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-037",
+"name": "苏州园林",
+"category": "旅游景点",
+"aliases": [
+"苏州",
+"拙政园"
+],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-038",
+"name": "乌镇",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-039",
+"name": "周庄",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-040",
+"name": "西塘",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-041",
+"name": "婺源",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-042",
+"name": "宏村",
+"category": "旅游景点",
+"aliases": [
+"徽派"
+],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-043",
+"name": "平遥古城",
+"category": "旅游景点",
+"aliases": [
+"平遥"
+],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-044",
+"name": "丽江古城",
+"category": "旅游景点",
+"aliases": [
+"丽江"
+],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-045",
+"name": "凤凰古城",
+"category": "旅游景点",
+"aliases": [
+"凤凰"
+],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-046",
+"name": "大理古城",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-047",
+"name": "鼓浪屿",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-048",
+"name": "洪崖洞夜景",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-049",
+"name": "宽窄巷子",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-050",
+"name": "武侯祠",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-051",
+"name": "黄鹤楼",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-052",
+"name": "岳阳楼",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-053",
+"name": "滕王阁",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-054",
+"name": "京都清水寺",
+"category": "旅游景点",
+"aliases": [
+"清水寺",
+"京都古街"
+],
+"hint": "和服或素雅长裙",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-055",
+"name": "奈良",
+"category": "旅游景点",
+"aliases": [
+"喂鹿"
+],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-056",
+"name": "浅草寺",
+"category": "旅游景点",
+"aliases": [
+"浅草"
+],
+"hint": "浴衣或和服体验",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-057",
+"name": "景福宫",
+"category": "旅游景点",
+"aliases": [],
+"hint": "韩服体验",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-058",
+"name": "吴哥窟景区",
+"category": "旅游景点",
+"aliases": [],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-059",
+"name": "卢浮宫",
+"category": "旅游景点",
+"aliases": [],
+"hint": "法式衬衫配长裙",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-060",
+"name": "罗马斗兽场",
+"category": "旅游景点",
+"aliases": [
+"斗兽场"
+],
+"hint": "新中式或素雅长裙，平底鞋",
+"vec": {
+"formality": 0.35,
+"exposure": 0.3,
+"trendiness": 0.75,
+"sportiness": 0.25,
+"coziness": 0.3,
+"warmth": 0.55,
+"outdoor": 0.9,
+"water": 0.0
+},
+"cap": 1
+},
+{
+"id": "spot-061",
+"name": "长城",
+"category": "旅游景点",
+"aliases": [
+"八达岭",
+"慕田峪"
+],
+"hint": "运动外套配直筒裤，运动鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-062",
+"name": "香山红叶",
+"category": "旅游景点",
+"aliases": [
+"香山公园"
+],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-063",
+"name": "泰山",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-064",
+"name": "黄山",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-065",
+"name": "华山",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-066",
+"name": "峨眉山",
+"category": "旅游景点",
+"aliases": [
+"峨眉"
+],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-067",
+"name": "张家界",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-068",
+"name": "九寨沟",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-069",
+"name": "桂林山水",
+"category": "旅游景点",
+"aliases": [
+"桂林",
+"阳朔",
+"漓江"
+],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-070",
+"name": "西湖",
+"category": "旅游景点",
+"aliases": [
+"杭州"
+],
+"hint": "温柔长裙配开衫",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-071",
+"name": "千岛湖",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-072",
+"name": "洱海",
+"category": "旅游景点",
+"aliases": [
+"大理"
+],
+"hint": "飘逸长裙配草帽，骑车环湖",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-073",
+"name": "泸沽湖",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-074",
+"name": "香格里拉",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-075",
+"name": "稻城亚丁",
+"category": "旅游景点",
+"aliases": [
+"稻城",
+"亚丁"
+],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-076",
+"name": "青海湖",
+"category": "旅游景点",
+"aliases": [],
+"hint": "红色长裙配防风外套",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-077",
+"name": "茶卡盐湖",
+"category": "旅游景点",
+"aliases": [
+"茶卡",
+"天空之镜"
+],
+"hint": "红色或白色长裙，出片",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-078",
+"name": "敦煌莫高窟",
+"category": "旅游景点",
+"aliases": [
+"敦煌",
+"鸣沙山"
+],
+"hint": "长袖长裙配纱巾，防晒",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-079",
+"name": "喀纳斯",
+"category": "旅游景点",
+"aliases": [
+"新疆"
+],
+"hint": "民族风长裙配外套",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-080",
+"name": "赛里木湖",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-081",
+"name": "呼伦贝尔",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-082",
+"name": "坝上草原",
+"category": "旅游景点",
+"aliases": [
+"坝上"
+],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-083",
+"name": "武功山",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-084",
+"name": "黄果树瀑布",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-085",
+"name": "三峡",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-086",
+"name": "富士山",
+"category": "旅游景点",
+"aliases": [],
+"hint": "防风外套配针织，富士山下出片",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-087",
+"name": "北海道",
+"category": "旅游景点",
+"aliases": [
+"小樽"
+],
+"hint": "长款大衣配毛线帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-088",
+"name": "镰仓",
+"category": "旅游景点",
+"aliases": [],
+"hint": "清新白衬衫配半裙",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-089",
+"name": "济州岛",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-090",
+"name": "瑞士少女峰景区",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-091",
+"name": "大峡谷",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-092",
+"name": "黄石公园",
+"category": "旅游景点",
+"aliases": [
+"黄石"
+],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-093",
+"name": "班夫",
+"category": "旅游景点",
+"aliases": [
+"路易斯湖"
+],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-094",
+"name": "尼亚加拉瀑布",
+"category": "旅游景点",
+"aliases": [],
+"hint": "户外景区装：防晒外套、长裤或长裙、好走的鞋",
+"vec": {
+"formality": 0.1,
+"exposure": 0.3,
+"trendiness": 0.55,
+"sportiness": 0.65,
+"coziness": 0.3,
+"warmth": 0.5,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-095",
+"name": "三亚",
+"category": "旅游景点",
+"aliases": [
+"亚龙湾",
+"海南"
+],
+"hint": "飘逸长裙配草帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "spot-096",
+"name": "涠洲岛",
+"category": "旅游景点",
+"aliases": [],
+"hint": "海边度假：长裙或防晒衬衫配短裤，草帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "spot-097",
+"name": "厦门海边",
+"category": "旅游景点",
+"aliases": [
+"厦门",
+"环岛路"
+],
+"hint": "海边度假：长裙或防晒衬衫配短裤，草帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "spot-098",
+"name": "青岛",
+"category": "旅游景点",
+"aliases": [
+"八大关"
+],
+"hint": "海军风条纹衫配半裙",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "spot-099",
+"name": "北戴河",
+"category": "旅游景点",
+"aliases": [
+"阿那亚"
+],
+"hint": "白色长裙，海边教堂出片",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "spot-100",
+"name": "大连",
+"category": "旅游景点",
+"aliases": [
+"星海广场"
+],
+"hint": "海边度假：长裙或防晒衬衫配短裤，草帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "spot-101",
+"name": "平潭",
+"category": "旅游景点",
+"aliases": [],
+"hint": "海边度假：长裙或防晒衬衫配短裤，草帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "spot-102",
+"name": "南澳岛",
+"category": "旅游景点",
+"aliases": [],
+"hint": "海边度假：长裙或防晒衬衫配短裤，草帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "spot-103",
+"name": "冲绳",
+"category": "旅游景点",
+"aliases": [],
+"hint": "海边度假：长裙或防晒衬衫配短裤，草帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "spot-104",
+"name": "圣托里尼景区",
+"category": "旅游景点",
+"aliases": [
+"伊亚",
+"蓝顶教堂"
+],
+"hint": "海边度假：长裙或防晒衬衫配短裤，草帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "spot-105",
+"name": "巴厘岛海神庙",
+"category": "旅游景点",
+"aliases": [],
+"hint": "海边度假：长裙或防晒衬衫配短裤，草帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "spot-106",
+"name": "普吉岛海滩",
+"category": "旅游景点",
+"aliases": [],
+"hint": "海边度假：长裙或防晒衬衫配短裤，草帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "spot-107",
+"name": "长滩岛白沙滩",
+"category": "旅游景点",
+"aliases": [],
+"hint": "海边度假：长裙或防晒衬衫配短裤，草帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "spot-108",
+"name": "黄金海岸",
+"category": "旅游景点",
+"aliases": [],
+"hint": "海边度假：长裙或防晒衬衫配短裤，草帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "spot-109",
+"name": "马尔代夫水屋",
+"category": "旅游景点",
+"aliases": [],
+"hint": "海边度假：长裙或防晒衬衫配短裤，草帽",
+"vec": {
+"formality": 0.1,
+"exposure": 0.6,
+"trendiness": 0.75,
+"sportiness": 0.4,
+"coziness": 0.3,
+"warmth": 0.9,
+"outdoor": 1.0,
+"water": 0.7
+},
+"cap": 3
+},
+{
+"id": "spot-110",
+"name": "北京环球影城景区",
+"category": "旅游景点",
+"aliases": [
+"北京环球"
+],
+"hint": "游玩装：舒服的鞋，小背包，防晒",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-111",
+"name": "上海迪士尼",
+"category": "旅游景点",
+"aliases": [],
+"hint": "游玩装：舒服的鞋，小背包，防晒",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-112",
+"name": "香港迪士尼",
+"category": "旅游景点",
+"aliases": [],
+"hint": "游玩装：舒服的鞋，小背包，防晒",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-113",
+"name": "东京迪士尼",
+"category": "旅游景点",
+"aliases": [],
+"hint": "游玩装：舒服的鞋，小背包，防晒",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-114",
+"name": "大阪环球影城",
+"category": "旅游景点",
+"aliases": [
+"日本环球"
+],
+"hint": "游玩装：舒服的鞋，小背包，防晒",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-115",
+"name": "长隆",
+"category": "旅游景点",
+"aliases": [],
+"hint": "游玩装：舒服的鞋，小背包，防晒",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-116",
+"name": "欢乐谷景区",
+"category": "旅游景点",
+"aliases": [],
+"hint": "游玩装：舒服的鞋，小背包，防晒",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-117",
+"name": "奥林匹克公园",
+"category": "旅游景点",
+"aliases": [
+"鸟巢",
+"水立方",
+"奥森"
+],
+"hint": "游玩装：舒服的鞋，小背包，防晒",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-118",
+"name": "奥森跑步",
+"category": "旅游景点",
+"aliases": [],
+"hint": "运动外套配运动裤，跑鞋",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-119",
+"name": "朝阳公园",
+"category": "旅游景点",
+"aliases": [],
+"hint": "游玩装：舒服的鞋，小背包，防晒",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-120",
+"name": "玉渊潭",
+"category": "旅游景点",
+"aliases": [],
+"hint": "浅色碎花裙，看樱花",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-121",
+"name": "中央公园",
+"category": "旅游景点",
+"aliases": [],
+"hint": "游玩装：舒服的鞋，小背包，防晒",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-122",
+"name": "东京塔",
+"category": "旅游景点",
+"aliases": [
+"晴空塔"
+],
+"hint": "游玩装：舒服的鞋，小背包，防晒",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-123",
+"name": "埃菲尔铁塔",
+"category": "旅游景点",
+"aliases": [
+"巴黎铁塔"
+],
+"hint": "法式风衣配贝雷帽",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-124",
+"name": "伦敦眼",
+"category": "旅游景点",
+"aliases": [],
+"hint": "游玩装：舒服的鞋，小背包，防晒",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-125",
+"name": "自由女神像",
+"category": "旅游景点",
+"aliases": [],
+"hint": "游玩装：舒服的鞋，小背包，防晒",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-126",
+"name": "悉尼歌剧院",
+"category": "旅游景点",
+"aliases": [
+"歌剧院"
+],
+"hint": "游玩装：舒服的鞋，小背包，防晒",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2
+},
+{
+"id": "spot-127",
+"name": "灵隐寺",
+"category": "旅游景点",
+"aliases": [],
+"hint": "素色长袖长裙配平底鞋",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "spot-128",
+"name": "少林寺",
+"category": "旅游景点",
+"aliases": [],
+"hint": "素色长袖长裙，不露肩不露膝，安静端庄",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "spot-129",
+"name": "布达拉宫",
+"category": "旅游景点",
+"aliases": [
+"拉萨"
+],
+"hint": "长袖长裙配防晒外套，高原注意保暖",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "spot-130",
+"name": "大昭寺",
+"category": "旅游景点",
+"aliases": [],
+"hint": "素色长袖长裙，不露肩不露膝，安静端庄",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "spot-131",
+"name": "乐山大佛",
+"category": "旅游景点",
+"aliases": [],
+"hint": "素色长袖长裙，不露肩不露膝，安静端庄",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "spot-132",
+"name": "普陀山",
+"category": "旅游景点",
+"aliases": [],
+"hint": "素色长袖长裙，不露肩不露膝，安静端庄",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "spot-133",
+"name": "五台山",
+"category": "旅游景点",
+"aliases": [],
+"hint": "素色长袖长裙，不露肩不露膝，安静端庄",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "spot-134",
+"name": "武当山",
+"category": "旅游景点",
+"aliases": [
+"武当"
+],
+"hint": "素色长袖长裙，不露肩不露膝，安静端庄",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "spot-135",
+"name": "泰姬陵",
+"category": "旅游景点",
+"aliases": [],
+"hint": "素色长袖长裙，不露肩不露膝，安静端庄",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "spot-136",
+"name": "大皇宫",
+"category": "旅游景点",
+"aliases": [
+"曼谷大皇宫"
+],
+"hint": "素色长袖长裙，不露肩不露膝，安静端庄",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "spot-137",
+"name": "圣彼得大教堂",
+"category": "旅游景点",
+"aliases": [],
+"hint": "素色长袖长裙，不露肩不露膝，安静端庄",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "spot-138",
+"name": "巴黎圣母院",
+"category": "旅游景点",
+"aliases": [],
+"hint": "素色长袖长裙，不露肩不露膝，安静端庄",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "spot-139",
+"name": "谢赫扎耶德清真寺",
+"category": "旅游景点",
+"aliases": [
+"扎耶德"
+],
+"hint": "长袖长裙配头巾",
+"vec": {
+"formality": 0.7,
+"exposure": 0.0,
+"trendiness": 0.4,
+"sportiness": 0.2,
+"coziness": 0.2,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 0
+},
+{
+"id": "work-001",
+"name": "影视公司工作间",
+"category": "实习工作",
+"aliases": [
+"分镜讨论",
+"看片会",
+"素材备份"
+],
+"hint": "利落衬衫或针织衫配长裤、平底鞋，便于工作",
+"vec": {
+"formality": 0.2,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.3,
+"coziness": 0.35,
+"warmth": 0.55,
+"outdoor": 0.3,
+"water": 0.0
+},
+"cap": 2,
+"scene_queries": [
+"影视公司 剪辑室 空景",
+"视频剪辑 工作室 电脑 桌面"
+]
+},
+{
+"id": "work-002",
+"name": "实习外出对接",
+"category": "实习工作",
+"aliases": [
+"器材交接",
+"道具交接",
+"场地对接"
+],
+"hint": "便于走动的外套长裤、运动鞋、小背包；按季节保暖",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2,
+"scene_queries": [
+"摄影器材租赁店 内景",
+"影视道具仓库 货架"
+]
+},
+{
+"id": "work-003",
+"name": "室外取景踩点",
+"category": "实习工作",
+"aliases": [
+"取景器",
+"记录光线",
+"环境声",
+"取景踩点"
+],
+"hint": "便于走动的外套长裤、运动鞋、小背包；按季节保暖",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2,
+"scene_queries": [
+"北京 东四胡同 街道 实拍",
+"北京 亮马河 河岸 步道"
+]
+},
+{
+"id": "work-004",
+"name": "外景跟组",
+"category": "实习工作",
+"aliases": [
+"外景片场",
+"场记板",
+"机位记录"
+],
+"hint": "便于走动的外套长裤、运动鞋、小背包；按季节保暖",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2,
+"scene_queries": [
+"电影摄影机 三脚架 外景 片场",
+"影视拍摄 外景 监视器"
+]
+},
+{
+"id": "work-005",
+"name": "实习出差交通",
+"category": "实习工作",
+"aliases": [
+"高铁车厢",
+"出差候车",
+"返京接驳"
+],
+"hint": "舒适通勤外套配长裤和平底鞋，小背包；不按度假穿搭",
+"vec": {
+"formality": 0.3,
+"exposure": 0.45,
+"trendiness": 0.85,
+"sportiness": 0.3,
+"coziness": 0.25,
+"warmth": 0.55,
+"outdoor": 0.8,
+"water": 0.0
+},
+"cap": 2,
+"scene_queries": [
+"高铁 车厢 座位 无人",
+"高铁 车窗 内景"
+]
+},
+{
+"id": "work-006",
+"name": "天津海河取景",
+"category": "实习工作",
+"aliases": [
+"天津海河沿线",
+"天津外景"
+],
+"hint": "耐走的长裤和平底鞋、便携外套和背包，外景工作穿搭",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2,
+"scene_queries": [
+"天津 海河 河岸 实拍",
+"天津 五大道 街道 实拍"
+]
+},
+{
+"id": "work-007",
+"name": "杭州运河取景",
+"category": "实习工作",
+"aliases": [
+"杭州运河沿线",
+"杭州外景"
+],
+"hint": "耐走的长裤和平底鞋、便携外套和背包，外景工作穿搭",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2,
+"scene_queries": [
+"杭州 京杭大运河 拱宸桥 实拍",
+"杭州 运河 河岸 步道"
+]
+},
+{
+"id": "work-008",
+"name": "上海滨江取景",
+"category": "实习工作",
+"aliases": [
+"杨浦滨江",
+"徐汇滨江",
+"上海外景"
+],
+"hint": "耐走的长裤和平底鞋、便携外套和背包，外景工作穿搭",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2,
+"scene_queries": [
+"上海 杨浦滨江 步道 实拍",
+"上海 徐汇滨江 河岸"
+]
+},
+{
+"id": "work-009",
+"name": "青岛海边取景",
+"category": "实习工作",
+"aliases": [
+"青岛海滨步道",
+"青岛外景"
+],
+"hint": "耐走的长裤和平底鞋、便携外套和背包，外景工作穿搭",
+"vec": {
+"formality": 0.15,
+"exposure": 0.4,
+"trendiness": 0.7,
+"sportiness": 0.5,
+"coziness": 0.25,
+"warmth": 0.6,
+"outdoor": 1.0,
+"water": 0.0
+},
+"cap": 2,
+"scene_queries": [
+"青岛 八大关 街道 实拍",
+"青岛 海滨步道 实拍"
+]
+},
+{
+"id": "night-001",
+"name": "海淀商场晚间小店",
+"category": "晚间生活",
+"aliases": [
+"海淀商场晚间小店",
+"试穿外套，和室友互相挑颜色",
+"逛文创小店挑明信片和贴纸",
+"逛饰品店试发夹和耳饰",
+"去生活杂货店挑杯子和收纳盒",
+"逛鞋包店，看完橱窗再歇脚"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 0,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"商场 服装店 试衣镜 空景",
+"文创 商店 内景 无人"
+]
+},
+{
+"id": "night-002",
+"name": "海淀街区灯光夜景",
+"category": "晚间生活",
+"aliases": [
+"海淀街区灯光夜景",
+"看临街橱窗灯光，拍玻璃倒影",
+"在开阔街口看车流，试拍长曝光",
+"看城市楼宇亮灯，找冷暖色对比",
+"沿亮灯步道看夜色，坐一会儿",
+"在室内临窗座位看街景亮起来"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 1,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"北京 街道 夜景 路灯 无人",
+"城市 橱窗 夜景 倒影"
+]
+},
+{
+"id": "night-003",
+"name": "KTV包间合唱间隙",
+"category": "晚间生活",
+"aliases": [
+"KTV包间合唱间隙",
+"和室友轮流唱拿手歌，中途歇嗓子",
+"跟同学挑战双人合唱，笑场后重来",
+"和室友唱老歌，挑一首粤语歌",
+"练音乐剧选段，唱完聊哪里跑调",
+"随心点几首轻松的歌，不拼高音",
+"唱慢歌，试着把一句歌词唱清楚"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 0,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"KTV 包间 话筒 沙发 无人 实拍",
+"KTV 包厢 内景 空景"
+]
+},
+{
+"id": "night-004",
+"name": "电影院散场大厅",
+"category": "晚间生活",
+"aliases": [
+"电影院散场大厅",
+"和同学看喜剧，散场聊最喜欢的桥段",
+"看一部动画，留意色彩和人物动作",
+"看剧情片，散场讨论人物选择",
+"看悬疑片，散场互相猜结尾",
+"看纪录片，散场记两笔镜头想法",
+"看经典重映，留意服装和布景"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 0,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"电影院 大厅 散场 无人",
+"电影院 检票口 走廊 空景"
+]
+},
+{
+"id": "night-005",
+"name": "晚间桌游手作小店",
+"category": "晚间生活",
+"aliases": [
+"晚间桌游手作小店",
+"和同学玩两局轻桌游，结束聊离谱操作",
+"做小串珠或钥匙扣，给成品拍照",
+"拼一个小模型，边拼边聊天",
+"做简单纸艺，挑配色拍完成品",
+"和室友画速写小卡，互相吐槽画风"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 0,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"桌游店 桌面 卡牌 无人",
+"手工 工作室 串珠 桌面"
+]
+},
+{
+"id": "night-006",
+"name": "校园路灯下短暂停留",
+"category": "晚间生活",
+"aliases": [
+"校园路灯下短暂停留",
+"饭后在校园走一小圈，路灯下歇脚",
+"绕宿舍附近透透气，拍一片树影"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 1,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"北京舞蹈学院 校园 夜景",
+"北京舞蹈学院 路灯"
+]
+},
+{
+"id": "night-007",
+"name": "城市夜景取景记录",
+"category": "晚间生活",
+"aliases": [
+"城市夜景取景记录",
+"记录路灯色温与人行道光影，整理机位备注",
+"拍橱窗倒影空镜，收工核对素材",
+"记录安全街角的环境声，拍固定机位空镜",
+"协助夜景外拍，间隙记录机位与补光位置",
+"拍楼宇灯光过渡，收工备份空镜素材",
+"夜间取景勘察，记噪声与灯光变化"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 1,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"电影 拍摄 夜景 外景 三脚架",
+"夜景 街道 拍摄 摄影机"
+]
+},
+{
+"id": "night-008",
+"name": "服装店试衣镜",
+"category": "晚间生活",
+"aliases": [
+"服装店试衣镜",
+"试穿外套，和室友互相挑颜色",
+"逛鞋包店，看完橱窗再歇脚",
+"选围巾配色，不买重复款"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 0,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"服装店 试衣镜 衣架 空景",
+"服装店 试衣镜 衣架 空景 实拍"
+]
+},
+{
+"id": "night-009",
+"name": "文具文创明信片架",
+"category": "晚间生活",
+"aliases": [
+"文具文创明信片架",
+"逛文创小店挑明信片和贴纸",
+"逛文具店试笔，补一支分镜笔"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 0,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"文具店 明信片 贴纸 陈列",
+"文具店 明信片 贴纸 陈列 实拍"
+]
+},
+{
+"id": "night-010",
+"name": "饰品柜台发夹耳饰",
+"category": "晚间生活",
+"aliases": [
+"饰品柜台发夹耳饰",
+"逛饰品店试发夹和耳饰",
+"看小发圈和鲨鱼夹，试扎低丸子"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 0,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"饰品店 发夹 耳饰 陈列 台镜",
+"饰品店 发夹 耳饰 陈列 台镜 实拍"
+]
+},
+{
+"id": "night-011",
+"name": "生活杂货杯子收纳",
+"category": "晚间生活",
+"aliases": [
+"生活杂货杯子收纳",
+"去生活杂货店挑杯子和收纳盒",
+"看帆布包和小零钱袋"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 0,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"生活杂货店 杯子 收纳盒 货架",
+"生活杂货店 杯子 收纳盒 货架 实拍"
+]
+},
+{
+"id": "night-012",
+"name": "夜间橱窗玻璃倒影",
+"category": "晚间生活",
+"aliases": [
+"夜间橱窗玻璃倒影",
+"看临街橱窗灯光，拍玻璃倒影",
+"拍橱窗倒影空镜，收工核对素材",
+"看雨后橱窗反光，只走亮灯路段",
+"逛亮灯街角，找一对互补色招牌"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 1,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"夜晚 橱窗 玻璃 倒影 街道",
+"夜晚 橱窗 玻璃 倒影 街道 实拍"
+]
+},
+{
+"id": "night-013",
+"name": "夜间步道车流光影",
+"category": "晚间生活",
+"aliases": [
+"夜间步道车流光影",
+"在开阔街口看车流，试拍长曝光",
+"看城市楼宇亮灯，找冷暖色对比",
+"沿亮灯步道看夜色，坐一会儿",
+"用手机试一组路灯散景"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 1,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"北京 夜晚 人行道 路灯 车流",
+"北京 夜晚 人行道 路灯 车流 实拍"
+]
+},
+{
+"id": "night-014",
+"name": "临窗热饮夜景",
+"category": "晚间生活",
+"aliases": [
+"临窗热饮夜景",
+"在室内临窗座位看街景亮起来",
+"坐窗边画三格夜景分镜"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 0,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"咖啡店 窗边 夜景 无人",
+"咖啡店 窗边 夜景 无人 实拍"
+]
+},
+{
+"id": "night-015",
+"name": "KTV话筒点歌桌面",
+"category": "晚间生活",
+"aliases": [
+"KTV话筒点歌桌面",
+"跟同学挑战双人合唱，笑场后重来",
+"和室友唱老歌，挑一首粤语歌",
+"各选一首电影插曲轮流唱",
+"和室友做三首歌的小歌单"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 0,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"KTV 话筒 桌面 包厢 无人",
+"KTV 话筒 桌面 包厢 无人 实拍"
+]
+},
+{
+"id": "night-016",
+"name": "桌游模型木桌",
+"category": "晚间生活",
+"aliases": [
+"桌游模型木桌",
+"和同学玩两局轻桌游，结束聊离谱操作",
+"拼一个小模型，边拼边聊天",
+"试一款两人合作桌游"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 0,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"桌游店 卡牌 桌面 无人",
+"桌游店 卡牌 桌面 无人 实拍"
+]
+},
+{
+"id": "night-017",
+"name": "串珠托盘挂件手作",
+"category": "晚间生活",
+"aliases": [
+"串珠托盘挂件手作",
+"做小串珠或钥匙扣，给成品拍照",
+"串一个蓝白配色钥匙扣"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 0,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"串珠 手工 托盘 桌面",
+"串珠 手工 托盘 桌面 实拍"
+]
+},
+{
+"id": "night-018",
+"name": "纸艺速写小卡桌面",
+"category": "晚间生活",
+"aliases": [
+"纸艺速写小卡桌面",
+"做简单纸艺，挑配色拍完成品",
+"和室友画速写小卡，互相吐槽画风",
+"做一张拼贴书签",
+"画一张热饮杯小速写"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 0,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"手工 彩纸 彩铅 桌面",
+"手工 彩纸 彩铅 桌面 实拍"
+]
+},
+{
+"id": "night-019",
+"name": "影院检票走廊",
+"category": "晚间生活",
+"aliases": [
+"影院检票走廊",
+"看一部动画，留意色彩和人物动作",
+"看悬疑片，散场互相猜结尾",
+"看歌舞片，留意一段舞蹈长镜头",
+"看一部轻松剧情片，散场聊配乐"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 0,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"电影院 检票口 走廊 无人",
+"电影院 检票口 走廊 无人 实拍"
+]
+},
+{
+"id": "night-020",
+"name": "夜间外拍器材",
+"category": "晚间生活",
+"aliases": [
+"夜间外拍器材",
+"记录安全街角的环境声，拍固定机位空镜",
+"协助夜景外拍，间隙记录机位与补光位置",
+"拍三种景别的夜间街角空镜"
+],
+"hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+"vec": {
+"formality": 0.2,
+"exposure": 0.25,
+"trendiness": 0.6,
+"sportiness": 0.15,
+"coziness": 0.5,
+"warmth": 0.5,
+"outdoor": 1,
+"water": 0
+},
+"cap": 2,
+"scene_queries": [
+"摄影 夜晚 三脚架 相机 街道",
+"摄影 夜晚 三脚架 相机 街道 实拍"
+]
+}
+]
+}

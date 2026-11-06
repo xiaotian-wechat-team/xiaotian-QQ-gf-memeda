@@ -1,0 +1,95 @@
+{
+  "_doc": "所有素材源轮询的中心限速配置（source_poll.py 读取）。min_interval_h=两次轮询最小间隔；jitter=±比例；max_per_day=每日上限；quiet=禁止轮询时段；max_pages/max_scrolls=单次会话上限；action_delay_s=页面动作间随机延时；backoff 遇验证码/错误 x2 直到 24h；global.max_per_day=所有抓取平台（不含 exclude，如 open_meteo 天气）每日合计上限（20）；各抓取平台单平台每日上限 10。",
+  "global": {
+    "max_per_day": 20,
+    "exclude": [
+      "open_meteo",
+      "open_meteo_bda",
+      "open_meteo_yanyuan"
+    ]
+  },
+  "defaults": {
+    "min_interval_h": 1,
+    "jitter": 0.3,
+    "max_per_day": 6,
+    "quiet": [
+      "01:00",
+      "07:30"
+    ],
+    "max_pages": 5,
+    "max_scrolls": 10,
+    "action_delay_s": [
+      3,
+      12
+    ],
+    "backoff_factor": 2,
+    "backoff_max_h": 24,
+    "login": false
+  },
+  "platforms": {
+    "xiaohongshu": {
+      "min_interval_h": 2,
+      "max_per_day": 10,
+      "max_pages": 3,
+      "max_scrolls": 8,
+      "login": true
+    },
+    "douyin": {
+      "min_interval_h": 2,
+      "max_per_day": 10,
+      "max_pages": 3,
+      "max_scrolls": 8,
+      "login": true
+    },
+    "weibo": {
+      "min_interval_h": 1.5,
+      "max_per_day": 10,
+      "max_pages": 3,
+      "max_scrolls": 8,
+      "login": true
+    },
+    "wechat_mp": {
+      "min_interval_h": 2,
+      "max_per_day": 10,
+      "max_pages": 3,
+      "max_scrolls": 6,
+      "login": true
+    },
+    "bilibili": {
+      "min_interval_h": 1.5,
+      "max_per_day": 10,
+      "max_pages": 3,
+      "max_scrolls": 8,
+      "login": true
+    },
+    "bda_site": {
+      "min_interval_h": 3,
+      "max_per_day": 10,
+      "max_pages": 4
+    },
+    "open_meteo": {
+      "min_interval_h": 1,
+      "max_per_day": 24,
+      "action_delay_s": [
+        0,
+        0
+      ]
+    },
+    "open_meteo_bda": {
+      "min_interval_h": 1,
+      "max_per_day": 24,
+      "action_delay_s": [
+        0,
+        0
+      ]
+    },
+    "open_meteo_yanyuan": {
+      "min_interval_h": 1,
+      "max_per_day": 24,
+      "action_delay_s": [
+        0,
+        0
+      ]
+    }
+  }
+}

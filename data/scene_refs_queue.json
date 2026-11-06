@@ -1,0 +1,749 @@
+{
+  "version": 1,
+  "per_scene": 4,
+  "pending": [
+    {
+      "scene_id": "sport-028",
+      "have": 0,
+      "need": 4,
+      "reason": "activity:ski_chongli,travel_hemu,travel_sanya,travel_tokyo_winter,travel_seoul_winter,travel_chiangmai,travel_bali,travel_hokkaido_ski,travel_singapore",
+      "queued_at": "2026-10-24T16:12:38"
+    },
+    {
+      "scene_id": "trip-001",
+      "have": 0,
+      "need": 4,
+      "reason": "activity:ski_chongli,travel_hemu,travel_sanya,travel_tokyo_winter,travel_seoul_winter,travel_chiangmai,travel_bali,travel_hokkaido_ski,travel_singapore",
+      "queued_at": "2026-10-24T16:12:38"
+    },
+    {
+      "scene_id": "spot-104",
+      "have": 0,
+      "need": 4,
+      "reason": "activity:ski_chongli,travel_hemu,travel_sanya,travel_tokyo_winter,travel_seoul_winter,travel_chiangmai,travel_bali,travel_hokkaido_ski,travel_singapore",
+      "queued_at": "2026-10-24T16:12:38"
+    },
+    {
+      "scene_id": "sport-074",
+      "have": 0,
+      "need": 4,
+      "reason": "activity:ski_chongli,travel_hemu,travel_sanya,travel_tokyo_winter,travel_seoul_winter,travel_chiangmai,travel_bali,travel_hokkaido_ski,travel_singapore,city_script_kill,city_livehouse,city_citywalk,study_library,school_rehearsal,transit_day",
+      "queued_at": "2026-10-24T16:12:38"
+    },
+    {
+      "scene_id": "campus-010",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "campus-017",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "campus-020",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "campus-022",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "campus-026",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "campus-033",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "campus-034",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "campus-041",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "campus-046",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-001",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-002",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-008",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-014",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-016",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-017",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-033",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-036",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-041",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-046",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-068",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-073",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-080",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-081",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-098",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-102",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "fun-011",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "fun-013",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "fun-026",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "fun-031",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "fun-041",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "fun-043",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "fun-046",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "fun-054",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "fun-063",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "fun-085",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "fun-090",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "fun-091",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "date-002",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "date-011",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "date-016",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "date-017",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "date-022",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "date-023",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "date-035",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "date-037",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "date-039",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "date-046",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "date-049",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "date-051",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "date-058",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "date-060",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "trip-015",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "trip-030",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "trip-036",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "trip-037",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "trip-062",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "country-008",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "country-031",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "country-059",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "country-067",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "spot-007",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "spot-010",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "spot-029",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "spot-065",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "spot-070",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "spot-071",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "spot-077",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "spot-081",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "spot-089",
+      "have": 3,
+      "need": 1,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "spot-094",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "spot-110",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "spot-112",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "spot-115",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "spot-121",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "spot-126",
+      "have": 0,
+      "need": 4,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-24T16:14:05"
+    },
+    {
+      "scene_id": "sport-006",
+      "have": 3,
+      "need": 1,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-25T08:42:05"
+    },
+    {
+      "scene_id": "sport-007",
+      "have": 2,
+      "need": 2,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-25T08:42:05"
+    },
+    {
+      "scene_id": "sport-065",
+      "have": 2,
+      "need": 2,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-25T08:42:05"
+    },
+    {
+      "scene_id": "date-026",
+      "have": 1,
+      "need": 3,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-25T08:42:05"
+    },
+    {
+      "scene_id": "date-050",
+      "have": 2,
+      "need": 2,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-25T08:42:05"
+    },
+    {
+      "scene_id": "trip-039",
+      "have": 2,
+      "need": 2,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-25T08:42:05"
+    },
+    {
+      "scene_id": "country-021",
+      "have": 3,
+      "need": 1,
+      "reason": "coverage<4",
+      "queued_at": "2026-10-25T08:42:05"
+    },
+    {
+      "scene_id": "work-002",
+      "have": 2,
+      "need": 2,
+      "reason": "internship: visually reviewed environment references",
+      "queued_at": "2026-10-27T17:30:42"
+    },
+    {
+      "scene_id": "work-003",
+      "have": 3,
+      "need": 1,
+      "reason": "internship: visually reviewed environment references",
+      "queued_at": "2026-10-27T17:30:42"
+    },
+    {
+      "scene_id": "work-004",
+      "have": 2,
+      "need": 2,
+      "reason": "internship: visually reviewed environment references",
+      "queued_at": "2026-10-27T17:30:42"
+    },
+    {
+      "scene_id": "work-005",
+      "have": 1,
+      "need": 3,
+      "reason": "internship: visually reviewed environment references",
+      "queued_at": "2026-10-27T17:30:42"
+    },
+    {
+      "scene_id": "night-004",
+      "have": 3,
+      "need": 1,
+      "reason": "night detail reviewed coverage<4",
+      "queued_at": "2026-10-28T16:30:00+08:00"
+    },
+    {
+      "scene_id": "night-005",
+      "have": 3,
+      "need": 1,
+      "reason": "night detail reviewed coverage<4",
+      "queued_at": "2026-10-28T16:30:00+08:00"
+    },
+    {
+      "scene_id": "night-006",
+      "have": 2,
+      "need": 2,
+      "reason": "night detail reviewed coverage<4",
+      "queued_at": "2026-10-28T16:30:00+08:00"
+    },
+    {
+      "scene_id": "night-007",
+      "have": 3,
+      "need": 1,
+      "reason": "night detail reviewed coverage<4",
+      "queued_at": "2026-10-28T16:30:00+08:00"
+    },
+    {
+      "scene_id": "night-010",
+      "have": 2,
+      "need": 2,
+      "reason": "night detail reviewed coverage<4",
+      "queued_at": "2026-10-28T16:30:00+08:00"
+    },
+    {
+      "scene_id": "night-011",
+      "have": 3,
+      "need": 1,
+      "reason": "night detail reviewed coverage<4",
+      "queued_at": "2026-10-28T16:30:00+08:00"
+    },
+    {
+      "scene_id": "night-012",
+      "have": 2,
+      "need": 2,
+      "reason": "night detail reviewed coverage<4",
+      "queued_at": "2026-10-28T16:30:00+08:00"
+    },
+    {
+      "scene_id": "night-013",
+      "have": 2,
+      "need": 2,
+      "reason": "night detail reviewed coverage<4",
+      "queued_at": "2026-10-28T16:30:00+08:00"
+    },
+    {
+      "scene_id": "night-014",
+      "have": 2,
+      "need": 2,
+      "reason": "night detail reviewed coverage<4",
+      "queued_at": "2026-10-28T16:30:00+08:00"
+    },
+    {
+      "scene_id": "night-020",
+      "have": 3,
+      "need": 1,
+      "reason": "night detail reviewed coverage<4",
+      "queued_at": "2026-10-28T16:30:00+08:00"
+    }
+  ],
+  "done": [
+    {
+      "scene_id": "work-001",
+      "have": 4,
+      "need": 0,
+      "reason": "internship: visually reviewed environment references",
+      "queued_at": "2026-10-27T17:30:42",
+      "finished_at": "2026-10-27"
+    },
+    {
+      "scene_id": "work-006",
+      "have": 4,
+      "need": 0,
+      "reason": "internship: visually reviewed environment references",
+      "queued_at": "2026-10-27T17:33:18",
+      "finished_at": "2026-10-27"
+    },
+    {
+      "scene_id": "work-007",
+      "have": 4,
+      "need": 0,
+      "reason": "internship: visually reviewed environment references",
+      "queued_at": "2026-10-27T17:33:18",
+      "finished_at": "2026-10-27"
+    },
+    {
+      "scene_id": "work-008",
+      "have": 4,
+      "need": 0,
+      "reason": "internship: visually reviewed environment references",
+      "queued_at": "2026-10-27T17:33:18",
+      "finished_at": "2026-10-27"
+    },
+    {
+      "scene_id": "work-009",
+      "have": 4,
+      "need": 0,
+      "reason": "internship: visually reviewed environment references",
+      "queued_at": "2026-10-27T17:33:18",
+      "finished_at": "2026-10-27"
+    }
+  ],
+  "updated": "2026-10-28T15:46:48"
+}

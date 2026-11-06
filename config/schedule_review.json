@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "owner": "local deterministic schedule checks; no review Agent",
+  "persona_source": "data/persona_dossier.json",
+  "activity_tree": "data/internship_tree.json",
+  "home_city": "北京",
+  "max_cities_per_day": 2,
+  "min_night_rest_hours": 7,
+  "local_outing_transit_minutes": 60,
+  "required_trip_fields": [
+    "trip_id",
+    "city",
+    "location",
+    "phase"
+  ],
+  "transport_fields": [
+    "from_city",
+    "to_city",
+    "start",
+    "end"
+  ],
+  "rules": [
+    "跨城必须有独立交通槽；交通预算含接驳候车，不能与工作/吃饭/睡觉重叠",
+    "远途最短3个日历日；出发、工作、住宿、返程应连贯，不能上午杭州下午上海晚上北京",
+    "外地驻留期间不得插回北京上课或回宿舍；回京须有返程槽",
+    "课程、考试复习、用户约定优先；未知线路须人工复审，禁止默认零交通时长",
+    "不得删除城市字段或改为泛称来规避审查；地点文字与结构字段必须一致",
+    "这些是保守排程预算，非实际车次；日程补充 Agent 临近出行核对交通与天气"
+  ]
+}

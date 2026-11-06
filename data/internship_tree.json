@@ -1,0 +1,205 @@
+{
+  "version": 1,
+  "persona_source": "data/persona_dossier.json#work.internship",
+  "note": "候选工作地点与任务，不代表获得场地许可、实际预约或已有客户；具体采用后写入日程。",
+  "branches": [
+    {
+      "id": "production",
+      "name": "案头与制片协助",
+      "activity_id": "film_internship",
+      "outside": false,
+      "periods": [
+        "pm",
+        "eve"
+      ],
+      "locations": [
+        "公司工作间"
+      ],
+      "tasks": [
+        {
+          "name": "分镜讨论/拍摄清单整理",
+          "scene_hints": [
+            "分镜",
+            "会议桌"
+          ]
+        },
+        {
+          "name": "素材备份/粗剪助理",
+          "scene_hints": [
+            "剪辑室",
+            "硬盘"
+          ]
+        },
+        {
+          "name": "样片看片会/整理反馈",
+          "scene_hints": [
+            "看片",
+            "笔记"
+          ]
+        },
+        {
+          "name": "通告单与道具清单核对",
+          "scene_hints": [
+            "通告单",
+            "道具清单"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "errand",
+      "name": "本市外出",
+      "activity_id": "film_internship_errand",
+      "outside": true,
+      "periods": [
+        "pm"
+      ],
+      "locations": [
+        "朝阳·高碑店周边工作室",
+        "海淀·五棵松周边工作室"
+      ],
+      "tasks": [
+        {
+          "name": "场地对接/现场尺寸记录",
+          "scene_hints": [
+            "场地对接",
+            "测量记录"
+          ]
+        },
+        {
+          "name": "器材与道具交接/清点",
+          "scene_hints": [
+            "器材交接",
+            "道具箱"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scout",
+      "name": "室外取景踩点",
+      "activity_id": "film_internship_scout",
+      "outside": true,
+      "periods": [
+        "pm"
+      ],
+      "locations": [
+        "东城·东四街巷",
+        "朝阳·亮马河沿线",
+        "海淀·玉渊潭周边"
+      ],
+      "tasks": [
+        {
+          "name": "观察日照/记录机位与环境声",
+          "scene_hints": [
+            "室外取景踩点",
+            "取景器",
+            "环境声"
+          ]
+        },
+        {
+          "name": "整理路线/拍摄候选空镜",
+          "scene_hints": [
+            "室外取景踩点",
+            "街景",
+            "空镜"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "location",
+      "name": "外景跟组",
+      "activity_id": "film_internship_location",
+      "outside": true,
+      "periods": [
+        "pm"
+      ],
+      "locations": [
+        "朝阳·亮马河沿线",
+        "东城·东四街巷"
+      ],
+      "tasks": [
+        {
+          "name": "场记/机位记录/收尾清点",
+          "scene_hints": [
+            "外景跟组",
+            "场记板"
+          ]
+        },
+        {
+          "name": "协助拍摄街景空镜/素材交接",
+          "scene_hints": [
+            "外景跟组",
+            "机位记录",
+            "空镜"
+          ]
+        }
+      ]
+    }
+  ],
+  "destinations": [
+    {
+      "id": "tianjin",
+      "city": "天津",
+      "min_trip_days": 1,
+      "transit_hours_from_beijing": 3,
+      "locations": [
+        "海河沿线",
+        "五大道街区"
+      ],
+      "tasks": [
+        "室外取景踩点",
+        "外景机位记录"
+      ],
+      "auto_schedule": true
+    },
+    {
+      "id": "hangzhou",
+      "city": "杭州",
+      "min_trip_days": 3,
+      "transit_hours_from_beijing": 6,
+      "locations": [
+        "运河沿线街区",
+        "钱塘江滨江沿线"
+      ],
+      "tasks": [
+        "取景路线踏勘",
+        "跟组场记",
+        "拍摄素材交接"
+      ],
+      "auto_schedule": false
+    },
+    {
+      "id": "shanghai",
+      "city": "上海",
+      "min_trip_days": 3,
+      "transit_hours_from_beijing": 6,
+      "locations": [
+        "杨浦滨江沿线",
+        "徐汇滨江沿线"
+      ],
+      "tasks": [
+        "城市外景踩点",
+        "场地对接",
+        "跟组记录"
+      ],
+      "auto_schedule": false
+    },
+    {
+      "id": "qingdao",
+      "city": "青岛",
+      "min_trip_days": 3,
+      "transit_hours_from_beijing": 6,
+      "locations": [
+        "老城街区",
+        "海滨步道"
+      ],
+      "tasks": [
+        "海边风噪/光线记录",
+        "外景跟组"
+      ],
+      "auto_schedule": false
+    }
+  ]
+}

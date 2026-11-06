@@ -1,0 +1,3677 @@
+{
+  "version": 1,
+  "updated": "2026-10-27",
+  "tz": "Asia/Shanghai",
+  "gate": {
+    "scope": "duration_only",
+    "measures": [
+      "typical_days",
+      "min_stay_days",
+      "min_transit_days_from",
+      "typical_hours",
+      "min_hours"
+    ],
+    "not_measured": [
+      "vibe",
+      "quality",
+      "persona_fit",
+      "rating"
+    ],
+    "require_reasonableness_pass": true,
+    "flow": [
+      "reasonableness_duration",
+      "life_schedule",
+      "scene_refs_queue"
+    ],
+    "note": "rating 字段若存在仅作活动库元数据，不参与合理度分数"
+  },
+  "activities": [
+    {
+      "id": "ski_chongli",
+      "name": "崇礼滑雪",
+      "aliases": [
+        "滑雪",
+        "崇礼",
+        "太舞",
+        "富龙",
+        "云顶",
+        "翠云山",
+        "万龙",
+        "还有比这儿更",
+        "寒假滑雪的",
+        "京津冀周边滑"
+      ],
+      "category": "travel_winter",
+      "bucket": "outdoor_outing",
+      "location": {
+        "region": "河北张家口",
+        "city": "崇礼",
+        "hub": "北京周边"
+      },
+      "reasonableness": {
+        "typical_days": 4,
+        "typical_days_min": 3,
+        "typical_days_max": 5,
+        "min_stay_days": 3,
+        "transit_hours_from": {
+          "北京": 3,
+          "三亚": 10,
+          "阿勒泰": 12,
+          "东京": 8,
+          "首尔": 6
+        },
+        "min_transit_days_from": {
+          "三亚": 1,
+          "阿勒泰": 1,
+          "禾木": 1,
+          "东京": 1,
+          "首尔": 1,
+          "北京": 0
+        },
+        "season": [
+          "winter"
+        ],
+        "research_note": "崇礼周末/短假常见3天2晚；认真学滑/大学生营约4天3晚。用户偏好~4天。 | [douyin] 还有比这儿更便宜的雪场吗？ #寒假去哪玩 #滑雪 有本事你们再找一个比这儿更便宜的雪场！ | [douyin] 寒假滑雪的，参考#崇礼滑雪 #富龙滑雪场 #富龙焕活酒店 #滑雪 #寒假 | [douyin] 京津冀周边滑雪就来太舞度假小镇吧～全家人一起来～小朋友也有自己的冰雪乐园！#被崇礼雪场的小孩姐帅到了#太舞滑雪小镇#崇礼滑雪#太舞滑雪场#抖音生活冰雪季 @太舞滑雪小镇"
+      },
+      "rating": {
+        "base": 0.85,
+        "source": "seed"
+      },
+      "scene_match": [
+        "滑雪",
+        "雪场",
+        "崇礼"
+      ],
+      "research_sources": [
+        {
+          "platform": "douyin",
+          "topic": "滑雪 崇礼 寒假",
+          "title": "还有比这儿更便宜的雪场吗？ #寒假去哪玩 #滑雪 有本事你们再找一个比这儿更便宜的雪场！"
+        },
+        {
+          "platform": "douyin",
+          "topic": "滑雪 崇礼 寒假",
+          "title": "寒假滑雪的，参考#崇礼滑雪 #富龙滑雪场 #富龙焕活酒店 #滑雪 #寒假"
+        },
+        {
+          "platform": "douyin",
+          "topic": "滑雪 崇礼 寒假",
+          "title": "京津冀周边滑雪就来太舞度假小镇吧～全家人一起来～小朋友也有自己的冰雪乐园！#被崇礼雪场的小孩姐帅到了#太舞滑雪小镇#崇礼滑雪#太舞滑雪场#抖音生活冰雪季 @太舞滑雪小镇"
+        }
+      ]
+    },
+    {
+      "id": "travel_hemu",
+      "name": "新疆禾木/喀纳斯冬游",
+      "aliases": [
+        "禾木",
+        "喀纳斯",
+        "白哈巴",
+        "阿勒泰",
+        "雪村",
+        "冬季禾木村到",
+        "自驾",
+        "冬天一个人开"
+      ],
+      "category": "travel_winter",
+      "bucket": "travel",
+      "location": {
+        "region": "新疆阿勒泰",
+        "city": "禾木",
+        "hub": "乌鲁木齐/阿勒泰"
+      },
+      "reasonableness": {
+        "typical_days": 7,
+        "typical_days_min": 5,
+        "typical_days_max": 8,
+        "min_stay_days": 5,
+        "transit_hours_from": {
+          "北京": 10,
+          "崇礼": 12,
+          "三亚": 12,
+          "东京": 14
+        },
+        "min_transit_days_from": {
+          "北京": 1,
+          "崇礼": 1,
+          "三亚": 1,
+          "东京": 1,
+          "首尔": 1
+        },
+        "season": [
+          "winter"
+        ],
+        "research_note": "禾木单点深度2–3天；含喀纳斯/白哈巴+雪路机动常见4–5天；用户偏好整段~7天。 | [douyin] 冬季禾木村到底怎么玩？一个视频讲清楚！ #旅行推荐官 #新疆旅游攻略 #禾木村 #阿勒泰 #新疆跟团游 | [douyin] 自驾7个小时，把腰开断来到的地方，一定不会让你失望❗太美了😍#阿勒泰的冬天 #禾木的冬天美的让人窒息 #禾木村雪景 #雪落山海间 | [douyin] 冬天一个人开车进禾木 不要再说女生开车技术不好啦#新疆自驾 #禾木 #冬天旅行 #在路上的风景"
+      },
+      "rating": {
+        "base": 0.9,
+        "source": "seed"
+      },
+      "scene_match": [
+        "禾木",
+        "雪村",
+        "木屋",
+        "喀纳斯"
+      ],
+      "research_sources": [
+        {
+          "platform": "douyin",
+          "topic": "新疆 禾木 冬天 旅行",
+          "title": "冬季禾木村到底怎么玩？一个视频讲清楚！ #旅行推荐官 #新疆旅游攻略 #禾木村 #阿勒泰 #新疆跟团游"
+        },
+        {
+          "platform": "douyin",
+          "topic": "新疆 禾木 冬天 旅行",
+          "title": "自驾7个小时，把腰开断来到的地方，一定不会让你失望❗太美了😍#阿勒泰的冬天 #禾木的冬天美的让人窒息 #禾木村雪景 #雪落山海间"
+        },
+        {
+          "platform": "douyin",
+          "topic": "新疆 禾木 冬天 旅行",
+          "title": "冬天一个人开车进禾木 不要再说女生开车技术不好啦#新疆自驾 #禾木 #冬天旅行 #在路上的风景"
+        }
+      ]
+    },
+    {
+      "id": "travel_sanya",
+      "name": "三亚暖冬",
+      "aliases": [
+        "三亚",
+        "海棠湾",
+        "亚龙湾",
+        "蜈支洲",
+        "天涯",
+        "寒假三亚旅行",
+        "寒假有计划来",
+        "来三亚旅行"
+      ],
+      "category": "travel_winter",
+      "bucket": "travel",
+      "location": {
+        "region": "海南",
+        "city": "三亚",
+        "hub": "三亚"
+      },
+      "reasonableness": {
+        "typical_days": 12,
+        "typical_days_min": 7,
+        "typical_days_max": 14,
+        "min_stay_days": 7,
+        "transit_hours_from": {
+          "北京": 6,
+          "崇礼": 8,
+          "阿勒泰": 12,
+          "东京": 10
+        },
+        "min_transit_days_from": {
+          "北京": 0,
+          "崇礼": 1,
+          "阿勒泰": 1,
+          "禾木": 1,
+          "东京": 1
+        },
+        "season": [
+          "winter"
+        ],
+        "research_note": "大学生常见5–7天；用户要求寒假待1–2周，取 typical=12、min_stay=7。 | [douyin] 寒假三亚旅行 2026年三亚旅行第二站，海棠湾香格里拉，冬天三亚玩儿水首选 #香格里拉酒店 | [douyin] 寒假有计划来天涯小镇的朋友，抓紧啦#三亚旅游攻略 #三亚海景 #三亚海景民宿 #天涯海角景区 #三亚云集海边海景美宿 | [douyin] 来三亚旅行，住的好玩的好的地方千万别错过镇海理想村#三亚#寒假#遛娃好去处#亲子"
+      },
+      "rating": {
+        "base": 0.88,
+        "source": "seed"
+      },
+      "scene_match": [
+        "三亚",
+        "海边",
+        "沙滩",
+        "椰林"
+      ],
+      "research_sources": [
+        {
+          "platform": "douyin",
+          "topic": "三亚 寒假 海边",
+          "title": "寒假三亚旅行 2026年三亚旅行第二站，海棠湾香格里拉，冬天三亚玩儿水首选 #香格里拉酒店"
+        },
+        {
+          "platform": "douyin",
+          "topic": "三亚 寒假 海边",
+          "title": "寒假有计划来天涯小镇的朋友，抓紧啦#三亚旅游攻略 #三亚海景 #三亚海景民宿 #天涯海角景区 #三亚云集海边海景美宿"
+        },
+        {
+          "platform": "douyin",
+          "topic": "三亚 寒假 海边",
+          "title": "来三亚旅行，住的好玩的好的地方千万别错过镇海理想村#三亚#寒假#遛娃好去处#亲子"
+        }
+      ]
+    },
+    {
+      "id": "travel_tokyo_winter",
+      "name": "东京冬季短途",
+      "aliases": [
+        "东京",
+        "日本",
+        "涩谷",
+        "浅草"
+      ],
+      "category": "travel_abroad",
+      "bucket": "travel",
+      "location": {
+        "region": "日本",
+        "city": "东京",
+        "hub": "成田/羽田"
+      },
+      "reasonableness": {
+        "typical_days": 6,
+        "typical_days_min": 5,
+        "typical_days_max": 8,
+        "min_stay_days": 4,
+        "transit_hours_from": {
+          "北京": 4,
+          "三亚": 8,
+          "崇礼": 6,
+          "阿勒泰": 12
+        },
+        "min_transit_days_from": {
+          "北京": 0,
+          "三亚": 1,
+          "崇礼": 1,
+          "阿勒泰": 1,
+          "禾木": 1
+        },
+        "season": [
+          "winter",
+          "spring",
+          "autumn"
+        ],
+        "research_note": "北京直飞东京常见5–7天自由行。"
+      },
+      "rating": {
+        "base": 0.82,
+        "source": "seed"
+      },
+      "scene_match": [
+        "东京",
+        "日本",
+        "涩谷"
+      ]
+    },
+    {
+      "id": "travel_seoul_winter",
+      "name": "首尔冬季短途",
+      "aliases": [
+        "首尔",
+        "韩国",
+        "明洞",
+        "弘大"
+      ],
+      "category": "travel_abroad",
+      "bucket": "travel",
+      "location": {
+        "region": "韩国",
+        "city": "首尔",
+        "hub": "仁川"
+      },
+      "reasonableness": {
+        "typical_days": 5,
+        "typical_days_min": 4,
+        "typical_days_max": 7,
+        "min_stay_days": 4,
+        "transit_hours_from": {
+          "北京": 2,
+          "三亚": 6,
+          "崇礼": 4,
+          "阿勒泰": 10
+        },
+        "min_transit_days_from": {
+          "北京": 0,
+          "三亚": 1,
+          "崇礼": 1,
+          "阿勒泰": 1
+        },
+        "season": [
+          "winter",
+          "spring",
+          "autumn"
+        ],
+        "research_note": "近程出国，4–6天常见。"
+      },
+      "rating": {
+        "base": 0.8,
+        "source": "seed"
+      },
+      "scene_match": [
+        "首尔",
+        "韩国",
+        "明洞"
+      ]
+    },
+    {
+      "id": "travel_chiangmai",
+      "name": "清迈暖冬",
+      "aliases": [
+        "清迈",
+        "泰国",
+        "泰北"
+      ],
+      "category": "travel_abroad",
+      "bucket": "travel",
+      "location": {
+        "region": "泰国",
+        "city": "清迈",
+        "hub": "清迈/曼谷"
+      },
+      "reasonableness": {
+        "typical_days": 7,
+        "typical_days_min": 5,
+        "typical_days_max": 10,
+        "min_stay_days": 5,
+        "transit_hours_from": {
+          "北京": 7,
+          "三亚": 5,
+          "崇礼": 9
+        },
+        "min_transit_days_from": {
+          "北京": 1,
+          "三亚": 1,
+          "崇礼": 1,
+          "阿勒泰": 1
+        },
+        "season": [
+          "winter"
+        ],
+        "research_note": "泰北暖冬常见一周左右。"
+      },
+      "rating": {
+        "base": 0.78,
+        "source": "seed"
+      },
+      "scene_match": [
+        "清迈",
+        "泰国"
+      ]
+    },
+    {
+      "id": "travel_bali",
+      "name": "巴厘岛度假",
+      "aliases": [
+        "巴厘岛",
+        "印尼",
+        "乌布"
+      ],
+      "category": "travel_abroad",
+      "bucket": "travel",
+      "location": {
+        "region": "印尼",
+        "city": "巴厘岛",
+        "hub": "登巴萨"
+      },
+      "reasonableness": {
+        "typical_days": 8,
+        "typical_days_min": 6,
+        "typical_days_max": 12,
+        "min_stay_days": 6,
+        "transit_hours_from": {
+          "北京": 10,
+          "三亚": 8
+        },
+        "min_transit_days_from": {
+          "北京": 1,
+          "三亚": 1,
+          "崇礼": 1,
+          "阿勒泰": 1
+        },
+        "season": [
+          "winter"
+        ],
+        "research_note": "海岛往返成本高，建议≥6天。"
+      },
+      "rating": {
+        "base": 0.75,
+        "source": "seed"
+      },
+      "scene_match": [
+        "巴厘岛",
+        "海神庙"
+      ]
+    },
+    {
+      "id": "travel_hokkaido_ski",
+      "name": "北海道滑雪",
+      "aliases": [
+        "北海道",
+        "札幌",
+        "二世谷",
+        "富良野"
+      ],
+      "category": "travel_abroad",
+      "bucket": "outdoor_outing",
+      "location": {
+        "region": "日本",
+        "city": "北海道",
+        "hub": "新千岁"
+      },
+      "reasonableness": {
+        "typical_days": 6,
+        "typical_days_min": 5,
+        "typical_days_max": 8,
+        "min_stay_days": 5,
+        "transit_hours_from": {
+          "北京": 5,
+          "崇礼": 7,
+          "三亚": 9
+        },
+        "min_transit_days_from": {
+          "北京": 1,
+          "崇礼": 1,
+          "三亚": 1,
+          "阿勒泰": 1
+        },
+        "season": [
+          "winter"
+        ],
+        "research_note": "粉雪短途常见5–7天。"
+      },
+      "rating": {
+        "base": 0.8,
+        "source": "seed"
+      },
+      "scene_match": [
+        "北海道",
+        "滑雪"
+      ]
+    },
+    {
+      "id": "travel_singapore",
+      "name": "新加坡短途",
+      "aliases": [
+        "新加坡",
+        "滨海湾"
+      ],
+      "category": "travel_abroad",
+      "bucket": "travel",
+      "location": {
+        "region": "新加坡",
+        "city": "新加坡",
+        "hub": "樟宜"
+      },
+      "reasonableness": {
+        "typical_days": 5,
+        "typical_days_min": 4,
+        "typical_days_max": 6,
+        "min_stay_days": 3,
+        "transit_hours_from": {
+          "北京": 6,
+          "三亚": 4
+        },
+        "min_transit_days_from": {
+          "北京": 1,
+          "三亚": 0,
+          "崇礼": 1
+        },
+        "season": [
+          "winter",
+          "summer"
+        ],
+        "research_note": "城市短途4–5天常见。"
+      },
+      "rating": {
+        "base": 0.72,
+        "source": "seed"
+      },
+      "scene_match": [
+        "新加坡"
+      ]
+    },
+    {
+      "id": "city_script_kill",
+      "name": "同学局·剧本杀",
+      "aliases": [
+        "剧本杀",
+        "古堡逃脱",
+        "密室"
+      ],
+      "category": "city_fun",
+      "bucket": "city_fun",
+      "location": {
+        "region": "北京",
+        "city": "北京",
+        "hub": "北京"
+      },
+      "reasonableness": {
+        "typical_days": 1,
+        "typical_days_min": 1,
+        "typical_days_max": 1,
+        "min_stay_days": 1,
+        "transit_hours_from": {
+          "北京": 0
+        },
+        "min_transit_days_from": {},
+        "season": [
+          "all"
+        ],
+        "research_note": "单晚活动，不占多日行程。",
+        "min_hours": 3
+      },
+      "rating": {
+        "base": 0.7,
+        "source": "seed"
+      },
+      "scene_match": [
+        "剧本杀",
+        "密室"
+      ]
+    },
+    {
+      "id": "city_livehouse",
+      "name": "Livehouse 小型演出",
+      "aliases": [
+        "Livehouse",
+        "演出",
+        "中财",
+        "北京团建",
+        "北平"
+      ],
+      "category": "city_fun",
+      "bucket": "city_fun",
+      "location": {
+        "region": "北京",
+        "city": "北京",
+        "hub": "北京"
+      },
+      "reasonableness": {
+        "typical_days": 1,
+        "typical_days_min": 1,
+        "typical_days_max": 1,
+        "min_stay_days": 1,
+        "transit_hours_from": {
+          "北京": 0
+        },
+        "min_transit_days_from": {},
+        "season": [
+          "all"
+        ],
+        "research_note": "单晚。 | [xiaohongshu] 中财｜海淀大学生能做的100件小事（娱乐版） | [xiaohongshu] 北京团建❗首家古堡逃脱团建，被问爆了❗ | [xiaohongshu] 北平404列车的大型跑偏repo来了！",
+        "min_hours": 1.5
+      },
+      "rating": {
+        "base": 0.7,
+        "source": "seed"
+      },
+      "scene_match": [
+        "Livehouse",
+        "演出"
+      ],
+      "research_sources": [
+        {
+          "platform": "xiaohongshu",
+          "topic": "大学生 城市娱乐 Livehouse 剧本杀",
+          "title": "中财｜海淀大学生能做的100件小事（娱乐版）"
+        },
+        {
+          "platform": "xiaohongshu",
+          "topic": "大学生 城市娱乐 Livehouse 剧本杀",
+          "title": "北京团建❗首家古堡逃脱团建，被问爆了❗"
+        },
+        {
+          "platform": "xiaohongshu",
+          "topic": "大学生 城市娱乐 Livehouse 剧本杀",
+          "title": "北平404列车的大型跑偏repo来了！"
+        }
+      ]
+    },
+    {
+      "id": "city_citywalk",
+      "name": "北京 citywalk 探店",
+      "aliases": [
+        "citywalk",
+        "南锣",
+        "鼓楼",
+        "三里屯",
+        "东四",
+        "离开北京前",
+        "东四赏秋"
+      ],
+      "category": "city_fun",
+      "bucket": "city_fun",
+      "location": {
+        "region": "北京",
+        "city": "北京",
+        "hub": "北京"
+      },
+      "reasonableness": {
+        "typical_days": 1,
+        "typical_days_min": 1,
+        "typical_days_max": 1,
+        "min_stay_days": 1,
+        "transit_hours_from": {
+          "北京": 0
+        },
+        "min_transit_days_from": {},
+        "season": [
+          "all"
+        ],
+        "research_note": "半日/全日城市活动。 | [xiaohongshu] 离开北京前，一定要逛14家漂亮文创&杂货铺… | [xiaohongshu] 🚶‍♂️东四赏秋🍂Citywalk！不要错过这12家！",
+        "min_hours": 1
+      },
+      "rating": {
+        "base": 0.75,
+        "source": "seed"
+      },
+      "scene_match": [
+        "citywalk",
+        "探店"
+      ],
+      "research_sources": [
+        {
+          "platform": "xiaohongshu",
+          "topic": "大学生 北京 周末玩什么 探店",
+          "title": "离开北京前，一定要逛14家漂亮文创&杂货铺…"
+        },
+        {
+          "platform": "xiaohongshu",
+          "topic": "大学生 北京 周末玩什么 探店",
+          "title": "🚶‍♂️东四赏秋🍂Citywalk！不要错过这12家！"
+        }
+      ]
+    },
+    {
+      "id": "study_library",
+      "name": "图书馆自习/编创阐述",
+      "aliases": [
+        "图书馆",
+        "自习",
+        "编创阐述"
+      ],
+      "category": "study",
+      "bucket": "school_library",
+      "location": {
+        "region": "北京",
+        "city": "北京",
+        "hub": "北舞校园"
+      },
+      "reasonableness": {
+        "typical_days": 1,
+        "typical_days_min": 1,
+        "typical_days_max": 14,
+        "min_stay_days": 1,
+        "transit_hours_from": {
+          "北京": 0
+        },
+        "min_transit_days_from": {},
+        "season": [
+          "all"
+        ],
+        "research_note": "学习可连续多日，无地理跳转约束。"
+      },
+      "rating": {
+        "base": 0.9,
+        "source": "seed"
+      },
+      "scene_match": [
+        "图书馆",
+        "自习"
+      ]
+    },
+    {
+      "id": "school_rehearsal",
+      "name": "剧目排练/基训",
+      "aliases": [
+        "排练",
+        "基训",
+        "练功"
+      ],
+      "category": "school",
+      "bucket": "school_rehearsal",
+      "location": {
+        "region": "北京",
+        "city": "北京",
+        "hub": "北舞校园"
+      },
+      "reasonableness": {
+        "typical_days": 1,
+        "typical_days_min": 1,
+        "typical_days_max": 1,
+        "min_stay_days": 1,
+        "transit_hours_from": {
+          "北京": 0
+        },
+        "min_transit_days_from": {},
+        "season": [
+          "all"
+        ],
+        "research_note": "校园日常。"
+      },
+      "rating": {
+        "base": 0.9,
+        "source": "seed"
+      },
+      "scene_match": [
+        "排练",
+        "练功房"
+      ]
+    },
+    {
+      "id": "transit_day",
+      "name": "转机/交通日",
+      "aliases": [
+        "转机",
+        "高铁",
+        "机场",
+        "特种兵"
+      ],
+      "category": "transit",
+      "bucket": "travel",
+      "location": {
+        "region": "在途",
+        "city": "在途",
+        "hub": "在途"
+      },
+      "reasonableness": {
+        "typical_days": 1,
+        "typical_days_min": 1,
+        "typical_days_max": 2,
+        "min_stay_days": 1,
+        "transit_hours_from": {},
+        "min_transit_days_from": {},
+        "season": [
+          "all"
+        ],
+        "research_note": "跨远距离目的地之间的缓冲日；可记入行程但不算目的地停留。"
+      },
+      "rating": {
+        "base": 0.95,
+        "source": "seed"
+      },
+      "scene_match": [
+        "机场",
+        "行李箱",
+        "高铁"
+      ]
+    },
+    {
+      "id": "travel_osaka_winter",
+      "name": "大阪/京都冬季短途",
+      "aliases": [
+        "大阪",
+        "京都",
+        "关西"
+      ],
+      "category": "travel_abroad",
+      "bucket": "travel",
+      "location": {
+        "region": "日本",
+        "city": "大阪",
+        "hub": "关西空港"
+      },
+      "reasonableness": {
+        "typical_days": 6,
+        "typical_days_min": 5,
+        "typical_days_max": 8,
+        "min_stay_days": 4,
+        "transit_hours_from": {
+          "北京": 4,
+          "三亚": 8,
+          "崇礼": 6,
+          "阿勒泰": 12
+        },
+        "min_transit_days_from": {
+          "北京": 0,
+          "三亚": 1,
+          "崇礼": 1,
+          "阿勒泰": 1,
+          "禾木": 1
+        },
+        "season": [
+          "winter",
+          "spring"
+        ],
+        "research_note": "关西短途常见5–7天（时长约束）。"
+      },
+      "rating": {
+        "base": 0.8,
+        "source": "seed"
+      },
+      "scene_match": [
+        "大阪",
+        "京都",
+        "日本"
+      ]
+    },
+    {
+      "id": "travel_hk_macau",
+      "name": "港澳短途",
+      "aliases": [
+        "香港",
+        "澳门",
+        "港澳"
+      ],
+      "category": "travel_abroad",
+      "bucket": "travel",
+      "location": {
+        "region": "港澳",
+        "city": "香港",
+        "hub": "香港/澳门"
+      },
+      "reasonableness": {
+        "typical_days": 4,
+        "typical_days_min": 3,
+        "typical_days_max": 5,
+        "min_stay_days": 3,
+        "transit_hours_from": {
+          "北京": 4,
+          "三亚": 2,
+          "崇礼": 5
+        },
+        "min_transit_days_from": {
+          "北京": 0,
+          "三亚": 0,
+          "崇礼": 1,
+          "阿勒泰": 1
+        },
+        "season": [
+          "all"
+        ],
+        "research_note": "近程短途常见3–5天。"
+      },
+      "rating": {
+        "base": 0.78,
+        "source": "seed"
+      },
+      "scene_match": [
+        "香港",
+        "澳门"
+      ]
+    },
+    {
+      "id": "travel_taipei",
+      "name": "台北短途",
+      "aliases": [
+        "台北",
+        "台湾",
+        "九份"
+      ],
+      "category": "travel_abroad",
+      "bucket": "travel",
+      "location": {
+        "region": "中国台湾",
+        "city": "台北",
+        "hub": "桃园"
+      },
+      "reasonableness": {
+        "typical_days": 5,
+        "typical_days_min": 4,
+        "typical_days_max": 7,
+        "min_stay_days": 4,
+        "transit_hours_from": {
+          "北京": 4,
+          "三亚": 4,
+          "崇礼": 5
+        },
+        "min_transit_days_from": {
+          "北京": 0,
+          "三亚": 1,
+          "崇礼": 1,
+          "阿勒泰": 1
+        },
+        "season": [
+          "winter",
+          "spring",
+          "autumn"
+        ],
+        "research_note": "短途常见4–6天。"
+      },
+      "rating": {
+        "base": 0.78,
+        "source": "seed"
+      },
+      "scene_match": [
+        "台北",
+        "台湾"
+      ]
+    },
+    {
+      "id": "research_112月推荐去的国内入门_28be98",
+      "name": "1-12月推荐去的国内入门级的雪山",
+      "aliases": [],
+      "category": "travel_winter",
+      "bucket": "travel",
+      "location": {
+        "region": "未知",
+        "city": "",
+        "hub": ""
+      },
+      "reasonableness": {
+        "typical_days": 5,
+        "typical_days_min": 4,
+        "typical_days_max": 7,
+        "min_stay_days": 4,
+        "needs_duration_review": false,
+        "research_note": "auto upsert: 1-12月推荐去的国内入门级的雪山",
+        "duration_filled_by": "local_heuristic"
+      },
+      "rating": {
+        "base": 0.65,
+        "source": "research_upsert"
+      },
+      "scene_match": [
+        "月推荐去",
+        "的国内入",
+        "门级的雪"
+      ],
+      "research_sources": [
+        {
+          "platform": "xiaohongshu",
+          "topic": "寒假旅行 雪山 攻略",
+          "title": "1-12月推荐去的国内入门级的雪山"
+        }
+      ]
+    },
+    {
+      "id": "travel_banff",
+      "name": "班夫冬日",
+      "aliases": [
+        "Banff",
+        "班夫"
+      ],
+      "category": "travel_abroad",
+      "bucket": "travel",
+      "location": {
+        "region": "加拿大",
+        "city": "Banff",
+        "hub": "abroad"
+      },
+      "reasonableness": {
+        "typical_days": 6,
+        "typical_days_min": 4,
+        "typical_days_max": 9,
+        "min_stay_days": 4,
+        "season": [
+          "winter"
+        ],
+        "needs_duration_review": false,
+        "research_note": "upsert from research: 🇨🇦Banff冬季自驾景点保姆级攻略（附地图）",
+        "duration_filled_by": "local_heuristic"
+      },
+      "rating": {
+        "base": 0.7,
+        "source": "research_upsert"
+      },
+      "scene_match": [
+        "Banff",
+        "雪山",
+        "自驾"
+      ],
+      "research_sources": [
+        {
+          "platform": "xiaohongshu",
+          "topic": "寒假旅行 雪山 攻略",
+          "title": "🇨🇦Banff冬季自驾景点保姆级攻略（附地图）"
+        }
+      ]
+    },
+    {
+      "id": "travel_meili",
+      "name": "梅里雪山",
+      "aliases": [
+        "梅里",
+        "日照金山"
+      ],
+      "category": "travel_winter",
+      "bucket": "outdoor_outing",
+      "location": {
+        "region": "云南",
+        "city": "德钦",
+        "hub": "西南"
+      },
+      "reasonableness": {
+        "typical_days": 4,
+        "typical_days_min": 3,
+        "typical_days_max": 6,
+        "min_stay_days": 3,
+        "season": [
+          "winter"
+        ],
+        "needs_duration_review": false,
+        "research_note": "upsert from research: 元旦适合去梅里雪山看日照金山吗？（附攻略）",
+        "duration_filled_by": "local_heuristic"
+      },
+      "rating": {
+        "base": 0.75,
+        "source": "research_upsert"
+      },
+      "scene_match": [
+        "雪山",
+        "梅里",
+        "日照金山"
+      ],
+      "research_sources": [
+        {
+          "platform": "xiaohongshu",
+          "topic": "寒假旅行 雪山 攻略",
+          "title": "元旦适合去梅里雪山看日照金山吗？（附攻略）"
+        }
+      ]
+    },
+    {
+      "id": "research_九件可以直接复制的北京周_109335",
+      "name": "九件可以直接复制的北京周末清单！",
+      "aliases": [],
+      "category": "city_fun",
+      "bucket": "city_fun",
+      "location": {
+        "region": "未知",
+        "city": "",
+        "hub": ""
+      },
+      "reasonableness": {
+        "typical_days": 1,
+        "typical_days_min": 1,
+        "typical_days_max": 3,
+        "min_stay_days": 1,
+        "needs_duration_review": false,
+        "research_note": "auto upsert: 九件可以直接复制的北京周末清单！",
+        "duration_filled_by": "local_heuristic"
+      },
+      "rating": {
+        "base": 0.65,
+        "source": "research_upsert"
+      },
+      "scene_match": [
+        "九件可以",
+        "直接复制",
+        "的北京周",
+        "末清单"
+      ],
+      "research_sources": [
+        {
+          "platform": "xiaohongshu",
+          "topic": "大学生 北京 周末玩什么 探店",
+          "title": "九件可以直接复制的北京周末清单！"
+        }
+      ]
+    },
+    {
+      "id": "film_internship",
+      "name": "电影公司实习",
+      "aliases": [
+        "电影公司",
+        "实习",
+        "场记",
+        "粗剪",
+        "跟组",
+        "影视实习"
+      ],
+      "category": "work_internship",
+      "bucket": "work_internship",
+      "location": {
+        "region": "北京",
+        "city": "北京",
+        "hub": "市区影视公司"
+      },
+      "reasonableness": {
+        "typical_days": 1,
+        "typical_days_min": 1,
+        "typical_days_max": 1,
+        "min_stay_days": 1,
+        "typical_hours": 4,
+        "min_hours": 3,
+        "transit_hours_from": {
+          "北京": 1
+        },
+        "min_transit_days_from": {},
+        "season": [
+          "all"
+        ],
+        "research_note": "大三轻度兼职实习，单日半天~4h；学期内每周随机约 3～5 个工作日有实习（ISO 周种子）；不占多日旅弧。"
+      },
+      "rating": {
+        "base": 0.85,
+        "source": "persona_internship"
+      },
+      "scene_match": [
+        "实习",
+        "片场",
+        "剪辑室",
+        "场记"
+      ]
+    },
+    {
+      "id": "dorm_surf",
+      "name": "宿舍刷小红书/抖音",
+      "aliases": [
+        "刷小红书",
+        "刷抖音",
+        "宿舍冲浪"
+      ],
+      "category": "dorm",
+      "bucket": "weekend_home",
+      "location": {
+        "region": "北京",
+        "city": "北京",
+        "hub": "北舞宿舍"
+      },
+      "reasonableness": {
+        "typical_days": 1,
+        "typical_days_min": 1,
+        "typical_days_max": 1,
+        "min_stay_days": 1,
+        "typical_hours": 3,
+        "min_hours": 1,
+        "transit_hours_from": {
+          "北京": 0
+        },
+        "min_transit_days_from": {},
+        "season": [
+          "all"
+        ],
+        "research_note": "宿舍空档，供冲浪/聊天主动节拍开口。"
+      },
+      "rating": {
+        "base": 0.8,
+        "source": "realism_quiet"
+      },
+      "scene_match": [
+        "刷小红书",
+        "刷抖音"
+      ]
+    },
+    {
+      "id": "dorm_chat",
+      "name": "宿舍和男友微信闲聊",
+      "aliases": [
+        "微信闲聊",
+        "宿舍聊天"
+      ],
+      "category": "dorm",
+      "bucket": "weekend_home",
+      "location": {
+        "region": "北京",
+        "city": "北京",
+        "hub": "北舞宿舍"
+      },
+      "reasonableness": {
+        "typical_days": 1,
+        "typical_days_min": 1,
+        "typical_days_max": 1,
+        "min_stay_days": 1,
+        "typical_hours": 3,
+        "min_hours": 1,
+        "transit_hours_from": {
+          "北京": 0
+        },
+        "min_transit_days_from": {},
+        "season": [
+          "all"
+        ],
+        "research_note": "宿舍空档，供冲浪/聊天主动节拍开口。"
+      },
+      "rating": {
+        "base": 0.8,
+        "source": "realism_quiet"
+      },
+      "scene_match": [
+        "微信闲聊",
+        "宿舍聊天"
+      ]
+    },
+    {
+      "id": "film_internship_errand",
+      "name": "实习外出对接",
+      "aliases": [
+        "实习外出对接",
+        "器材交接"
+      ],
+      "category": "work_internship",
+      "bucket": "work_internship",
+      "location": {
+        "region": "北京",
+        "city": "北京",
+        "hub": "外景工作点"
+      },
+      "reasonableness": {
+        "typical_days": 1,
+        "typical_days_min": 1,
+        "typical_days_max": 1,
+        "min_stay_days": 1,
+        "typical_hours": 3,
+        "min_hours": 3,
+        "transit_hours_from": {
+          "北京": 1
+        },
+        "min_transit_days_from": {},
+        "season": [
+          "all"
+        ],
+        "research_note": "用户2026-10-27授权扩展实习；出差含往返交通预算，非已发生事实"
+      },
+      "rating": {
+        "base": 0.85,
+        "source": "persona_internship"
+      },
+      "scene_match": [
+        "实习外出对接",
+        "器材交接"
+      ]
+    },
+    {
+      "id": "film_internship_scout",
+      "name": "室外取景踩点",
+      "aliases": [
+        "室外取景踩点",
+        "取景器"
+      ],
+      "category": "work_internship",
+      "bucket": "work_internship",
+      "location": {
+        "region": "北京",
+        "city": "北京",
+        "hub": "外景工作点"
+      },
+      "reasonableness": {
+        "typical_days": 1,
+        "typical_days_min": 1,
+        "typical_days_max": 1,
+        "min_stay_days": 1,
+        "typical_hours": 3,
+        "min_hours": 3,
+        "transit_hours_from": {
+          "北京": 1
+        },
+        "min_transit_days_from": {},
+        "season": [
+          "all"
+        ],
+        "research_note": "用户2026-10-27授权扩展实习；出差含往返交通预算，非已发生事实"
+      },
+      "rating": {
+        "base": 0.85,
+        "source": "persona_internship"
+      },
+      "scene_match": [
+        "室外取景踩点",
+        "取景器"
+      ]
+    },
+    {
+      "id": "film_internship_location",
+      "name": "外景跟组",
+      "aliases": [
+        "外景跟组",
+        "场记板"
+      ],
+      "category": "work_internship",
+      "bucket": "work_internship",
+      "location": {
+        "region": "北京",
+        "city": "北京",
+        "hub": "外景工作点"
+      },
+      "reasonableness": {
+        "typical_days": 1,
+        "typical_days_min": 1,
+        "typical_days_max": 1,
+        "min_stay_days": 1,
+        "typical_hours": 3,
+        "min_hours": 3,
+        "transit_hours_from": {
+          "北京": 1
+        },
+        "min_transit_days_from": {},
+        "season": [
+          "all"
+        ],
+        "research_note": "用户2026-10-27授权扩展实习；出差含往返交通预算，非已发生事实"
+      },
+      "rating": {
+        "base": 0.85,
+        "source": "persona_internship"
+      },
+      "scene_match": [
+        "外景跟组",
+        "场记板"
+      ]
+    },
+    {
+      "id": "film_internship_trip",
+      "name": "实习外地短途出差",
+      "aliases": [
+        "实习出差交通",
+        "室外取景踩点",
+        "外景跟组"
+      ],
+      "category": "work_internship",
+      "bucket": "work_internship",
+      "location": {
+        "region": "天津",
+        "city": "天津",
+        "hub": "外景工作点"
+      },
+      "reasonableness": {
+        "typical_days": 1,
+        "typical_days_min": 1,
+        "typical_days_max": 1,
+        "min_stay_days": 1,
+        "typical_hours": 10,
+        "min_hours": 10,
+        "transit_hours_from": {
+          "北京": 1
+        },
+        "min_transit_days_from": {},
+        "season": [
+          "all"
+        ],
+        "research_note": "用户2026-10-27授权扩展实习；出差含往返交通预算，非已发生事实"
+      },
+      "rating": {
+        "base": 0.85,
+        "source": "persona_internship"
+      },
+      "scene_match": [
+        "实习出差交通",
+        "室外取景踩点",
+        "外景跟组",
+        "天津海河取景",
+        "杭州运河取景",
+        "上海滨江取景",
+        "青岛海边取景"
+      ],
+      "review_policy": "config/schedule_review.json",
+      "activity_tree": "data/internship_tree.json#destinations"
+    },
+    {
+      "id": "evening_shopping_01",
+      "name": "试穿外套，和室友互相挑颜色",
+      "category": "evening_shopping",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "试穿外套，和室友互相挑颜色"
+      ],
+      "scene_match": [
+        "试衣镜和衣架",
+        "试穿外套，和室友互相挑颜色"
+      ],
+      "scene_ids": [
+        "night-008"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.0,
+        "min_hours": 0.75,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "试一件能搭现有衣服的外套",
+        "companion_plan": "林晓晚",
+        "destination_area": "万寿寺路周边服装店候选",
+        "steps": [
+          "看版型和袖长",
+          "试两种颜色，在镜前比较",
+          "记下更合适的颜色，不强行买"
+        ],
+        "photo_subject": "试衣镜和衣架",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_shopping_02",
+      "name": "逛文创小店挑明信片和贴纸",
+      "category": "evening_shopping",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "逛文创小店挑明信片和贴纸"
+      ],
+      "scene_match": [
+        "明信片和贴纸架",
+        "逛文创小店挑明信片和贴纸"
+      ],
+      "scene_ids": [
+        "night-009"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.0,
+        "min_hours": 0.75,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "给分镜本补一点贴纸和书签",
+        "companion_plan": "周予安",
+        "destination_area": "万寿寺路周边文具文创店候选",
+        "steps": [
+          "翻明信片架找两张喜欢的构图",
+          "挑一组不抢画面的小贴纸",
+          "对比纸张手感，收好购物清单"
+        ],
+        "photo_subject": "明信片和贴纸架",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_shopping_03",
+      "name": "逛饰品店试发夹和耳饰",
+      "category": "evening_shopping",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "逛饰品店试发夹和耳饰"
+      ],
+      "scene_match": [
+        "发夹耳饰展示盘和台镜",
+        "逛饰品店试发夹和耳饰"
+      ],
+      "scene_ids": [
+        "night-010"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.0,
+        "min_hours": 0.75,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "给日常扎发找一个不勒头的发夹",
+        "companion_plan": "林晓晚",
+        "destination_area": "万寿寺路周边饰品柜台候选",
+        "steps": [
+          "先看哑光发夹和小耳饰",
+          "在小镜子前试两种颜色",
+          "比较佩戴舒适度，拍下喜欢的一款"
+        ],
+        "photo_subject": "发夹耳饰展示盘和台镜",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_shopping_04",
+      "name": "去生活杂货店挑杯子和收纳盒",
+      "category": "evening_shopping",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "去生活杂货店挑杯子和收纳盒"
+      ],
+      "scene_match": [
+        "杯子和收纳盒货架",
+        "去生活杂货店挑杯子和收纳盒"
+      ],
+      "scene_ids": [
+        "night-011"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.0,
+        "min_hours": 0.75,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "给宿舍桌面找个小收纳盒",
+        "companion_plan": "周予安",
+        "destination_area": "万寿寺路周边生活杂货店候选",
+        "steps": [
+          "先量随身本子的宽度作参照",
+          "看杯子和分格收纳盒",
+          "比较尺寸，列出需要的款式"
+        ],
+        "photo_subject": "杯子和收纳盒货架",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_shopping_05",
+      "name": "逛鞋包店，看完橱窗再歇脚",
+      "category": "evening_shopping",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "逛鞋包店，看完橱窗再歇脚"
+      ],
+      "scene_match": [
+        "鞋包橱窗和休息椅",
+        "逛鞋包店，看完橱窗再歇脚"
+      ],
+      "scene_ids": [
+        "night-008"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.0,
+        "min_hours": 0.75,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "找适合走路和外拍的小包",
+        "companion_plan": "林晓晚",
+        "destination_area": "万寿寺路周边鞋包店候选",
+        "steps": [
+          "看橱窗配色",
+          "试背小包，检查肩带和容量",
+          "到休息座椅旁整理想法"
+        ],
+        "photo_subject": "鞋包橱窗和休息椅",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_nightview_01",
+      "name": "看临街橱窗灯光，拍玻璃倒影",
+      "category": "evening_nightview",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "看临街橱窗灯光，拍玻璃倒影"
+      ],
+      "scene_match": [
+        "夜间橱窗玻璃倒影",
+        "看临街橱窗灯光，拍玻璃倒影"
+      ],
+      "scene_ids": [
+        "night-012"
+      ],
+      "reasonableness": {
+        "typical_hours": 0.9166666666666666,
+        "min_hours": 0.6666666666666666,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "收集三张冷暖灯光倒影作构图练习",
+        "companion_plan": "周予安",
+        "destination_area": "万寿寺路沿街亮灯商铺外人行道",
+        "steps": [
+          "先找不妨碍行人的玻璃橱窗",
+          "拍暖色灯与蓝色夜空的对比",
+          "停下检查画面，删掉明显糊片"
+        ],
+        "photo_subject": "夜间橱窗玻璃倒影",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_nightview_02",
+      "name": "在开阔街口看车流，试拍长曝光",
+      "category": "evening_nightview",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "在开阔街口看车流，试拍长曝光"
+      ],
+      "scene_match": [
+        "人行道与车流光轨",
+        "在开阔街口看车流，试拍长曝光"
+      ],
+      "scene_ids": [
+        "night-013"
+      ],
+      "reasonableness": {
+        "typical_hours": 0.9166666666666666,
+        "min_hours": 0.6666666666666666,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "练习固定机位记录车流",
+        "companion_plan": "周予安",
+        "destination_area": "万寿寺路与中关村南大街附近安全人行道",
+        "steps": [
+          "在人行道内侧选稳妥机位",
+          "分别试普通曝光和较慢快门",
+          "比较车灯光线，记一条拍摄心得"
+        ],
+        "photo_subject": "人行道与车流光轨",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_nightview_03",
+      "name": "看城市楼宇亮灯，找冷暖色对比",
+      "category": "evening_nightview",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "看城市楼宇亮灯，找冷暖色对比"
+      ],
+      "scene_match": [
+        "楼宇灯窗与树影",
+        "看城市楼宇亮灯，找冷暖色对比"
+      ],
+      "scene_ids": [
+        "night-013"
+      ],
+      "reasonableness": {
+        "typical_hours": 0.9166666666666666,
+        "min_hours": 0.6666666666666666,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "找一组楼宇灯光和树影的对比",
+        "companion_plan": "林晓晚",
+        "destination_area": "中关村南大街沿线公共人行道",
+        "steps": [
+          "先沿亮灯路段走一小段",
+          "在安全停留点拍楼宇灯窗",
+          "到有灯光的位置歇脚再返校"
+        ],
+        "photo_subject": "楼宇灯窗与树影",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_nightview_04",
+      "name": "沿亮灯步道看夜色，坐一会儿",
+      "category": "evening_nightview",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "沿亮灯步道看夜色，坐一会儿"
+      ],
+      "scene_match": [
+        "路灯下步道与长椅",
+        "沿亮灯步道看夜色，坐一会儿"
+      ],
+      "scene_ids": [
+        "night-013"
+      ],
+      "reasonableness": {
+        "typical_hours": 0.9166666666666666,
+        "min_hours": 0.6666666666666666,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "放松眼睛，拍一张路灯下的树影",
+        "companion_plan": "林晓晚",
+        "destination_area": "万寿寺路沿线公共步道",
+        "steps": [
+          "走到路灯连续且有人通行的路段",
+          "找树影和长椅构图，短暂停留",
+          "走回来时看一眼刚拍的照片"
+        ],
+        "photo_subject": "路灯下步道与长椅",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_nightview_05",
+      "name": "在室内临窗座位看街景亮起来",
+      "category": "evening_nightview",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "在室内临窗座位看街景亮起来"
+      ],
+      "scene_match": [
+        "热饮桌角与夜景窗户",
+        "在室内临窗座位看街景亮起来"
+      ],
+      "scene_ids": [
+        "night-014"
+      ],
+      "reasonableness": {
+        "typical_hours": 0.9166666666666666,
+        "min_hours": 0.6666666666666666,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "暖和地坐着看夜景，画一张窗边小速写",
+        "companion_plan": "周予安",
+        "destination_area": "万寿寺路周边临窗饮品店候选",
+        "steps": [
+          "找面向街道的室内座位",
+          "边喝热饮边画窗框与灯光",
+          "拍桌角和窗外夜色，整理画纸"
+        ],
+        "photo_subject": "热饮桌角与夜景窗户",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_singing_01",
+      "name": "和室友轮流唱拿手歌，中途歇嗓子",
+      "category": "evening_singing",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "和室友轮流唱拿手歌，中途歇嗓子"
+      ],
+      "scene_match": [
+        "点歌台与包间沙发",
+        "和室友轮流唱拿手歌，中途歇嗓子"
+      ],
+      "scene_ids": [
+        "night-003"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.25,
+        "min_hours": 1.0,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "各唱两首拿手歌，轻松放松",
+        "companion_plan": "陈可心",
+        "destination_area": "学校周边可往返的KTV候选（门店待确认）",
+        "steps": [
+          "点熟悉的中低音歌曲",
+          "轮流唱两轮，中间喝水歇嗓",
+          "留一首合唱收尾，整理随身物品"
+        ],
+        "photo_subject": "点歌台与包间沙发",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_singing_02",
+      "name": "跟同学挑战双人合唱，笑场后重来",
+      "category": "evening_singing",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "跟同学挑战双人合唱，笑场后重来"
+      ],
+      "scene_match": [
+        "双话筒与小桌",
+        "跟同学挑战双人合唱，笑场后重来"
+      ],
+      "scene_ids": [
+        "night-015"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.25,
+        "min_hours": 1.0,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "练一首双人合唱的换气和接句",
+        "companion_plan": "陈可心",
+        "destination_area": "学校周边可往返的KTV候选（门店待确认）",
+        "steps": [
+          "先分好两段歌词",
+          "用普通音量练接句，不追求飙高音",
+          "休息后完整唱一遍"
+        ],
+        "photo_subject": "双话筒与小桌",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_singing_03",
+      "name": "和室友唱老歌，挑一首粤语歌",
+      "category": "evening_singing",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "和室友唱老歌，挑一首粤语歌"
+      ],
+      "scene_match": [
+        "话筒饮水杯与点歌屏",
+        "和室友唱老歌，挑一首粤语歌"
+      ],
+      "scene_ids": [
+        "night-015"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.25,
+        "min_hours": 1.0,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "唱几首熟悉的老歌，最后试一首粤语歌",
+        "companion_plan": "林晓晚",
+        "destination_area": "学校周边可往返的KTV候选（门店待确认）",
+        "steps": [
+          "各点一首熟悉老歌",
+          "轮流唱，中途喝水聊天",
+          "挑一首会唱的粤语歌作收尾"
+        ],
+        "photo_subject": "话筒饮水杯与点歌屏",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_singing_04",
+      "name": "练音乐剧选段，唱完聊哪里跑调",
+      "category": "evening_singing",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "练音乐剧选段，唱完聊哪里跑调"
+      ],
+      "scene_match": [
+        "包间座位与话筒",
+        "练音乐剧选段，唱完聊哪里跑调"
+      ],
+      "scene_ids": [
+        "night-003"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.25,
+        "min_hours": 1.0,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "练音乐剧短选段的情绪和咬字",
+        "companion_plan": "陈可心",
+        "destination_area": "学校周边可往返的KTV候选（门店待确认）",
+        "steps": [
+          "挑已经熟悉的短选段",
+          "先轻声顺词，再试情绪变化",
+          "歇嗓子，聊哪里需要重新练"
+        ],
+        "photo_subject": "包间座位与话筒",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_singing_05",
+      "name": "随心点几首轻松的歌，不拼高音",
+      "category": "evening_singing",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "随心点几首轻松的歌，不拼高音"
+      ],
+      "scene_match": [
+        "暖色包间沙发和桌面",
+        "随心点几首轻松的歌，不拼高音"
+      ],
+      "scene_ids": [
+        "night-003"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.25,
+        "min_hours": 1.0,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "只唱轻松的歌，不把休息晚变成练习课",
+        "companion_plan": "林晓晚",
+        "destination_area": "学校周边可往返的KTV候选（门店待确认）",
+        "steps": [
+          "各点一首舒适音域的歌",
+          "唱唱停停，喝水闲聊",
+          "选一首大家熟悉的歌收尾"
+        ],
+        "photo_subject": "暖色包间沙发和桌面",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_movie_01",
+      "name": "和同学看喜剧，散场聊最喜欢的桥段",
+      "category": "evening_movie",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "和同学看喜剧，散场聊最喜欢的桥段"
+      ],
+      "scene_match": [
+        "电影院大厅与检票走廊",
+        "和同学看喜剧，散场聊最喜欢的桥段"
+      ],
+      "scene_ids": [
+        "night-004"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.875,
+        "min_hours": 1.6666666666666667,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "看喜剧，重点留意喜剧节奏",
+        "companion_plan": "周予安",
+        "destination_area": "学校周边影院候选（片名/场次待确认）",
+        "steps": [
+          "核对片名场次，在大厅等候",
+          "安静观影，不拍银幕；片长与场次须能放入本时段，否则取消",
+          "散场在大厅聊一个印象深的镜头"
+        ],
+        "photo_subject": "电影院大厅与检票走廊",
+        "fallback": "核实片名、场次、完整片长与往返；放不进现有时段则取消观影，不中途离场赶计划，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_movie_02",
+      "name": "看一部动画，留意色彩和人物动作",
+      "category": "evening_movie",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "看一部动画，留意色彩和人物动作"
+      ],
+      "scene_match": [
+        "电影院大厅与检票走廊",
+        "看一部动画，留意色彩和人物动作"
+      ],
+      "scene_ids": [
+        "night-019"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.875,
+        "min_hours": 1.6666666666666667,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "看动画，重点留意角色动作与配色",
+        "companion_plan": "周予安",
+        "destination_area": "学校周边影院候选（片名/场次待确认）",
+        "steps": [
+          "核对片名场次，在大厅等候",
+          "安静观影，不拍银幕；片长与场次须能放入本时段，否则取消",
+          "散场在大厅聊一个印象深的镜头"
+        ],
+        "photo_subject": "电影院大厅与检票走廊",
+        "fallback": "核实片名、场次、完整片长与往返；放不进现有时段则取消观影，不中途离场赶计划，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_movie_03",
+      "name": "看剧情片，散场讨论人物选择",
+      "category": "evening_movie",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "看剧情片，散场讨论人物选择"
+      ],
+      "scene_match": [
+        "电影院大厅与检票走廊",
+        "看剧情片，散场讨论人物选择"
+      ],
+      "scene_ids": [
+        "night-004"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.875,
+        "min_hours": 1.6666666666666667,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "看剧情片，重点留意人物选择",
+        "companion_plan": "周予安",
+        "destination_area": "学校周边影院候选（片名/场次待确认）",
+        "steps": [
+          "核对片名场次，在大厅等候",
+          "安静观影，不拍银幕；片长与场次须能放入本时段，否则取消",
+          "散场在大厅聊一个印象深的镜头"
+        ],
+        "photo_subject": "电影院大厅与检票走廊",
+        "fallback": "核实片名、场次、完整片长与往返；放不进现有时段则取消观影，不中途离场赶计划，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_movie_04",
+      "name": "看悬疑片，散场互相猜结尾",
+      "category": "evening_movie",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "看悬疑片，散场互相猜结尾"
+      ],
+      "scene_match": [
+        "电影院大厅与检票走廊",
+        "看悬疑片，散场互相猜结尾"
+      ],
+      "scene_ids": [
+        "night-019"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.875,
+        "min_hours": 1.6666666666666667,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "看悬疑片，重点留意悬念铺垫",
+        "companion_plan": "周予安",
+        "destination_area": "学校周边影院候选（片名/场次待确认）",
+        "steps": [
+          "核对片名场次，在大厅等候",
+          "安静观影，不拍银幕；片长与场次须能放入本时段，否则取消",
+          "散场在大厅聊一个印象深的镜头"
+        ],
+        "photo_subject": "电影院大厅与检票走廊",
+        "fallback": "核实片名、场次、完整片长与往返；放不进现有时段则取消观影，不中途离场赶计划，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_movie_05",
+      "name": "看纪录片，散场记两笔镜头想法",
+      "category": "evening_movie",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "看纪录片，散场记两笔镜头想法"
+      ],
+      "scene_match": [
+        "电影院大厅与检票走廊",
+        "看纪录片，散场记两笔镜头想法"
+      ],
+      "scene_ids": [
+        "night-004"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.875,
+        "min_hours": 1.6666666666666667,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "看纪录片，重点留意镜头与环境声",
+        "companion_plan": "周予安",
+        "destination_area": "学校周边影院候选（片名/场次待确认）",
+        "steps": [
+          "核对片名场次，在大厅等候",
+          "安静观影，不拍银幕；片长与场次须能放入本时段，否则取消",
+          "散场在大厅聊一个印象深的镜头"
+        ],
+        "photo_subject": "电影院大厅与检票走廊",
+        "fallback": "核实片名、场次、完整片长与往返；放不进现有时段则取消观影，不中途离场赶计划，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_light_fun_01",
+      "name": "和同学玩两局轻桌游，结束聊离谱操作",
+      "category": "evening_light_fun",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "和同学玩两局轻桌游，结束聊离谱操作"
+      ],
+      "scene_match": [
+        "卡牌木桌与计分纸",
+        "和同学玩两局轻桌游，结束聊离谱操作"
+      ],
+      "scene_ids": [
+        "night-016"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.125,
+        "min_hours": 0.8333333333333334,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "玩两局短桌游，换一种思路",
+        "companion_plan": "周予安",
+        "destination_area": "学校周边桌游店候选",
+        "steps": [
+          "选规则能快速讲清的游戏",
+          "玩两局，中间留休息",
+          "复盘一处好笑操作，收好卡牌"
+        ],
+        "photo_subject": "卡牌木桌与计分纸",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_light_fun_02",
+      "name": "做小串珠或钥匙扣，给成品拍照",
+      "category": "evening_light_fun",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "做小串珠或钥匙扣，给成品拍照"
+      ],
+      "scene_match": [
+        "串珠托盘与半成品挂件",
+        "做小串珠或钥匙扣，给成品拍照"
+      ],
+      "scene_ids": [
+        "night-017"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.125,
+        "min_hours": 0.8333333333333334,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "做一个自己配色的手机挂件",
+        "companion_plan": "陈可心",
+        "destination_area": "学校周边手作店候选",
+        "steps": [
+          "挑三种颜色，先排一遍顺序",
+          "串珠打结，检查结扣",
+          "在桌面给成品拍一张"
+        ],
+        "photo_subject": "串珠托盘与半成品挂件",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_light_fun_03",
+      "name": "拼一个小模型，边拼边聊天",
+      "category": "evening_light_fun",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "拼一个小模型，边拼边聊天"
+      ],
+      "scene_match": [
+        "模型零件与木桌",
+        "拼一个小模型，边拼边聊天"
+      ],
+      "scene_ids": [
+        "night-016"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.125,
+        "min_hours": 0.8333333333333334,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "拼一个一小时内能收尾的小模型",
+        "companion_plan": "周予安",
+        "destination_area": "学校周边手作店候选",
+        "steps": [
+          "清点零件，先看步骤",
+          "拼主体，不选超长复杂款",
+          "把未完成部分分袋收好"
+        ],
+        "photo_subject": "模型零件与木桌",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_light_fun_04",
+      "name": "做简单纸艺，挑配色拍完成品",
+      "category": "evening_light_fun",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "做简单纸艺，挑配色拍完成品"
+      ],
+      "scene_match": [
+        "彩纸剪刀与手工小卡",
+        "做简单纸艺，挑配色拍完成品"
+      ],
+      "scene_ids": [
+        "night-018"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.125,
+        "min_hours": 0.8333333333333334,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "做一张折纸立体小卡",
+        "companion_plan": "陈可心",
+        "destination_area": "学校周边手作店候选",
+        "steps": [
+          "选两种主色，先折样片",
+          "裁切拼贴，压平折痕",
+          "在干净桌面拍成品细节"
+        ],
+        "photo_subject": "彩纸剪刀与手工小卡",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_light_fun_05",
+      "name": "和室友画速写小卡，互相吐槽画风",
+      "category": "evening_light_fun",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "和室友画速写小卡，互相吐槽画风"
+      ],
+      "scene_match": [
+        "速写卡彩铅与热饮",
+        "和室友画速写小卡，互相吐槽画风"
+      ],
+      "scene_ids": [
+        "night-018"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.125,
+        "min_hours": 0.8333333333333334,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "互画一张十分钟速写卡",
+        "companion_plan": "林晓晚",
+        "destination_area": "学校周边安静饮品店候选",
+        "steps": [
+          "找有桌面的安静座位",
+          "轮流画两张小卡，不追求像",
+          "交换看画，拍下自己的纸笔"
+        ],
+        "photo_subject": "速写卡彩铅与热饮",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_campus_walk_01",
+      "name": "饭后在校园走一小圈，路灯下歇脚",
+      "category": "evening_campus_walk",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "饭后在校园走一小圈，路灯下歇脚"
+      ],
+      "scene_match": [
+        "校园路灯步道",
+        "饭后在校园走一小圈，路灯下歇脚"
+      ],
+      "scene_ids": [
+        "night-006"
+      ],
+      "reasonableness": {
+        "typical_hours": 0.5833333333333334,
+        "min_hours": 0.5,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.08333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "饭后透气，短走一圈就回",
+        "companion_plan": "自己",
+        "destination_area": "北舞校园宿舍附近路灯步道",
+        "steps": [
+          "从宿舍楼附近慢慢走",
+          "在路灯下休息片刻",
+          "原路回寝，准备洗漱"
+        ],
+        "photo_subject": "校园路灯步道",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_campus_walk_02",
+      "name": "绕宿舍附近透透气，拍一片树影",
+      "category": "evening_campus_walk",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "绕宿舍附近透透气，拍一片树影"
+      ],
+      "scene_match": [
+        "校园长椅和树影",
+        "绕宿舍附近透透气，拍一片树影"
+      ],
+      "scene_ids": [
+        "night-006"
+      ],
+      "reasonableness": {
+        "typical_hours": 0.5833333333333334,
+        "min_hours": 0.5,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.08333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "给眼睛休息一下，拍一片树影",
+        "companion_plan": "自己",
+        "destination_area": "北舞校园宿舍附近树影路段",
+        "steps": [
+          "走到附近亮灯处",
+          "拍一张树影，收起手机",
+          "绕小圈回寝，不延长夜游"
+        ],
+        "photo_subject": "校园长椅和树影",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_night_work_01",
+      "name": "记录路灯色温与人行道光影，整理机位备注",
+      "category": "evening_night_work",
+      "bucket": "work_internship",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "记录路灯色温与人行道光影，整理机位备注"
+      ],
+      "scene_match": [
+        "路灯与机位记录本",
+        "记录路灯色温与人行道光影，整理机位备注"
+      ],
+      "scene_ids": [
+        "night-007"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.3333333333333333,
+        "min_hours": 1.0,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.5
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "完成既有晚实习的取景记录，不另加项目",
+        "companion_plan": "实习同事（按实际通知）",
+        "destination_area": "海淀校区周边外景候选（以实习通知为准）",
+        "steps": [
+          "先确认安全机位与工作范围",
+          "记录两处路灯色温和地面光影",
+          "收工核对机位备注与器材"
+        ],
+        "photo_subject": "路灯与机位记录本",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_night_work_02",
+      "name": "拍橱窗倒影空镜，收工核对素材",
+      "category": "evening_night_work",
+      "bucket": "work_internship",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "拍橱窗倒影空镜，收工核对素材"
+      ],
+      "scene_match": [
+        "玻璃倒影与相机",
+        "拍橱窗倒影空镜，收工核对素材"
+      ],
+      "scene_ids": [
+        "night-012"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.3333333333333333,
+        "min_hours": 1.0,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.5
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "完成既有晚实习的取景记录，不另加项目",
+        "companion_plan": "实习同事（按实际通知）",
+        "destination_area": "海淀校区周边外景候选（以实习通知为准）",
+        "steps": [
+          "先检查玻璃反光与行人动线",
+          "固定机位拍橱窗倒影空镜",
+          "收工核对素材编号"
+        ],
+        "photo_subject": "玻璃倒影与相机",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_night_work_03",
+      "name": "记录安全街角的环境声，拍固定机位空镜",
+      "category": "evening_night_work",
+      "bucket": "work_internship",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "记录安全街角的环境声，拍固定机位空镜"
+      ],
+      "scene_match": [
+        "便携录音器与夜间街角",
+        "记录安全街角的环境声，拍固定机位空镜"
+      ],
+      "scene_ids": [
+        "night-020"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.3333333333333333,
+        "min_hours": 1.0,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.5
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "完成既有晚实习的取景记录，不另加项目",
+        "companion_plan": "实习同事（按实际通知）",
+        "destination_area": "海淀校区周边外景候选（以实习通知为准）",
+        "steps": [
+          "检查收音电平与安全站位",
+          "记录短段环境声和固定空镜",
+          "试听录音，标注机位时间"
+        ],
+        "photo_subject": "便携录音器与夜间街角",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_night_work_04",
+      "name": "协助夜景外拍，间隙记录机位与补光位置",
+      "category": "evening_night_work",
+      "bucket": "work_internship",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "协助夜景外拍，间隙记录机位与补光位置"
+      ],
+      "scene_match": [
+        "三脚架与便携补光灯",
+        "协助夜景外拍，间隙记录机位与补光位置"
+      ],
+      "scene_ids": [
+        "night-020"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.3333333333333333,
+        "min_hours": 1.0,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.5
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "完成既有晚实习的取景记录，不另加项目",
+        "companion_plan": "实习同事（按实际通知）",
+        "destination_area": "海淀校区周边外景候选（以实习通知为准）",
+        "steps": [
+          "先协助检查三脚架与补光",
+          "在指导下记录机位和灯位",
+          "收工清点器材与电池"
+        ],
+        "photo_subject": "三脚架与便携补光灯",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_night_work_05",
+      "name": "拍楼宇灯光过渡，收工备份空镜素材",
+      "category": "evening_night_work",
+      "bucket": "work_internship",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "拍楼宇灯光过渡，收工备份空镜素材"
+      ],
+      "scene_match": [
+        "夜景相机与收纳包",
+        "拍楼宇灯光过渡，收工备份空镜素材"
+      ],
+      "scene_ids": [
+        "night-007"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.3333333333333333,
+        "min_hours": 1.0,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.5
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "完成既有晚实习的取景记录，不另加项目",
+        "companion_plan": "实习同事（按实际通知）",
+        "destination_area": "海淀校区周边外景候选（以实习通知为准）",
+        "steps": [
+          "确认楼宇取景范围",
+          "记录亮灯变化的短段空镜",
+          "核对素材卡并安排回去备份"
+        ],
+        "photo_subject": "夜景相机与收纳包",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_shopping_06",
+      "name": "选围巾配色，不买重复款",
+      "category": "evening_shopping",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "选围巾配色，不买重复款"
+      ],
+      "scene_match": [
+        "服装店试衣镜",
+        "选围巾配色，不买重复款"
+      ],
+      "scene_ids": [
+        "night-008"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.0,
+        "min_hours": 0.75,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "把现有大衣配得更协调",
+        "companion_plan": "林晓晚",
+        "destination_area": "万寿寺路周边服装店候选",
+        "steps": [
+          "看两种低饱和配色",
+          "在镜前比一下长度与厚度",
+          "拍下候选颜色，回寝对照衣柜"
+        ],
+        "photo_subject": "服装店试衣镜",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_shopping_07",
+      "name": "逛文具店试笔，补一支分镜笔",
+      "category": "evening_shopping",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "逛文具店试笔，补一支分镜笔"
+      ],
+      "scene_match": [
+        "文具文创明信片架",
+        "逛文具店试笔，补一支分镜笔"
+      ],
+      "scene_ids": [
+        "night-009"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.0,
+        "min_hours": 0.75,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "找一支适合画分镜线条的笔",
+        "companion_plan": "周予安",
+        "destination_area": "万寿寺路周边服装店候选",
+        "steps": [
+          "看粗细和笔尖",
+          "在试写纸画直线与小格",
+          "对比手感，只记真正需要的型号"
+        ],
+        "photo_subject": "文具文创明信片架",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_shopping_08",
+      "name": "看小发圈和鲨鱼夹，试扎低丸子",
+      "category": "evening_shopping",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "看小发圈和鲨鱼夹，试扎低丸子"
+      ],
+      "scene_match": [
+        "饰品柜台发夹耳饰",
+        "看小发圈和鲨鱼夹，试扎低丸子"
+      ],
+      "scene_ids": [
+        "night-010"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.0,
+        "min_hours": 0.75,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "找到排练后能快速整理头发的配饰",
+        "companion_plan": "陈可心",
+        "destination_area": "万寿寺路周边服装店候选",
+        "steps": [
+          "挑不刮头发的款式",
+          "用台镜试低丸子与半扎发",
+          "记下舒适的一款，归还试用品"
+        ],
+        "photo_subject": "饰品柜台发夹耳饰",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_shopping_09",
+      "name": "看帆布包和小零钱袋",
+      "category": "evening_shopping",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "看帆布包和小零钱袋"
+      ],
+      "scene_match": [
+        "生活杂货杯子收纳",
+        "看帆布包和小零钱袋"
+      ],
+      "scene_ids": [
+        "night-011"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.0,
+        "min_hours": 0.75,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "给零碎外拍用品找个轻便小袋",
+        "companion_plan": "林晓晚",
+        "destination_area": "万寿寺路周边服装店候选",
+        "steps": [
+          "先看袋口与内层",
+          "试装随身本和水杯",
+          "对比背带，整理需求清单"
+        ],
+        "photo_subject": "生活杂货杯子收纳",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_nightview_06",
+      "name": "看雨后橱窗反光，只走亮灯路段",
+      "category": "evening_nightview",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "看雨后橱窗反光，只走亮灯路段"
+      ],
+      "scene_match": [
+        "夜间橱窗玻璃倒影",
+        "看雨后橱窗反光，只走亮灯路段"
+      ],
+      "scene_ids": [
+        "night-012"
+      ],
+      "reasonableness": {
+        "typical_hours": 0.9166666666666666,
+        "min_hours": 0.6666666666666666,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "练一张雨后冷暖反光构图，雨停地面安全才出门",
+        "companion_plan": "周予安",
+        "destination_area": "万寿寺路沿街亮灯商铺外人行道",
+        "steps": [
+          "核对天气与路况",
+          "在人行道内侧拍玻璃反光",
+          "检查鞋底与相机，提前收工"
+        ],
+        "photo_subject": "夜间橱窗玻璃倒影",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_nightview_07",
+      "name": "坐窗边画三格夜景分镜",
+      "category": "evening_nightview",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "坐窗边画三格夜景分镜"
+      ],
+      "scene_match": [
+        "临窗热饮夜景",
+        "坐窗边画三格夜景分镜"
+      ],
+      "scene_ids": [
+        "night-014"
+      ],
+      "reasonableness": {
+        "typical_hours": 0.9166666666666666,
+        "min_hours": 0.6666666666666666,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "把同一扇窗画成远中近三种景别",
+        "companion_plan": "周予安",
+        "destination_area": "万寿寺路周边临窗饮品店候选",
+        "steps": [
+          "在室内选临窗座位",
+          "用十分钟分别画远中近三格",
+          "拍下画纸和窗光，喝完热饮收尾"
+        ],
+        "photo_subject": "临窗热饮夜景",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_nightview_08",
+      "name": "用手机试一组路灯散景",
+      "category": "evening_nightview",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "用手机试一组路灯散景"
+      ],
+      "scene_match": [
+        "夜间步道车流光影",
+        "用手机试一组路灯散景"
+      ],
+      "scene_ids": [
+        "night-013"
+      ],
+      "reasonableness": {
+        "typical_hours": 0.9166666666666666,
+        "min_hours": 0.6666666666666666,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "练前景清楚、背景灯光柔和的画面",
+        "companion_plan": "林晓晚",
+        "destination_area": "万寿寺路沿街亮灯商铺外人行道",
+        "steps": [
+          "找安全停留点",
+          "用随身小物试对焦距离",
+          "比较两张效果，沿原路返回"
+        ],
+        "photo_subject": "夜间步道车流光影",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_nightview_09",
+      "name": "逛亮灯街角，找一对互补色招牌",
+      "category": "evening_nightview",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "逛亮灯街角，找一对互补色招牌"
+      ],
+      "scene_match": [
+        "夜间橱窗玻璃倒影",
+        "逛亮灯街角，找一对互补色招牌"
+      ],
+      "scene_ids": [
+        "night-012"
+      ],
+      "reasonableness": {
+        "typical_hours": 0.9166666666666666,
+        "min_hours": 0.6666666666666666,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "收集一组有趣的城市配色",
+        "companion_plan": "林晓晚",
+        "destination_area": "万寿寺路沿街亮灯商铺外人行道",
+        "steps": [
+          "沿既定街段慢走",
+          "拍一处冷暖招牌对比，不拍路人正脸",
+          "挑两张留作配色灵感"
+        ],
+        "photo_subject": "夜间橱窗玻璃倒影",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_singing_06",
+      "name": "各选一首电影插曲轮流唱",
+      "category": "evening_singing",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "各选一首电影插曲轮流唱"
+      ],
+      "scene_match": [
+        "KTV话筒点歌桌面",
+        "各选一首电影插曲轮流唱"
+      ],
+      "scene_ids": [
+        "night-015"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.25,
+        "min_hours": 1.0,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "换个轻松歌单，聊旋律怎样配剧情",
+        "companion_plan": "陈可心",
+        "destination_area": "学校周边可往返的KTV候选（门店待确认）",
+        "steps": [
+          "点两首熟悉的电影插曲",
+          "轮流唱，中间喝水",
+          "聊一段喜欢的配乐后收尾"
+        ],
+        "photo_subject": "KTV话筒点歌桌面",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_singing_07",
+      "name": "唱慢歌，试着把一句歌词唱清楚",
+      "category": "evening_singing",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "唱慢歌，试着把一句歌词唱清楚"
+      ],
+      "scene_match": [
+        "KTV包间合唱间隙",
+        "唱慢歌，试着把一句歌词唱清楚"
+      ],
+      "scene_ids": [
+        "night-003"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.25,
+        "min_hours": 1.0,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "练轻声表达，不加练高音",
+        "companion_plan": "陈可心",
+        "destination_area": "学校周边可往返的KTV候选（门店待确认）",
+        "steps": [
+          "选舒适音域的慢歌",
+          "试一次轻声与正常音量对比",
+          "喝水休息，唱熟悉的歌结束"
+        ],
+        "photo_subject": "KTV包间合唱间隙",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_singing_08",
+      "name": "和室友做三首歌的小歌单",
+      "category": "evening_singing",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "和室友做三首歌的小歌单"
+      ],
+      "scene_match": [
+        "KTV话筒点歌桌面",
+        "和室友做三首歌的小歌单"
+      ],
+      "scene_ids": [
+        "night-015"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.25,
+        "min_hours": 1.0,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "短短唱三首就回，不唱成通宵",
+        "companion_plan": "林晓晚",
+        "destination_area": "学校周边可往返的KTV候选（门店待确认）",
+        "steps": [
+          "各挑一首，再选共同喜欢的一首",
+          "轮流唱，留出聊天间隙",
+          "最后合唱，按时离店"
+        ],
+        "photo_subject": "KTV话筒点歌桌面",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_movie_06",
+      "name": "看歌舞片，留意一段舞蹈长镜头",
+      "category": "evening_movie",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "看歌舞片，留意一段舞蹈长镜头"
+      ],
+      "scene_match": [
+        "影院检票走廊",
+        "看歌舞片，留意一段舞蹈长镜头"
+      ],
+      "scene_ids": [
+        "night-019"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.875,
+        "min_hours": 1.6666666666666667,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "观察镜头怎样跟人物移动",
+        "companion_plan": "陈可心",
+        "destination_area": "学校周边影院候选（片名/场次待确认）",
+        "steps": [
+          "核实片名与场次，在大厅等候",
+          "安静观影，留意一段长镜头；片长与场次须能放入本时段，否则取消",
+          "散场只聊一个动作与镜头的配合"
+        ],
+        "photo_subject": "影院检票走廊",
+        "fallback": "核实片名、场次、完整片长与往返；放不进现有时段则取消观影，不中途离场赶计划，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_movie_07",
+      "name": "看经典重映，留意服装和布景",
+      "category": "evening_movie",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "看经典重映，留意服装和布景"
+      ],
+      "scene_match": [
+        "电影院散场大厅",
+        "看经典重映，留意服装和布景"
+      ],
+      "scene_ids": [
+        "night-004"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.875,
+        "min_hours": 1.6666666666666667,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "找一处服装与人物情绪的联系",
+        "companion_plan": "周予安",
+        "destination_area": "学校周边影院候选（片名/场次待确认）",
+        "steps": [
+          "先确认有合适重映和可返校场次",
+          "安静观影，不拍银幕；片长与场次须能放入本时段，否则取消",
+          "在大厅记一条布景想法"
+        ],
+        "photo_subject": "电影院散场大厅",
+        "fallback": "核实片名、场次、完整片长与往返；放不进现有时段则取消观影，不中途离场赶计划，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_movie_08",
+      "name": "看一部轻松剧情片，散场聊配乐",
+      "category": "evening_movie",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "看一部轻松剧情片，散场聊配乐"
+      ],
+      "scene_match": [
+        "影院检票走廊",
+        "看一部轻松剧情片，散场聊配乐"
+      ],
+      "scene_ids": [
+        "night-019"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.875,
+        "min_hours": 1.6666666666666667,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.4166666666666667
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "放松地看电影，留意一段配乐",
+        "companion_plan": "林晓晚",
+        "destination_area": "学校周边影院候选（片名/场次待确认）",
+        "steps": [
+          "核实场次和片长，入场前歇脚",
+          "安静观影；片长与场次须能放入本时段，否则取消",
+          "散场在大厅聊哪段配乐最合适"
+        ],
+        "photo_subject": "影院检票走廊",
+        "fallback": "核实片名、场次、完整片长与往返；放不进现有时段则取消观影，不中途离场赶计划，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_light_fun_06",
+      "name": "做一张拼贴书签",
+      "category": "evening_light_fun",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "做一张拼贴书签"
+      ],
+      "scene_match": [
+        "纸艺速写小卡桌面",
+        "做一张拼贴书签"
+      ],
+      "scene_ids": [
+        "night-018"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.125,
+        "min_hours": 0.8333333333333334,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "用两种颜色完成一张实用书签",
+        "companion_plan": "陈可心",
+        "destination_area": "学校周边手作店候选",
+        "steps": [
+          "选纸张与配色",
+          "剪贴压平，留干燥时间",
+          "拍书签细节，收好材料"
+        ],
+        "photo_subject": "纸艺速写小卡桌面",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_light_fun_07",
+      "name": "串一个蓝白配色钥匙扣",
+      "category": "evening_light_fun",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "串一个蓝白配色钥匙扣"
+      ],
+      "scene_match": [
+        "串珠托盘挂件手作",
+        "串一个蓝白配色钥匙扣"
+      ],
+      "scene_ids": [
+        "night-017"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.125,
+        "min_hours": 0.8333333333333334,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "做一个简单耐用的小挂件",
+        "companion_plan": "陈可心",
+        "destination_area": "学校周边手作店候选",
+        "steps": [
+          "先排珠子和扣环",
+          "串好后检查结扣",
+          "给成品拍张桌面照"
+        ],
+        "photo_subject": "串珠托盘挂件手作",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_light_fun_08",
+      "name": "试一款两人合作桌游",
+      "category": "evening_light_fun",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "试一款两人合作桌游"
+      ],
+      "scene_match": [
+        "桌游模型木桌",
+        "试一款两人合作桌游"
+      ],
+      "scene_ids": [
+        "night-016"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.125,
+        "min_hours": 0.8333333333333334,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "练配合，控制在两小局内",
+        "companion_plan": "周予安",
+        "destination_area": "学校周边桌游店候选",
+        "steps": [
+          "读简单规则，摆好卡牌",
+          "合作玩两局",
+          "聊一个配合点，收牌离店"
+        ],
+        "photo_subject": "桌游模型木桌",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_light_fun_09",
+      "name": "画一张热饮杯小速写",
+      "category": "evening_light_fun",
+      "bucket": "city_fun",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "画一张热饮杯小速写"
+      ],
+      "scene_match": [
+        "纸艺速写小卡桌面",
+        "画一张热饮杯小速写"
+      ],
+      "scene_ids": [
+        "night-018"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.125,
+        "min_hours": 0.8333333333333334,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.3333333333333333
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "把日常小物画成一张轻松的小卡",
+        "companion_plan": "林晓晚",
+        "destination_area": "学校周边安静饮品店候选",
+        "steps": [
+          "找有桌面的安静座位",
+          "画杯子轮廓和一块阴影",
+          "拍纸笔桌角，喝完再回"
+        ],
+        "photo_subject": "纸艺速写小卡桌面",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_night_work_06",
+      "name": "拍三种景别的夜间街角空镜",
+      "category": "evening_night_work",
+      "bucket": "work_internship",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "拍三种景别的夜间街角空镜"
+      ],
+      "scene_match": [
+        "夜间外拍器材",
+        "拍三种景别的夜间街角空镜"
+      ],
+      "scene_ids": [
+        "night-020"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.3333333333333333,
+        "min_hours": 1.0,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.5
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "按既有实习要求练远中近镜头",
+        "companion_plan": "实习同事（按实际通知）",
+        "destination_area": "海淀校区周边外景候选（以实习通知为准）",
+        "steps": [
+          "检查安全机位和工作要求",
+          "按远中近顺序录短空镜",
+          "检查文件与器材，按时收工"
+        ],
+        "photo_subject": "夜间外拍器材",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    },
+    {
+      "id": "evening_night_work_07",
+      "name": "夜间取景勘察，记噪声与灯光变化",
+      "category": "evening_night_work",
+      "bucket": "work_internship",
+      "location": {
+        "city": "北京",
+        "region": "海淀",
+        "hub": "北京"
+      },
+      "aliases": [
+        "夜间取景勘察，记噪声与灯光变化"
+      ],
+      "scene_match": [
+        "城市夜景取景记录",
+        "夜间取景勘察，记噪声与灯光变化"
+      ],
+      "scene_ids": [
+        "night-007"
+      ],
+      "reasonableness": {
+        "typical_hours": 1.3333333333333333,
+        "min_hours": 1.0,
+        "typical_days": 1,
+        "min_stay_days": 0,
+        "transit_hours_from": {
+          "北京": 0.5
+        }
+      },
+      "source": "data/evening_activities.json",
+      "plan_only": true,
+      "plan_details": {
+        "purpose": "为既有实习记录环境条件",
+        "companion_plan": "实习同事（按实际通知）",
+        "destination_area": "海淀校区周边外景候选（以实习通知为准）",
+        "steps": [
+          "确认允许停留的街段",
+          "记录光源方向和噪声变化",
+          "整理现场备注，返校后备份"
+        ],
+        "photo_subject": "城市夜景取景记录",
+        "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+      }
+    }
+  ],
+  "enrichment": {
+    "last_upsert": {
+      "matched": 14,
+      "created": 4,
+      "skipped": 0,
+      "ideas": 18,
+      "at": "2026-10-24T16:30:28"
+    }
+  }
+}

@@ -1,0 +1,4787 @@
+{
+  "dims": [
+    "sweet",
+    "tease",
+    "intimacy",
+    "serious",
+    "playful"
+  ],
+  "count": 338,
+  "method": "cursor-agent 按 11 个场景类别生成候选并按词义打分 → 分批审核（真实常用、宁缺毋滥、嘴损情侣关系）并重新打分 → 去重、禁词过滤 → 大模型标注 gender(m/f/n)；2026-10-23 按当代中文互联网用法清理：删过时土味（皇上/少爷/老头子/北鼻/哈尼/逗比等 39 个），role=tease 改为当代黑话（大冤种/大聪明/甲方/X老师/小登等），见 docs/nickname-slang-notes.md；2026-10-25 nickname tiering：标 tier、降权 extension、清不符拓展库",
+  "nicknames": [
+    {
+      "name": "宝贝",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.9,
+        "tease": 0.12,
+        "intimacy": 0.86,
+        "serious": 0.72,
+        "playful": 0.32
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "宝宝",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.93,
+        "tease": 0.18,
+        "intimacy": 0.88,
+        "serious": 0.52,
+        "playful": 0.58
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "宝贝儿",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.22,
+        "intimacy": 0.84,
+        "serious": 0.58,
+        "playful": 0.42
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小宝贝",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.91,
+        "tease": 0.2,
+        "intimacy": 0.83,
+        "serious": 0.48,
+        "playful": 0.62
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "大宝贝",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.84,
+        "tease": 0.38,
+        "intimacy": 0.8,
+        "serious": 0.36,
+        "playful": 0.58
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "乖宝贝",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.28,
+        "intimacy": 0.82,
+        "serious": 0.44,
+        "playful": 0.52
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "心肝",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.82,
+        "tease": 0.08,
+        "intimacy": 0.92,
+        "serious": 0.78,
+        "playful": 0.18
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "心肝儿",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.85,
+        "tease": 0.12,
+        "intimacy": 0.9,
+        "serious": 0.66,
+        "playful": 0.28
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小心肝",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.9,
+        "tease": 0.18,
+        "intimacy": 0.88,
+        "serious": 0.5,
+        "playful": 0.48
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "甜心",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.94,
+        "tease": 0.12,
+        "intimacy": 0.74,
+        "serious": 0.38,
+        "playful": 0.52
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小甜心",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.93,
+        "tease": 0.16,
+        "intimacy": 0.72,
+        "serious": 0.32,
+        "playful": 0.64
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "乖乖",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.8,
+        "tease": 0.34,
+        "intimacy": 0.82,
+        "serious": 0.42,
+        "playful": 0.58
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小乖乖",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.3,
+        "intimacy": 0.84,
+        "serious": 0.36,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "乖宝",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.84,
+        "tease": 0.26,
+        "intimacy": 0.8,
+        "serious": 0.4,
+        "playful": 0.6
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "乖宝宝",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.24,
+        "intimacy": 0.83,
+        "serious": 0.34,
+        "playful": 0.66
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小乖",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.76,
+        "tease": 0.28,
+        "intimacy": 0.74,
+        "serious": 0.32,
+        "playful": 0.64
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "亲爱的",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.72,
+        "tease": 0.05,
+        "intimacy": 0.82,
+        "serious": 0.93,
+        "playful": 0.1
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "亲亲",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.78,
+        "tease": 0.16,
+        "intimacy": 0.73,
+        "serious": 0.28,
+        "playful": 0.55
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "爱人",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.62,
+        "tease": 0.02,
+        "intimacy": 0.88,
+        "serious": 0.96,
+        "playful": 0.05
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "宝",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.74,
+        "tease": 0.14,
+        "intimacy": 0.8,
+        "serious": 0.58,
+        "playful": 0.28
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小宝",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.82,
+        "tease": 0.18,
+        "intimacy": 0.81,
+        "serious": 0.46,
+        "playful": 0.46
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "宝儿",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.8,
+        "tease": 0.2,
+        "intimacy": 0.78,
+        "serious": 0.44,
+        "playful": 0.4
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "心尖尖",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.92,
+        "tease": 0.16,
+        "intimacy": 0.9,
+        "serious": 0.48,
+        "playful": 0.52
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "心尖儿",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.12,
+        "intimacy": 0.88,
+        "serious": 0.56,
+        "playful": 0.36
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "甜甜",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.1,
+        "intimacy": 0.68,
+        "serious": 0.3,
+        "playful": 0.58
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小甜甜",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.91,
+        "tease": 0.14,
+        "intimacy": 0.7,
+        "serious": 0.26,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "糖糖",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.2,
+        "intimacy": 0.66,
+        "serious": 0.22,
+        "playful": 0.72
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小糖糖",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.22,
+        "intimacy": 0.64,
+        "serious": 0.18,
+        "playful": 0.76
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小团子",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.74,
+        "tease": 0.32,
+        "intimacy": 0.62,
+        "serious": 0.12,
+        "playful": 0.78
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "肉肉",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.7,
+        "tease": 0.36,
+        "intimacy": 0.73,
+        "serious": 0.16,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小可爱",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.84,
+        "tease": 0.28,
+        "intimacy": 0.68,
+        "serious": 0.28,
+        "playful": 0.76
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "祖宗",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.28,
+        "tease": 0.88,
+        "intimacy": 0.72,
+        "serious": 0.12,
+        "playful": 0.74
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小祖宗",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.42,
+        "tease": 0.9,
+        "intimacy": 0.76,
+        "serious": 0.1,
+        "playful": 0.86
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "心头肉",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.84,
+        "tease": 0.1,
+        "intimacy": 0.93,
+        "serious": 0.72,
+        "playful": 0.22
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "老婆",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.58,
+        "tease": 0.18,
+        "intimacy": 0.96,
+        "serious": 0.86,
+        "playful": 0.24
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "老公",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.52,
+        "tease": 0.2,
+        "intimacy": 0.96,
+        "serious": 0.86,
+        "playful": 0.26
+      },
+      "gender": "m",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "媳妇",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.5,
+        "tease": 0.32,
+        "intimacy": 0.9,
+        "serious": 0.68,
+        "playful": 0.34
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "媳妇儿",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.58,
+        "tease": 0.36,
+        "intimacy": 0.9,
+        "serious": 0.58,
+        "playful": 0.46
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "熊熊",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.8,
+        "tease": 0.22,
+        "intimacy": 0.74,
+        "serious": 0.22,
+        "playful": 0.76
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "小熊",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.84,
+        "tease": 0.18,
+        "intimacy": 0.76,
+        "serious": 0.26,
+        "playful": 0.72
+      },
+      "gender": "m",
+      "weight": 1.45,
+      "core": true,
+      "role": "affection",
+      "tier": "core"
+    },
+    {
+      "name": "小太阳",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.82,
+        "tease": 0.12,
+        "intimacy": 0.7,
+        "serious": 0.48,
+        "playful": 0.5
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小天使",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.16,
+        "intimacy": 0.66,
+        "serious": 0.34,
+        "playful": 0.48
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "臭宝",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.58,
+        "tease": 0.78,
+        "intimacy": 0.84,
+        "serious": 0.18,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "臭宝宝",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.64,
+        "tease": 0.74,
+        "intimacy": 0.85,
+        "serious": 0.16,
+        "playful": 0.74
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "臭宝贝",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.62,
+        "tease": 0.72,
+        "intimacy": 0.86,
+        "serious": 0.2,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "崽崽",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.74,
+        "tease": 0.42,
+        "intimacy": 0.8,
+        "serious": 0.16,
+        "playful": 0.84
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小崽崽",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.78,
+        "tease": 0.4,
+        "intimacy": 0.8,
+        "serious": 0.14,
+        "playful": 0.86
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小包子",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.68,
+        "tease": 0.46,
+        "intimacy": 0.66,
+        "serious": 0.1,
+        "playful": 0.82
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小胖胖",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.78,
+        "tease": 0.28,
+        "intimacy": 0.72,
+        "serious": 0.22,
+        "playful": 0.62
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "乖乖儿",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.12,
+        "intimacy": 0.84,
+        "serious": 0.7,
+        "playful": 0.4
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小宝贝儿",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.92,
+        "tease": 0.08,
+        "intimacy": 0.9,
+        "serious": 0.72,
+        "playful": 0.45
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小可怜",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.75,
+        "tease": 0.3,
+        "intimacy": 0.72,
+        "serious": 0.68,
+        "playful": 0.35
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小可怜儿",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.8,
+        "tease": 0.25,
+        "intimacy": 0.78,
+        "serious": 0.7,
+        "playful": 0.38
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小东西",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.55,
+        "tease": 0.62,
+        "intimacy": 0.7,
+        "serious": 0.2,
+        "playful": 0.72
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小家伙",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.58,
+        "tease": 0.48,
+        "intimacy": 0.66,
+        "serious": 0.28,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "淘气包",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.52,
+        "tease": 0.55,
+        "intimacy": 0.58,
+        "serious": 0.12,
+        "playful": 0.85
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "宝子",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.74,
+        "tease": 0.18,
+        "intimacy": 0.64,
+        "serious": 0.35,
+        "playful": 0.55
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "笨蛋",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.4,
+        "tease": 0.82,
+        "intimacy": 0.62,
+        "serious": 0.38,
+        "playful": 0.6
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小笨蛋",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.62,
+        "tease": 0.7,
+        "intimacy": 0.75,
+        "serious": 0.48,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "大笨蛋",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.35,
+        "tease": 0.88,
+        "intimacy": 0.6,
+        "serious": 0.22,
+        "playful": 0.66
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "傻瓜",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.48,
+        "tease": 0.75,
+        "intimacy": 0.72,
+        "serious": 0.55,
+        "playful": 0.5
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小傻瓜",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.68,
+        "tease": 0.62,
+        "intimacy": 0.8,
+        "serious": 0.58,
+        "playful": 0.58
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "大傻瓜",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.38,
+        "tease": 0.85,
+        "intimacy": 0.64,
+        "serious": 0.28,
+        "playful": 0.6
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "笨笨",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.7,
+        "tease": 0.48,
+        "intimacy": 0.74,
+        "serious": 0.32,
+        "playful": 0.66
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小笨笨",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.78,
+        "tease": 0.42,
+        "intimacy": 0.78,
+        "serious": 0.34,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "呆瓜",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.42,
+        "tease": 0.72,
+        "intimacy": 0.55,
+        "serious": 0.18,
+        "playful": 0.64
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小呆瓜",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.64,
+        "tease": 0.58,
+        "intimacy": 0.68,
+        "serious": 0.22,
+        "playful": 0.72
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "呆呆",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.66,
+        "tease": 0.4,
+        "intimacy": 0.7,
+        "serious": 0.25,
+        "playful": 0.6
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小呆呆",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.76,
+        "tease": 0.35,
+        "intimacy": 0.74,
+        "serious": 0.28,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "憨憨",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.68,
+        "tease": 0.45,
+        "intimacy": 0.7,
+        "serious": 0.22,
+        "playful": 0.72
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小憨憨",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.78,
+        "tease": 0.38,
+        "intimacy": 0.76,
+        "serious": 0.25,
+        "playful": 0.75
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "铁憨憨",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.48,
+        "tease": 0.7,
+        "intimacy": 0.55,
+        "serious": 0.1,
+        "playful": 0.82
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "木头",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.15,
+        "tease": 0.68,
+        "intimacy": 0.48,
+        "serious": 0.12,
+        "playful": 0.25
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小木头",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.4,
+        "tease": 0.58,
+        "intimacy": 0.58,
+        "serious": 0.18,
+        "playful": 0.42
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小迷糊",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.62,
+        "tease": 0.48,
+        "intimacy": 0.64,
+        "serious": 0.2,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "坏蛋",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.3,
+        "tease": 0.85,
+        "intimacy": 0.55,
+        "serious": 0.12,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小坏蛋",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.58,
+        "tease": 0.75,
+        "intimacy": 0.72,
+        "serious": 0.18,
+        "playful": 0.8
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "大坏蛋",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.28,
+        "tease": 0.9,
+        "intimacy": 0.58,
+        "serious": 0.1,
+        "playful": 0.72
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小坏坏",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.64,
+        "tease": 0.62,
+        "intimacy": 0.7,
+        "serious": 0.15,
+        "playful": 0.78
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "调皮鬼",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.45,
+        "tease": 0.68,
+        "intimacy": 0.52,
+        "serious": 0.1,
+        "playful": 0.88
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "调皮蛋",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.5,
+        "tease": 0.64,
+        "intimacy": 0.55,
+        "serious": 0.1,
+        "playful": 0.86
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小淘气",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.6,
+        "tease": 0.55,
+        "intimacy": 0.62,
+        "serious": 0.15,
+        "playful": 0.84
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "捣蛋鬼",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.35,
+        "tease": 0.72,
+        "intimacy": 0.48,
+        "serious": 0.08,
+        "playful": 0.86
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小捣蛋",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.55,
+        "tease": 0.64,
+        "intimacy": 0.6,
+        "serious": 0.12,
+        "playful": 0.88
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小鬼头",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.42,
+        "tease": 0.6,
+        "intimacy": 0.5,
+        "serious": 0.12,
+        "playful": 0.75
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "讨厌鬼",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.35,
+        "tease": 0.78,
+        "intimacy": 0.66,
+        "serious": 0.15,
+        "playful": 0.55
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小冤家",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.55,
+        "tease": 0.64,
+        "intimacy": 0.82,
+        "serious": 0.3,
+        "playful": 0.48
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "冤家",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.4,
+        "tease": 0.7,
+        "intimacy": 0.78,
+        "serious": 0.35,
+        "playful": 0.32
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "磨人精",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.38,
+        "tease": 0.72,
+        "intimacy": 0.64,
+        "serious": 0.12,
+        "playful": 0.6
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小恶魔",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.42,
+        "tease": 0.76,
+        "intimacy": 0.68,
+        "serious": 0.08,
+        "playful": 0.88
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "大小姐",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.35,
+        "tease": 0.66,
+        "intimacy": 0.48,
+        "serious": 0.2,
+        "playful": 0.45
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "傲娇鬼",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.42,
+        "tease": 0.74,
+        "intimacy": 0.52,
+        "serious": 0.12,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "话痨",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.22,
+        "tease": 0.7,
+        "intimacy": 0.38,
+        "serious": 0.1,
+        "playful": 0.55
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小话痨",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.52,
+        "tease": 0.6,
+        "intimacy": 0.58,
+        "serious": 0.12,
+        "playful": 0.78
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "唠叨鬼",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.32,
+        "tease": 0.7,
+        "intimacy": 0.5,
+        "serious": 0.15,
+        "playful": 0.52
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小滑头",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.45,
+        "tease": 0.76,
+        "intimacy": 0.55,
+        "serious": 0.1,
+        "playful": 0.82
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "机灵鬼",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.58,
+        "tease": 0.42,
+        "intimacy": 0.6,
+        "serious": 0.2,
+        "playful": 0.84
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小吃货",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.74,
+        "tease": 0.38,
+        "intimacy": 0.66,
+        "serious": 0.16,
+        "playful": 0.78
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "吃货",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.36,
+        "tease": 0.5,
+        "intimacy": 0.38,
+        "serious": 0.12,
+        "playful": 0.55
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "懒虫",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.34,
+        "tease": 0.66,
+        "intimacy": 0.48,
+        "serious": 0.1,
+        "playful": 0.52
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小懒虫",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.66,
+        "tease": 0.5,
+        "intimacy": 0.68,
+        "serious": 0.14,
+        "playful": 0.74
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "懒鬼",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.26,
+        "tease": 0.7,
+        "intimacy": 0.42,
+        "serious": 0.06,
+        "playful": 0.48
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小懒鬼",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.58,
+        "tease": 0.56,
+        "intimacy": 0.64,
+        "serious": 0.1,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "二哈",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.3,
+        "tease": 0.8,
+        "intimacy": 0.48,
+        "serious": 0.05,
+        "playful": 0.8
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小二哈",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.54,
+        "tease": 0.68,
+        "intimacy": 0.64,
+        "serious": 0.08,
+        "playful": 0.88
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "显眼包",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.22,
+        "tease": 0.82,
+        "intimacy": 0.38,
+        "serious": 0.05,
+        "playful": 0.8
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "活宝",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.56,
+        "tease": 0.58,
+        "intimacy": 0.6,
+        "serious": 0.14,
+        "playful": 0.86
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小活宝",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.74,
+        "tease": 0.46,
+        "intimacy": 0.72,
+        "serious": 0.18,
+        "playful": 0.9
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "臭美",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.26,
+        "tease": 0.76,
+        "intimacy": 0.4,
+        "serious": 0.06,
+        "playful": 0.55
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小臭美",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.54,
+        "tease": 0.64,
+        "intimacy": 0.6,
+        "serious": 0.1,
+        "playful": 0.78
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小臭屁",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.4,
+        "tease": 0.72,
+        "intimacy": 0.52,
+        "serious": 0.08,
+        "playful": 0.74
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "撒娇鬼",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.72,
+        "tease": 0.5,
+        "intimacy": 0.78,
+        "serious": 0.18,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "撒娇精",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.64,
+        "tease": 0.58,
+        "intimacy": 0.72,
+        "serious": 0.12,
+        "playful": 0.74
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "粘人精",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.66,
+        "tease": 0.55,
+        "intimacy": 0.8,
+        "serious": 0.2,
+        "playful": 0.58
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "跟屁虫",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.5,
+        "tease": 0.6,
+        "intimacy": 0.68,
+        "serious": 0.12,
+        "playful": 0.66
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小尾巴",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.84,
+        "tease": 0.32,
+        "intimacy": 0.86,
+        "serious": 0.28,
+        "playful": 0.64
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "醋精",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.34,
+        "tease": 0.76,
+        "intimacy": 0.58,
+        "serious": 0.15,
+        "playful": 0.52
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "爱哭鬼",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.58,
+        "tease": 0.48,
+        "intimacy": 0.7,
+        "serious": 0.28,
+        "playful": 0.42
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "先生",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.42,
+        "tease": 0.12,
+        "intimacy": 0.58,
+        "serious": 0.88,
+        "playful": 0.12
+      },
+      "gender": "m",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "太太",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.55,
+        "tease": 0.22,
+        "intimacy": 0.66,
+        "serious": 0.78,
+        "playful": 0.32
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "老婆儿",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.72,
+        "tease": 0.3,
+        "intimacy": 0.86,
+        "serious": 0.55,
+        "playful": 0.38
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小老公",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.22,
+        "intimacy": 0.9,
+        "serious": 0.38,
+        "playful": 0.68
+      },
+      "gender": "m",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小媳妇",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.82,
+        "tease": 0.16,
+        "intimacy": 0.88,
+        "serious": 0.45,
+        "playful": 0.48
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小媳妇儿",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.22,
+        "intimacy": 0.9,
+        "serious": 0.4,
+        "playful": 0.62
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "老婆大人",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.62,
+        "tease": 0.48,
+        "intimacy": 0.76,
+        "serious": 0.22,
+        "playful": 0.84
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的宝贝",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.96,
+        "tease": 0.06,
+        "intimacy": 0.94,
+        "serious": 0.58,
+        "playful": 0.4
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的宝宝",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.95,
+        "tease": 0.08,
+        "intimacy": 0.94,
+        "serious": 0.52,
+        "playful": 0.55
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的宝",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.12,
+        "intimacy": 0.86,
+        "serious": 0.42,
+        "playful": 0.48
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小宝宝",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.92,
+        "tease": 0.1,
+        "intimacy": 0.9,
+        "serious": 0.35,
+        "playful": 0.72
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "大宝宝",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.82,
+        "tease": 0.32,
+        "intimacy": 0.78,
+        "serious": 0.28,
+        "playful": 0.8
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "丫头",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.55,
+        "tease": 0.48,
+        "intimacy": 0.64,
+        "serious": 0.3,
+        "playful": 0.62
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "傻丫头",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.5,
+        "tease": 0.8,
+        "intimacy": 0.68,
+        "serious": 0.12,
+        "playful": 0.84
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "臭小子",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.3,
+        "tease": 0.86,
+        "intimacy": 0.66,
+        "serious": 0.1,
+        "playful": 0.76
+      },
+      "gender": "m",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "好老公",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.64,
+        "tease": 0.12,
+        "intimacy": 0.8,
+        "serious": 0.74,
+        "playful": 0.28
+      },
+      "gender": "m",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "亲爱的宝宝",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.93,
+        "tease": 0.06,
+        "intimacy": 0.88,
+        "serious": 0.55,
+        "playful": 0.38
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "好宝宝",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.8,
+        "tease": 0.22,
+        "intimacy": 0.76,
+        "serious": 0.4,
+        "playful": 0.64
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我家宝宝",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.85,
+        "tease": 0.1,
+        "intimacy": 0.87,
+        "serious": 0.48,
+        "playful": 0.46
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我老婆",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.52,
+        "tease": 0.1,
+        "intimacy": 0.9,
+        "serious": 0.78,
+        "playful": 0.22
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我老公",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.52,
+        "tease": 0.1,
+        "intimacy": 0.9,
+        "serious": 0.78,
+        "playful": 0.22
+      },
+      "gender": "m",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我媳妇",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.5,
+        "tease": 0.2,
+        "intimacy": 0.88,
+        "serious": 0.7,
+        "playful": 0.36
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我家老婆",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.58,
+        "tease": 0.12,
+        "intimacy": 0.92,
+        "serious": 0.76,
+        "playful": 0.26
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我家老公",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.58,
+        "tease": 0.12,
+        "intimacy": 0.92,
+        "serious": 0.76,
+        "playful": 0.26
+      },
+      "gender": "m",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "宝贝老婆",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.14,
+        "intimacy": 0.9,
+        "serious": 0.46,
+        "playful": 0.55
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "宝贝老公",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.14,
+        "intimacy": 0.9,
+        "serious": 0.46,
+        "playful": 0.55
+      },
+      "gender": "m",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "好老婆",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.64,
+        "tease": 0.1,
+        "intimacy": 0.82,
+        "serious": 0.75,
+        "playful": 0.26
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的小宝贝",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.94,
+        "tease": 0.08,
+        "intimacy": 0.88,
+        "serious": 0.42,
+        "playful": 0.58
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的小宝",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.12,
+        "intimacy": 0.84,
+        "serious": 0.4,
+        "playful": 0.56
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的心肝",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.78,
+        "tease": 0.06,
+        "intimacy": 0.9,
+        "serious": 0.6,
+        "playful": 0.22
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的小心肝",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.9,
+        "tease": 0.12,
+        "intimacy": 0.9,
+        "serious": 0.46,
+        "playful": 0.5
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "心肝宝贝儿",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.92,
+        "tease": 0.1,
+        "intimacy": 0.88,
+        "serious": 0.34,
+        "playful": 0.64
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的心头肉",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.76,
+        "tease": 0.16,
+        "intimacy": 0.92,
+        "serious": 0.5,
+        "playful": 0.32
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的乖乖",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.85,
+        "tease": 0.18,
+        "intimacy": 0.86,
+        "serious": 0.5,
+        "playful": 0.55
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的小乖乖",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.9,
+        "tease": 0.16,
+        "intimacy": 0.88,
+        "serious": 0.4,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的小可怜",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.7,
+        "tease": 0.22,
+        "intimacy": 0.8,
+        "serious": 0.58,
+        "playful": 0.32
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的爱人",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.62,
+        "tease": 0.02,
+        "intimacy": 0.86,
+        "serious": 0.93,
+        "playful": 0.08
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的老公",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.58,
+        "tease": 0.08,
+        "intimacy": 0.9,
+        "serious": 0.8,
+        "playful": 0.2
+      },
+      "gender": "m",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的老婆",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.58,
+        "tease": 0.08,
+        "intimacy": 0.9,
+        "serious": 0.8,
+        "playful": 0.2
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "亲爱的老公",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.76,
+        "tease": 0.05,
+        "intimacy": 0.9,
+        "serious": 0.84,
+        "playful": 0.16
+      },
+      "gender": "m",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "亲爱的老婆",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.76,
+        "tease": 0.05,
+        "intimacy": 0.9,
+        "serious": 0.84,
+        "playful": 0.16
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "老公宝贝",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.87,
+        "tease": 0.18,
+        "intimacy": 0.88,
+        "serious": 0.34,
+        "playful": 0.66
+      },
+      "gender": "m",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "老婆宝贝",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.87,
+        "tease": 0.18,
+        "intimacy": 0.88,
+        "serious": 0.34,
+        "playful": 0.66
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的媳妇",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.54,
+        "tease": 0.16,
+        "intimacy": 0.88,
+        "serious": 0.72,
+        "playful": 0.3
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的媳妇儿",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.6,
+        "tease": 0.24,
+        "intimacy": 0.88,
+        "serious": 0.58,
+        "playful": 0.5
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的先生",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.36,
+        "tease": 0.04,
+        "intimacy": 0.7,
+        "serious": 0.96,
+        "playful": 0.06
+      },
+      "gender": "m",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的太太",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.4,
+        "tease": 0.04,
+        "intimacy": 0.72,
+        "serious": 0.96,
+        "playful": 0.06
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "baby",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.84,
+        "tease": 0.1,
+        "intimacy": 0.76,
+        "serious": 0.28,
+        "playful": 0.6
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "honey",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.08,
+        "intimacy": 0.74,
+        "serious": 0.32,
+        "playful": 0.42
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的甜心",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.93,
+        "tease": 0.06,
+        "intimacy": 0.82,
+        "serious": 0.36,
+        "playful": 0.48
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "亲爱的宝贝",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.95,
+        "tease": 0.05,
+        "intimacy": 0.9,
+        "serious": 0.58,
+        "playful": 0.34
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我家丫头",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.6,
+        "tease": 0.42,
+        "intimacy": 0.8,
+        "serious": 0.32,
+        "playful": 0.64
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的小朋友",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.76,
+        "tease": 0.36,
+        "intimacy": 0.72,
+        "serious": 0.24,
+        "playful": 0.86
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的小可爱",
+      "category": "serious",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.24,
+        "intimacy": 0.76,
+        "serious": 0.2,
+        "playful": 0.9
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "崽",
+      "category": "playful",
+      "vec": {
+        "sweet": 0.78,
+        "tease": 0.42,
+        "intimacy": 0.84,
+        "serious": 0.32,
+        "playful": 0.74
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小崽",
+      "category": "playful",
+      "vec": {
+        "sweet": 0.82,
+        "tease": 0.36,
+        "intimacy": 0.83,
+        "serious": 0.34,
+        "playful": 0.76
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "崽宝",
+      "category": "playful",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.28,
+        "intimacy": 0.85,
+        "serious": 0.36,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "奶崽",
+      "category": "playful",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.26,
+        "intimacy": 0.8,
+        "serious": 0.28,
+        "playful": 0.72
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "可爱鬼",
+      "category": "playful",
+      "vec": {
+        "sweet": 0.8,
+        "tease": 0.48,
+        "intimacy": 0.7,
+        "serious": 0.2,
+        "playful": 0.84
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小糖",
+      "category": "playful",
+      "vec": {
+        "sweet": 0.9,
+        "tease": 0.14,
+        "intimacy": 0.68,
+        "serious": 0.3,
+        "playful": 0.58
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小熊熊",
+      "category": "playful",
+      "vec": {
+        "sweet": 0.92,
+        "tease": 0.22,
+        "intimacy": 0.8,
+        "serious": 0.36,
+        "playful": 0.74
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "熊宝",
+      "category": "playful",
+      "vec": {
+        "sweet": 0.9,
+        "tease": 0.24,
+        "intimacy": 0.82,
+        "serious": 0.38,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "星星",
+      "category": "playful",
+      "vec": {
+        "sweet": 0.84,
+        "tease": 0.1,
+        "intimacy": 0.58,
+        "serious": 0.4,
+        "playful": 0.46
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "草莓",
+      "category": "playful",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.12,
+        "intimacy": 0.52,
+        "serious": 0.24,
+        "playful": 0.56
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小橘子",
+      "category": "playful",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.2,
+        "intimacy": 0.64,
+        "serious": 0.26,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "桃子",
+      "category": "playful",
+      "vec": {
+        "sweet": 0.8,
+        "tease": 0.14,
+        "intimacy": 0.55,
+        "serious": 0.28,
+        "playful": 0.5
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小桃子",
+      "category": "playful",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.16,
+        "intimacy": 0.66,
+        "serious": 0.3,
+        "playful": 0.62
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小熊猫",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.84,
+        "tease": 0.24,
+        "intimacy": 0.6,
+        "serious": 0.2,
+        "playful": 0.72
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "小羊",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.82,
+        "tease": 0.12,
+        "intimacy": 0.58,
+        "serious": 0.34,
+        "playful": 0.48
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "羊羊",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.18,
+        "intimacy": 0.62,
+        "serious": 0.26,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小绵羊",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.9,
+        "tease": 0.08,
+        "intimacy": 0.66,
+        "serious": 0.42,
+        "playful": 0.44
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小橘",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.8,
+        "tease": 0.28,
+        "intimacy": 0.58,
+        "serious": 0.2,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "毛球",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.78,
+        "tease": 0.24,
+        "intimacy": 0.62,
+        "serious": 0.16,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小毛球",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.2,
+        "intimacy": 0.68,
+        "serious": 0.22,
+        "playful": 0.74
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小果冻",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.83,
+        "tease": 0.26,
+        "intimacy": 0.68,
+        "serious": 0.22,
+        "playful": 0.8
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "奶茶",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.2,
+        "intimacy": 0.64,
+        "serious": 0.18,
+        "playful": 0.72
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小麻薯",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.8,
+        "tease": 0.32,
+        "intimacy": 0.66,
+        "serious": 0.16,
+        "playful": 0.78
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "巧克力",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.14,
+        "intimacy": 0.7,
+        "serious": 0.32,
+        "playful": 0.42
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "蜜桃",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.87,
+        "tease": 0.38,
+        "intimacy": 0.76,
+        "serious": 0.2,
+        "playful": 0.64
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小樱桃",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.85,
+        "tease": 0.24,
+        "intimacy": 0.72,
+        "serious": 0.26,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小苹果",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.78,
+        "tease": 0.22,
+        "intimacy": 0.64,
+        "serious": 0.3,
+        "playful": 0.74
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小柠檬",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.46,
+        "tease": 0.74,
+        "intimacy": 0.6,
+        "serious": 0.15,
+        "playful": 0.82
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小西瓜",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.62,
+        "tease": 0.48,
+        "intimacy": 0.66,
+        "serious": 0.16,
+        "playful": 0.8
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "蜂蜜",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.93,
+        "tease": 0.1,
+        "intimacy": 0.72,
+        "serious": 0.42,
+        "playful": 0.32
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "旺仔",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.68,
+        "tease": 0.46,
+        "intimacy": 0.58,
+        "serious": 0.12,
+        "playful": 0.82
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小旺仔",
+      "category": "food_animal",
+      "vec": {
+        "sweet": 0.76,
+        "tease": 0.42,
+        "intimacy": 0.66,
+        "serious": 0.14,
+        "playful": 0.86
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "傻妞",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.42,
+        "tease": 0.84,
+        "intimacy": 0.78,
+        "serious": 0.1,
+        "playful": 0.74
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "大丫头",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.38,
+        "tease": 0.68,
+        "intimacy": 0.74,
+        "serious": 0.24,
+        "playful": 0.52
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小丫头",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.64,
+        "tease": 0.52,
+        "intimacy": 0.8,
+        "serious": 0.3,
+        "playful": 0.58
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "宝贝疙瘩",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.9,
+        "tease": 0.28,
+        "intimacy": 0.93,
+        "serious": 0.48,
+        "playful": 0.46
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "傻狍子",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.32,
+        "tease": 0.9,
+        "intimacy": 0.76,
+        "serious": 0.06,
+        "playful": 0.88
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小样儿",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.2,
+        "tease": 0.92,
+        "intimacy": 0.7,
+        "serious": 0.08,
+        "playful": 0.8
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "臭丫头",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.36,
+        "tease": 0.82,
+        "intimacy": 0.85,
+        "serious": 0.12,
+        "playful": 0.64
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小妮儿",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.72,
+        "tease": 0.28,
+        "intimacy": 0.76,
+        "serious": 0.42,
+        "playful": 0.46
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小心肝儿",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.96,
+        "tease": 0.08,
+        "intimacy": 0.96,
+        "serious": 0.74,
+        "playful": 0.26
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "妞儿",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.5,
+        "tease": 0.44,
+        "intimacy": 0.66,
+        "serious": 0.22,
+        "playful": 0.56
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "BB",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.16,
+        "intimacy": 0.86,
+        "serious": 0.36,
+        "playful": 0.62
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "靓女",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.6,
+        "tease": 0.42,
+        "intimacy": 0.6,
+        "serious": 0.2,
+        "playful": 0.7
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "心肝女",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.92,
+        "tease": 0.1,
+        "intimacy": 0.92,
+        "serious": 0.68,
+        "playful": 0.26
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "靓靓",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.74,
+        "tease": 0.26,
+        "intimacy": 0.62,
+        "serious": 0.18,
+        "playful": 0.76
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小崽儿",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.76,
+        "tease": 0.34,
+        "intimacy": 0.84,
+        "serious": 0.32,
+        "playful": 0.58
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "娃娃",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.82,
+        "tease": 0.18,
+        "intimacy": 0.78,
+        "serious": 0.4,
+        "playful": 0.52
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小娃娃",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.16,
+        "intimacy": 0.82,
+        "serious": 0.36,
+        "playful": 0.6
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "团团",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.8,
+        "tease": 0.3,
+        "intimacy": 0.74,
+        "serious": 0.26,
+        "playful": 0.76
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "臭臭",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.52,
+        "tease": 0.78,
+        "intimacy": 0.9,
+        "serious": 0.14,
+        "playful": 0.74
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "妮儿",
+      "category": "dialect",
+      "vec": {
+        "sweet": 0.6,
+        "tease": 0.36,
+        "intimacy": 0.7,
+        "serious": 0.34,
+        "playful": 0.48
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "暖宝",
+      "category": "daily",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.16,
+        "intimacy": 0.76,
+        "serious": 0.46,
+        "playful": 0.48
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小暖宝",
+      "category": "daily",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.2,
+        "intimacy": 0.74,
+        "serious": 0.36,
+        "playful": 0.62
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "哭包",
+      "category": "daily",
+      "vec": {
+        "sweet": 0.32,
+        "tease": 0.76,
+        "intimacy": 0.58,
+        "serious": 0.14,
+        "playful": 0.52
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小哭包",
+      "category": "daily",
+      "vec": {
+        "sweet": 0.46,
+        "tease": 0.68,
+        "intimacy": 0.64,
+        "serious": 0.16,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小馋嘴",
+      "category": "daily",
+      "vec": {
+        "sweet": 0.6,
+        "tease": 0.58,
+        "intimacy": 0.62,
+        "serious": 0.12,
+        "playful": 0.78
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "同学",
+      "category": "daily",
+      "vec": {
+        "sweet": 0.22,
+        "tease": 0.54,
+        "intimacy": 0.32,
+        "serious": 0.28,
+        "playful": 0.58
+      },
+      "gender": "n",
+      "role": "tease",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "领导",
+      "category": "daily",
+      "vec": {
+        "sweet": 0.14,
+        "tease": 0.74,
+        "intimacy": 0.3,
+        "serious": 0.22,
+        "playful": 0.52
+      },
+      "gender": "n",
+      "role": "tease",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "老板",
+      "category": "daily",
+      "vec": {
+        "sweet": 0.18,
+        "tease": 0.7,
+        "intimacy": 0.34,
+        "serious": 0.26,
+        "playful": 0.56
+      },
+      "gender": "n",
+      "role": "tease",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "美女",
+      "category": "daily",
+      "vec": {
+        "sweet": 0.46,
+        "tease": 0.42,
+        "intimacy": 0.36,
+        "serious": 0.24,
+        "playful": 0.46
+      },
+      "gender": "f",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "懒宝",
+      "category": "daily",
+      "vec": {
+        "sweet": 0.54,
+        "tease": 0.6,
+        "intimacy": 0.7,
+        "serious": 0.12,
+        "playful": 0.58
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "懒懒",
+      "category": "daily",
+      "vec": {
+        "sweet": 0.62,
+        "tease": 0.46,
+        "intimacy": 0.64,
+        "serious": 0.16,
+        "playful": 0.72
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "醋坛子",
+      "category": "daily",
+      "vec": {
+        "sweet": 0.24,
+        "tease": 0.86,
+        "intimacy": 0.6,
+        "serious": 0.12,
+        "playful": 0.44
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "娇气包",
+      "category": "daily",
+      "vec": {
+        "sweet": 0.34,
+        "tease": 0.78,
+        "intimacy": 0.56,
+        "serious": 0.1,
+        "playful": 0.48
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小奶茶",
+      "category": "daily",
+      "vec": {
+        "sweet": 0.84,
+        "tease": 0.18,
+        "intimacy": 0.58,
+        "serious": 0.1,
+        "playful": 0.76
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "困困",
+      "category": "daily",
+      "vec": {
+        "sweet": 0.66,
+        "tease": 0.34,
+        "intimacy": 0.62,
+        "serious": 0.18,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "奶宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.82,
+        "tease": 0.22,
+        "intimacy": 0.74,
+        "serious": 0.24,
+        "playful": 0.64
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "馋宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.56,
+        "tease": 0.54,
+        "intimacy": 0.68,
+        "serious": 0.1,
+        "playful": 0.66
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "胖宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.5,
+        "tease": 0.62,
+        "intimacy": 0.7,
+        "serious": 0.1,
+        "playful": 0.6
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小臭宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.7,
+        "tease": 0.6,
+        "intimacy": 0.86,
+        "serious": 0.28,
+        "playful": 0.64
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小乖宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.2,
+        "intimacy": 0.82,
+        "serious": 0.44,
+        "playful": 0.58
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小憨宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.68,
+        "tease": 0.5,
+        "intimacy": 0.74,
+        "serious": 0.2,
+        "playful": 0.62
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小傻宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.52,
+        "tease": 0.72,
+        "intimacy": 0.76,
+        "serious": 0.1,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小笨宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.5,
+        "tease": 0.7,
+        "intimacy": 0.74,
+        "serious": 0.1,
+        "playful": 0.66
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小甜宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.9,
+        "tease": 0.14,
+        "intimacy": 0.8,
+        "serious": 0.36,
+        "playful": 0.6
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小懒宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.56,
+        "tease": 0.58,
+        "intimacy": 0.72,
+        "serious": 0.12,
+        "playful": 0.64
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小胖宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.52,
+        "tease": 0.6,
+        "intimacy": 0.72,
+        "serious": 0.1,
+        "playful": 0.66
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "臭臭宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.66,
+        "tease": 0.56,
+        "intimacy": 0.84,
+        "serious": 0.24,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "甜甜宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.12,
+        "intimacy": 0.78,
+        "serious": 0.32,
+        "playful": 0.64
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "笨笨宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.48,
+        "tease": 0.66,
+        "intimacy": 0.74,
+        "serious": 0.1,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "憨宝宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.66,
+        "tease": 0.46,
+        "intimacy": 0.76,
+        "serious": 0.22,
+        "playful": 0.6
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "傻宝宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.54,
+        "tease": 0.66,
+        "intimacy": 0.8,
+        "serious": 0.16,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "笨宝宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.5,
+        "tease": 0.64,
+        "intimacy": 0.78,
+        "serious": 0.14,
+        "playful": 0.66
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "奶宝宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.84,
+        "tease": 0.16,
+        "intimacy": 0.8,
+        "serious": 0.26,
+        "playful": 0.62
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "胖宝宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.56,
+        "tease": 0.54,
+        "intimacy": 0.78,
+        "serious": 0.12,
+        "playful": 0.64
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "心肝宝宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.92,
+        "tease": 0.06,
+        "intimacy": 0.9,
+        "serious": 0.6,
+        "playful": 0.34
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "乖乖宝宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.16,
+        "intimacy": 0.86,
+        "serious": 0.46,
+        "playful": 0.56
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "臭臭宝宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.68,
+        "tease": 0.52,
+        "intimacy": 0.88,
+        "serious": 0.26,
+        "playful": 0.66
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我家宝贝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.9,
+        "tease": 0.08,
+        "intimacy": 0.92,
+        "serious": 0.54,
+        "playful": 0.38
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我家小宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.82,
+        "tease": 0.14,
+        "intimacy": 0.86,
+        "serious": 0.36,
+        "playful": 0.52
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我家臭宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.66,
+        "tease": 0.5,
+        "intimacy": 0.9,
+        "serious": 0.3,
+        "playful": 0.54
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我家崽",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.58,
+        "tease": 0.36,
+        "intimacy": 0.84,
+        "serious": 0.32,
+        "playful": 0.58
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我家崽崽",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.72,
+        "tease": 0.28,
+        "intimacy": 0.88,
+        "serious": 0.34,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的臭宝",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.64,
+        "tease": 0.52,
+        "intimacy": 0.9,
+        "serious": 0.32,
+        "playful": 0.5
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的宝贝儿",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.94,
+        "tease": 0.06,
+        "intimacy": 0.94,
+        "serious": 0.66,
+        "playful": 0.32
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "笨崽",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.4,
+        "tease": 0.72,
+        "intimacy": 0.7,
+        "serious": 0.08,
+        "playful": 0.64
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "臭崽",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.5,
+        "tease": 0.68,
+        "intimacy": 0.76,
+        "serious": 0.12,
+        "playful": 0.66
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "乖崽崽",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.78,
+        "tease": 0.22,
+        "intimacy": 0.78,
+        "serious": 0.3,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "臭崽崽",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.58,
+        "tease": 0.6,
+        "intimacy": 0.82,
+        "serious": 0.16,
+        "playful": 0.74
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "笨仔",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.46,
+        "tease": 0.76,
+        "intimacy": 0.58,
+        "serious": 0.12,
+        "playful": 0.7
+      },
+      "gender": "m",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "臭仔",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.5,
+        "tease": 0.84,
+        "intimacy": 0.64,
+        "serious": 0.1,
+        "playful": 0.66
+      },
+      "gender": "m",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小宝儿",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.1,
+        "intimacy": 0.82,
+        "serious": 0.58,
+        "playful": 0.6
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "乖宝儿",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.82,
+        "tease": 0.24,
+        "intimacy": 0.76,
+        "serious": 0.45,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "臭宝儿",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.72,
+        "tease": 0.74,
+        "intimacy": 0.8,
+        "serious": 0.16,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "甜甜儿",
+      "category": "pet_suffix",
+      "vec": {
+        "sweet": 0.92,
+        "tease": 0.08,
+        "intimacy": 0.7,
+        "serious": 0.28,
+        "playful": 0.78
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "维尼",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.74,
+        "tease": 0.12,
+        "intimacy": 0.86,
+        "serious": 0.62,
+        "playful": 0.52
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "小维尼",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.16,
+        "intimacy": 0.84,
+        "serious": 0.4,
+        "playful": 0.76
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "小熊维尼",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.78,
+        "tease": 0.22,
+        "intimacy": 0.76,
+        "serious": 0.3,
+        "playful": 0.8
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "小小熊",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.84,
+        "tease": 0.16,
+        "intimacy": 0.82,
+        "serious": 0.32,
+        "playful": 0.78
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "维尼宝",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.12,
+        "intimacy": 0.84,
+        "serious": 0.38,
+        "playful": 0.66
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "维尼宝宝",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.93,
+        "tease": 0.1,
+        "intimacy": 0.91,
+        "serious": 0.42,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "维尼宝贝",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.91,
+        "tease": 0.1,
+        "intimacy": 0.89,
+        "serious": 0.48,
+        "playful": 0.64
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "维尼崽",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.76,
+        "tease": 0.38,
+        "intimacy": 0.78,
+        "serious": 0.18,
+        "playful": 0.88
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "我的维尼",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.9,
+        "tease": 0.06,
+        "intimacy": 0.94,
+        "serious": 0.68,
+        "playful": 0.36
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "我的小熊",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.92,
+        "tease": 0.12,
+        "intimacy": 0.92,
+        "serious": 0.58,
+        "playful": 0.55
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "熊宝宝",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.9,
+        "tease": 0.14,
+        "intimacy": 0.88,
+        "serious": 0.4,
+        "playful": 0.74
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "熊宝贝",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.12,
+        "intimacy": 0.86,
+        "serious": 0.46,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "小熊宝",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.15,
+        "intimacy": 0.83,
+        "serious": 0.36,
+        "playful": 0.76
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "熊崽",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.7,
+        "tease": 0.42,
+        "intimacy": 0.74,
+        "serious": 0.16,
+        "playful": 0.86
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "熊崽崽",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.8,
+        "tease": 0.34,
+        "intimacy": 0.78,
+        "serious": 0.14,
+        "playful": 0.92
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "小熊崽",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.82,
+        "tease": 0.32,
+        "intimacy": 0.8,
+        "serious": 0.16,
+        "playful": 0.88
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "笨熊",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.5,
+        "tease": 0.82,
+        "intimacy": 0.68,
+        "serious": 0.12,
+        "playful": 0.72
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "小笨熊",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.64,
+        "tease": 0.74,
+        "intimacy": 0.72,
+        "serious": 0.14,
+        "playful": 0.84
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "胖熊",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.4,
+        "tease": 0.88,
+        "intimacy": 0.62,
+        "serious": 0.06,
+        "playful": 0.68
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "小胖熊",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.58,
+        "tease": 0.76,
+        "intimacy": 0.66,
+        "serious": 0.08,
+        "playful": 0.82
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "胖维尼",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.56,
+        "tease": 0.84,
+        "intimacy": 0.7,
+        "serious": 0.06,
+        "playful": 0.8
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "臭熊",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.54,
+        "tease": 0.88,
+        "intimacy": 0.72,
+        "serious": 0.08,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "乖乖熊",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.86,
+        "tease": 0.26,
+        "intimacy": 0.78,
+        "serious": 0.34,
+        "playful": 0.82
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "熊墩墩",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.76,
+        "tease": 0.3,
+        "intimacy": 0.68,
+        "serious": 0.12,
+        "playful": 0.9
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "bb",
+      "category": "english_mix",
+      "vec": {
+        "sweet": 0.76,
+        "tease": 0.1,
+        "intimacy": 0.8,
+        "serious": 0.32,
+        "playful": 0.42
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小baby",
+      "category": "english_mix",
+      "vec": {
+        "sweet": 0.8,
+        "tease": 0.18,
+        "intimacy": 0.7,
+        "serious": 0.28,
+        "playful": 0.76
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小bb",
+      "category": "english_mix",
+      "vec": {
+        "sweet": 0.72,
+        "tease": 0.28,
+        "intimacy": 0.68,
+        "serious": 0.18,
+        "playful": 0.82
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的baby",
+      "category": "english_mix",
+      "vec": {
+        "sweet": 0.82,
+        "tease": 0.1,
+        "intimacy": 0.88,
+        "serious": 0.5,
+        "playful": 0.48
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "我的honey",
+      "category": "english_mix",
+      "vec": {
+        "sweet": 0.85,
+        "tease": 0.12,
+        "intimacy": 0.83,
+        "serious": 0.46,
+        "playful": 0.5
+      },
+      "gender": "n",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "熊老师",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.28,
+        "tease": 0.6,
+        "intimacy": 0.4,
+        "serious": 0.22,
+        "playful": 0.6
+      },
+      "gender": "n",
+      "role": "tease",
+      "source": "2025-26 slang",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "甲方",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.12,
+        "tease": 0.75,
+        "intimacy": 0.3,
+        "serious": 0.2,
+        "playful": 0.55
+      },
+      "gender": "n",
+      "role": "tease",
+      "source": "2025-26 slang",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "学长",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.3,
+        "tease": 0.55,
+        "intimacy": 0.4,
+        "serious": 0.3,
+        "playful": 0.5
+      },
+      "gender": "m",
+      "role": "tease",
+      "source": "2025-26 slang",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "大冤种",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.2,
+        "tease": 0.75,
+        "intimacy": 0.4,
+        "serious": 0.1,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "role": "tease",
+      "source": "2025-26 slang",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "大聪明",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.12,
+        "tease": 0.8,
+        "intimacy": 0.35,
+        "serious": 0.1,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "role": "tease",
+      "source": "2025-26 slang",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "恋爱脑",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.3,
+        "tease": 0.7,
+        "intimacy": 0.5,
+        "serious": 0.15,
+        "playful": 0.6
+      },
+      "gender": "n",
+      "role": "tease",
+      "source": "2025-26 slang",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "纯爱战士",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.35,
+        "tease": 0.6,
+        "intimacy": 0.45,
+        "serious": 0.2,
+        "playful": 0.6
+      },
+      "gender": "n",
+      "role": "tease",
+      "source": "2025-26 slang",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小登",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.2,
+        "tease": 0.72,
+        "intimacy": 0.38,
+        "serious": 0.12,
+        "playful": 0.65
+      },
+      "gender": "n",
+      "role": "tease",
+      "source": "2025-26 slang",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "打工人",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.25,
+        "tease": 0.6,
+        "intimacy": 0.35,
+        "serious": 0.3,
+        "playful": 0.5
+      },
+      "gender": "n",
+      "role": "tease",
+      "source": "2025-26 slang",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "饲养员",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.4,
+        "tease": 0.55,
+        "intimacy": 0.5,
+        "serious": 0.2,
+        "playful": 0.6
+      },
+      "gender": "n",
+      "role": "tease",
+      "source": "2025-26 slang",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "干饭搭子",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.3,
+        "tease": 0.6,
+        "intimacy": 0.4,
+        "serious": 0.15,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "role": "tease",
+      "source": "2025-26 slang",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "哥们",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.15,
+        "tease": 0.65,
+        "intimacy": 0.35,
+        "serious": 0.2,
+        "playful": 0.6
+      },
+      "gender": "m",
+      "role": "tease",
+      "source": "2025-26 slang",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "MVP",
+      "category": "tease",
+      "vec": {
+        "sweet": 0.3,
+        "tease": 0.6,
+        "intimacy": 0.35,
+        "serious": 0.2,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "role": "tease",
+      "source": "2025-26 slang",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "哥哥",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.8,
+        "tease": 0.2,
+        "intimacy": 0.8,
+        "serious": 0.45,
+        "playful": 0.4
+      },
+      "gender": "m",
+      "source": "2025-26 slang",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "熊哥",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.6,
+        "tease": 0.35,
+        "intimacy": 0.7,
+        "serious": 0.3,
+        "playful": 0.5
+      },
+      "gender": "m",
+      "source": "2025-26 slang",
+      "weight": 1.25,
+      "near_core": true,
+      "tier": "core",
+      "core": true
+    },
+    {
+      "name": "小朋友",
+      "category": "sweet",
+      "vec": {
+        "sweet": 0.75,
+        "tease": 0.35,
+        "intimacy": 0.75,
+        "serious": 0.3,
+        "playful": 0.55
+      },
+      "gender": "n",
+      "source": "2025-26 slang",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "搭子",
+      "category": "daily",
+      "vec": {
+        "sweet": 0.5,
+        "tease": 0.45,
+        "intimacy": 0.6,
+        "serious": 0.2,
+        "playful": 0.65
+      },
+      "gender": "n",
+      "source": "2025-26 slang",
+      "weight": 0.5,
+      "tier": "extension"
+    },
+    {
+      "name": "小熊同学",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.72,
+        "tease": 0.2,
+        "intimacy": 0.8,
+        "serious": 0.48,
+        "playful": 0.7
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "🐻",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.7,
+        "tease": 0.15,
+        "intimacy": 0.85,
+        "serious": 0.3,
+        "playful": 0.75
+      },
+      "gender": "m",
+      "weight": 1.35,
+      "core": true,
+      "role": "affection",
+      "tier": "core"
+    },
+    {
+      "name": "小🐻",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.82,
+        "tease": 0.16,
+        "intimacy": 0.86,
+        "serious": 0.34,
+        "playful": 0.74
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "熊🐻",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.76,
+        "tease": 0.18,
+        "intimacy": 0.84,
+        "serious": 0.32,
+        "playful": 0.76
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "一只小熊🐻",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.68,
+        "tease": 0.28,
+        "intimacy": 0.88,
+        "serious": 0.35,
+        "playful": 0.8
+      },
+      "gender": "n",
+      "weight": 1.3,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "熊仔",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.78,
+        "tease": 0.22,
+        "intimacy": 0.8,
+        "serious": 0.36,
+        "playful": 0.74
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "小熊仔",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.82,
+        "tease": 0.2,
+        "intimacy": 0.82,
+        "serious": 0.34,
+        "playful": 0.74
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "熊熊宝",
+      "category": "bear",
+      "vec": {
+        "sweet": 0.88,
+        "tease": 0.18,
+        "intimacy": 0.86,
+        "serious": 0.36,
+        "playful": 0.72
+      },
+      "gender": "n",
+      "weight": 1.25,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "明明",
+      "category": "intimacy",
+      "vec": {
+        "sweet": 0.6,
+        "tease": 0.12,
+        "intimacy": 0.82,
+        "serious": 0.55,
+        "playful": 0.4
+      },
+      "gender": "m",
+      "weight": 1.15,
+      "core": true,
+      "tier": "core"
+    },
+    {
+      "name": "小杨",
+      "gender": "m",
+      "role": "affection",
+      "weight": 1.2,
+      "core": true,
+      "vec": {
+        "sweet": 0.28,
+        "tease": 0.22,
+        "intimacy": 0.4,
+        "serious": 0.35,
+        "playful": 0.4
+      },
+      "tier": "core"
+    }
+  ],
+  "role_note": "role=tease：调侃称呼（不是真实身份/关系，两人真实关系是情侣），只在调侃语境被选中",
+  "core_note": "tier=core|extension + weight：core=小熊/🐻/小熊相关（日常默认高权重）；extension=无姓名甜称等（低概率）；已清动物身份/公主仙女/王姓调侃",
+  "tier_note": "core 日常主导（换称时≈88%只采 core）；extension 稀有（≈12%）。同 tier 内 cos*weight；extension weight≈0.50，core≥1.25"
+}

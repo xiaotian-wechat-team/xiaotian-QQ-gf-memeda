@@ -1,0 +1,2280 @@
+{
+  "version": 2,
+  "persona_source": "data/persona_dossier.json",
+  "note": "模板是候选计划，非真实到访/预约证据。活动时间不含往返；不改变既有睡眠与实习频率。 固定活动含目的、计划同行、三段流程和独立拍照点；门店/场次未核实不冒充事实。",
+  "activities": [
+    {
+      "id": "shopping_01",
+      "category": "shopping",
+      "category_name": "逛街",
+      "category_weight": 24,
+      "activity": "试穿外套，和室友互相挑颜色",
+      "location": "附近商场",
+      "duration_minutes": [
+        45,
+        75
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-008",
+      "scene_hints": [
+        "试衣镜和衣架",
+        "试穿外套，和室友互相挑颜色"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "林晓晚",
+      "destination_area": "万寿寺路周边服装店候选",
+      "purpose": "试一件能搭现有衣服的外套",
+      "steps": [
+        "看版型和袖长",
+        "试两种颜色，在镜前比较",
+        "记下更合适的颜色，不强行买"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：试一件能搭现有衣服的外套",
+      "photo_subject": "试衣镜和衣架",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "shopping_02",
+      "category": "shopping",
+      "category_name": "逛街",
+      "category_weight": 24,
+      "activity": "逛文创小店挑明信片和贴纸",
+      "location": "附近商场",
+      "duration_minutes": [
+        45,
+        75
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-009",
+      "scene_hints": [
+        "明信片和贴纸架",
+        "逛文创小店挑明信片和贴纸"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "万寿寺路周边文具文创店候选",
+      "purpose": "给分镜本补一点贴纸和书签",
+      "steps": [
+        "翻明信片架找两张喜欢的构图",
+        "挑一组不抢画面的小贴纸",
+        "对比纸张手感，收好购物清单"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：给分镜本补一点贴纸和书签",
+      "photo_subject": "明信片和贴纸架",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "shopping_03",
+      "category": "shopping",
+      "category_name": "逛街",
+      "category_weight": 24,
+      "activity": "逛饰品店试发夹和耳饰",
+      "location": "附近商场",
+      "duration_minutes": [
+        45,
+        75
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-010",
+      "scene_hints": [
+        "发夹耳饰展示盘和台镜",
+        "逛饰品店试发夹和耳饰"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "林晓晚",
+      "destination_area": "万寿寺路周边饰品柜台候选",
+      "purpose": "给日常扎发找一个不勒头的发夹",
+      "steps": [
+        "先看哑光发夹和小耳饰",
+        "在小镜子前试两种颜色",
+        "比较佩戴舒适度，拍下喜欢的一款"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：给日常扎发找一个不勒头的发夹",
+      "photo_subject": "发夹耳饰展示盘和台镜",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "shopping_04",
+      "category": "shopping",
+      "category_name": "逛街",
+      "category_weight": 24,
+      "activity": "去生活杂货店挑杯子和收纳盒",
+      "location": "附近商场",
+      "duration_minutes": [
+        45,
+        75
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-011",
+      "scene_hints": [
+        "杯子和收纳盒货架",
+        "去生活杂货店挑杯子和收纳盒"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "万寿寺路周边生活杂货店候选",
+      "purpose": "给宿舍桌面找个小收纳盒",
+      "steps": [
+        "先量随身本子的宽度作参照",
+        "看杯子和分格收纳盒",
+        "比较尺寸，列出需要的款式"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：给宿舍桌面找个小收纳盒",
+      "photo_subject": "杯子和收纳盒货架",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "shopping_05",
+      "category": "shopping",
+      "category_name": "逛街",
+      "category_weight": 24,
+      "activity": "逛鞋包店，看完橱窗再歇脚",
+      "location": "附近商场",
+      "duration_minutes": [
+        45,
+        75
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-008",
+      "scene_hints": [
+        "鞋包橱窗和休息椅",
+        "逛鞋包店，看完橱窗再歇脚"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "林晓晚",
+      "destination_area": "万寿寺路周边鞋包店候选",
+      "purpose": "找适合走路和外拍的小包",
+      "steps": [
+        "看橱窗配色",
+        "试背小包，检查肩带和容量",
+        "到休息座椅旁整理想法"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：找适合走路和外拍的小包",
+      "photo_subject": "鞋包橱窗和休息椅",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "nightview_01",
+      "category": "nightview",
+      "category_name": "看夜景",
+      "category_weight": 22,
+      "activity": "看临街橱窗灯光，拍玻璃倒影",
+      "location": "海淀附近亮灯街区",
+      "duration_minutes": [
+        40,
+        70
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-012",
+      "scene_hints": [
+        "夜间橱窗玻璃倒影",
+        "看临街橱窗灯光，拍玻璃倒影"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "万寿寺路沿街亮灯商铺外人行道",
+      "purpose": "收集三张冷暖灯光倒影作构图练习",
+      "steps": [
+        "先找不妨碍行人的玻璃橱窗",
+        "拍暖色灯与蓝色夜空的对比",
+        "停下检查画面，删掉明显糊片"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：收集三张冷暖灯光倒影作构图练习",
+      "photo_subject": "夜间橱窗玻璃倒影",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "nightview_02",
+      "category": "nightview",
+      "category_name": "看夜景",
+      "category_weight": 22,
+      "activity": "在开阔街口看车流，试拍长曝光",
+      "location": "海淀附近亮灯街区",
+      "duration_minutes": [
+        40,
+        70
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-013",
+      "scene_hints": [
+        "人行道与车流光轨",
+        "在开阔街口看车流，试拍长曝光"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "万寿寺路与中关村南大街附近安全人行道",
+      "purpose": "练习固定机位记录车流",
+      "steps": [
+        "在人行道内侧选稳妥机位",
+        "分别试普通曝光和较慢快门",
+        "比较车灯光线，记一条拍摄心得"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：练习固定机位记录车流",
+      "photo_subject": "人行道与车流光轨",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "nightview_03",
+      "category": "nightview",
+      "category_name": "看夜景",
+      "category_weight": 22,
+      "activity": "看城市楼宇亮灯，找冷暖色对比",
+      "location": "海淀附近亮灯街区",
+      "duration_minutes": [
+        40,
+        70
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-013",
+      "scene_hints": [
+        "楼宇灯窗与树影",
+        "看城市楼宇亮灯，找冷暖色对比"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "林晓晚",
+      "destination_area": "中关村南大街沿线公共人行道",
+      "purpose": "找一组楼宇灯光和树影的对比",
+      "steps": [
+        "先沿亮灯路段走一小段",
+        "在安全停留点拍楼宇灯窗",
+        "到有灯光的位置歇脚再返校"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：找一组楼宇灯光和树影的对比",
+      "photo_subject": "楼宇灯窗与树影",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "nightview_04",
+      "category": "nightview",
+      "category_name": "看夜景",
+      "category_weight": 22,
+      "activity": "沿亮灯步道看夜色，坐一会儿",
+      "location": "海淀附近亮灯街区",
+      "duration_minutes": [
+        40,
+        70
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-013",
+      "scene_hints": [
+        "路灯下步道与长椅",
+        "沿亮灯步道看夜色，坐一会儿"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "林晓晚",
+      "destination_area": "万寿寺路沿线公共步道",
+      "purpose": "放松眼睛，拍一张路灯下的树影",
+      "steps": [
+        "走到路灯连续且有人通行的路段",
+        "找树影和长椅构图，短暂停留",
+        "走回来时看一眼刚拍的照片"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：放松眼睛，拍一张路灯下的树影",
+      "photo_subject": "路灯下步道与长椅",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "nightview_05",
+      "category": "nightview",
+      "category_name": "看夜景",
+      "category_weight": 22,
+      "activity": "在室内临窗座位看街景亮起来",
+      "location": "海淀附近亮灯街区",
+      "duration_minutes": [
+        40,
+        70
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-014",
+      "scene_hints": [
+        "热饮桌角与夜景窗户",
+        "在室内临窗座位看街景亮起来"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "万寿寺路周边临窗饮品店候选",
+      "purpose": "暖和地坐着看夜景，画一张窗边小速写",
+      "steps": [
+        "找面向街道的室内座位",
+        "边喝热饮边画窗框与灯光",
+        "拍桌角和窗外夜色，整理画纸"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：暖和地坐着看夜景，画一张窗边小速写",
+      "photo_subject": "热饮桌角与夜景窗户",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "singing_01",
+      "category": "singing",
+      "category_name": "唱歌",
+      "category_weight": 18,
+      "activity": "和室友轮流唱拿手歌，中途歇嗓子",
+      "location": "附近KTV",
+      "duration_minutes": [
+        60,
+        90
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-003",
+      "scene_hints": [
+        "点歌台与包间沙发",
+        "和室友轮流唱拿手歌，中途歇嗓子"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "陈可心",
+      "destination_area": "学校周边可往返的KTV候选（门店待确认）",
+      "purpose": "各唱两首拿手歌，轻松放松",
+      "steps": [
+        "点熟悉的中低音歌曲",
+        "轮流唱两轮，中间喝水歇嗓",
+        "留一首合唱收尾，整理随身物品"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：各唱两首拿手歌，轻松放松",
+      "photo_subject": "点歌台与包间沙发",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "singing_02",
+      "category": "singing",
+      "category_name": "唱歌",
+      "category_weight": 18,
+      "activity": "跟同学挑战双人合唱，笑场后重来",
+      "location": "附近KTV",
+      "duration_minutes": [
+        60,
+        90
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-015",
+      "scene_hints": [
+        "双话筒与小桌",
+        "跟同学挑战双人合唱，笑场后重来"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "陈可心",
+      "destination_area": "学校周边可往返的KTV候选（门店待确认）",
+      "purpose": "练一首双人合唱的换气和接句",
+      "steps": [
+        "先分好两段歌词",
+        "用普通音量练接句，不追求飙高音",
+        "休息后完整唱一遍"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：练一首双人合唱的换气和接句",
+      "photo_subject": "双话筒与小桌",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "singing_03",
+      "category": "singing",
+      "category_name": "唱歌",
+      "category_weight": 18,
+      "activity": "和室友唱老歌，挑一首粤语歌",
+      "location": "附近KTV",
+      "duration_minutes": [
+        60,
+        90
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-015",
+      "scene_hints": [
+        "话筒饮水杯与点歌屏",
+        "和室友唱老歌，挑一首粤语歌"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "林晓晚",
+      "destination_area": "学校周边可往返的KTV候选（门店待确认）",
+      "purpose": "唱几首熟悉的老歌，最后试一首粤语歌",
+      "steps": [
+        "各点一首熟悉老歌",
+        "轮流唱，中途喝水聊天",
+        "挑一首会唱的粤语歌作收尾"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：唱几首熟悉的老歌，最后试一首粤语歌",
+      "photo_subject": "话筒饮水杯与点歌屏",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "singing_04",
+      "category": "singing",
+      "category_name": "唱歌",
+      "category_weight": 18,
+      "activity": "练音乐剧选段，唱完聊哪里跑调",
+      "location": "附近KTV",
+      "duration_minutes": [
+        60,
+        90
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-003",
+      "scene_hints": [
+        "包间座位与话筒",
+        "练音乐剧选段，唱完聊哪里跑调"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "陈可心",
+      "destination_area": "学校周边可往返的KTV候选（门店待确认）",
+      "purpose": "练音乐剧短选段的情绪和咬字",
+      "steps": [
+        "挑已经熟悉的短选段",
+        "先轻声顺词，再试情绪变化",
+        "歇嗓子，聊哪里需要重新练"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：练音乐剧短选段的情绪和咬字",
+      "photo_subject": "包间座位与话筒",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "singing_05",
+      "category": "singing",
+      "category_name": "唱歌",
+      "category_weight": 18,
+      "activity": "随心点几首轻松的歌，不拼高音",
+      "location": "附近KTV",
+      "duration_minutes": [
+        60,
+        90
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-003",
+      "scene_hints": [
+        "暖色包间沙发和桌面",
+        "随心点几首轻松的歌，不拼高音"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "林晓晚",
+      "destination_area": "学校周边可往返的KTV候选（门店待确认）",
+      "purpose": "只唱轻松的歌，不把休息晚变成练习课",
+      "steps": [
+        "各点一首舒适音域的歌",
+        "唱唱停停，喝水闲聊",
+        "选一首大家熟悉的歌收尾"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：只唱轻松的歌，不把休息晚变成练习课",
+      "photo_subject": "暖色包间沙发和桌面",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "movie_01",
+      "category": "movie",
+      "category_name": "看电影",
+      "category_weight": 18,
+      "activity": "和同学看喜剧，散场聊最喜欢的桥段",
+      "location": "附近电影院",
+      "duration_minutes": [
+        100,
+        125
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-004",
+      "scene_hints": [
+        "电影院大厅与检票走廊",
+        "和同学看喜剧，散场聊最喜欢的桥段"
+      ],
+      "photo_note": "电影仅入场前/散场后大厅拍照，不拍银幕或观影中的他人",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "学校周边影院候选（片名/场次待确认）",
+      "purpose": "看喜剧，重点留意喜剧节奏",
+      "steps": [
+        "核对片名场次，在大厅等候",
+        "安静观影，不拍银幕；片长与场次须能放入本时段，否则取消",
+        "散场在大厅聊一个印象深的镜头"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：看喜剧，重点留意喜剧节奏",
+      "photo_subject": "电影院大厅与检票走廊",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "核实片名、场次、完整片长与往返；放不进现有时段则取消观影，不中途离场赶计划，不挤占睡眠"
+    },
+    {
+      "id": "movie_02",
+      "category": "movie",
+      "category_name": "看电影",
+      "category_weight": 18,
+      "activity": "看一部动画，留意色彩和人物动作",
+      "location": "附近电影院",
+      "duration_minutes": [
+        100,
+        125
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-019",
+      "scene_hints": [
+        "电影院大厅与检票走廊",
+        "看一部动画，留意色彩和人物动作"
+      ],
+      "photo_note": "电影仅入场前/散场后大厅拍照，不拍银幕或观影中的他人",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "学校周边影院候选（片名/场次待确认）",
+      "purpose": "看动画，重点留意角色动作与配色",
+      "steps": [
+        "核对片名场次，在大厅等候",
+        "安静观影，不拍银幕；片长与场次须能放入本时段，否则取消",
+        "散场在大厅聊一个印象深的镜头"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：看动画，重点留意角色动作与配色",
+      "photo_subject": "电影院大厅与检票走廊",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "核实片名、场次、完整片长与往返；放不进现有时段则取消观影，不中途离场赶计划，不挤占睡眠"
+    },
+    {
+      "id": "movie_03",
+      "category": "movie",
+      "category_name": "看电影",
+      "category_weight": 18,
+      "activity": "看剧情片，散场讨论人物选择",
+      "location": "附近电影院",
+      "duration_minutes": [
+        100,
+        125
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-004",
+      "scene_hints": [
+        "电影院大厅与检票走廊",
+        "看剧情片，散场讨论人物选择"
+      ],
+      "photo_note": "电影仅入场前/散场后大厅拍照，不拍银幕或观影中的他人",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "学校周边影院候选（片名/场次待确认）",
+      "purpose": "看剧情片，重点留意人物选择",
+      "steps": [
+        "核对片名场次，在大厅等候",
+        "安静观影，不拍银幕；片长与场次须能放入本时段，否则取消",
+        "散场在大厅聊一个印象深的镜头"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：看剧情片，重点留意人物选择",
+      "photo_subject": "电影院大厅与检票走廊",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "核实片名、场次、完整片长与往返；放不进现有时段则取消观影，不中途离场赶计划，不挤占睡眠"
+    },
+    {
+      "id": "movie_04",
+      "category": "movie",
+      "category_name": "看电影",
+      "category_weight": 18,
+      "activity": "看悬疑片，散场互相猜结尾",
+      "location": "附近电影院",
+      "duration_minutes": [
+        100,
+        125
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-019",
+      "scene_hints": [
+        "电影院大厅与检票走廊",
+        "看悬疑片，散场互相猜结尾"
+      ],
+      "photo_note": "电影仅入场前/散场后大厅拍照，不拍银幕或观影中的他人",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "学校周边影院候选（片名/场次待确认）",
+      "purpose": "看悬疑片，重点留意悬念铺垫",
+      "steps": [
+        "核对片名场次，在大厅等候",
+        "安静观影，不拍银幕；片长与场次须能放入本时段，否则取消",
+        "散场在大厅聊一个印象深的镜头"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：看悬疑片，重点留意悬念铺垫",
+      "photo_subject": "电影院大厅与检票走廊",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "核实片名、场次、完整片长与往返；放不进现有时段则取消观影，不中途离场赶计划，不挤占睡眠"
+    },
+    {
+      "id": "movie_05",
+      "category": "movie",
+      "category_name": "看电影",
+      "category_weight": 18,
+      "activity": "看纪录片，散场记两笔镜头想法",
+      "location": "附近电影院",
+      "duration_minutes": [
+        100,
+        125
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-004",
+      "scene_hints": [
+        "电影院大厅与检票走廊",
+        "看纪录片，散场记两笔镜头想法"
+      ],
+      "photo_note": "电影仅入场前/散场后大厅拍照，不拍银幕或观影中的他人",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "学校周边影院候选（片名/场次待确认）",
+      "purpose": "看纪录片，重点留意镜头与环境声",
+      "steps": [
+        "核对片名场次，在大厅等候",
+        "安静观影，不拍银幕；片长与场次须能放入本时段，否则取消",
+        "散场在大厅聊一个印象深的镜头"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：看纪录片，重点留意镜头与环境声",
+      "photo_subject": "电影院大厅与检票走廊",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "核实片名、场次、完整片长与往返；放不进现有时段则取消观影，不中途离场赶计划，不挤占睡眠"
+    },
+    {
+      "id": "light_fun_01",
+      "category": "light_fun",
+      "category_name": "其他轻娱乐",
+      "category_weight": 16,
+      "activity": "和同学玩两局轻桌游，结束聊离谱操作",
+      "location": "附近桌游或手作店",
+      "duration_minutes": [
+        50,
+        85
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-016",
+      "scene_hints": [
+        "卡牌木桌与计分纸",
+        "和同学玩两局轻桌游，结束聊离谱操作"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "学校周边桌游店候选",
+      "purpose": "玩两局短桌游，换一种思路",
+      "steps": [
+        "选规则能快速讲清的游戏",
+        "玩两局，中间留休息",
+        "复盘一处好笑操作，收好卡牌"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：玩两局短桌游，换一种思路",
+      "photo_subject": "卡牌木桌与计分纸",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "light_fun_02",
+      "category": "light_fun",
+      "category_name": "其他轻娱乐",
+      "category_weight": 16,
+      "activity": "做小串珠或钥匙扣，给成品拍照",
+      "location": "附近桌游或手作店",
+      "duration_minutes": [
+        50,
+        85
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-017",
+      "scene_hints": [
+        "串珠托盘与半成品挂件",
+        "做小串珠或钥匙扣，给成品拍照"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "陈可心",
+      "destination_area": "学校周边手作店候选",
+      "purpose": "做一个自己配色的手机挂件",
+      "steps": [
+        "挑三种颜色，先排一遍顺序",
+        "串珠打结，检查结扣",
+        "在桌面给成品拍一张"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：做一个自己配色的手机挂件",
+      "photo_subject": "串珠托盘与半成品挂件",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "light_fun_03",
+      "category": "light_fun",
+      "category_name": "其他轻娱乐",
+      "category_weight": 16,
+      "activity": "拼一个小模型，边拼边聊天",
+      "location": "附近桌游或手作店",
+      "duration_minutes": [
+        50,
+        85
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-016",
+      "scene_hints": [
+        "模型零件与木桌",
+        "拼一个小模型，边拼边聊天"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "学校周边手作店候选",
+      "purpose": "拼一个一小时内能收尾的小模型",
+      "steps": [
+        "清点零件，先看步骤",
+        "拼主体，不选超长复杂款",
+        "把未完成部分分袋收好"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：拼一个一小时内能收尾的小模型",
+      "photo_subject": "模型零件与木桌",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "light_fun_04",
+      "category": "light_fun",
+      "category_name": "其他轻娱乐",
+      "category_weight": 16,
+      "activity": "做简单纸艺，挑配色拍完成品",
+      "location": "附近桌游或手作店",
+      "duration_minutes": [
+        50,
+        85
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-018",
+      "scene_hints": [
+        "彩纸剪刀与手工小卡",
+        "做简单纸艺，挑配色拍完成品"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "陈可心",
+      "destination_area": "学校周边手作店候选",
+      "purpose": "做一张折纸立体小卡",
+      "steps": [
+        "选两种主色，先折样片",
+        "裁切拼贴，压平折痕",
+        "在干净桌面拍成品细节"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：做一张折纸立体小卡",
+      "photo_subject": "彩纸剪刀与手工小卡",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "light_fun_05",
+      "category": "light_fun",
+      "category_name": "其他轻娱乐",
+      "category_weight": 16,
+      "activity": "和室友画速写小卡，互相吐槽画风",
+      "location": "附近桌游或手作店",
+      "duration_minutes": [
+        50,
+        85
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-018",
+      "scene_hints": [
+        "速写卡彩铅与热饮",
+        "和室友画速写小卡，互相吐槽画风"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "林晓晚",
+      "destination_area": "学校周边安静饮品店候选",
+      "purpose": "互画一张十分钟速写卡",
+      "steps": [
+        "找有桌面的安静座位",
+        "轮流画两张小卡，不追求像",
+        "交换看画，拍下自己的纸笔"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：互画一张十分钟速写卡",
+      "photo_subject": "速写卡彩铅与热饮",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "campus_walk_01",
+      "category": "campus_walk",
+      "category_name": "校园散步",
+      "category_weight": 2,
+      "activity": "饭后在校园走一小圈，路灯下歇脚",
+      "location": "学校附近步道",
+      "duration_minutes": [
+        30,
+        40
+      ],
+      "transit_minutes": 5,
+      "scene_id": "night-006",
+      "scene_hints": [
+        "校园路灯步道",
+        "饭后在校园走一小圈，路灯下歇脚"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "自己",
+      "destination_area": "北舞校园宿舍附近路灯步道",
+      "purpose": "饭后透气，短走一圈就回",
+      "steps": [
+        "从宿舍楼附近慢慢走",
+        "在路灯下休息片刻",
+        "原路回寝，准备洗漱"
+      ],
+      "meeting_point": "从宿舍出发",
+      "followup": "若本次成行，回寝后整理：饭后透气，短走一圈就回",
+      "photo_subject": "校园路灯步道",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "campus_walk_02",
+      "category": "campus_walk",
+      "category_name": "校园散步",
+      "category_weight": 2,
+      "activity": "绕宿舍附近透透气，拍一片树影",
+      "location": "学校附近步道",
+      "duration_minutes": [
+        30,
+        40
+      ],
+      "transit_minutes": 5,
+      "scene_id": "night-006",
+      "scene_hints": [
+        "校园长椅和树影",
+        "绕宿舍附近透透气，拍一片树影"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "自己",
+      "destination_area": "北舞校园宿舍附近树影路段",
+      "purpose": "给眼睛休息一下，拍一片树影",
+      "steps": [
+        "走到附近亮灯处",
+        "拍一张树影，收起手机",
+        "绕小圈回寝，不延长夜游"
+      ],
+      "meeting_point": "从宿舍出发",
+      "followup": "若本次成行，回寝后整理：给眼睛休息一下，拍一片树影",
+      "photo_subject": "校园长椅和树影",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "night_work_01",
+      "category": "night_work",
+      "category_name": "夜间实习拍摄",
+      "category_weight": 0,
+      "activity": "记录路灯色温与人行道光影，整理机位备注",
+      "location": "海淀附近亮灯街区",
+      "duration_minutes": [
+        60,
+        100
+      ],
+      "transit_minutes": 30,
+      "scene_id": "night-007",
+      "scene_hints": [
+        "路灯与机位记录本",
+        "记录路灯色温与人行道光影，整理机位备注"
+      ],
+      "photo_note": "实习仅工作间隙分享环境与自己的器材，不展示项目文件或他人正脸",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "实习同事（按实际通知）",
+      "destination_area": "海淀校区周边外景候选（以实习通知为准）",
+      "purpose": "完成既有晚实习的取景记录，不另加项目",
+      "steps": [
+        "先确认安全机位与工作范围",
+        "记录两处路灯色温和地面光影",
+        "收工核对机位备注与器材"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：完成既有晚实习的取景记录，不另加项目",
+      "photo_subject": "路灯与机位记录本",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "night_work_02",
+      "category": "night_work",
+      "category_name": "夜间实习拍摄",
+      "category_weight": 0,
+      "activity": "拍橱窗倒影空镜，收工核对素材",
+      "location": "海淀附近亮灯街区",
+      "duration_minutes": [
+        60,
+        100
+      ],
+      "transit_minutes": 30,
+      "scene_id": "night-012",
+      "scene_hints": [
+        "玻璃倒影与相机",
+        "拍橱窗倒影空镜，收工核对素材"
+      ],
+      "photo_note": "实习仅工作间隙分享环境与自己的器材，不展示项目文件或他人正脸",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "实习同事（按实际通知）",
+      "destination_area": "海淀校区周边外景候选（以实习通知为准）",
+      "purpose": "完成既有晚实习的取景记录，不另加项目",
+      "steps": [
+        "先检查玻璃反光与行人动线",
+        "固定机位拍橱窗倒影空镜",
+        "收工核对素材编号"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：完成既有晚实习的取景记录，不另加项目",
+      "photo_subject": "玻璃倒影与相机",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "night_work_03",
+      "category": "night_work",
+      "category_name": "夜间实习拍摄",
+      "category_weight": 0,
+      "activity": "记录安全街角的环境声，拍固定机位空镜",
+      "location": "海淀附近亮灯街区",
+      "duration_minutes": [
+        60,
+        100
+      ],
+      "transit_minutes": 30,
+      "scene_id": "night-020",
+      "scene_hints": [
+        "便携录音器与夜间街角",
+        "记录安全街角的环境声，拍固定机位空镜"
+      ],
+      "photo_note": "实习仅工作间隙分享环境与自己的器材，不展示项目文件或他人正脸",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "实习同事（按实际通知）",
+      "destination_area": "海淀校区周边外景候选（以实习通知为准）",
+      "purpose": "完成既有晚实习的取景记录，不另加项目",
+      "steps": [
+        "检查收音电平与安全站位",
+        "记录短段环境声和固定空镜",
+        "试听录音，标注机位时间"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：完成既有晚实习的取景记录，不另加项目",
+      "photo_subject": "便携录音器与夜间街角",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "night_work_04",
+      "category": "night_work",
+      "category_name": "夜间实习拍摄",
+      "category_weight": 0,
+      "activity": "协助夜景外拍，间隙记录机位与补光位置",
+      "location": "海淀附近亮灯街区",
+      "duration_minutes": [
+        60,
+        100
+      ],
+      "transit_minutes": 30,
+      "scene_id": "night-020",
+      "scene_hints": [
+        "三脚架与便携补光灯",
+        "协助夜景外拍，间隙记录机位与补光位置"
+      ],
+      "photo_note": "实习仅工作间隙分享环境与自己的器材，不展示项目文件或他人正脸",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "实习同事（按实际通知）",
+      "destination_area": "海淀校区周边外景候选（以实习通知为准）",
+      "purpose": "完成既有晚实习的取景记录，不另加项目",
+      "steps": [
+        "先协助检查三脚架与补光",
+        "在指导下记录机位和灯位",
+        "收工清点器材与电池"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：完成既有晚实习的取景记录，不另加项目",
+      "photo_subject": "三脚架与便携补光灯",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "night_work_05",
+      "category": "night_work",
+      "category_name": "夜间实习拍摄",
+      "category_weight": 0,
+      "activity": "拍楼宇灯光过渡，收工备份空镜素材",
+      "location": "海淀附近亮灯街区",
+      "duration_minutes": [
+        60,
+        100
+      ],
+      "transit_minutes": 30,
+      "scene_id": "night-007",
+      "scene_hints": [
+        "夜景相机与收纳包",
+        "拍楼宇灯光过渡，收工备份空镜素材"
+      ],
+      "photo_note": "实习仅工作间隙分享环境与自己的器材，不展示项目文件或他人正脸",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "实习同事（按实际通知）",
+      "destination_area": "海淀校区周边外景候选（以实习通知为准）",
+      "purpose": "完成既有晚实习的取景记录，不另加项目",
+      "steps": [
+        "确认楼宇取景范围",
+        "记录亮灯变化的短段空镜",
+        "核对素材卡并安排回去备份"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：完成既有晚实习的取景记录，不另加项目",
+      "photo_subject": "夜景相机与收纳包",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "shopping_06",
+      "category": "shopping",
+      "category_name": "逛街",
+      "category_weight": 24,
+      "activity": "选围巾配色，不买重复款",
+      "location": "附近商场",
+      "duration_minutes": [
+        45,
+        75
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-008",
+      "scene_hints": [
+        "服装店试衣镜",
+        "选围巾配色，不买重复款"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "林晓晚",
+      "destination_area": "万寿寺路周边服装店候选",
+      "purpose": "把现有大衣配得更协调",
+      "steps": [
+        "看两种低饱和配色",
+        "在镜前比一下长度与厚度",
+        "拍下候选颜色，回寝对照衣柜"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：把现有大衣配得更协调",
+      "photo_subject": "服装店试衣镜",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "shopping_07",
+      "category": "shopping",
+      "category_name": "逛街",
+      "category_weight": 24,
+      "activity": "逛文具店试笔，补一支分镜笔",
+      "location": "附近商场",
+      "duration_minutes": [
+        45,
+        75
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-009",
+      "scene_hints": [
+        "文具文创明信片架",
+        "逛文具店试笔，补一支分镜笔"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "万寿寺路周边服装店候选",
+      "purpose": "找一支适合画分镜线条的笔",
+      "steps": [
+        "看粗细和笔尖",
+        "在试写纸画直线与小格",
+        "对比手感，只记真正需要的型号"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：找一支适合画分镜线条的笔",
+      "photo_subject": "文具文创明信片架",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "shopping_08",
+      "category": "shopping",
+      "category_name": "逛街",
+      "category_weight": 24,
+      "activity": "看小发圈和鲨鱼夹，试扎低丸子",
+      "location": "附近商场",
+      "duration_minutes": [
+        45,
+        75
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-010",
+      "scene_hints": [
+        "饰品柜台发夹耳饰",
+        "看小发圈和鲨鱼夹，试扎低丸子"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "陈可心",
+      "destination_area": "万寿寺路周边服装店候选",
+      "purpose": "找到排练后能快速整理头发的配饰",
+      "steps": [
+        "挑不刮头发的款式",
+        "用台镜试低丸子与半扎发",
+        "记下舒适的一款，归还试用品"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：找到排练后能快速整理头发的配饰",
+      "photo_subject": "饰品柜台发夹耳饰",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "shopping_09",
+      "category": "shopping",
+      "category_name": "逛街",
+      "category_weight": 24,
+      "activity": "看帆布包和小零钱袋",
+      "location": "附近商场",
+      "duration_minutes": [
+        45,
+        75
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-011",
+      "scene_hints": [
+        "生活杂货杯子收纳",
+        "看帆布包和小零钱袋"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "林晓晚",
+      "destination_area": "万寿寺路周边服装店候选",
+      "purpose": "给零碎外拍用品找个轻便小袋",
+      "steps": [
+        "先看袋口与内层",
+        "试装随身本和水杯",
+        "对比背带，整理需求清单"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：给零碎外拍用品找个轻便小袋",
+      "photo_subject": "生活杂货杯子收纳",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "nightview_06",
+      "category": "nightview",
+      "category_name": "看夜景",
+      "category_weight": 22,
+      "activity": "看雨后橱窗反光，只走亮灯路段",
+      "location": "海淀附近亮灯街区",
+      "duration_minutes": [
+        40,
+        70
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-012",
+      "scene_hints": [
+        "夜间橱窗玻璃倒影",
+        "看雨后橱窗反光，只走亮灯路段"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "万寿寺路沿街亮灯商铺外人行道",
+      "purpose": "练一张雨后冷暖反光构图，雨停地面安全才出门",
+      "steps": [
+        "核对天气与路况",
+        "在人行道内侧拍玻璃反光",
+        "检查鞋底与相机，提前收工"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：练一张雨后冷暖反光构图，雨停地面安全才出门",
+      "photo_subject": "夜间橱窗玻璃倒影",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠",
+      "weather_requirement": "仅雨后已停雨且路面安全；否则改室内临窗休息"
+    },
+    {
+      "id": "nightview_07",
+      "category": "nightview",
+      "category_name": "看夜景",
+      "category_weight": 22,
+      "activity": "坐窗边画三格夜景分镜",
+      "location": "海淀附近亮灯街区",
+      "duration_minutes": [
+        40,
+        70
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-014",
+      "scene_hints": [
+        "临窗热饮夜景",
+        "坐窗边画三格夜景分镜"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "万寿寺路周边临窗饮品店候选",
+      "purpose": "把同一扇窗画成远中近三种景别",
+      "steps": [
+        "在室内选临窗座位",
+        "用十分钟分别画远中近三格",
+        "拍下画纸和窗光，喝完热饮收尾"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：把同一扇窗画成远中近三种景别",
+      "photo_subject": "临窗热饮夜景",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "nightview_08",
+      "category": "nightview",
+      "category_name": "看夜景",
+      "category_weight": 22,
+      "activity": "用手机试一组路灯散景",
+      "location": "海淀附近亮灯街区",
+      "duration_minutes": [
+        40,
+        70
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-013",
+      "scene_hints": [
+        "夜间步道车流光影",
+        "用手机试一组路灯散景"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "林晓晚",
+      "destination_area": "万寿寺路沿街亮灯商铺外人行道",
+      "purpose": "练前景清楚、背景灯光柔和的画面",
+      "steps": [
+        "找安全停留点",
+        "用随身小物试对焦距离",
+        "比较两张效果，沿原路返回"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：练前景清楚、背景灯光柔和的画面",
+      "photo_subject": "夜间步道车流光影",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "nightview_09",
+      "category": "nightview",
+      "category_name": "看夜景",
+      "category_weight": 22,
+      "activity": "逛亮灯街角，找一对互补色招牌",
+      "location": "海淀附近亮灯街区",
+      "duration_minutes": [
+        40,
+        70
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-012",
+      "scene_hints": [
+        "夜间橱窗玻璃倒影",
+        "逛亮灯街角，找一对互补色招牌"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "林晓晚",
+      "destination_area": "万寿寺路沿街亮灯商铺外人行道",
+      "purpose": "收集一组有趣的城市配色",
+      "steps": [
+        "沿既定街段慢走",
+        "拍一处冷暖招牌对比，不拍路人正脸",
+        "挑两张留作配色灵感"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：收集一组有趣的城市配色",
+      "photo_subject": "夜间橱窗玻璃倒影",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "singing_06",
+      "category": "singing",
+      "category_name": "唱歌",
+      "category_weight": 18,
+      "activity": "各选一首电影插曲轮流唱",
+      "location": "附近KTV",
+      "duration_minutes": [
+        60,
+        90
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-015",
+      "scene_hints": [
+        "KTV话筒点歌桌面",
+        "各选一首电影插曲轮流唱"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "陈可心",
+      "destination_area": "学校周边可往返的KTV候选（门店待确认）",
+      "purpose": "换个轻松歌单，聊旋律怎样配剧情",
+      "steps": [
+        "点两首熟悉的电影插曲",
+        "轮流唱，中间喝水",
+        "聊一段喜欢的配乐后收尾"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：换个轻松歌单，聊旋律怎样配剧情",
+      "photo_subject": "KTV话筒点歌桌面",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "singing_07",
+      "category": "singing",
+      "category_name": "唱歌",
+      "category_weight": 18,
+      "activity": "唱慢歌，试着把一句歌词唱清楚",
+      "location": "附近KTV",
+      "duration_minutes": [
+        60,
+        90
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-003",
+      "scene_hints": [
+        "KTV包间合唱间隙",
+        "唱慢歌，试着把一句歌词唱清楚"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "陈可心",
+      "destination_area": "学校周边可往返的KTV候选（门店待确认）",
+      "purpose": "练轻声表达，不加练高音",
+      "steps": [
+        "选舒适音域的慢歌",
+        "试一次轻声与正常音量对比",
+        "喝水休息，唱熟悉的歌结束"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：练轻声表达，不加练高音",
+      "photo_subject": "KTV包间合唱间隙",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "singing_08",
+      "category": "singing",
+      "category_name": "唱歌",
+      "category_weight": 18,
+      "activity": "和室友做三首歌的小歌单",
+      "location": "附近KTV",
+      "duration_minutes": [
+        60,
+        90
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-015",
+      "scene_hints": [
+        "KTV话筒点歌桌面",
+        "和室友做三首歌的小歌单"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "林晓晚",
+      "destination_area": "学校周边可往返的KTV候选（门店待确认）",
+      "purpose": "短短唱三首就回，不唱成通宵",
+      "steps": [
+        "各挑一首，再选共同喜欢的一首",
+        "轮流唱，留出聊天间隙",
+        "最后合唱，按时离店"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：短短唱三首就回，不唱成通宵",
+      "photo_subject": "KTV话筒点歌桌面",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "movie_06",
+      "category": "movie",
+      "category_name": "看电影",
+      "category_weight": 18,
+      "activity": "看歌舞片，留意一段舞蹈长镜头",
+      "location": "附近电影院",
+      "duration_minutes": [
+        100,
+        125
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-019",
+      "scene_hints": [
+        "影院检票走廊",
+        "看歌舞片，留意一段舞蹈长镜头"
+      ],
+      "photo_note": "电影仅入场前/散场后大厅拍照，不拍银幕或观影中的他人",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "陈可心",
+      "destination_area": "学校周边影院候选（片名/场次待确认）",
+      "purpose": "观察镜头怎样跟人物移动",
+      "steps": [
+        "核实片名与场次，在大厅等候",
+        "安静观影，留意一段长镜头；片长与场次须能放入本时段，否则取消",
+        "散场只聊一个动作与镜头的配合"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：观察镜头怎样跟人物移动",
+      "photo_subject": "影院检票走廊",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "核实片名、场次、完整片长与往返；放不进现有时段则取消观影，不中途离场赶计划，不挤占睡眠"
+    },
+    {
+      "id": "movie_07",
+      "category": "movie",
+      "category_name": "看电影",
+      "category_weight": 18,
+      "activity": "看经典重映，留意服装和布景",
+      "location": "附近电影院",
+      "duration_minutes": [
+        100,
+        125
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-004",
+      "scene_hints": [
+        "电影院散场大厅",
+        "看经典重映，留意服装和布景"
+      ],
+      "photo_note": "电影仅入场前/散场后大厅拍照，不拍银幕或观影中的他人",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "学校周边影院候选（片名/场次待确认）",
+      "purpose": "找一处服装与人物情绪的联系",
+      "steps": [
+        "先确认有合适重映和可返校场次",
+        "安静观影，不拍银幕；片长与场次须能放入本时段，否则取消",
+        "在大厅记一条布景想法"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：找一处服装与人物情绪的联系",
+      "photo_subject": "电影院散场大厅",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "核实片名、场次、完整片长与往返；放不进现有时段则取消观影，不中途离场赶计划，不挤占睡眠"
+    },
+    {
+      "id": "movie_08",
+      "category": "movie",
+      "category_name": "看电影",
+      "category_weight": 18,
+      "activity": "看一部轻松剧情片，散场聊配乐",
+      "location": "附近电影院",
+      "duration_minutes": [
+        100,
+        125
+      ],
+      "transit_minutes": 25,
+      "scene_id": "night-019",
+      "scene_hints": [
+        "影院检票走廊",
+        "看一部轻松剧情片，散场聊配乐"
+      ],
+      "photo_note": "电影仅入场前/散场后大厅拍照，不拍银幕或观影中的他人",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "林晓晚",
+      "destination_area": "学校周边影院候选（片名/场次待确认）",
+      "purpose": "放松地看电影，留意一段配乐",
+      "steps": [
+        "核实场次和片长，入场前歇脚",
+        "安静观影；片长与场次须能放入本时段，否则取消",
+        "散场在大厅聊哪段配乐最合适"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：放松地看电影，留意一段配乐",
+      "photo_subject": "影院检票走廊",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "核实片名、场次、完整片长与往返；放不进现有时段则取消观影，不中途离场赶计划，不挤占睡眠"
+    },
+    {
+      "id": "light_fun_06",
+      "category": "light_fun",
+      "category_name": "其他轻娱乐",
+      "category_weight": 16,
+      "activity": "做一张拼贴书签",
+      "location": "附近桌游或手作店",
+      "duration_minutes": [
+        50,
+        85
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-018",
+      "scene_hints": [
+        "纸艺速写小卡桌面",
+        "做一张拼贴书签"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "陈可心",
+      "destination_area": "学校周边手作店候选",
+      "purpose": "用两种颜色完成一张实用书签",
+      "steps": [
+        "选纸张与配色",
+        "剪贴压平，留干燥时间",
+        "拍书签细节，收好材料"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：用两种颜色完成一张实用书签",
+      "photo_subject": "纸艺速写小卡桌面",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "light_fun_07",
+      "category": "light_fun",
+      "category_name": "其他轻娱乐",
+      "category_weight": 16,
+      "activity": "串一个蓝白配色钥匙扣",
+      "location": "附近桌游或手作店",
+      "duration_minutes": [
+        50,
+        85
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-017",
+      "scene_hints": [
+        "串珠托盘挂件手作",
+        "串一个蓝白配色钥匙扣"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "陈可心",
+      "destination_area": "学校周边手作店候选",
+      "purpose": "做一个简单耐用的小挂件",
+      "steps": [
+        "先排珠子和扣环",
+        "串好后检查结扣",
+        "给成品拍张桌面照"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：做一个简单耐用的小挂件",
+      "photo_subject": "串珠托盘挂件手作",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "light_fun_08",
+      "category": "light_fun",
+      "category_name": "其他轻娱乐",
+      "category_weight": 16,
+      "activity": "试一款两人合作桌游",
+      "location": "附近桌游或手作店",
+      "duration_minutes": [
+        50,
+        85
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-016",
+      "scene_hints": [
+        "桌游模型木桌",
+        "试一款两人合作桌游"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "周予安",
+      "destination_area": "学校周边桌游店候选",
+      "purpose": "练配合，控制在两小局内",
+      "steps": [
+        "读简单规则，摆好卡牌",
+        "合作玩两局",
+        "聊一个配合点，收牌离店"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：练配合，控制在两小局内",
+      "photo_subject": "桌游模型木桌",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "light_fun_09",
+      "category": "light_fun",
+      "category_name": "其他轻娱乐",
+      "category_weight": 16,
+      "activity": "画一张热饮杯小速写",
+      "location": "附近桌游或手作店",
+      "duration_minutes": [
+        50,
+        85
+      ],
+      "transit_minutes": 20,
+      "scene_id": "night-018",
+      "scene_hints": [
+        "纸艺速写小卡桌面",
+        "画一张热饮杯小速写"
+      ],
+      "photo_note": "随手拍环境或自己；不虚构同行者合照",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "林晓晚",
+      "destination_area": "学校周边安静饮品店候选",
+      "purpose": "把日常小物画成一张轻松的小卡",
+      "steps": [
+        "找有桌面的安静座位",
+        "画杯子轮廓和一块阴影",
+        "拍纸笔桌角，喝完再回"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：把日常小物画成一张轻松的小卡",
+      "photo_subject": "纸艺速写小卡桌面",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "night_work_06",
+      "category": "night_work",
+      "category_name": "夜间实习拍摄",
+      "category_weight": 0,
+      "activity": "拍三种景别的夜间街角空镜",
+      "location": "海淀附近亮灯街区",
+      "duration_minutes": [
+        60,
+        100
+      ],
+      "transit_minutes": 30,
+      "scene_id": "night-020",
+      "scene_hints": [
+        "夜间外拍器材",
+        "拍三种景别的夜间街角空镜"
+      ],
+      "photo_note": "实习仅工作间隙分享环境与自己的器材，不展示项目文件或他人正脸",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "实习同事（按实际通知）",
+      "destination_area": "海淀校区周边外景候选（以实习通知为准）",
+      "purpose": "按既有实习要求练远中近镜头",
+      "steps": [
+        "检查安全机位和工作要求",
+        "按远中近顺序录短空镜",
+        "检查文件与器材，按时收工"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：按既有实习要求练远中近镜头",
+      "photo_subject": "夜间外拍器材",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    },
+    {
+      "id": "night_work_07",
+      "category": "night_work",
+      "category_name": "夜间实习拍摄",
+      "category_weight": 0,
+      "activity": "夜间取景勘察，记噪声与灯光变化",
+      "location": "海淀附近亮灯街区",
+      "duration_minutes": [
+        60,
+        100
+      ],
+      "transit_minutes": 30,
+      "scene_id": "night-007",
+      "scene_hints": [
+        "城市夜景取景记录",
+        "夜间取景勘察，记噪声与灯光变化"
+      ],
+      "photo_note": "实习仅工作间隙分享环境与自己的器材，不展示项目文件或他人正脸",
+      "booking_status": "计划；场次/营业与开放时段待核实，不声称预约或购票",
+      "companion_plan": "实习同事（按实际通知）",
+      "destination_area": "海淀校区周边外景候选（以实习通知为准）",
+      "purpose": "为既有实习记录环境条件",
+      "steps": [
+        "确认允许停留的街段",
+        "记录光源方向和噪声变化",
+        "整理现场备注，返校后备份"
+      ],
+      "meeting_point": "学校门口集合；同行待确认",
+      "followup": "若本次成行，回寝后整理：为既有实习记录环境条件",
+      "photo_subject": "城市夜景取景记录",
+      "plan_status": "候选计划；不是已到访、已购票或同行已确认的事实",
+      "fallback": "出发前核实门店/场次、交通、天气与同行；不能在预算内往返则取消外出，回寝休息，不挤占睡眠"
+    }
+  ],
+  "scenes": [
+    {
+      "id": "night-001",
+      "name": "海淀商场晚间小店",
+      "category": "晚间生活",
+      "aliases": [
+        "海淀商场晚间小店",
+        "试穿外套，和室友互相挑颜色",
+        "逛文创小店挑明信片和贴纸",
+        "逛饰品店试发夹和耳饰",
+        "去生活杂货店挑杯子和收纳盒",
+        "逛鞋包店，看完橱窗再歇脚"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 0,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "商场 服装店 试衣镜 空景",
+        "文创 商店 内景 无人"
+      ]
+    },
+    {
+      "id": "night-002",
+      "name": "海淀街区灯光夜景",
+      "category": "晚间生活",
+      "aliases": [
+        "海淀街区灯光夜景",
+        "看临街橱窗灯光，拍玻璃倒影",
+        "在开阔街口看车流，试拍长曝光",
+        "看城市楼宇亮灯，找冷暖色对比",
+        "沿亮灯步道看夜色，坐一会儿",
+        "在室内临窗座位看街景亮起来"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 1,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "北京 街道 夜景 路灯 无人",
+        "城市 橱窗 夜景 倒影"
+      ]
+    },
+    {
+      "id": "night-003",
+      "name": "KTV包间合唱间隙",
+      "category": "晚间生活",
+      "aliases": [
+        "KTV包间合唱间隙",
+        "和室友轮流唱拿手歌，中途歇嗓子",
+        "跟同学挑战双人合唱，笑场后重来",
+        "和室友唱老歌，挑一首粤语歌",
+        "练音乐剧选段，唱完聊哪里跑调",
+        "随心点几首轻松的歌，不拼高音",
+        "唱慢歌，试着把一句歌词唱清楚"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 0,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "KTV 包间 话筒 沙发 无人 实拍",
+        "KTV 包厢 内景 空景"
+      ]
+    },
+    {
+      "id": "night-004",
+      "name": "电影院散场大厅",
+      "category": "晚间生活",
+      "aliases": [
+        "电影院散场大厅",
+        "和同学看喜剧，散场聊最喜欢的桥段",
+        "看一部动画，留意色彩和人物动作",
+        "看剧情片，散场讨论人物选择",
+        "看悬疑片，散场互相猜结尾",
+        "看纪录片，散场记两笔镜头想法",
+        "看经典重映，留意服装和布景"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 0,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "电影院 大厅 散场 无人",
+        "电影院 检票口 走廊 空景"
+      ]
+    },
+    {
+      "id": "night-005",
+      "name": "晚间桌游手作小店",
+      "category": "晚间生活",
+      "aliases": [
+        "晚间桌游手作小店",
+        "和同学玩两局轻桌游，结束聊离谱操作",
+        "做小串珠或钥匙扣，给成品拍照",
+        "拼一个小模型，边拼边聊天",
+        "做简单纸艺，挑配色拍完成品",
+        "和室友画速写小卡，互相吐槽画风"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 0,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "桌游店 桌面 卡牌 无人",
+        "手工 工作室 串珠 桌面"
+      ]
+    },
+    {
+      "id": "night-006",
+      "name": "校园路灯下短暂停留",
+      "category": "晚间生活",
+      "aliases": [
+        "校园路灯下短暂停留",
+        "饭后在校园走一小圈，路灯下歇脚",
+        "绕宿舍附近透透气，拍一片树影"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 1,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "北京舞蹈学院 校园 夜景",
+        "北京舞蹈学院 路灯"
+      ]
+    },
+    {
+      "id": "night-007",
+      "name": "城市夜景取景记录",
+      "category": "晚间生活",
+      "aliases": [
+        "城市夜景取景记录",
+        "记录路灯色温与人行道光影，整理机位备注",
+        "拍橱窗倒影空镜，收工核对素材",
+        "记录安全街角的环境声，拍固定机位空镜",
+        "协助夜景外拍，间隙记录机位与补光位置",
+        "拍楼宇灯光过渡，收工备份空镜素材",
+        "夜间取景勘察，记噪声与灯光变化"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 1,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "电影 拍摄 夜景 外景 三脚架",
+        "夜景 街道 拍摄 摄影机"
+      ]
+    },
+    {
+      "id": "night-008",
+      "name": "服装店试衣镜",
+      "category": "晚间生活",
+      "aliases": [
+        "服装店试衣镜",
+        "试穿外套，和室友互相挑颜色",
+        "逛鞋包店，看完橱窗再歇脚",
+        "选围巾配色，不买重复款"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 0,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "服装店 试衣镜 衣架 空景",
+        "服装店 试衣镜 衣架 空景 实拍"
+      ]
+    },
+    {
+      "id": "night-009",
+      "name": "文具文创明信片架",
+      "category": "晚间生活",
+      "aliases": [
+        "文具文创明信片架",
+        "逛文创小店挑明信片和贴纸",
+        "逛文具店试笔，补一支分镜笔"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 0,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "文具店 明信片 贴纸 陈列",
+        "文具店 明信片 贴纸 陈列 实拍"
+      ]
+    },
+    {
+      "id": "night-010",
+      "name": "饰品柜台发夹耳饰",
+      "category": "晚间生活",
+      "aliases": [
+        "饰品柜台发夹耳饰",
+        "逛饰品店试发夹和耳饰",
+        "看小发圈和鲨鱼夹，试扎低丸子"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 0,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "饰品店 发夹 耳饰 陈列 台镜",
+        "饰品店 发夹 耳饰 陈列 台镜 实拍"
+      ]
+    },
+    {
+      "id": "night-011",
+      "name": "生活杂货杯子收纳",
+      "category": "晚间生活",
+      "aliases": [
+        "生活杂货杯子收纳",
+        "去生活杂货店挑杯子和收纳盒",
+        "看帆布包和小零钱袋"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 0,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "生活杂货店 杯子 收纳盒 货架",
+        "生活杂货店 杯子 收纳盒 货架 实拍"
+      ]
+    },
+    {
+      "id": "night-012",
+      "name": "夜间橱窗玻璃倒影",
+      "category": "晚间生活",
+      "aliases": [
+        "夜间橱窗玻璃倒影",
+        "看临街橱窗灯光，拍玻璃倒影",
+        "拍橱窗倒影空镜，收工核对素材",
+        "看雨后橱窗反光，只走亮灯路段",
+        "逛亮灯街角，找一对互补色招牌"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 1,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "夜晚 橱窗 玻璃 倒影 街道",
+        "夜晚 橱窗 玻璃 倒影 街道 实拍"
+      ]
+    },
+    {
+      "id": "night-013",
+      "name": "夜间步道车流光影",
+      "category": "晚间生活",
+      "aliases": [
+        "夜间步道车流光影",
+        "在开阔街口看车流，试拍长曝光",
+        "看城市楼宇亮灯，找冷暖色对比",
+        "沿亮灯步道看夜色，坐一会儿",
+        "用手机试一组路灯散景"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 1,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "北京 夜晚 人行道 路灯 车流",
+        "北京 夜晚 人行道 路灯 车流 实拍"
+      ]
+    },
+    {
+      "id": "night-014",
+      "name": "临窗热饮夜景",
+      "category": "晚间生活",
+      "aliases": [
+        "临窗热饮夜景",
+        "在室内临窗座位看街景亮起来",
+        "坐窗边画三格夜景分镜"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 0,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "咖啡店 窗边 夜景 无人",
+        "咖啡店 窗边 夜景 无人 实拍"
+      ]
+    },
+    {
+      "id": "night-015",
+      "name": "KTV话筒点歌桌面",
+      "category": "晚间生活",
+      "aliases": [
+        "KTV话筒点歌桌面",
+        "跟同学挑战双人合唱，笑场后重来",
+        "和室友唱老歌，挑一首粤语歌",
+        "各选一首电影插曲轮流唱",
+        "和室友做三首歌的小歌单"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 0,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "KTV 话筒 桌面 包厢 无人",
+        "KTV 话筒 桌面 包厢 无人 实拍"
+      ]
+    },
+    {
+      "id": "night-016",
+      "name": "桌游模型木桌",
+      "category": "晚间生活",
+      "aliases": [
+        "桌游模型木桌",
+        "和同学玩两局轻桌游，结束聊离谱操作",
+        "拼一个小模型，边拼边聊天",
+        "试一款两人合作桌游"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 0,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "桌游店 卡牌 桌面 无人",
+        "桌游店 卡牌 桌面 无人 实拍"
+      ]
+    },
+    {
+      "id": "night-017",
+      "name": "串珠托盘挂件手作",
+      "category": "晚间生活",
+      "aliases": [
+        "串珠托盘挂件手作",
+        "做小串珠或钥匙扣，给成品拍照",
+        "串一个蓝白配色钥匙扣"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 0,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "串珠 手工 托盘 桌面",
+        "串珠 手工 托盘 桌面 实拍"
+      ]
+    },
+    {
+      "id": "night-018",
+      "name": "纸艺速写小卡桌面",
+      "category": "晚间生活",
+      "aliases": [
+        "纸艺速写小卡桌面",
+        "做简单纸艺，挑配色拍完成品",
+        "和室友画速写小卡，互相吐槽画风",
+        "做一张拼贴书签",
+        "画一张热饮杯小速写"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 0,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "手工 彩纸 彩铅 桌面",
+        "手工 彩纸 彩铅 桌面 实拍"
+      ]
+    },
+    {
+      "id": "night-019",
+      "name": "影院检票走廊",
+      "category": "晚间生活",
+      "aliases": [
+        "影院检票走廊",
+        "看一部动画，留意色彩和人物动作",
+        "看悬疑片，散场互相猜结尾",
+        "看歌舞片，留意一段舞蹈长镜头",
+        "看一部轻松剧情片，散场聊配乐"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 0,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "电影院 检票口 走廊 无人",
+        "电影院 检票口 走廊 无人 实拍"
+      ]
+    },
+    {
+      "id": "night-020",
+      "name": "夜间外拍器材",
+      "category": "晚间生活",
+      "aliases": [
+        "夜间外拍器材",
+        "记录安全街角的环境声，拍固定机位空镜",
+        "协助夜景外拍，间隙记录机位与补光位置",
+        "拍三种景别的夜间街角空镜"
+      ],
+      "hint": "按北京当季温度搭配外套、针织与好走的鞋；室内可脱外套，夜间室外保暖。",
+      "vec": {
+        "formality": 0.2,
+        "exposure": 0.25,
+        "trendiness": 0.6,
+        "sportiness": 0.15,
+        "coziness": 0.5,
+        "warmth": 0.5,
+        "outdoor": 1,
+        "water": 0
+      },
+      "cap": 2,
+      "scene_queries": [
+        "摄影 夜晚 三脚架 相机 街道",
+        "摄影 夜晚 三脚架 相机 街道 实拍"
+      ]
+    }
+  ]
+}

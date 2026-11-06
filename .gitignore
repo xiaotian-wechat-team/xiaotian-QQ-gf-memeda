@@ -1,0 +1,110 @@
+# Local runtime config (copy from config.example.json)
+config.json
+
+# =============================================================================
+# xiaotian-wechat .gitignore
+# config.example.json 可保留演示模型名；本地 config.json、密钥与运行时文件勿提交。
+# Keep demo model names in config.example.json; never commit local secrets or runtime state.
+# =============================================================================
+
+# ----- 通用 / general -----
+__pycache__/
+.venv/
+.venv
+tmp/
+
+# ----- 密钥 secrets（API keys / tokens；勿提交真实 *.env）-----
+# Catch-all for local env files; *.env.example stays trackable (different suffix).
+config/*.env
+# 发言 LLM chat keys
+#   config/deepseek.env   — DeepSeek short_backend
+#   config/kimi.env       — Kimi short_backend
+#   config/doubao.env     — Doubao/Volcengine Ark chat (ARK_API_KEY)
+# 生图 / Magpie（发言 grok 适配器亦读此文件）
+#   config/magpie.env     — MAGPIE_API_KEY / MAGPIE_LAN_KEY
+# 语音 TTS
+#   config/doubao_voice.env — Doubao voice APP_ID / ACCESS_TOKEN / API_KEY
+# 其它
+#   config/relay.env      — relay webhook
+config/relay.env
+config/deepseek.env
+config/kimi.env
+config/doubao.env
+config/doubao_voice.env
+config/magpie.env
+tools/napcat/.env
+
+# ----- 发言模型配置 chat/speech LLM（session / workspace runtime）-----
+data/llm_session.json
+data/llm_ws/*
+!data/llm_ws/README.md
+data/llm_ws_short_bench/
+
+# ----- 生图模型配置 imagegen（Codex/Magpie session & local bakeoffs）-----
+data/codex_session.json
+data/vision_*_bakeoff_*/
+data/vision_bakeoff_*/
+
+# ----- 语音模型配置 voice / ASR / TTS（caches & local media）-----
+data/asr_cache/
+data/tts_mvp/
+data/caption_cache/
+data/media/
+
+# ----- 通道凭据 / channel credentials -----
+# iLink 自建凭据 / 长轮询 cursor
+data/ilink_creds.json
+data/ilink_creds.json.sync
+
+# ----- 通道运行时 / channel runtime -----
+data/ilink_outbox.json
+data/qq_outbox.json
+data/ilink_ctx.json
+data/wechat_ui.lock
+data/wechat_reply_pending
+data/daemon.lock
+data/collectors.lock
+data/collect_runs/
+data/schedule_override_pending.json
+data/devtest/
+data/proactive_queue.json
+data/source_poll_state.json
+data/campus_events.json
+data/outfit_scene_emb.npz
+data/weather_cache.json
+
+# P0 channel stores (SQLite)
+data/outbox.db
+data/outbox.db-*
+data/outbox.db.*.lock
+data/classmate_memory.db
+data/classmate_memory.db-*
+data/qq_receipts.db
+data/qq_receipts.db-*
+data/*.json.migrated
+
+# Local runtime / media / e2e (do not ship)
+data/*.db
+data/*.log
+data/*.err
+data/*.png
+data/mem0_qdrant/
+data/mem0_history.db*
+data/logs/
+data/avatar/
+data/e2e/
+data/permcheck/
+data/inbound_*
+tools/vision/refscan
+tools/napcat/data/
+
+# runtime caches (local paths / weather samples)
+data/scene_ref_day_probes.json
+data/weather_baseline.json
+
+# Proactive worker locks and local deployment backups
+data/*.worker.lock
+data/_deploy_bak_*/
+
+# local mem0/qdrant runtime (tests may create)
+data/qdrant/

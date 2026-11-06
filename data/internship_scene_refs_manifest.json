@@ -1,0 +1,231 @@
+{
+  "version": 1,
+  "reviewed_at": "2026-10-27",
+  "purpose": "environment references only, not persona travel evidence",
+  "images": [
+    {
+      "scene_id": "work-001",
+      "scene_name": "影视公司工作间",
+      "source": "bing",
+      "source_url": "https://imgs.699pic.com/images/600/106/336.jpg!detail.v1",
+      "sha256": "6f4b53ab98b2840ed6d257d1c31c64b34cbeb631eafc3ab5d1ce838a6e9b236e",
+      "query": "影视公司工作间 空景 无人"
+    },
+    {
+      "scene_id": "work-001",
+      "scene_name": "影视公司工作间",
+      "source": "bing",
+      "source_url": "https://imgs.699pic.com/images/601/257/337.jpg!detail.v1",
+      "sha256": "fccf22509ac58d29efd72d1613ead47608630c7116235380b91476327ebe2d44",
+      "query": "影视公司工作间 空景 无人"
+    },
+    {
+      "scene_id": "work-001",
+      "scene_name": "影视公司工作间",
+      "source": "bing",
+      "source_url": "http://www.comefilm.com/public/file/image/20201028/2020102812312897754.png",
+      "sha256": "8593a473e37f75af36a80a2faa62a60e3c853205613c9ac659fea51c68f5eac1",
+      "query": "影视公司工作间 空景 无人"
+    },
+    {
+      "scene_id": "work-001",
+      "scene_name": "影视公司工作间",
+      "source": "bing",
+      "source_url": "https://pic.ntimg.cn/file/20250325/35479210_184051769132_2.jpg",
+      "sha256": "9c1f286a984f3f1e1ec61c0e1ace5863edfeef0436d4a5d484b6a8646076e5b0",
+      "query": "影视公司 剪辑室 空景"
+    },
+    {
+      "scene_id": "work-002",
+      "scene_name": "实习外出对接",
+      "source": "bing",
+      "source_url": "https://pic3.zhimg.com/v2-b5ff88149ef442355f44dc8b2db2836a_r.jpg",
+      "sha256": "48649fb5f9aa557a91b2fd6f66a8af502fcd34ea1f6feb32bf87fbd3ad2b6225",
+      "query": "摄影器材租赁店 内景"
+    },
+    {
+      "scene_id": "work-002",
+      "scene_name": "实习外出对接",
+      "source": "bing",
+      "source_url": "http://www.comefilm.com/public/file/image/20210417/2021041723014129829.jpg",
+      "sha256": "45b2ce38c1d09000551805ea13dedaa781e9b5769d677fa457b6b83b51148346",
+      "query": "摄影器材租赁店 内景"
+    },
+    {
+      "scene_id": "work-003",
+      "scene_name": "室外取景踩点",
+      "source": "bing",
+      "source_url": "https://youimg1.c-ctrip.com/target/100j0y000000m20gc395A.jpg",
+      "sha256": "48782dd29d56dfaf78f8ac488a8f579d74cdb3f2fa08a8eede4b338d5532c774",
+      "query": "北京 东四胡同 街道 实拍"
+    },
+    {
+      "scene_id": "work-003",
+      "scene_name": "室外取景踩点",
+      "source": "bing",
+      "source_url": "https://youimg1.c-ctrip.com/target/10051700000110etr7890.jpg",
+      "sha256": "af548d0faa8bf822821f021ac71aa7d4753c5e5c60ce6eab2ac326e5299aed02",
+      "query": "北京 东四胡同 街道 实拍"
+    },
+    {
+      "scene_id": "work-003",
+      "scene_name": "室外取景踩点",
+      "source": "bing",
+      "source_url": "https://static.bjd.com.cn/dams-res/editing/image/202409/05/66d943a3d5dea8a7c61dafc7.png",
+      "sha256": "323490a01cac38d4b8421a6a4e1817a0342c4a4149160078752338290778120e",
+      "query": "北京 东四胡同 街道 实拍"
+    },
+    {
+      "scene_id": "work-004",
+      "scene_name": "外景跟组",
+      "source": "bing",
+      "source_url": "https://107cine.cdn.cinehello.com/20220202/uploads/weixin/02Feb2022175156534.jpg",
+      "sha256": "7537760708f25261432f416b06c863c601e7356e20e5f97fe4780ed9016fa42e",
+      "query": "影视公司工作间 空景 无人"
+    },
+    {
+      "scene_id": "work-004",
+      "scene_name": "外景跟组",
+      "source": "bing",
+      "source_url": "https://gd-hbimg.huaban.com/918b4f8229e7955d3095847d911a643f4c9f79d81af7b-4kS5YB_fw658",
+      "sha256": "6befe5f5e626d27c4e12899cf263014eddfa48c4f42026a5b1e2f9ee7c1a8de1",
+      "query": "电影摄影机 三脚架 外景 片场"
+    },
+    {
+      "scene_id": "work-005",
+      "scene_name": "实习出差交通",
+      "source": "bing",
+      "source_url": "https://img.redocn.com/sheying/20170407/wurendegaotiechexiangzuoyi_8072599.jpg",
+      "sha256": "07eeeeb30c0a63b56e6a39564c24d20f066ef7d113bf832b13611cbc5934b236",
+      "query": "高铁 车厢 座位 无人"
+    },
+    {
+      "scene_id": "work-006",
+      "scene_name": "天津海河取景",
+      "source": "bing",
+      "source_url": "https://img95.699pic.com/photo/50071/9621.jpg_wh860.jpg",
+      "sha256": "4d98791321faeedbe76a6d5b86f368df6dc1c6a093965def14bf3223882e4306",
+      "query": "天津海河取景 空景 无人"
+    },
+    {
+      "scene_id": "work-006",
+      "scene_name": "天津海河取景",
+      "source": "bing",
+      "source_url": "https://preview.qiantucdn.com/58pic/35/16/90/05b58PICP104R2Qf3iRI3_PIC2018.jpg!w1024_new_small_1",
+      "sha256": "874e1b1f7faa20cf17c5c79637850890fc121422ce26ec10a0782a7e6c0bb30f",
+      "query": "天津海河取景 空景 无人"
+    },
+    {
+      "scene_id": "work-006",
+      "scene_name": "天津海河取景",
+      "source": "bing",
+      "source_url": "http://n.sinaimg.cn/front/759/w960h599/20181115/8eCv-hnvukff5065375.jpg",
+      "sha256": "e4337dd8a0fbc3c02bf1dba1e0e5fffa35a650a726628a572a1dcddc31173bb2",
+      "query": "天津海河取景 空景 无人"
+    },
+    {
+      "scene_id": "work-006",
+      "scene_name": "天津海河取景",
+      "source": "bing",
+      "source_url": "https://pic.nximg.cn/file/20221213/34418356_095215615102_2.jpg",
+      "sha256": "38c06195a27afcb303bc16a4ee5e689ae88af35c581dce44b89740fa6629d072",
+      "query": "天津 海河 河岸 实拍"
+    },
+    {
+      "scene_id": "work-007",
+      "scene_name": "杭州运河取景",
+      "source": "bing",
+      "source_url": "https://img.pconline.com.cn/images/upload/upc/tx/itbbs/2002/02/c7/190847285_1580614534134.jpg",
+      "sha256": "8711e276b4c86f403410619ac333fd89389a795f0106826c611c91dff97711c9",
+      "query": "杭州 京杭大运河 拱宸桥 实拍"
+    },
+    {
+      "scene_id": "work-007",
+      "scene_name": "杭州运河取景",
+      "source": "bing",
+      "source_url": "http://img.pconline.com.cn/images/upload/upc/tx/itbbs/2002/02/c7/190847314_1580614541548.jpg",
+      "sha256": "b5296b347db59946974fae62e3700cff8e5cebc0ab6a5ee1f97f8af9c1c226c5",
+      "query": "杭州 京杭大运河 拱宸桥 实拍"
+    },
+    {
+      "scene_id": "work-007",
+      "scene_name": "杭州运河取景",
+      "source": "bing",
+      "source_url": "http://vip-public.people.com.cn/photo/2024/7/11/04bb64a9349f48fda7b0f6ffe28e2e30BxAJ_m.jpg",
+      "sha256": "18ec512dc03b62a868f196d3f4ada0ffb6a7c022b4987bf9d72ef75bce44965a",
+      "query": "杭州 京杭大运河 拱宸桥 实拍"
+    },
+    {
+      "scene_id": "work-007",
+      "scene_name": "杭州运河取景",
+      "source": "bing",
+      "source_url": "https://img.pconline.com.cn/images/upload/upc/tx/itbbs/2002/02/c7/190847353_1580614552019.jpg",
+      "sha256": "4cdcfbbe1f91f7a2576bd60f6ab46f81bd1389e8d3b4a790fda074dfc836e4cf",
+      "query": "杭州 京杭大运河 拱宸桥 实拍"
+    },
+    {
+      "scene_id": "work-008",
+      "scene_name": "上海滨江取景",
+      "source": "bing",
+      "source_url": "https://pic5.40017.cn/04/001/f3/d3/rBTJU11DK0GAE_sDAAR1-618iSg747_680x_02.jpg",
+      "sha256": "ad03d216376f0eb5005c8cbe47542b6634aa2289d01f89d895669fe91a3a3f25",
+      "query": "上海 杨浦滨江 步道 实拍"
+    },
+    {
+      "scene_id": "work-008",
+      "scene_name": "上海滨江取景",
+      "source": "bing",
+      "source_url": "https://www.whb.cn/u/cms/www/202010/062018087oal.jpg",
+      "sha256": "e74d556b99ab8ba665b71d28556cc71b3f830c140e0003f9f5cc3a6a502d201f",
+      "query": "上海 杨浦滨江 步道 实拍"
+    },
+    {
+      "scene_id": "work-008",
+      "scene_name": "上海滨江取景",
+      "source": "bing",
+      "source_url": "https://img95.699pic.com/photo/50129/2613.jpg_wh860.jpg",
+      "sha256": "536e83dc6d3862198b2e1a4cfef9c82c8103dc287acd7db641b5bf5ba986b279",
+      "query": "上海 杨浦滨江 步道 实拍"
+    },
+    {
+      "scene_id": "work-008",
+      "scene_name": "上海滨江取景",
+      "source": "bing",
+      "source_url": "https://pic4.zhimg.com/v2-68dce8d385f82aae15fe4d52e6bd1059_r.jpg",
+      "sha256": "db84ac2d9399cefa3425b9792c8bebf51673ea310ed3c41f6c2581808bcc11a4",
+      "query": "上海 杨浦滨江 步道 实拍"
+    },
+    {
+      "scene_id": "work-009",
+      "scene_name": "青岛海边取景",
+      "source": "bing",
+      "source_url": "https://pic.nximg.cn/file/20190601/27886704_123035798288_2.jpg",
+      "sha256": "2d1664ac599d27da2b6df8b2b552b1c04c9a061fea87cb8782ae55d7f1a9ea3a",
+      "query": "青岛 八大关 街道 实拍"
+    },
+    {
+      "scene_id": "work-009",
+      "scene_name": "青岛海边取景",
+      "source": "bing",
+      "source_url": "https://p1-tt-ipv6.byteimg.com/large/pgc-image/916e2097f23c4d198f78d173aec75d06",
+      "sha256": "fea3799a0f8727312bc595e0daa5503829925c03e8f9d26b8fe5ac0171b00bc6",
+      "query": "青岛 八大关 街道 实拍"
+    },
+    {
+      "scene_id": "work-009",
+      "scene_name": "青岛海边取景",
+      "source": "bing",
+      "source_url": "https://img1.qunarzz.com/travel/d2/1809/a5/ddad463f1c608bb5.jpg_600x600x70_5ea08de5.jpg",
+      "sha256": "4ebb9ec7d4766db77113fd5ec967948fa44340e5e914fca476a592bc31662be6",
+      "query": "青岛 八大关 街道 实拍"
+    },
+    {
+      "scene_id": "work-009",
+      "scene_name": "青岛海边取景",
+      "source": "bing",
+      "source_url": "https://img1.qunarzz.com/travel/d7/1806/95/e8d7ddc1567785b5.jpg",
+      "sha256": "f1b671b69f2c0d9ebbffa9803f275c1e7ee1f1d183cd2242b61815582681c101",
+      "query": "青岛 八大关 街道 实拍"
+    }
+  ]
+}

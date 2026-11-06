@@ -1,0 +1,534 @@
+{
+  "timezone": "Asia/Shanghai",
+  "backend": "mac",
+  "wda_url": "http://localhost:8100",
+  "wechat_bundle": "com.tencent.xin",
+  "wda_bundle": "com.example.WebDriverAgentRunner.xctrunner",
+  "wda_helper_dir": "/Users/you/iphone",
+  "digital_life_dir": "/Users/you/digital-life",
+  "db_path": "./data/chat.db",
+  "contact": {
+    "id": "demo_contact",
+    "name": "小熊",
+    "nickname": "小熊",
+    "remark": "小熊",
+    "remark_note": "演示用联系人备注（仅定位）",
+    "search_key": "小熊"
+  },
+  "user_gender": "m",
+  "persona_gender": "f",
+  "poll_min_sec": 10,
+  "poll_max_sec": 30,
+  "poll_note": "poll_min/max_sec 只给旧的 --once 文档参考；实时循环用 reply.*",
+  "reply": {
+    "_note": "typing/think 供 ilink bridge 与 OCR daemon 共用。think 一律 think_max_awake_sec 短垫；已去掉睡觉态长等待（旧 think_max_sleeping_sec）。max_regenerate 仅 OCR daemon（src/daemon.py）在生成期间合并重写用；ilink 真聊不读、无「对方一直在发就静音」入站冻结。",
+    "poll_active_sec": 0.2,
+    "poll_idle_max_sec": 0.2,
+    "idle_after_sec": 20,
+    "backoff_factor": 1.5,
+    "full_check_sec": 60,
+    "human_typing": true,
+    "typing_sec_per_char": 0.3,
+    "typing_min_sec": 2,
+    "typing_max_sec": 15,
+    "think_max_awake_sec": 5,
+    "think_max_sleeping_sec": 5,
+    "max_regenerate": 2,
+    "engagement": {
+      "enabled": true,
+      "window_sec": 180,
+      "half_life_sec": 60,
+      "active_score": 2.5,
+      "dense_score": 5,
+      "collect_quiet_sec": 2,
+      "collect_max_sec": 12,
+      "day_start_hour": 7,
+      "evening_hour": 17,
+      "internship_enthusiastic_probability": 0.3,
+      "_note": "真实入站60秒半衰、近3分钟计数。白天高频来聊仅实际实习槽抽签：30%热情、70%常规，同一实习槽内连续聊天固定选择；其他活动直接热情。17:00至次日07:00来聊必须热情，覆盖被动回复的睡聊收短；明确告别则收口。热情回应重在内容，不按来信条数配额；最多8气泡120字。普通回复不扣主动额度，主动睡眠门槛独立保留。"
+    }
+  },
+  "history_for_prompt": 12,
+  "chat_search": {
+    "enabled": true,
+    "provider": "browser",
+    "browser_engine": "xiaohongshu",
+    "bsk_path": "/Users/you/.local/bin/bsk",
+    "browser_instance_id": "demo-browser-instance",
+    "timeout_sec": 50,
+    "max_results": 5,
+    "read_first_note": true,
+    "_note": "2026-10-29 用户指定已登录小红书，经 browser-skill/bsk 新建独立 Agent Window 只读搜索；固定绑定 Mac mini 实例。失败如实反馈，禁止通用 agent 或更换登录会话兜底。"
+  },
+  "llm": {
+    "backend": "cursor_agent",
+    "cmd": "/Users/you/.local/bin/cursor-agent",
+    "model": "cursor-grok-4.6-low-fast",
+    "timeout": 120,
+    "reuse_session": true,
+    "session_state": "data/llm_session.json",
+    "workspace": "data/llm_ws",
+    "short_backend": "deepseek",
+    "short_model": "deepseek-chat",
+    "long_backend": "cursor_agent",
+    "char_threshold": 80,
+    "deepseek_base": "https://api.deepseek.com",
+    "deepseek_timeout": 30,
+    "magpie_base": "http://127.0.0.1:3425/v1",
+    "grok_model": "cursor/grok-4.6",
+    "grok_effort": "low",
+    "grok_timeout": 45,
+    "short_timeout": 30,
+    "deepseek_model": "deepseek-chat",
+    "kimi_base": "https://api.kimi.com/coding/v1",
+    "kimi_model": "kimi-k2.7-code-highspeed",
+    "kimi_effort": "low",
+    "kimi_timeout": 30,
+    "doubao_base": "https://ark.cn-beijing.volces.com/api/v3",
+    "doubao_model": "doubao-seed-2-1-lite-260915",
+    "doubao_timeout": 30,
+    "doubao_thinking": false,
+    "doubao_reasoning_effort": "minimal",
+    "weather_tool_model": "grok-4.7-low-fast"
+  },
+  "mac": {
+    "cliclick": "/usr/local/bin/cliclick",
+    "shot_path": "/tmp/xiaotian_wechat_shot.png",
+    "sidebar_w": 300,
+    "header_h": 60,
+    "input_h": 150,
+    "bear_rgb": [
+      132,
+      90,
+      48
+    ]
+  },
+  "appearance": {
+    "profile": "zhuzhuxiaoye",
+    "profile_dir": "",
+    "canonical_refs": [
+      "sheet.png"
+    ],
+    "extra_sheets": true,
+    "_canonical_note": "换人设：改 profile（或 profile_dir 直接指向外貌目录）；该目录 canonical/ 下的 canonical_refs 是身份标准，可改成 [\"front.png\",\"l34.png\",\"r34.png\",\"lprofile.png\",\"rprofile.png\"]",
+    "assets_dir": "/Users/you/xiaotian-assets/appearance",
+    "profiles": {
+      "default": {
+        "ref_images": [],
+        "description": ""
+      },
+      "zhuzhuxiaoye": {
+        "ref_dir": "zhuzhuxiaoye/refs",
+        "description_file": "zhuzhuxiaoye/description.md",
+        "source_file": "zhuzhuxiaoye/SOURCE.md"
+      }
+    },
+    "body": {
+      "height_cm": 173,
+      "weight_kg": 50,
+      "_note": "生图体型锁定：提示词与 SOP 用身高/体重保证与场景透视比例一致；默认 scene_refs_mode=match（insert 易比例失调）"
+    }
+  },
+  "max_reply_delay_sec": 300,
+  "memory": {
+    "backend": "mem0",
+    "qdrant_path": "./data/qdrant",
+    "history_db": "./data/mem0_history.db",
+    "collection": "xiaotian",
+    "embed_model": "BAAI/bge-small-zh-v1.5",
+    "embed_dims": 512,
+    "top_k": 8,
+    "budget": {
+      "user": 600,
+      "profile": 400,
+      "memory": 600,
+      "chat": 1500
+    },
+    "contacts": [
+      "demo_contact"
+    ],
+    "compact": {
+      "mode": "schedule_ledger",
+      "keep_weeks": 26,
+      "max_core_per_week": 8,
+      "max_emotion_per_week": 5,
+      "mem0_secondary": false,
+      "note": "差分挂 life_schedule；高重复日常不记；向量可选二级"
+    }
+  },
+  "schedule": [],
+  "weather": {
+    "enabled": true,
+    "provider": "open-meteo",
+    "lat": 39.9925,
+    "lon": 116.31,
+    "city": "北京海淀燕园",
+    "_note": "免 key（api.open-meteo.com）。两地：places.bda=小甜海淀北舞；顶层 lat/lon 与 places.yanyuan=用户燕园。按需工具 weather.get(place)/call_tool；勿写入 life_schedule。brain：weather.needs() → Cursor grok-4.7-low-fast tool-calling loop（非 DeepSeek short）；方差 attach.auto_variance 仍可 cache_only 挂一行。",
+    "attach": {
+      "temp_delta_c": 5,
+      "day_swing_c": 12,
+      "precip_prob": 50,
+      "aqi_delta": 50,
+      "aqi_high": 150,
+      "baseline_hours": 48,
+      "baseline_max": 24,
+      "fetch_aqi": true,
+      "auto_variance": true
+    },
+    "places": {
+      "bda": {
+        "lat": 39.9459,
+        "lon": 116.313,
+        "city": "北京海淀北舞",
+        "_note": "OSM university 北京舞蹈学院 万寿寺路1号"
+      },
+      "yanyuan": {
+        "lat": 39.9925,
+        "lon": 116.31,
+        "city": "北京海淀燕园",
+        "_note": "用户侧天气默认：北京大学燕园一带（脱敏）"
+      }
+    }
+  },
+  "proactive": {
+    "enabled": true,
+    "quiet_hours": [
+      "00:30",
+      "09:00"
+    ],
+    "consider_t_min_sec": 5,
+    "consider_t_max_sec": 1800,
+    "consider_jitter": [
+      0.7,
+      1.3
+    ],
+    "min_gap_sec": [
+      1800,
+      3000
+    ],
+    "max_per_day": 10,
+    "probability": 0,
+    "busy_factor": 0.3,
+    "no_double_text": false,
+    "topics": {
+      "share_self": 0.35,
+      "callback": 0.3,
+      "context": 0.2,
+      "playful": 0.15
+    },
+    "ttl_min": 30,
+    "idle_contact": {
+      "enabled": true,
+      "interval_sec": [
+        5400,
+        9000
+      ],
+      "_note": "每轮90–150分钟清醒时间无实际互相联系就主动一次，稳定随机，不在轮询时重抽。睡眠暂停；实际入站或确认发送（含照片）重置。独立于普通主动额度和随机留白，可撒娇询问、分享此刻或只发一张照片。"
+    },
+    "_note": "每天最多10轮普通主动联系（含分享/随机问候/关心）；早安、晨间行程、吃饭报备、晚安独立记账，不占额度、不强制附图；普通回复不计；12点前最多2轮、17点前4轮、20点前7轮，保留晚间机会。白天75–120分钟、17点后35–65分钟稳定随机间隔；30分钟窗稳定抽签，越晚触发率越高。分享1–5次浮动上限、至少隔2小时；不补足配额，睡眠优先。",
+    "_legacy": "已移除 unanswered_freeze_at 冻结与旧 min_gap_hours/check_interval_min；读到 unanswered_freeze_at 忽略。轮次计数见 proactive_unanswered_turns / type=proactive。",
+    "transport": "onebot",
+    "beats": {
+      "enabled": true,
+      "max_beat_per_day": 14,
+      "morning_window_min": 90,
+      "pre_sleep_window_min": 50,
+      "activity_end_grace_min": 30,
+      "meal_want_image": true,
+      "surf_max_per_day": 5,
+      "surf_prefer_media": true,
+      "mid_quiet_buckets": [
+        "school_class",
+        "school_rehearsal",
+        "work_internship",
+        "sleep"
+      ],
+      "must": [
+        "morning",
+        "schedule_brief",
+        "evening",
+        "daily_chat",
+        "pre_sleep"
+      ],
+      "bypass_quiet_for": [
+        "morning",
+        "schedule_brief",
+        "evening",
+        "pre_sleep"
+      ],
+      "must_ignore_max_per_day": false,
+      "_note": "关心分早/午/下午/傍晚/夜间五窗，每窗最多一次，不能追补过时窗口；关心候选权重3，分享1.5，其余默认1；睡前收口优先。普通主动联系共用10轮与分时/随机闸门；早安/晨间行程/吃饭/晚安按事件窗口优先，不占额度、不抽随机节奏，保留120秒防连发；全部仍受睡眠闸门约束。",
+      "surf_min_per_day": 1,
+      "surf_require_media": true,
+      "surf_platforms": [
+        "xiaohongshu",
+        "douyin"
+      ],
+      "surf_ignore_max_per_day": false,
+      "silence_nudge_enabled": true,
+      "silence_min_hours": 3.0,
+      "silence_max_per_day": 1,
+      "soft_reach": [
+        "silence_nudge"
+      ],
+      "meal_p": 0.45,
+      "evening_start": "17:00",
+      "evening_end": "21:30",
+      "surf_min_gap_hours": 2,
+      "care_checkin_enabled": true,
+      "care_min_rounds": 3,
+      "care_windows": [
+        [
+          "09:00",
+          "12:00",
+          "轻松问候、接着昨天的小事"
+        ],
+        [
+          "12:00",
+          "15:00",
+          "午间状态、忙完后有没有喘口气"
+        ],
+        [
+          "15:00",
+          "18:00",
+          "接着他提过的事、今天的小进展"
+        ],
+        [
+          "18:00",
+          "20:00",
+          "一天过得怎样、有没有有趣的小事"
+        ],
+        [
+          "20:00",
+          "24:00",
+          "放松时的感受、陪伴或接住疲惫"
+        ]
+      ],
+      "selection_weights": {
+        "care_checkin": 3,
+        "surf_share": 1.5,
+        "evening": 1.5
+      }
+    },
+    "quiet_hours_weekend": [
+      "00:30",
+      "10:00"
+    ],
+    "unanswered_miss_at": 5,
+    "unanswered_miss_freq_slope": 0,
+    "unanswered_miss_freq_cap": 1.0,
+    "channel_policy": "primary",
+    "primary_channel": "qq_onebot",
+    "limiter": {
+      "merge_window_sec": 1800,
+      "moderate_reduction": 0.16666666666666666,
+      "max_reduction": 0.25,
+      "spacing_range_sec": [
+        4500,
+        7200
+      ]
+    },
+    "daily_contact_range": [
+      10,
+      10
+    ],
+    "image_share_min_ratio": 0.6,
+    "contact_rhythm": {
+      "enabled": true,
+      "window_minutes": 30,
+      "probability_by_hour": [
+        [
+          7,
+          0.15
+        ],
+        [
+          12,
+          0.25
+        ],
+        [
+          17,
+          0.55
+        ],
+        [
+          20,
+          0.85
+        ],
+        [
+          22,
+          0.95
+        ]
+      ],
+      "cumulative_caps": [
+        [
+          12,
+          2
+        ],
+        [
+          17,
+          4
+        ],
+        [
+          20,
+          7
+        ],
+        [
+          24,
+          10
+        ]
+      ],
+      "evening_hour": 17,
+      "day_spacing_sec": [
+        4500,
+        7200
+      ],
+      "evening_spacing_sec": [
+        2100,
+        3900
+      ]
+    }
+  },
+  "imagegen": {
+    "backend": "local",
+    "macbook_script": "~/xiaotian-assets/bin/imagegen_macbook.sh",
+    "ssh_host": "",
+    "cmd": "codex",
+    "out_dir": "/Users/you/xiaotian-assets/generated",
+    "max_refs": 3,
+    "other_refs": 3,
+    "session_state": "",
+    "timeout": 900,
+    "_note": "默认 local：Mac mini 本机 codex（PATH 含 ~/.local/bin；已登录 ChatGPT）经 Magpie :3425；generate 前 tools/imagegen_greenlight（Magpie 挂了就 open）；同一天复用会话（max_session_count 后新开），超时/坏会话 forget；reasoning_effort=ultra 仅覆盖生图；backend=macbook/relay 备用。",
+    "scene_refs": "1",
+    "scene_refs_k": 2,
+    "scene_refs_mode": "match",
+    "scene_refs_people_free": true,
+    "scene_refs_dir": "~/xiaotian-assets/scene_refs",
+    "_scene_refs_note": "生成时按场景向量附 1~2 张真实场景底板；默认 SCENE_REFS_MODE=match；若 FeaturePrint 距 canonical 比无底板旧路径差 >0.15 则自动 face-fallback 再跑一次无 scene_refs；SCENE_REFS=0 关；SCENE_REFS_MODE=insert|match",
+    "scene_refs_face_fallback": "1",
+    "scene_refs_face_fallback_delta": 0.15,
+    "realism_casual_photo_p": 0.4,
+    "_realism_selfie_note": "场景含自拍等：强制注入 realism 自拍/iphone 随手拍修饰；偶发「给你拍」类按 realism_casual_photo_p（可用 REALISM_CASUAL_PHOTO_P 覆盖）。",
+    "chat_image_count_p": [
+      0.4,
+      0.3,
+      0.18,
+      0.08,
+      0.04
+    ],
+    "_chat_image_count_note": "多图 one-shot 上限：绝对顶 chat_image_count_max_abs=5（1～5 含端点）；对方明确要图（看看/发图/自拍）用 chat_image_count_max + chat_image_count_p（下标0→1张，长度=max，偏1–2偶发3–5）；主动节拍用 proactive_image_count_max + proactive_image_count_p（偏1–2偶发3–5，允许>1且可达5，嘴损情侣别刷屏）。CHAT_IMAGE_COUNT_P 可覆盖需求侧。数量指令走 imagegen.build_quantity_prompt 独立通道，不与场景/妆造/构图混写。N>1 时同一套 ≤5 参考图（face/body/hands/legs+scene）共享给全部 N 张，禁止每张各挂一套 refs；禁止串行补齐。",
+    "hold_on_before_generate": true,
+    "hold_on_after_sec": 8,
+    "_hold_on_note": "生图前先发一句小甜 hold-on；可用 IMAGEGEN_HOLD_ON=0 关",
+    "reasoning_effort": "ultra",
+    "max_session_count": 2,
+    "magpie_url": "http://127.0.0.1:3425/v1/models",
+    "magpie_app": "/Users/you/Applications/magpie.app",
+    "magpie_wait_sec": 45,
+    "chat_image_count_max_abs": 5,
+    "chat_image_count_max": 5,
+    "proactive_image_count_max": 5,
+    "proactive_image_count_p": [
+      0.5,
+      0.28,
+      0.12,
+      0.07,
+      0.03
+    ]
+  },
+  "msg_classifier": {
+    "enabled": true,
+    "menu_confirm": true,
+    "menu_confirm_below": 0.7,
+    "menu_confirm_cap": 2,
+    "sticker_max_pt": 145
+  },
+  "life_calendar": {
+    "sync_on_reply": true,
+    "sync_mem0_on_reply": false,
+    "_note_sync": "回复热路径只写 STATE；mem0 日程条交给定时/工具，避免每轮 embed+add 挡发送",
+    "tz": "Asia/Shanghai",
+    "_note_tz": "日程/作息/STATE 与 slot_at/now/生成一律 Asia/Shanghai（东八区），勿用其它时区。"
+  },
+  "persona": {
+    "id": "xiaotian",
+    "primary_contact_id": "demo_contact",
+    "contact_aliases": {
+      "wechat:demo_contact": "demo_contact",
+      "wechat_mac:demo_contact": "demo_contact",
+      "wechat_ilink:demo@im.wechat": "demo_contact",
+      "qq_onebot:10001": "demo_contact"
+    },
+    "channels": {
+      "qq": {
+        "provider": "napcat",
+        "ws_uri": "ws://127.0.0.1:3001",
+        "ws_token": "",
+        "webui_uri": "http://127.0.0.1:6099",
+        "note": "NapCat via Colima+Docker on Mac mini (tools/napcat). Native Mac Shell skipped: no /Applications/QQ.app; Docker is official NapCat path. adapter 正向连 ws_uri；扫码见 tools/napcat/data/cache/qrcode.png 或 WebUI :6099。",
+        "http_api": "http://127.0.0.1:3000",
+        "allow_user_ids": [
+          "10001"
+        ],
+        "allow_note": "仅白名单私聊；其他人忽略/不回",
+        "send_surface": "onebot"
+      },
+      "wechat_ilink": {
+        "provider": "weixin-ilink",
+        "credentials_file": "data/ilink_creds.json",
+        "protocol_doc": "https://github.com/Tencent/openclaw-weixin/blob/main/docs/protocol.md",
+        "sdk": "https://github.com/zongrongjin/weixin-ilink",
+        "note": "自建 Python iLink；扫码 tools/ilink_weixin_run.py login；不装 OpenClaw；不启 OCR daemon",
+        "send_surface": "ilink",
+        "ocr_daemon": false
+      }
+    }
+  },
+  "avatar": {
+    "album_dir": "/Users/you/xiaotian-assets/album/xiaohongshu-ZzDgwSyeeeee",
+    "album_min_days": 0,
+    "xhs_min_days": 0,
+    "_note": "album=自己相册：无14天；频率=mood门控+日概率+最短间隔小时（见 mood.*）。xhs=小红书检索：无14天硬约束，必须守 source_poll（静默/日上限/间隔/captcha backoff）；配额满则入队 queue_path，次日 quiet 结束后第一号优先。zhuzhuxiaoye/raw 仅长相参考。",
+    "queue_path": "data/avatar/queue.json",
+    "mood": {
+      "daily_p": 0.28,
+      "min_interval_h": 6,
+      "mood_min": 6.0,
+      "high_mood": 8.0,
+      "high_mood_bonus_p": 0.22,
+      "sweet_pulse_bonus_p": 0.15,
+      "roll_state_path": "data/avatar/album_gate.json"
+    }
+  },
+  "tz": "Asia/Shanghai",
+  "wechat_outbound": "ilink",
+  "ocr_daemon_enabled": false,
+  "sleep_chat": {
+    "enabled": true,
+    "asleep_after_sec": 600,
+    "daytime_sleep_max_sec": 7200,
+    "_note": "睡前/已睡密度独立于日常 reply。* pre_sleep：字数↓气泡↓间隔↑；asleep：压制主动+极简回复。asleep_after_sec=道晚安后对方无响应判睡（秒）。详见 docs/sleep-chat.md",
+    "pre_sleep": {
+      "max_bubbles": 3,
+      "max_chars_total": 40,
+      "max_bubble_chars": 14,
+      "gap_scale": 1.75,
+      "gap_min_sec": 1.5,
+      "gap_max_sec": 4.2,
+      "prompt_tip": "睡前/刚道晚安：整轮≤2～3短气泡就收；别展开别连问别发图。「活动/还活动了？」=他还没睡的调侃，绝不是日程活动；禁止追问啥活动、禁止新开行程梗。可回晚安后收住。"
+    },
+    "asleep": {
+      "max_bubbles": 2,
+      "max_chars_total": 24,
+      "max_bubble_chars": 12,
+      "gap_scale": 2.2,
+      "gap_min_sec": 1.8,
+      "gap_max_sec": 4.8,
+      "suppress_proactive": true,
+      "prompt_tip": "会话已睡/他夜里又戳：极短回一两句就停。「活动/还活动了」=还没睡，别问行程别追问活动；别发图别开新话题。"
+    }
+  },
+  "onebot": {
+    "http_api": "http://127.0.0.1:3000",
+    "ws_url": "ws://127.0.0.1:3001"
+  }
+}

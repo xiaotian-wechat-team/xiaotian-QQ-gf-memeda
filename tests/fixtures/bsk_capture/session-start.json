@@ -1,0 +1,9 @@
+{
+  "agent_window_id": 100000000,
+  "browser_instance_id": "demo-browser-instance",
+  "interaction": {
+    "borrow_confirmation": "always",
+    "request_help": "enabled"
+  },
+  "session_id": "demo-session"
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.xiaotian.avatar-qq</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/bash</string>
+		<string>-c</string>
+		<string>sleep $((RANDOM % 900)); exec '/bin/bash' '/Users/you/xiaotian-wechat/tools/avatar_qq_daily.sh'</string>
+	</array>
+	<key>WorkingDirectory</key>
+	<string>/Users/you/xiaotian-wechat</string>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>PATH</key>
+		<string>/Users/you/.local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+		<key>HOME</key>
+		<string>/Users/you</string>
+		<key>LANG</key>
+		<string>zh_CN.UTF-8</string>
+		<key>LC_ALL</key>
+		<string>zh_CN.UTF-8</string>
+		<key>PYTHONUNBUFFERED</key>
+		<string>1</string>
+		<key>PYTHONDONTWRITEBYTECODE</key>
+		<string>1</string>
+		<key>MEM0_TELEMETRY</key>
+		<string>False</string>
+		<key>TOKENIZERS_PARALLELISM</key>
+		<string>false</string>
+		<key>HF_HUB_OFFLINE</key>
+		<string>1</string>
+		<key>TRANSFORMERS_OFFLINE</key>
+		<string>1</string>
+		<key>TZ</key>
+		<string>Asia/Shanghai</string>
+	</dict>
+	<key>StandardOutPath</key>
+	<string>/Users/you/Library/Logs/xiaotian/avatar-qq.log</string>
+	<key>StandardErrorPath</key>
+	<string>/Users/you/Library/Logs/xiaotian/avatar-qq.err</string>
+	<key>LimitLoadToSessionType</key>
+	<string>Aqua</string>
+	<key>RunAtLoad</key>
+	<false/>
+	<key>ProcessType</key>
+	<string>Background</string>
+	<key>LowPriorityIO</key>
+	<true/>
+	<key>Nice</key>
+	<integer>5</integer>
+	<key>StartCalendarInterval</key>
+	<dict>
+		<key>Hour</key>
+		<integer>7</integer>
+		<key>Minute</key>
+		<integer>40</integer>
+	</dict>
+	<key>ExitTimeOut</key>
+	<integer>600</integer>
+</dict>
+</plist>

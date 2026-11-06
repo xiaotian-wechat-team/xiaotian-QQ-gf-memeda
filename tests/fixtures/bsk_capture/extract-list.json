@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "kind": "list",
+  "tab_id": 100000001,
+  "source": {
+    "page_url": "https://www.xiaohongshu.com/search_result?keyword=%E4%B8%89%E8%A7%92%E6%B4%B2%E8%A1%8C%E5%8A%A8&source=web_search_result_notes&type=51",
+    "frame_url": "https://www.xiaohongshu.com/search_result?keyword=%E4%B8%89%E8%A7%92%E6%B4%B2%E8%A1%8C%E5%8A%A8&source=web_search_result_notes&type=51",
+    "frame_id": "DEMO_FRAME_ID",
+    "title": "三角洲行动 - 小红书搜索",
+    "captured_at": "2026-10-28T18:56:12.804Z",
+    "selector": ".feeds-container"
+  },
+  "columns": [
+    {
+      "key": "href",
+      "name": "href",
+      "header_path": [],
+      "name_source": "field"
+    },
+    {
+      "key": "title",
+      "name": "title",
+      "header_path": [],
+      "name_source": "field"
+    },
+    {
+      "key": "author",
+      "name": "author",
+      "header_path": [],
+      "name_source": "field"
+    }
+  ],
+  "rows": [
+    {
+      "href": "https://www.xiaohongshu.com/search_result/6adab385000000002b00216a?xsec_token=fixture-signature&xsec_source=",
+      "title": "你说新版本的大哥都会遁地了？",
+      "author": "[account omitted]"
+    },
+    {
+      "href": "https://www.xiaohongshu.com/search_result/6ae1dd4e00000000280094a4?xsec_token=fixture-signature&xsec_source=",
+      "title": "幸运鸟窝新赛季限时返场！",
+      "author": "[account omitted]"
+    },
+    {
+      "href": "https://www.xiaohongshu.com/search_result/6aabe792000000002700b353?xsec_token=fixture-signature&xsec_source=",
+      "title": "三角洲不同干员跳得吃舞",
+      "author": "[account omitted]"
+    },
+    {
+      "href": null,
+      "title": null,
+      "author": null
+    },
+    {
+      "href": "https://www.xiaohongshu.com/search_result/6adc1de4000000002c0135ad?xsec_token=fixture-signature&xsec_source=",
+      "title": "哈夫克信物3级工卡获取攻略！",
+      "author": "[account omitted]"
+    },
+    {
+      "href": "https://www.xiaohongshu.com/search_result/6addad26000000002a02a786?xsec_token=fixture-signature&xsec_source=",
+      "title": "手把手教你解锁阿萨拉挂坠，招募阿萨拉小兵",
+      "author": "[account omitted]"
+    },
+    {
+      "href": "https://www.xiaohongshu.com/search_result/6ad9ebf3000000002b003ae5?xsec_token=fixture-signature&xsec_source=",
+      "title": "5万年前那一战，战过之后我回头看",
+      "author": "[account omitted]"
+    },
+    {
+      "href": null,
+      "title": null,
+      "author": null
+    },
+    {
+      "href": null,
+      "title": null,
+      "author": null
+    },
+    {
+      "href": "https://www.xiaohongshu.com/search_result/6ae06d860000000022034821?xsec_token=fixture-signature&xsec_source=",
+      "title": "一蛛三吃！S12全新靶场！蜘蛛囚笼！保姆级攻略",
+      "author": "[account omitted]"
+    }
+  ],
+  "row_sources": [
+    {
+      "row": 0,
+      "source_row": 1,
+      "row_kind": "data",
+      "locator": "#global > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > section:nth-of-type(1)"
+    },
+    {
+      "row": 1,
+      "source_row": 2,
+      "row_kind": "data",
+      "locator": "#global > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > section:nth-of-type(2)"
+    },
+    {
+      "row": 2,
+      "source_row": 3,
+      "row_kind": "data",
+      "locator": "#global > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > section:nth-of-type(3)"
+    },
+    {
+      "row": 3,
+      "source_row": 4,
+      "row_kind": "data",
+      "locator": "#global > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > section:nth-of-type(4)"
+    },
+    {
+      "row": 4,
+      "source_row": 5,
+      "row_kind": "data",
+      "locator": "#global > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > section:nth-of-type(5)"
+    },
+    {
+      "row": 5,
+      "source_row": 6,
+      "row_kind": "data",
+      "locator": "#global > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > section:nth-of-type(6)"
+    },
+    {
+      "row": 6,
+      "source_row": 7,
+      "row_kind": "data",
+      "locator": "#global > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > section:nth-of-type(7)"
+    },
+    {
+      "row": 7,
+      "source_row": 8,
+      "row_kind": "data",
+      "locator": "#global > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > section:nth-of-type(8)"
+    },
+    {
+      "row": 8,
+      "source_row": 9,
+      "row_kind": "data",
+      "locator": "#global > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > section:nth-of-type(9)"
+    },
+    {
+      "row": 9,
+      "source_row": 10,
+      "row_kind": "data",
+      "locator": "#global > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > section:nth-of-type(10)"
+    }
+  ],
+  "spans": [],
+  "coverage": {
+    "scope": "loaded_dom",
+    "rows_returned": 10,
+    "truncated": true,
+    "dataset_complete": "incomplete",
+    "stop_reason": "row_limit"
+  },
+  "warnings": []
+}

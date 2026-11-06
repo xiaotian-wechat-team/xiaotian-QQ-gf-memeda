@@ -1,0 +1,592 @@
+{
+  "version": 2,
+  "reviewed_at": "2026-10-28",
+  "purpose": "visually screened scene/prop references; preserve persona canonical references",
+  "images": [
+    {
+      "scene_id": "night-001",
+      "scene_name": "海淀商场晚间小店",
+      "source": "bing",
+      "source_url": "https://img.zx123.cn/Resources/zx123cn/uploadfile/2019/1231/22ec9377b6e92e51d0715d4b3c4e514d.jpg",
+      "sha256": "9db5cf292edd7dec49707ff62c3ac02576a1e11b5bc80b2073f1e5228173a266",
+      "query": "商场 服装店 试衣镜 空景",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-001",
+      "scene_name": "海淀商场晚间小店",
+      "source": "bing",
+      "source_url": "https://cbu01.alicdn.com/img/ibank/O1CN01S0O2Xw1Z5XWxoRQAH_!!2211070023143-0-cib.jpg",
+      "sha256": "ffeaf3aeef14a54889fa2e7291324550773b883b7a4a8b759c0c8c3a28784d53",
+      "query": "商场 服装店 试衣镜 空景",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-001",
+      "scene_name": "海淀商场晚间小店",
+      "source": "bing",
+      "source_url": "https://img.zx123.cn/Resources/zx123cn/uploadfile/2019/0911/8e3f125a240c8ec597e632aa429ac449.jpg",
+      "sha256": "5089b8e7b254045638a59d5af4afb1cfca9aa5f2ca09c00a4222fd229f58521c",
+      "query": "服装店 试衣间 空景 实拍",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-001",
+      "scene_name": "海淀商场晚间小店",
+      "source": "bing",
+      "source_url": "https://img.zx123.cn/Resources/zx123cn/uploadfile/2019/0703/d32ed04d95465c9fc8bc239760254f18.jpg",
+      "sha256": "fd6479dc9ecc771a0a21c4387e0b7ea9a3b8ba7d843b6b5589d54a6b75f8265f",
+      "query": "服装店 试衣间 空景 实拍",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-002",
+      "scene_name": "海淀街区灯光夜景",
+      "source": "bing",
+      "source_url": "https://img95.699pic.com/photo/50199/2875.jpg_wh860.jpg",
+      "sha256": "a87192760b3aa89bef8ca51660a6d4214e51d12687287453030e1131f2fec66e",
+      "query": "北京 街道 夜景 路灯 无人",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-002",
+      "scene_name": "海淀街区灯光夜景",
+      "source": "bing",
+      "source_url": "https://img95.699pic.com/photo/50199/2856.jpg_wh860.jpg",
+      "sha256": "f707bbfce6cab1b2389bd43d41ad86dfb8e6cd344021f2d02ab03e09ae6923dc",
+      "query": "北京 街道 夜景 路灯 无人",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-002",
+      "scene_name": "海淀街区灯光夜景",
+      "source": "bing",
+      "source_url": "https://imgs.699pic.com/images/600/474/840.jpg!detail.v1",
+      "sha256": "bd602356b669072fce92d03468417c51097ca589b4461ceba24f45553c0fb48a",
+      "query": "北京 街道 夜景 路灯 无人",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-002",
+      "scene_name": "海淀街区灯光夜景",
+      "source": "bing",
+      "source_url": "https://imgs.699pic.com/images/321/473/333.jpg!detail.v1",
+      "sha256": "80956424af46c01ccb6b9b4c99f98005d2b19d8f7b257147b8836580316272ff",
+      "query": "北京 街道 夜景 路灯 无人",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-003",
+      "scene_name": "KTV包间合唱间隙",
+      "source": "bing",
+      "source_url": "https://img.zx123.cn/Resources/zx123cn/uploadfile/2018/1222/2b1394d1580ca033126a7bf9bf917629.jpg",
+      "sha256": "eb93883d49d96e3aa07ee8eb28649b1137304d09457ac011a729ce431031313b",
+      "query": "KTV 包间 话筒 沙发 无人 实拍",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-003",
+      "scene_name": "KTV包间合唱间隙",
+      "source": "bing",
+      "source_url": "https://img.zx123.cn/Resources/zx123cn/uploadfile/2015/1124/4cf19e2d33875010f34f6c8a6ecb1632.jpg",
+      "sha256": "518fba1d7fe017243d8bef06864c424592fecbd223eab4218ed8f681bdbab0a8",
+      "query": "KTV 包间 话筒 沙发 无人 实拍",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-003",
+      "scene_name": "KTV包间合唱间隙",
+      "source": "bing",
+      "source_url": "https://img.zx123.cn/Resources/zx123cn/uploadfile/2015/0528/d13c8f661c4fda880f382822176095d5.jpg",
+      "sha256": "d2c22dcfa51f0d0725ade4f8a2ab8259c139376cc141e201a6172f0dee09af2d",
+      "query": "KTV 包间 话筒 沙发 无人 实拍",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-003",
+      "scene_name": "KTV包间合唱间隙",
+      "source": "bing",
+      "source_url": "https://img.zx123.cn/Resources/zx123cn/uploadfile/2015/1112/ad28e967d82be9faa6a37b811de84f37.jpg",
+      "sha256": "53f18e77bbd4dfc480fb02734126fddd8d1f7460dc4dcce30f5e770724329dd2",
+      "query": "KTV 包间 话筒 沙发 无人 实拍",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-004",
+      "scene_name": "电影院散场大厅",
+      "source": "bing",
+      "source_url": "https://img95.699pic.com/photo/60001/4983.jpg_wh860.jpg",
+      "sha256": "f3dd3fd4907a516e0107aea286f4dd7619d157d0ea8eaa340578d3d25b09abbb",
+      "query": "电影院 大厅 散场 无人",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-004",
+      "scene_name": "电影院散场大厅",
+      "source": "bing",
+      "source_url": "https://img95.699pic.com/photo/50068/3880.jpg_wh860.jpg",
+      "sha256": "bca710a431da07d97c6efb43b457cb814f158680993d0541b93f2fb6619088d0",
+      "query": "电影院 大厅 休息区 实拍",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-004",
+      "scene_name": "电影院散场大厅",
+      "source": "bing",
+      "source_url": "https://img.zx123.cn/Resources/zx123cn/uploadfile/2023/0523/f46f6e4cf6e96491c3c72d78a3749820.jpg",
+      "sha256": "1f6385c88428eacd55e6dd99b241529fe780d6fa2185260cbd8f779d5c4a2c43",
+      "query": "电影院 大厅 休息区 实拍",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-005",
+      "scene_name": "晚间桌游手作小店",
+      "source": "bing",
+      "source_url": "https://image.gcores.com/9967dcdd17b656ecb261b23910a0ecec-3000-2250.jpeg?x-oss-process=image/resize,limit_1,m_mfit,w_2000/quality,q_90/format,webp/bright,-8",
+      "sha256": "04da0350a08ea454e217bc7f74b5c57107ab70953bb9616cab159e7f8985051b",
+      "query": "桌游店 桌面 卡牌 无人",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-005",
+      "scene_name": "晚间桌游手作小店",
+      "source": "bing",
+      "source_url": "https://image.gcores.com/9f98c37e7ac7e5d5964d9f86e91aa1b2-3000-2250.jpeg?x-oss-process=image/resize,limit_1,m_mfit,w_2000/quality,q_90/format,webp/bright,-8",
+      "sha256": "177c234052f3ee958aeb0b4395f55472b860cc3820d4517c4fae0ae5899d30f1",
+      "query": "桌游店 桌面 卡牌 无人",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-005",
+      "scene_name": "晚间桌游手作小店",
+      "source": "bing",
+      "source_url": "https://imgs.699pic.com/images/600/555/786.jpg!detail.v1",
+      "sha256": "aca724087615747cb35b507f19e8964049f8a632dc2026115e2a5e41dfca7b93",
+      "query": "手作店 串珠 桌面 实拍",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-006",
+      "scene_name": "校园路灯下短暂停留",
+      "source": "bing",
+      "source_url": "https://www.eduip.cn/uploads/school_img_info/585/585_7_b.jpg",
+      "sha256": "54745a1da4f29abaac8d281a3e9c59c1f2a7c18416e26235b8a880800f257cf2",
+      "query": "北京舞蹈学院 校园 夜景",
+      "use": "北舞建筑布局参考；原图白天，夜间光照以日程场景为准，不复刻天空/光照"
+    },
+    {
+      "scene_id": "night-006",
+      "scene_name": "校园路灯下短暂停留",
+      "source": "bing",
+      "source_url": "https://pic.nximg.cn/20120508/4320883_220848425000_2.jpg",
+      "sha256": "c9d44189582dbea2b416d914a08c9708fd6f5fbd23bea86c1bb119fcb398056b",
+      "query": "北京舞蹈学院 校园 夜景",
+      "use": "北舞建筑布局参考；原图白天，夜间光照以日程场景为准，不复刻天空/光照"
+    },
+    {
+      "scene_id": "night-007",
+      "scene_name": "城市夜景取景记录",
+      "source": "bing",
+      "source_url": "https://qnam.smzdm.com/201911/07/5dc3db560750f3871.jpg_e1080.jpg",
+      "sha256": "7e10c2184a48ec926013a65c35a78a124ecc9065a1977bb9bba0f45f3000a81c",
+      "query": "电影 拍摄 夜景 外景 三脚架",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-007",
+      "scene_name": "城市夜景取景记录",
+      "source": "bing",
+      "source_url": "https://preview.qiantucdn.com/agency/dt/xsj/0k/lr/z2.jpg!w1024_new_small_1",
+      "sha256": "e227bc4c68ad3d27bc79ce33cf92269a3d17b3162f292f241d887b6b4a460ba6",
+      "query": "夜景拍摄 相机 三脚架 城市",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-007",
+      "scene_name": "城市夜景取景记录",
+      "source": "bing",
+      "source_url": "http://n.sinaimg.cn/sinacn20190629s/266/w640h426/20190629/297c-hyzpvis2969235.jpg",
+      "sha256": "bdc8caecabd5732ff081d625838dfd61e1a68c8ce0a2c28298ee04457c4ca1f6",
+      "query": "夜景拍摄 相机 三脚架 车流",
+      "use": "environment reference only; not evidence of attendance, booking or location"
+    },
+    {
+      "scene_id": "night-008",
+      "scene_name": "服装店试衣镜",
+      "source": "bing",
+      "source_url": "https://imgs.699pic.com/images/501/600/825.jpg!detail.v1",
+      "sha256": "d386aae1d12f5b2113f00973eac4e13b8cece687495f6291043189f6cd045a4b",
+      "query": "服装店 试衣镜 衣架 空景",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-008",
+      "scene_name": "服装店试衣镜",
+      "source": "bing",
+      "source_url": "https://cbu01.alicdn.com/img/ibank/O1CN01XUsmkN1gKq7sKpAhK_!!2209021754124-0-cib.jpg",
+      "sha256": "80ab5e850a0cdfbc4f52f526929a981e1422339ea6e3b051d2652a8d03aa2b06",
+      "query": "服装店 试衣镜 衣架 空景",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-008",
+      "scene_name": "服装店试衣镜",
+      "source": "bing",
+      "source_url": "http://img.alicdn.com/i2/2211576838793/O1CN01yhhL2V1CDZIVELaNb_!!47-0-lubanu.jpg",
+      "sha256": "98f4d06ab2f5413993d94567ecc99916e59f9a7be2ab0e919719f44318cf2ae8",
+      "query": "服装店 试衣镜 衣架 空景",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-008",
+      "scene_name": "服装店试衣镜",
+      "source": "bing",
+      "source_url": "https://n.sinaimg.cn/transform/20150715/dE3T-fxewxfu4194647.jpg",
+      "sha256": "72f40b2aec73ae7f1701e72e01f3f52a7a4c525ff1e175190750d1a12b7fcd9f",
+      "query": "服装店 试衣镜 衣架 空景",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-009",
+      "scene_name": "文具文创明信片架",
+      "source": "bing",
+      "source_url": "https://www.haomeigs.com/uploads/201117/1-20111G521312c.jpg",
+      "sha256": "6245d69cdb2d5ff6894f1174c195bf56a95069159f36a37aefd0ba900ed8b505",
+      "query": "文具店 明信片 贴纸 陈列",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-009",
+      "scene_name": "文具文创明信片架",
+      "source": "bing",
+      "source_url": "https://pic1.zhimg.com/v2-9cfc68cdd2782d1f141bb2f24ad32a11_r.jpg?source=1940ef5c",
+      "sha256": "f7a5205b4df0b74fc01cd5a53f10a0e36beaaf9fb1e56b92587bee2150c8adea",
+      "query": "文具店 明信片 贴纸 陈列",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-009",
+      "scene_name": "文具文创明信片架",
+      "source": "bing",
+      "source_url": "https://pic.nximg.cn/file/20250912/8129528_221930074103_2.jpg",
+      "sha256": "d363a0452a4c0b59e998ea6683a58e9ae89d9bf098e806dd0cb88e473ecd0a68",
+      "query": "文具店 明信片 贴纸 陈列",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-009",
+      "scene_name": "文具文创明信片架",
+      "source": "bing",
+      "source_url": "https://pic.nximg.cn/file/20260514/32896850_214152415101_2.jpg",
+      "sha256": "6989786a09884ff41483c78346cb74ee59f9e556824c2a3dd60782e99a7e8f38",
+      "query": "文具店 明信片 贴纸 陈列",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-010",
+      "scene_name": "饰品柜台发夹耳饰",
+      "source": "bing",
+      "source_url": "http://img.alicdn.com/tfscom/i4/679537481/TB22aMUcPqhSKJjSspnXXc79XXa_!!679537481.jpg",
+      "sha256": "6a687b5d996894341b68ff56c4cc175873afc07be54f3afbcc39143a588850b6",
+      "query": "饰品店 发夹 耳饰 陈列 台镜",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-010",
+      "scene_name": "饰品柜台发夹耳饰",
+      "source": "bing",
+      "source_url": "https://pic.ntimg.cn/file/20241214/35479210_081628956135_2.jpg",
+      "sha256": "c9fb4e240b3596ebdec2e147a6d9918fd7fe7dfca7f78341128c5fd40b5cf586",
+      "query": "饰品店 发夹 耳饰 陈列 台镜",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-011",
+      "scene_name": "生活杂货杯子收纳",
+      "source": "bing",
+      "source_url": "https://img.alicdn.com/bao/uploaded/i4/3881771352/O1CN014oYykT1LrG5ZQdBJW_!!3881771352.jpg",
+      "sha256": "b483881a89a740a8e0b39c3aaa4d5cc76fa9fd9bd34a7607dbed39d69217b2e7",
+      "query": "生活杂货店 杯子 收纳盒 货架",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-011",
+      "scene_name": "生活杂货杯子收纳",
+      "source": "bing",
+      "source_url": "https://img.alicdn.com/bao/uploaded/i2/1130253429/O1CN01uE6r0F1bCWwH2M4CV_!!0-item_pic.jpg",
+      "sha256": "3995c2313da9da0ca732b401492347c2ac69c73f3bd463f680e514de1a571e5a",
+      "query": "生活杂货店 杯子 收纳盒 货架",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-011",
+      "scene_name": "生活杂货杯子收纳",
+      "source": "bing",
+      "source_url": "https://img.alicdn.com/bao/uploaded/i1/1850916288/O1CN01CfahXY1wJx0xeeXS6_!!1850916288.jpg",
+      "sha256": "dff589163bd60abc22c8678e81414636d078a291780716a6493cda2b9cff9982",
+      "query": "生活杂货店 杯子 收纳盒 货架",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-012",
+      "scene_name": "夜间橱窗玻璃倒影",
+      "source": "bing",
+      "source_url": "https://img95.699pic.com/photo/60083/1484.jpg_wh860.jpg",
+      "sha256": "74f4a15ff81294b7bb16b028f306713c8fb07ed4a8dd22927141faf8bd354bed",
+      "query": "夜晚 橱窗 玻璃 倒影 街道",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-012",
+      "scene_name": "夜间橱窗玻璃倒影",
+      "source": "bing",
+      "source_url": "https://thumbs.dreamstime.com/b/night-shot-hometown-storefront-taken-street-light-reflects-wet-pavement-store-illuminated-big-windows-nighttime-141231533.jpg",
+      "sha256": "a30559204d819085007f6f1080affa1bbbae0d3ae628b1850b8b28f6a1332676",
+      "query": "night storefront reflection photograph",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-013",
+      "scene_name": "夜间步道车流光影",
+      "source": "bing",
+      "source_url": "https://preview.qiantucdn.com/58pic/70/99/86/58PIC4458PICe5a6icWc8zPaP_PIC2018.jpg!w1024_new_0_1",
+      "sha256": "1c20989f36726ee826afec1373e7335f6372937d3b314834b526e63e16212abb",
+      "query": "北京 夜晚 人行道 路灯 车流",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-013",
+      "scene_name": "夜间步道车流光影",
+      "source": "bing",
+      "source_url": "https://youjia.cdn.bcebos.com/wenda_pics/1666874452454769b52b.png@!default_youjia",
+      "sha256": "d8a73257df2a4731555dca4bceaefe0623a05ee85de352aa38155218111e4f52",
+      "query": "北京 夜晚 人行道 路灯 车流",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-014",
+      "scene_name": "临窗热饮夜景",
+      "source": "bing",
+      "source_url": "https://thumbs.dreamstime.com/z/night-view-cafe-window-to-old-european-street-night-view-cafe-window-to-old-european-street-bars-137605034.jpg",
+      "sha256": "2a951b065e3e21f0329903b1b236ea25c09dcf9e8799fcf4ff369a9579f43a70",
+      "query": "cafe window night interior photograph",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-014",
+      "scene_name": "临窗热饮夜景",
+      "source": "bing",
+      "source_url": "https://c8.alamy.com/comp/M1C2JF/people-behind-the-window-at-the-counter-of-waraku-cafe-in-kyoto-at-M1C2JF.jpg",
+      "sha256": "4c88e87f790c8e156bf85df22edf28fec4f00859bf69b7049f36166a48394b27",
+      "query": "cafe window night interior photograph",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-015",
+      "scene_name": "KTV话筒点歌桌面",
+      "source": "bing",
+      "source_url": "https://img.alicdn.com/i4/1044439486/TB21W3YhJzJ8KJjSspkXXbF7VXa_!!1044439486.jpg",
+      "sha256": "ea92bde0f802d53e1b976565cb9c05252bcc4e98910bbad37a06da76779be9af",
+      "query": "KTV 话筒 桌面 包厢 无人",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-015",
+      "scene_name": "KTV话筒点歌桌面",
+      "source": "bing",
+      "source_url": "https://thumbs.dreamstime.com/b/karaoke-room-14851903.jpg",
+      "sha256": "e88a224c17f000e90252d1c20949788e839450c2aefea0c09bfecc7fa469852a",
+      "query": "karaoke microphone table room photo",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-015",
+      "scene_name": "KTV话筒点歌桌面",
+      "source": "bing",
+      "source_url": "https://ekokaraokelounge.com/wp-content/uploads/2020/01/Small-Room.jpg",
+      "sha256": "1664ff14496a9e3dbf331667548c459f897da97ada924a155d9a65557e84e7a8",
+      "query": "karaoke microphone table room photo",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-015",
+      "scene_name": "KTV话筒点歌桌面",
+      "source": "bing",
+      "source_url": "https://thumbs.dreamstime.com/b/microphone-sound-music-karaoke-audio-studio-stage-mic-technology-speech-broadcast-equipment-dark-room-table-270580206.jpg",
+      "sha256": "cc983a814d6c68b250601f8ad495462960cbc1c70a3e0b3147cb45fab7d84fe2",
+      "query": "karaoke microphone table room photo",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-016",
+      "scene_name": "桌游模型木桌",
+      "source": "bing",
+      "source_url": "https://c8.alamy.com/comp/EFFFKG/cropped-image-of-friends-playing-board-game-at-cafe-table-EFFFKG.jpg",
+      "sha256": "2ed27b608ee2f026e6044d75b92ef50472b6db9213a996828828d40f4c482d54",
+      "query": "board game cafe table photo",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-016",
+      "scene_name": "桌游模型木桌",
+      "source": "bing",
+      "source_url": "https://www.tabletopcafe.ca/cdn/shop/files/PXL_20220124_181454554.jpg?v=1643050345&width=1500",
+      "sha256": "f6e66c0e0eae634f1814ea127ccc76424fb63a1b7aab75e3c7e6930dcf182268",
+      "query": "board game cafe table photo",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-016",
+      "scene_name": "桌游模型木桌",
+      "source": "bing",
+      "source_url": "https://images.adsttc.com/media/images/5252/0ae2/e8e4/4e67/bf00/0574/large_jpg/Photo1_Triopton_Architects.jpg?1381108442",
+      "sha256": "6e50b3db5a2564dd67f72348d9360ac4ae4d4f9f96fde2154cb1e4e3c09825c6",
+      "query": "board game cafe table photo",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-016",
+      "scene_name": "桌游模型木桌",
+      "source": "bing",
+      "source_url": "http://retaildesignblog.net/wp-content/uploads/2013/11/Alaloum-Board-Game-Cafe-by-Triopton-Architects-Athens-Greece-03.jpg",
+      "sha256": "a78ff1469a627cd77c41cd935e7ce3357da524e3623f752b212de95bc2b7d732",
+      "query": "board game cafe table photo",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-017",
+      "scene_name": "串珠托盘挂件手作",
+      "source": "bing",
+      "source_url": "https://makerworld.bblmw.cn/makerworld/model/CNc0a31639c60915/design/2025-11-16_c7b2b08347c518.jpg?x-oss-process=image/resize,w_1200/ignore-error,1",
+      "sha256": "cbc03028b5b3c44a4bb7b9657a22f7647b029260b63dddb95b7089f376e603a5",
+      "query": "串珠 手工 托盘 桌面",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-017",
+      "scene_name": "串珠托盘挂件手作",
+      "source": "bing",
+      "source_url": "https://cbu01.alicdn.com/img/ibank/O1CN01eXz0gK1DG9VVunNeV_!!2200785930188-0-cib.jpg",
+      "sha256": "226bb4d4acb73644be164aa56e06ba55e596df44bd8263d5ae491a4599632009",
+      "query": "串珠 手工 托盘 桌面",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-017",
+      "scene_name": "串珠托盘挂件手作",
+      "source": "bing",
+      "source_url": "https://design.sztu.edu.cn/__local/4/5F/46/6231A901052AD16819BAC0219C0_601847C1_723A2.jpg",
+      "sha256": "c5596b560bfeae23dc3e99ce79be2e513455db4f9779b009650f0a76e94976ed",
+      "query": "串珠 手作 工作台 实拍",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-017",
+      "scene_name": "串珠托盘挂件手作",
+      "source": "bing",
+      "source_url": "http://jixie.ciit.edu.cn/_upload/article/images/4e/69/5fcf4fcb41c8b3af38f56f071b79/5311236c-d785-4d89-aa00-fe1260c0b68e.jpg",
+      "sha256": "9adaf8f22666dac65a3b78a0bb1a002bae1227988f0b809fbfa031dab79668f4",
+      "query": "串珠 手作 工作台 实拍",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-018",
+      "scene_name": "纸艺速写小卡桌面",
+      "source": "bing",
+      "source_url": "https://cbu01.alicdn.com/img/ibank/2018/995/833/10233338599_65246163.jpg",
+      "sha256": "978d8c63edd783401f2d55bfaa7e1b82644a71cc3a92a7fd0ad6aa5c90e77dc5",
+      "query": "手工 彩纸 彩铅 桌面",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-018",
+      "scene_name": "纸艺速写小卡桌面",
+      "source": "bing",
+      "source_url": "https://img95.699pic.com/photo/50464/9512.jpg_wh860.jpg",
+      "sha256": "d28e450bd5e019f38611b8d582b2cc68f680cbf3a20f77ba53a4384afc3abade",
+      "query": "手工 彩纸 彩铅 桌面",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-018",
+      "scene_name": "纸艺速写小卡桌面",
+      "source": "bing",
+      "source_url": "https://pic4.zhimg.com/50/v2-468d4ed9e350e5e27fdfd3998968cccd_hd.jpg?source=1940ef5c",
+      "sha256": "845aaacba64eecfb364fd981d15644156d35a766e8346895b02ff2db4e8d3374",
+      "query": "手账 拼贴 桌面 实拍",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-018",
+      "scene_name": "纸艺速写小卡桌面",
+      "source": "bing",
+      "source_url": "https://pic1.zhimg.com/v2-b7eaf19b474c903b56fed8043da3e2eb_r.jpg?source=1940ef5c",
+      "sha256": "b328246bbf8c2e424806f3c189cc5a5bf6d3228682f07325dc675d5bf6f2ca4e",
+      "query": "手账 拼贴 桌面 实拍",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-019",
+      "scene_name": "影院检票走廊",
+      "source": "bing",
+      "source_url": "http://www.bj-park.com/Editor/attached/image/20190118/20190118145826552655.jpg",
+      "sha256": "9b2dd1d104dc50ba7cbaba2a85806e98e6fc248f87528786551374453dc4a961",
+      "query": "电影院 检票口 走廊 无人",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-019",
+      "scene_name": "影院检票走廊",
+      "source": "bing",
+      "source_url": "https://x0.ifengimg.com/res/2020/B0A1EC48A2C881A6FC83ED6F4C9E7775DFF45708_size143_w1440_h1080.jpeg",
+      "sha256": "a5816191354078e6bb9a2e786aa02653e769b6a96daac35c1667a0470b2974de",
+      "query": "电影院 检票口 走廊 无人",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-019",
+      "scene_name": "影院检票走廊",
+      "source": "bing",
+      "source_url": "https://x0.ifengimg.com/res/2020/253DE7AD384191E3047A9BEE4121881BCF8F46C4_size126_w1080_h1440.jpeg",
+      "sha256": "c61c59770cb8b91b6dfd2a0602133bc0beea39eab955165955ef8d7f13864953",
+      "query": "电影院 检票口 走廊 无人",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-019",
+      "scene_name": "影院检票走廊",
+      "source": "bing",
+      "source_url": "https://x0.ifengimg.com/res/2020/D3FD3F18D859DA1F3EC9FCE89C8EF215FD467363_size168_w1440_h1080.jpeg",
+      "sha256": "541bc232a58ef1e6bc8fd7aa192f50a47590c629dcb9fbd1547bbdb3d5ccddfc",
+      "query": "电影院 检票口 走廊 无人",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity"
+    },
+    {
+      "scene_id": "night-020",
+      "scene_name": "夜间外拍器材",
+      "source": "bing",
+      "source_url": "https://gd-hbimg.huaban.com/21536cc0c5174bd8f147d7ae9a81d48c4be5310e56fe3-hSqYfw_fw658",
+      "sha256": "271e6d868ae5c909ca726fe42f1559e7f4b1839a109facd4fdbd49f2943d4a52",
+      "query": "摄影 夜晚 三脚架 相机 街道",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-020",
+      "scene_name": "夜间外拍器材",
+      "source": "bing",
+      "source_url": "https://static1.makeuseofimages.com/wordpress/wp-content/uploads/2020/01/digital-camera-with-tripod.jpg",
+      "sha256": "ec97c64afeb866e010850570bbae787c6f28484d4efd9b09bea1582949e4f463",
+      "query": "camera tripod city night photography equipment",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    },
+    {
+      "scene_id": "night-020",
+      "scene_name": "夜间外拍器材",
+      "source": "bing",
+      "source_url": "https://static.vecteezy.com/system/resources/previews/058/411/437/large_2x/camera-on-tripod-capturing-city-lights-at-night-photo.jpeg",
+      "sha256": "3817f3d119d3590563efbe17647be94cfa8ec2fb81be578644327cf28c51e028",
+      "query": "camera tripod city night photography equipment",
+      "use": "scene/prop reference only; not evidence of attendance or exact location; ignore branding/watermarks; preserve persona canonical identity; props/layout only, not venue identity or lighting/time proof"
+    }
+  ]
+}

@@ -1,0 +1,1058 @@
+[
+  {
+    "name": "笨蛋",
+    "sweet": 0.55,
+    "tease": 0.75,
+    "intimacy": 0.8,
+    "serious": 0.15,
+    "playful": 0.7
+  },
+  {
+    "name": "小笨蛋",
+    "sweet": 0.72,
+    "tease": 0.62,
+    "intimacy": 0.88,
+    "serious": 0.22,
+    "playful": 0.74
+  },
+  {
+    "name": "大笨蛋",
+    "sweet": 0.42,
+    "tease": 0.86,
+    "intimacy": 0.74,
+    "serious": 0.08,
+    "playful": 0.78
+  },
+  {
+    "name": "傻瓜",
+    "sweet": 0.6,
+    "tease": 0.7,
+    "intimacy": 0.82,
+    "serious": 0.18,
+    "playful": 0.64
+  },
+  {
+    "name": "小傻瓜",
+    "sweet": 0.76,
+    "tease": 0.58,
+    "intimacy": 0.9,
+    "serious": 0.24,
+    "playful": 0.7
+  },
+  {
+    "name": "大傻瓜",
+    "sweet": 0.48,
+    "tease": 0.82,
+    "intimacy": 0.76,
+    "serious": 0.08,
+    "playful": 0.72
+  },
+  {
+    "name": "傻蛋",
+    "sweet": 0.5,
+    "tease": 0.78,
+    "intimacy": 0.72,
+    "serious": 0.1,
+    "playful": 0.76
+  },
+  {
+    "name": "小傻蛋",
+    "sweet": 0.66,
+    "tease": 0.68,
+    "intimacy": 0.8,
+    "serious": 0.14,
+    "playful": 0.78
+  },
+  {
+    "name": "傻瓜蛋",
+    "sweet": 0.62,
+    "tease": 0.66,
+    "intimacy": 0.78,
+    "serious": 0.14,
+    "playful": 0.72
+  },
+  {
+    "name": "笨笨",
+    "sweet": 0.74,
+    "tease": 0.52,
+    "intimacy": 0.84,
+    "serious": 0.2,
+    "playful": 0.68
+  },
+  {
+    "name": "小笨笨",
+    "sweet": 0.8,
+    "tease": 0.46,
+    "intimacy": 0.88,
+    "serious": 0.22,
+    "playful": 0.74
+  },
+  {
+    "name": "呆瓜",
+    "sweet": 0.58,
+    "tease": 0.72,
+    "intimacy": 0.76,
+    "serious": 0.12,
+    "playful": 0.7
+  },
+  {
+    "name": "小呆瓜",
+    "sweet": 0.72,
+    "tease": 0.6,
+    "intimacy": 0.84,
+    "serious": 0.18,
+    "playful": 0.74
+  },
+  {
+    "name": "呆呆",
+    "sweet": 0.78,
+    "tease": 0.42,
+    "intimacy": 0.82,
+    "serious": 0.26,
+    "playful": 0.64
+  },
+  {
+    "name": "小呆呆",
+    "sweet": 0.82,
+    "tease": 0.38,
+    "intimacy": 0.88,
+    "serious": 0.28,
+    "playful": 0.7
+  },
+  {
+    "name": "憨憨",
+    "sweet": 0.7,
+    "tease": 0.55,
+    "intimacy": 0.8,
+    "serious": 0.2,
+    "playful": 0.68
+  },
+  {
+    "name": "小憨憨",
+    "sweet": 0.8,
+    "tease": 0.46,
+    "intimacy": 0.86,
+    "serious": 0.22,
+    "playful": 0.72
+  },
+  {
+    "name": "铁憨憨",
+    "sweet": 0.52,
+    "tease": 0.78,
+    "intimacy": 0.7,
+    "serious": 0.06,
+    "playful": 0.88
+  },
+  {
+    "name": "憨包",
+    "sweet": 0.6,
+    "tease": 0.66,
+    "intimacy": 0.74,
+    "serious": 0.12,
+    "playful": 0.7
+  },
+  {
+    "name": "小憨包",
+    "sweet": 0.7,
+    "tease": 0.56,
+    "intimacy": 0.8,
+    "serious": 0.16,
+    "playful": 0.72
+  },
+  {
+    "name": "憨豆",
+    "sweet": 0.66,
+    "tease": 0.58,
+    "intimacy": 0.72,
+    "serious": 0.12,
+    "playful": 0.76
+  },
+  {
+    "name": "小憨豆",
+    "sweet": 0.74,
+    "tease": 0.5,
+    "intimacy": 0.8,
+    "serious": 0.16,
+    "playful": 0.78
+  },
+  {
+    "name": "憨宝",
+    "sweet": 0.82,
+    "tease": 0.4,
+    "intimacy": 0.88,
+    "serious": 0.24,
+    "playful": 0.64
+  },
+  {
+    "name": "呆宝",
+    "sweet": 0.84,
+    "tease": 0.36,
+    "intimacy": 0.88,
+    "serious": 0.28,
+    "playful": 0.6
+  },
+  {
+    "name": "傻宝",
+    "sweet": 0.76,
+    "tease": 0.48,
+    "intimacy": 0.86,
+    "serious": 0.2,
+    "playful": 0.66
+  },
+  {
+    "name": "笨宝",
+    "sweet": 0.74,
+    "tease": 0.5,
+    "intimacy": 0.84,
+    "serious": 0.18,
+    "playful": 0.64
+  },
+  {
+    "name": "木头",
+    "sweet": 0.38,
+    "tease": 0.72,
+    "intimacy": 0.66,
+    "serious": 0.14,
+    "playful": 0.42
+  },
+  {
+    "name": "小木头",
+    "sweet": 0.56,
+    "tease": 0.6,
+    "intimacy": 0.76,
+    "serious": 0.2,
+    "playful": 0.48
+  },
+  {
+    "name": "木头人",
+    "sweet": 0.32,
+    "tease": 0.74,
+    "intimacy": 0.6,
+    "serious": 0.1,
+    "playful": 0.46
+  },
+  {
+    "name": "迷糊",
+    "sweet": 0.55,
+    "tease": 0.5,
+    "intimacy": 0.7,
+    "serious": 0.26,
+    "playful": 0.52
+  },
+  {
+    "name": "小迷糊",
+    "sweet": 0.74,
+    "tease": 0.42,
+    "intimacy": 0.82,
+    "serious": 0.32,
+    "playful": 0.6
+  },
+  {
+    "name": "迷糊蛋",
+    "sweet": 0.64,
+    "tease": 0.58,
+    "intimacy": 0.76,
+    "serious": 0.16,
+    "playful": 0.7
+  },
+  {
+    "name": "糊涂蛋",
+    "sweet": 0.48,
+    "tease": 0.7,
+    "intimacy": 0.7,
+    "serious": 0.14,
+    "playful": 0.64
+  },
+  {
+    "name": "小糊涂",
+    "sweet": 0.64,
+    "tease": 0.54,
+    "intimacy": 0.76,
+    "serious": 0.22,
+    "playful": 0.58
+  },
+  {
+    "name": "糊涂虫",
+    "sweet": 0.52,
+    "tease": 0.64,
+    "intimacy": 0.68,
+    "serious": 0.14,
+    "playful": 0.66
+  },
+  {
+    "name": "马大哈",
+    "sweet": 0.36,
+    "tease": 0.72,
+    "intimacy": 0.58,
+    "serious": 0.1,
+    "playful": 0.62
+  },
+  {
+    "name": "小马虎",
+    "sweet": 0.5,
+    "tease": 0.58,
+    "intimacy": 0.68,
+    "serious": 0.2,
+    "playful": 0.54
+  },
+  {
+    "name": "粗心鬼",
+    "sweet": 0.34,
+    "tease": 0.66,
+    "intimacy": 0.6,
+    "serious": 0.16,
+    "playful": 0.48
+  },
+  {
+    "name": "小粗心",
+    "sweet": 0.48,
+    "tease": 0.52,
+    "intimacy": 0.7,
+    "serious": 0.24,
+    "playful": 0.46
+  },
+  {
+    "name": "路痴",
+    "sweet": 0.38,
+    "tease": 0.74,
+    "intimacy": 0.64,
+    "serious": 0.08,
+    "playful": 0.7
+  },
+  {
+    "name": "小路痴",
+    "sweet": 0.56,
+    "tease": 0.64,
+    "intimacy": 0.76,
+    "serious": 0.12,
+    "playful": 0.74
+  },
+  {
+    "name": "健忘鬼",
+    "sweet": 0.3,
+    "tease": 0.72,
+    "intimacy": 0.58,
+    "serious": 0.08,
+    "playful": 0.54
+  },
+  {
+    "name": "坏蛋",
+    "sweet": 0.5,
+    "tease": 0.76,
+    "intimacy": 0.8,
+    "serious": 0.08,
+    "playful": 0.72
+  },
+  {
+    "name": "小坏蛋",
+    "sweet": 0.72,
+    "tease": 0.64,
+    "intimacy": 0.9,
+    "serious": 0.14,
+    "playful": 0.82
+  },
+  {
+    "name": "大坏蛋",
+    "sweet": 0.38,
+    "tease": 0.84,
+    "intimacy": 0.72,
+    "serious": 0.04,
+    "playful": 0.76
+  },
+  {
+    "name": "坏坏",
+    "sweet": 0.64,
+    "tease": 0.58,
+    "intimacy": 0.82,
+    "serious": 0.12,
+    "playful": 0.7
+  },
+  {
+    "name": "小坏坏",
+    "sweet": 0.74,
+    "tease": 0.52,
+    "intimacy": 0.86,
+    "serious": 0.14,
+    "playful": 0.76
+  },
+  {
+    "name": "调皮鬼",
+    "sweet": 0.6,
+    "tease": 0.66,
+    "intimacy": 0.76,
+    "serious": 0.1,
+    "playful": 0.88
+  },
+  {
+    "name": "小调皮",
+    "sweet": 0.72,
+    "tease": 0.54,
+    "intimacy": 0.82,
+    "serious": 0.16,
+    "playful": 0.84
+  },
+  {
+    "name": "调皮蛋",
+    "sweet": 0.66,
+    "tease": 0.6,
+    "intimacy": 0.76,
+    "serious": 0.1,
+    "playful": 0.86
+  },
+  {
+    "name": "淘气包",
+    "sweet": 0.66,
+    "tease": 0.58,
+    "intimacy": 0.78,
+    "serious": 0.14,
+    "playful": 0.86
+  },
+  {
+    "name": "小淘气",
+    "sweet": 0.74,
+    "tease": 0.48,
+    "intimacy": 0.84,
+    "serious": 0.18,
+    "playful": 0.84
+  },
+  {
+    "name": "捣蛋鬼",
+    "sweet": 0.48,
+    "tease": 0.74,
+    "intimacy": 0.7,
+    "serious": 0.06,
+    "playful": 0.9
+  },
+  {
+    "name": "小捣蛋",
+    "sweet": 0.62,
+    "tease": 0.66,
+    "intimacy": 0.78,
+    "serious": 0.08,
+    "playful": 0.88
+  },
+  {
+    "name": "皮猴子",
+    "sweet": 0.42,
+    "tease": 0.76,
+    "intimacy": 0.64,
+    "serious": 0.04,
+    "playful": 0.92
+  },
+  {
+    "name": "小皮猴",
+    "sweet": 0.58,
+    "tease": 0.68,
+    "intimacy": 0.76,
+    "serious": 0.06,
+    "playful": 0.9
+  },
+  {
+    "name": "皮孩子",
+    "sweet": 0.46,
+    "tease": 0.72,
+    "intimacy": 0.68,
+    "serious": 0.06,
+    "playful": 0.86
+  },
+  {
+    "name": "熊孩子",
+    "sweet": 0.36,
+    "tease": 0.8,
+    "intimacy": 0.62,
+    "serious": 0.04,
+    "playful": 0.84
+  },
+  {
+    "name": "小鬼",
+    "sweet": 0.5,
+    "tease": 0.6,
+    "intimacy": 0.72,
+    "serious": 0.14,
+    "playful": 0.76
+  },
+  {
+    "name": "小鬼头",
+    "sweet": 0.62,
+    "tease": 0.56,
+    "intimacy": 0.76,
+    "serious": 0.16,
+    "playful": 0.82
+  },
+  {
+    "name": "小屁孩",
+    "sweet": 0.44,
+    "tease": 0.74,
+    "intimacy": 0.72,
+    "serious": 0.06,
+    "playful": 0.8
+  },
+  {
+    "name": "臭小孩",
+    "sweet": 0.56,
+    "tease": 0.6,
+    "intimacy": 0.82,
+    "serious": 0.1,
+    "playful": 0.7
+  },
+  {
+    "name": "臭宝",
+    "sweet": 0.7,
+    "tease": 0.4,
+    "intimacy": 0.85,
+    "serious": 0.1,
+    "playful": 0.7
+  },
+  {
+    "name": "小东西",
+    "sweet": 0.66,
+    "tease": 0.44,
+    "intimacy": 0.84,
+    "serious": 0.22,
+    "playful": 0.58
+  },
+  {
+    "name": "小家伙",
+    "sweet": 0.72,
+    "tease": 0.34,
+    "intimacy": 0.8,
+    "serious": 0.36,
+    "playful": 0.54
+  },
+  {
+    "name": "讨厌鬼",
+    "sweet": 0.52,
+    "tease": 0.72,
+    "intimacy": 0.8,
+    "serious": 0.1,
+    "playful": 0.64
+  },
+  {
+    "name": "小讨厌",
+    "sweet": 0.7,
+    "tease": 0.56,
+    "intimacy": 0.88,
+    "serious": 0.16,
+    "playful": 0.7
+  },
+  {
+    "name": "小冤家",
+    "sweet": 0.62,
+    "tease": 0.64,
+    "intimacy": 0.86,
+    "serious": 0.22,
+    "playful": 0.52
+  },
+  {
+    "name": "冤家",
+    "sweet": 0.46,
+    "tease": 0.58,
+    "intimacy": 0.78,
+    "serious": 0.28,
+    "playful": 0.38
+  },
+  {
+    "name": "死鬼",
+    "sweet": 0.48,
+    "tease": 0.56,
+    "intimacy": 0.84,
+    "serious": 0.12,
+    "playful": 0.42
+  },
+  {
+    "name": "小没良心",
+    "sweet": 0.4,
+    "tease": 0.76,
+    "intimacy": 0.74,
+    "serious": 0.08,
+    "playful": 0.58
+  },
+  {
+    "name": "没心肝",
+    "sweet": 0.34,
+    "tease": 0.72,
+    "intimacy": 0.7,
+    "serious": 0.1,
+    "playful": 0.4
+  },
+  {
+    "name": "小没心肝",
+    "sweet": 0.5,
+    "tease": 0.66,
+    "intimacy": 0.78,
+    "serious": 0.14,
+    "playful": 0.52
+  },
+  {
+    "name": "磨人精",
+    "sweet": 0.54,
+    "tease": 0.72,
+    "intimacy": 0.82,
+    "serious": 0.08,
+    "playful": 0.7
+  },
+  {
+    "name": "小妖精",
+    "sweet": 0.6,
+    "tease": 0.66,
+    "intimacy": 0.84,
+    "serious": 0.06,
+    "playful": 0.86
+  },
+  {
+    "name": "小恶魔",
+    "sweet": 0.58,
+    "tease": 0.7,
+    "intimacy": 0.82,
+    "serious": 0.06,
+    "playful": 0.9
+  },
+  {
+    "name": "小魔鬼",
+    "sweet": 0.48,
+    "tease": 0.72,
+    "intimacy": 0.76,
+    "serious": 0.04,
+    "playful": 0.84
+  },
+  {
+    "name": "小祖宗",
+    "sweet": 0.56,
+    "tease": 0.62,
+    "intimacy": 0.9,
+    "serious": 0.18,
+    "playful": 0.64
+  },
+  {
+    "name": "活祖宗",
+    "sweet": 0.32,
+    "tease": 0.8,
+    "intimacy": 0.76,
+    "serious": 0.06,
+    "playful": 0.7
+  },
+  {
+    "name": "祖宗",
+    "sweet": 0.4,
+    "tease": 0.56,
+    "intimacy": 0.82,
+    "serious": 0.24,
+    "playful": 0.38
+  },
+  {
+    "name": "大小姐",
+    "sweet": 0.5,
+    "tease": 0.66,
+    "intimacy": 0.74,
+    "serious": 0.14,
+    "playful": 0.58
+  },
+  {
+    "name": "少爷",
+    "sweet": 0.44,
+    "tease": 0.62,
+    "intimacy": 0.7,
+    "serious": 0.16,
+    "playful": 0.54
+  },
+  {
+    "name": "作精",
+    "sweet": 0.28,
+    "tease": 0.86,
+    "intimacy": 0.6,
+    "serious": 0.04,
+    "playful": 0.68
+  },
+  {
+    "name": "小作精",
+    "sweet": 0.46,
+    "tease": 0.76,
+    "intimacy": 0.74,
+    "serious": 0.06,
+    "playful": 0.74
+  },
+  {
+    "name": "戏精",
+    "sweet": 0.38,
+    "tease": 0.82,
+    "intimacy": 0.62,
+    "serious": 0.04,
+    "playful": 0.88
+  },
+  {
+    "name": "小戏精",
+    "sweet": 0.54,
+    "tease": 0.72,
+    "intimacy": 0.76,
+    "serious": 0.06,
+    "playful": 0.9
+  },
+  {
+    "name": "傲娇",
+    "sweet": 0.5,
+    "tease": 0.6,
+    "intimacy": 0.72,
+    "serious": 0.1,
+    "playful": 0.64
+  },
+  {
+    "name": "小傲娇",
+    "sweet": 0.66,
+    "tease": 0.54,
+    "intimacy": 0.82,
+    "serious": 0.12,
+    "playful": 0.72
+  },
+  {
+    "name": "傲娇鬼",
+    "sweet": 0.54,
+    "tease": 0.66,
+    "intimacy": 0.76,
+    "serious": 0.08,
+    "playful": 0.76
+  },
+  {
+    "name": "小高冷",
+    "sweet": 0.46,
+    "tease": 0.56,
+    "intimacy": 0.7,
+    "serious": 0.14,
+    "playful": 0.48
+  },
+  {
+    "name": "闷葫芦",
+    "sweet": 0.34,
+    "tease": 0.62,
+    "intimacy": 0.6,
+    "serious": 0.12,
+    "playful": 0.36
+  },
+  {
+    "name": "话痨",
+    "sweet": 0.32,
+    "tease": 0.72,
+    "intimacy": 0.6,
+    "serious": 0.06,
+    "playful": 0.66
+  },
+  {
+    "name": "小话痨",
+    "sweet": 0.5,
+    "tease": 0.62,
+    "intimacy": 0.74,
+    "serious": 0.08,
+    "playful": 0.72
+  },
+  {
+    "name": "小喇叭",
+    "sweet": 0.44,
+    "tease": 0.66,
+    "intimacy": 0.68,
+    "serious": 0.06,
+    "playful": 0.78
+  },
+  {
+    "name": "唠叨鬼",
+    "sweet": 0.28,
+    "tease": 0.7,
+    "intimacy": 0.58,
+    "serious": 0.08,
+    "playful": 0.46
+  },
+  {
+    "name": "杠精",
+    "sweet": 0.22,
+    "tease": 0.88,
+    "intimacy": 0.54,
+    "serious": 0.04,
+    "playful": 0.7
+  },
+  {
+    "name": "小杠精",
+    "sweet": 0.4,
+    "tease": 0.76,
+    "intimacy": 0.68,
+    "serious": 0.06,
+    "playful": 0.76
+  },
+  {
+    "name": "嘴硬鬼",
+    "sweet": 0.3,
+    "tease": 0.74,
+    "intimacy": 0.64,
+    "serious": 0.08,
+    "playful": 0.52
+  },
+  {
+    "name": "小滑头",
+    "sweet": 0.44,
+    "tease": 0.7,
+    "intimacy": 0.72,
+    "serious": 0.08,
+    "playful": 0.74
+  },
+  {
+    "name": "机灵鬼",
+    "sweet": 0.56,
+    "tease": 0.44,
+    "intimacy": 0.68,
+    "serious": 0.18,
+    "playful": 0.78
+  },
+  {
+    "name": "鬼灵精",
+    "sweet": 0.5,
+    "tease": 0.56,
+    "intimacy": 0.66,
+    "serious": 0.1,
+    "playful": 0.82
+  },
+  {
+    "name": "小吃货",
+    "sweet": 0.66,
+    "tease": 0.44,
+    "intimacy": 0.76,
+    "serious": 0.14,
+    "playful": 0.72
+  },
+  {
+    "name": "吃货",
+    "sweet": 0.48,
+    "tease": 0.56,
+    "intimacy": 0.64,
+    "serious": 0.08,
+    "playful": 0.6
+  },
+  {
+    "name": "懒虫",
+    "sweet": 0.44,
+    "tease": 0.64,
+    "intimacy": 0.68,
+    "serious": 0.08,
+    "playful": 0.58
+  },
+  {
+    "name": "小懒虫",
+    "sweet": 0.6,
+    "tease": 0.54,
+    "intimacy": 0.78,
+    "serious": 0.12,
+    "playful": 0.64
+  },
+  {
+    "name": "懒鬼",
+    "sweet": 0.34,
+    "tease": 0.7,
+    "intimacy": 0.62,
+    "serious": 0.06,
+    "playful": 0.52
+  },
+  {
+    "name": "小懒鬼",
+    "sweet": 0.5,
+    "tease": 0.6,
+    "intimacy": 0.74,
+    "serious": 0.08,
+    "playful": 0.6
+  },
+  {
+    "name": "起床困难户",
+    "sweet": 0.4,
+    "tease": 0.62,
+    "intimacy": 0.62,
+    "serious": 0.06,
+    "playful": 0.72
+  },
+  {
+    "name": "赖床鬼",
+    "sweet": 0.38,
+    "tease": 0.66,
+    "intimacy": 0.66,
+    "serious": 0.06,
+    "playful": 0.62
+  },
+  {
+    "name": "逗比",
+    "sweet": 0.42,
+    "tease": 0.78,
+    "intimacy": 0.7,
+    "serious": 0.04,
+    "playful": 0.92
+  },
+  {
+    "name": "小逗比",
+    "sweet": 0.58,
+    "tease": 0.68,
+    "intimacy": 0.8,
+    "serious": 0.06,
+    "playful": 0.9
+  },
+  {
+    "name": "二货",
+    "sweet": 0.32,
+    "tease": 0.84,
+    "intimacy": 0.68,
+    "serious": 0.04,
+    "playful": 0.82
+  },
+  {
+    "name": "小二货",
+    "sweet": 0.5,
+    "tease": 0.76,
+    "intimacy": 0.78,
+    "serious": 0.06,
+    "playful": 0.84
+  },
+  {
+    "name": "二哈",
+    "sweet": 0.48,
+    "tease": 0.72,
+    "intimacy": 0.74,
+    "serious": 0.04,
+    "playful": 0.9
+  },
+  {
+    "name": "小二哈",
+    "sweet": 0.64,
+    "tease": 0.62,
+    "intimacy": 0.82,
+    "serious": 0.06,
+    "playful": 0.9
+  },
+  {
+    "name": "显眼包",
+    "sweet": 0.36,
+    "tease": 0.8,
+    "intimacy": 0.64,
+    "serious": 0.04,
+    "playful": 0.88
+  },
+  {
+    "name": "活宝",
+    "sweet": 0.62,
+    "tease": 0.5,
+    "intimacy": 0.74,
+    "serious": 0.14,
+    "playful": 0.82
+  },
+  {
+    "name": "小活宝",
+    "sweet": 0.72,
+    "tease": 0.44,
+    "intimacy": 0.82,
+    "serious": 0.16,
+    "playful": 0.84
+  },
+  {
+    "name": "臭美",
+    "sweet": 0.44,
+    "tease": 0.66,
+    "intimacy": 0.7,
+    "serious": 0.08,
+    "playful": 0.6
+  },
+  {
+    "name": "小臭美",
+    "sweet": 0.62,
+    "tease": 0.56,
+    "intimacy": 0.8,
+    "serious": 0.1,
+    "playful": 0.68
+  },
+  {
+    "name": "臭屁虫",
+    "sweet": 0.38,
+    "tease": 0.74,
+    "intimacy": 0.66,
+    "serious": 0.04,
+    "playful": 0.76
+  },
+  {
+    "name": "小臭屁",
+    "sweet": 0.5,
+    "tease": 0.66,
+    "intimacy": 0.74,
+    "serious": 0.06,
+    "playful": 0.72
+  },
+  {
+    "name": "撒娇鬼",
+    "sweet": 0.66,
+    "tease": 0.54,
+    "intimacy": 0.88,
+    "serious": 0.12,
+    "playful": 0.76
+  },
+  {
+    "name": "小撒娇",
+    "sweet": 0.78,
+    "tease": 0.4,
+    "intimacy": 0.9,
+    "serious": 0.2,
+    "playful": 0.72
+  },
+  {
+    "name": "撒娇精",
+    "sweet": 0.54,
+    "tease": 0.7,
+    "intimacy": 0.8,
+    "serious": 0.06,
+    "playful": 0.76
+  },
+  {
+    "name": "粘人精",
+    "sweet": 0.62,
+    "tease": 0.58,
+    "intimacy": 0.9,
+    "serious": 0.14,
+    "playful": 0.58
+  },
+  {
+    "name": "小粘人",
+    "sweet": 0.76,
+    "tease": 0.42,
+    "intimacy": 0.92,
+    "serious": 0.22,
+    "playful": 0.62
+  },
+  {
+    "name": "跟屁虫",
+    "sweet": 0.5,
+    "tease": 0.62,
+    "intimacy": 0.82,
+    "serious": 0.08,
+    "playful": 0.66
+  },
+  {
+    "name": "小尾巴",
+    "sweet": 0.72,
+    "tease": 0.4,
+    "intimacy": 0.9,
+    "serious": 0.18,
+    "playful": 0.6
+  },
+  {
+    "name": "醋精",
+    "sweet": 0.34,
+    "tease": 0.78,
+    "intimacy": 0.74,
+    "serious": 0.06,
+    "playful": 0.52
+  },
+  {
+    "name": "小醋包",
+    "sweet": 0.56,
+    "tease": 0.6,
+    "intimacy": 0.82,
+    "serious": 0.12,
+    "playful": 0.58
+  },
+  {
+    "name": "爱哭鬼",
+    "sweet": 0.52,
+    "tease": 0.56,
+    "intimacy": 0.78,
+    "serious": 0.2,
+    "playful": 0.44
+  }
+]

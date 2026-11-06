@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.xiaotian.campus</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/bash</string>
+		<string>-c</string>
+		<string>sleep $((RANDOM % 600)); exec '/Users/you/xiaotian-wechat/.venv/bin/python' '/Users/you/xiaotian-wechat/src/campus.py' '--fetch'</string>
+	</array>
+	<key>WorkingDirectory</key>
+	<string>/Users/you/xiaotian-wechat/src</string>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>PATH</key>
+		<string>/Users/you/.local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+		<key>HOME</key>
+		<string>/Users/you</string>
+		<key>LANG</key>
+		<string>zh_CN.UTF-8</string>
+		<key>LC_ALL</key>
+		<string>zh_CN.UTF-8</string>
+		<key>PYTHONUNBUFFERED</key>
+		<string>1</string>
+		<key>PYTHONDONTWRITEBYTECODE</key>
+		<string>1</string>
+		<key>MEM0_TELEMETRY</key>
+		<string>False</string>
+		<key>TOKENIZERS_PARALLELISM</key>
+		<string>false</string>
+		<key>HF_HUB_OFFLINE</key>
+		<string>1</string>
+		<key>TRANSFORMERS_OFFLINE</key>
+		<string>1</string>
+		<key>TZ</key>
+		<string>Asia/Shanghai</string>
+	</dict>
+	<key>StandardOutPath</key>
+	<string>/Users/you/Library/Logs/xiaotian/campus.log</string>
+	<key>StandardErrorPath</key>
+	<string>/Users/you/Library/Logs/xiaotian/campus.err</string>
+	<key>LimitLoadToSessionType</key>
+	<string>Aqua</string>
+	<key>RunAtLoad</key>
+	<false/>
+	<key>ProcessType</key>
+	<string>Background</string>
+	<key>LowPriorityIO</key>
+	<true/>
+	<key>Nice</key>
+	<integer>5</integer>
+	<key>StartCalendarInterval</key>
+	<array>
+		<dict>
+			<key>Hour</key>
+			<integer>9</integer>
+			<key>Minute</key>
+			<integer>17</integer>
+		</dict>
+		<dict>
+			<key>Hour</key>
+			<integer>18</integer>
+			<key>Minute</key>
+			<integer>43</integer>
+		</dict>
+	</array>
+</dict>
+</plist>

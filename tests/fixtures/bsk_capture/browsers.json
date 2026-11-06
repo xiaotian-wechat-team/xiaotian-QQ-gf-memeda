@@ -1,0 +1,14 @@
+[
+  {
+    "instance_id": "demo-browser-instance",
+    "browser_name": "chrome",
+    "browser_version": "155.0.0.0",
+    "extension_version": "0.3.3",
+    "label": "",
+    "session_count": 0,
+    "connected_at_ms": 1700000000000,
+    "version_skew": false,
+    "extension_protocol_version": "1.3",
+    "unresponsive": false
+  }
+]

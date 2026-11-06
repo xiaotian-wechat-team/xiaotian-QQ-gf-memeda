@@ -1,0 +1,282 @@
+[
+  {
+    "name": "小果冻",
+    "sweet": 0.83,
+    "tease": 0.26,
+    "intimacy": 0.68,
+    "serious": 0.22,
+    "playful": 0.8
+  },
+  {
+    "name": "奶茶",
+    "sweet": 0.86,
+    "tease": 0.2,
+    "intimacy": 0.64,
+    "serious": 0.18,
+    "playful": 0.72
+  },
+  {
+    "name": "小麻薯",
+    "sweet": 0.8,
+    "tease": 0.32,
+    "intimacy": 0.66,
+    "serious": 0.16,
+    "playful": 0.78
+  },
+  {
+    "name": "巧克力",
+    "sweet": 0.88,
+    "tease": 0.14,
+    "intimacy": 0.7,
+    "serious": 0.32,
+    "playful": 0.42
+  },
+  {
+    "name": "蜜桃",
+    "sweet": 0.87,
+    "tease": 0.38,
+    "intimacy": 0.76,
+    "serious": 0.2,
+    "playful": 0.64
+  },
+  {
+    "name": "小樱桃",
+    "sweet": 0.85,
+    "tease": 0.24,
+    "intimacy": 0.72,
+    "serious": 0.26,
+    "playful": 0.7
+  },
+  {
+    "name": "小苹果",
+    "sweet": 0.78,
+    "tease": 0.22,
+    "intimacy": 0.64,
+    "serious": 0.3,
+    "playful": 0.74
+  },
+  {
+    "name": "小柠檬",
+    "sweet": 0.46,
+    "tease": 0.74,
+    "intimacy": 0.6,
+    "serious": 0.15,
+    "playful": 0.82
+  },
+  {
+    "name": "小西瓜",
+    "sweet": 0.62,
+    "tease": 0.48,
+    "intimacy": 0.66,
+    "serious": 0.16,
+    "playful": 0.8
+  },
+  {
+    "name": "蜂蜜",
+    "sweet": 0.93,
+    "tease": 0.1,
+    "intimacy": 0.72,
+    "serious": 0.42,
+    "playful": 0.32
+  },
+  {
+    "name": "旺仔",
+    "sweet": 0.68,
+    "tease": 0.46,
+    "intimacy": 0.58,
+    "serious": 0.12,
+    "playful": 0.82
+  },
+  {
+    "name": "小旺仔",
+    "sweet": 0.76,
+    "tease": 0.42,
+    "intimacy": 0.66,
+    "serious": 0.14,
+    "playful": 0.86
+  },
+  {
+    "name": "傻妞",
+    "sweet": 0.42,
+    "tease": 0.84,
+    "intimacy": 0.78,
+    "serious": 0.1,
+    "playful": 0.74
+  },
+  {
+    "name": "大丫头",
+    "sweet": 0.38,
+    "tease": 0.68,
+    "intimacy": 0.74,
+    "serious": 0.24,
+    "playful": 0.52
+  },
+  {
+    "name": "小丫头",
+    "sweet": 0.64,
+    "tease": 0.52,
+    "intimacy": 0.8,
+    "serious": 0.3,
+    "playful": 0.58
+  },
+  {
+    "name": "宝贝疙瘩",
+    "sweet": 0.9,
+    "tease": 0.28,
+    "intimacy": 0.93,
+    "serious": 0.48,
+    "playful": 0.46
+  },
+  {
+    "name": "傻狍子",
+    "sweet": 0.32,
+    "tease": 0.9,
+    "intimacy": 0.76,
+    "serious": 0.06,
+    "playful": 0.88
+  },
+  {
+    "name": "小样儿",
+    "sweet": 0.2,
+    "tease": 0.92,
+    "intimacy": 0.7,
+    "serious": 0.08,
+    "playful": 0.8
+  },
+  {
+    "name": "臭丫头",
+    "sweet": 0.36,
+    "tease": 0.82,
+    "intimacy": 0.85,
+    "serious": 0.12,
+    "playful": 0.64
+  },
+  {
+    "name": "小妮儿",
+    "sweet": 0.72,
+    "tease": 0.28,
+    "intimacy": 0.76,
+    "serious": 0.42,
+    "playful": 0.46
+  },
+  {
+    "name": "小心肝儿",
+    "sweet": 0.96,
+    "tease": 0.08,
+    "intimacy": 0.96,
+    "serious": 0.74,
+    "playful": 0.26
+  },
+  {
+    "name": "妞儿",
+    "sweet": 0.5,
+    "tease": 0.44,
+    "intimacy": 0.66,
+    "serious": 0.22,
+    "playful": 0.56
+  },
+  {
+    "name": "BB",
+    "sweet": 0.88,
+    "tease": 0.16,
+    "intimacy": 0.86,
+    "serious": 0.36,
+    "playful": 0.62
+  },
+  {
+    "name": "靓仔",
+    "sweet": 0.54,
+    "tease": 0.5,
+    "intimacy": 0.58,
+    "serious": 0.18,
+    "playful": 0.74
+  },
+  {
+    "name": "靓女",
+    "sweet": 0.6,
+    "tease": 0.42,
+    "intimacy": 0.6,
+    "serious": 0.2,
+    "playful": 0.7
+  },
+  {
+    "name": "心肝仔",
+    "sweet": 0.94,
+    "tease": 0.1,
+    "intimacy": 0.95,
+    "serious": 0.72,
+    "playful": 0.28
+  },
+  {
+    "name": "心肝女",
+    "sweet": 0.92,
+    "tease": 0.1,
+    "intimacy": 0.92,
+    "serious": 0.68,
+    "playful": 0.26
+  },
+  {
+    "name": "靓靓",
+    "sweet": 0.74,
+    "tease": 0.26,
+    "intimacy": 0.62,
+    "serious": 0.18,
+    "playful": 0.76
+  },
+  {
+    "name": "小崽儿",
+    "sweet": 0.76,
+    "tease": 0.34,
+    "intimacy": 0.84,
+    "serious": 0.32,
+    "playful": 0.58
+  },
+  {
+    "name": "娃娃",
+    "sweet": 0.82,
+    "tease": 0.18,
+    "intimacy": 0.78,
+    "serious": 0.4,
+    "playful": 0.52
+  },
+  {
+    "name": "小娃娃",
+    "sweet": 0.86,
+    "tease": 0.16,
+    "intimacy": 0.82,
+    "serious": 0.36,
+    "playful": 0.6
+  },
+  {
+    "name": "团团",
+    "sweet": 0.8,
+    "tease": 0.3,
+    "intimacy": 0.74,
+    "serious": 0.26,
+    "playful": 0.76
+  },
+  {
+    "name": "臭臭",
+    "sweet": 0.52,
+    "tease": 0.78,
+    "intimacy": 0.9,
+    "serious": 0.14,
+    "playful": 0.74
+  },
+  {
+    "name": "妮儿",
+    "sweet": 0.6,
+    "tease": 0.36,
+    "intimacy": 0.7,
+    "serious": 0.34,
+    "playful": 0.48
+  },
+  {
+    "name": "亲",
+    "sweet": 0.78,
+    "tease": 0.12,
+    "intimacy": 0.82,
+    "serious": 0.58,
+    "playful": 0.32
+  }
+]
