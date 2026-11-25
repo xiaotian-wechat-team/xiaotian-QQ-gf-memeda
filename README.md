@@ -8,9 +8,11 @@
 
 *Xiaotian is a local-first AI companion runtime with an onboarding gallery, an editable persona workbench, and acknowledgement-aware messaging for QQ and WeChat.*
 
-## 首页画廊
+## 正在基于 49 个明星/电影角色开发伙伴预设
 
-首页用 49 张肖像组成滚动画廊，点击画廊可以暂停，底部入口开始创建伙伴。以下三张截图取自实际运行的首页，展示的 21 位人物各不相同。
+你可以从伙伴预设出发，按自己的需求定制伙伴的性格、说话方式和日常相处节奏。
+
+以下三张截图取自实际运行的首页，共展示 21 位不同人物。
 
 ![画廊首页第一组，七幅错落排布的肖像与创建伙伴入口](docs/screenshots/gallery-01.jpg)
 
