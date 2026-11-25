@@ -1,6 +1,6 @@
 ---
 name: xiaotian-imagegen
-description: Generate a photo of 小甜 (the xiaotian-wechat persona) with the built-in image_gen tool, always keeping her real face and style from the local reference library (~/xiaotian-assets/appearance/<profile>/raw/, 451 photos). Use when asked to 生图 / 画小甜 / 给小甜拍一张 / make a selfie or scene picture of 小甜 or 她, or when xiaotian-wechat's imagegen.py calls Codex. Do not use for images of other people or for generic illustrations.
+description: Generate original photos of 小甜 (the xiaotian-wechat persona) with the built-in image_gen tool, canonical identity references, scene adaptation and the selected High workflow using existing GPT subscription quota. Use when asked to 生图 / 画小甜 / 给小甜拍一张 / make a selfie or scene picture of 小甜 or 她, or when xiaotian-wechat's imagegen.py calls Codex. Do not use for images of other people or generic illustrations.
 ---
 
 # 小甜生图
@@ -10,6 +10,20 @@ description: Generate a photo of 小甜 (the xiaotian-wechat persona) with the b
 禁止编造档案未载明的生平；聊天/生图/日程各自只用不为 null 且列入 `usage` 的字段。
 
 目标：画出来的必须是**参考图里的同一个女生**（小甜），不是另一个长得像的女生。
+
+## 默认生图路线（2026-11-15 用户选定）
+
+默认使用 **Freefield / CreatorOS 分层提示词 + High**：`config.json` 的 `imagegen.prompt_recipe=freefield_creatoros_v1`、`imagegen.reasoning_effort=high`，由 `src/photo_recipe.py` 编排。继续使用已有 ChatGPT / GPT 订阅的 Codex 内置 image_gen；不要添加付费 Images API、训练或新订阅。
+
+人物参考与场景适配是硬约束。分层顺序为场景与光照契约、参考图分工、当次穿搭与表情、逐张镜头、摄影质感。脸图和身体图只锁身份及比例，穿搭、动作和光照按本次场景更新；摄影修饰不能覆盖场景。手部、腿部和第一视角仍按镜头要求取景，不强行露脸。
+
+仓库自动路线优先调用 `imagegen.py`，它会编译分层提示词并设置 High；若手动运行 `codex exec`，在 `-i` 之前明确传 `-c model_reasoning_effort=high`，包括 resume 调用，避免继承全局 Max / Ultra。不要把生图改回旧版整段外貌提示词，或因为 Medium 曾用于对照就把默认降回 Medium。每张实际 image_gen 调用均须携带该镜头需要的身份参考路径。
+
+下面命令里的 `~/xiaotian-wechat` 是仓库简称；使用本 SKILL 真实文件位置向上三级得到的仓库根，勿假定该简称路径在当前主机上存在。参考素材路径按当前主机已有素材定位，不修改人物身份或复制账号凭据。
+
+## 日程照片硬约束
+
+聊天和主动生图必须服从调用方提供的已记录日程契约：日期、拍摄时刻、地点与活动均不能由参考图或旧会话改写。历史照片按指定日期日程还原，不冒称当前现场；缺少地点不得自行补成食堂、餐馆或街边。场景素材缺失时保持契约描述，不拿相似场景替代。光照服从调用方基于拍摄日期和地点提供的约束，模卡只参考身份和身形。详见仓库 `docs/image-shot-selection-sop.md`。
 
 ## 人物外貌锁定（小甜身份 · 写入本 SOP，勿只靠临时 description 短语）
 
@@ -40,7 +54,7 @@ description: Generate a photo of 小甜 (the xiaotian-wechat persona) with the b
 2. **把挑出的图作为参考图附上**。如果你是 `codex exec`，就用 `-i a.jpg -i b.jpg -i c.jpg`，提示词从 stdin 传（`-i` 是多值参数，后面的位置参数会被它吞掉）。
 3. **提示词要点**（必须包含）：
    - 「参考图是同一个女生（小甜）；画面里必须是她本人：脸型、五官、眼睛、黑色长直发、肤色、气质与参考图一致；不要生成另一个长相的女生；不要照搬参考图的构图和背景。」
-   - 把 `~/xiaotian-assets/appearance/<profile>/description.md` 的外貌描述附上。
+   - `description.md` 只提取人物、发型、面部风格、肤色、脸型、妆容、体型、身高、体重等明确标记的身份字段；不要整段附上其中的示例场景、衣服或动作。自动路线已由 `photo_recipe.identity_notes` 处理。
    - **穿搭描述（不再固定写「穿着得体」）**：运行 `cd ~/xiaotian-wechat/src && ../.venv/bin/python outfit.py "<场景>" [--scene 约会]`，把输出的 `text` 原样放进提示词，再接具体场景 + 「手机直出照片质感，竖构图」。张数：调用方先定 N（demand/proactive 均默认 max=5 / 1～5 含端点；分布偏 1–2 偶发 3–5），数量指令走独立 `imagegen.build_quantity_prompt(N)` 前缀通道（【数量指令】），不与场景/妆造/构图混写；再与 `build_prompt` 内容段同一次 Codex 出齐——禁止分多轮 resume / 一张一张凑。N 张共享同一套 ≤5 参考图（face/body/hands/legs+scene），禁止每张各挂一套 refs。`src/chat_media.generate_paths` + `src/imagegen.build_quantity_prompt` / `build_prompt(n_images=…)` 已封装。
      - 场景库 `data/outfit_scenes.json`（579 个，`tools/gen_outfit_scenes.py` 生成）：校园日常（含旧 8 场景：上课/排练、见老师/学生会正式场合、朋友聚会、约会、准备见他、和他在一起(居家/独处)、宅宿舍/睡前、外出日常）、体育（爬山/打网球/游泳/滑雪/瑜伽/跑步…）、娱乐（KTV/剧本杀/演唱会/游乐园/看展…）、约会（烛光晚餐/看电影约会/逛街/见家长…）、旅游（海边/露营/古镇/自驾…）、旅游国家（日本/泰国/法国/冰岛…，带气候和礼仪提示）、旅游景点（三里屯/故宫/长城/外滩/洱海/富士山…）。每个场景有 别名、简短穿搭提示 hint、8 维向量（formality 正式 / exposure 放开 / trendiness 时髦 / sportiness 运动 / coziness 居家 + warmth 保暖↔清凉 / outdoor 户外 / water 玩水）和放开上限 cap。
      - 选场景用向量：本地 bge-small-zh-v1.5（与 mem.py 同款，场景嵌入缓存在 data/outfit_scene_emb.npz）嵌入 画面描述（权重最高）/最近聊天/作息活动/校园动态，加权余弦 + 别名命中加分 + 先验（作息/工作日周末/情绪的旧推断、周末晚上偏出门、季节不符扣分），top-8 温度采样主场景并与前几名软混合，加 ±0.05 抖动。模型不可用时自动退回别名+字符匹配。季节/天气只用月份和 weather.py 已有缓存，不额外联网；国家类场景用目的地气候。
@@ -67,7 +81,10 @@ description: Generate a photo of 小甜 (the xiaotian-wechat persona) with the b
 ## 后端（2026-10-24）
 
 - 默认永远用 **Mac mini 本机 Codex**（Magpie 订阅，127.0.0.1:3425），即 `src/imagegen.py` 的 local 后端。
-- MacBook（`~/xiaotian-assets/bin/imagegen_macbook.sh`，用户 you）只是**应急路线**：仅当 `IMAGEGEN_BACKEND=macbook` 强制，或本机因非审核原因（Codex/Magpie 挂了、鉴权失败、超时）失败且重试 1 次仍失败时自动切换。
+- MacBook（`~/xiaotian-assets/bin/imagegen_macbook.sh`）只是**应急路线**：仅当 `IMAGEGEN_BACKEND=macbook` 强制，或本机因非审核原因（Codex/Magpie 挂了、鉴权失败、超时）失败且重试 1 次仍失败时自动切换。
+- 应急入口由仓库 `tools/imagegen_macbook.sh` 调用 `src/macbook_imagegen.py`，与 local 共用 `prepare_photo` 的参考图选择和分层提示词，强制新版 + High；新会话、resume 和坏会话重开均显式设置 High。仅接受现有 ChatGPT 登录，移除子进程的 API key，不切付费接口，也不复制登录凭据。
+- `PHOTO_REQUEST_JSON` 传递发送主机已记录的原始场景、日程快照、光照和逐张镜头/数量；应急主机沿用该快照，不能用自己的日程替换。穿搭、写实修饰和表情仍接受 `OUTFIT_TEXT` / `REALISM_TEXT` / `EMOTION_TEXT`，本机素材可用 `ASSETS` 定位。缺少该批镜头必需的人物参考时停止。
+- relay 的 pending/payload 保存上述请求和 `macbook_cmd`；pending 内的 `prompt` 是任务说明，不能当无参考的最终生图提示词使用。执行 `macbook_cmd` 后，MacBook 输出目录中的 `prompt.txt`、`run.json` 和调用审计才是最终输入记录。
 - 审核拦截不切 MacBook：照旧换参考图、逐级降放开程度。
 - 每次所用后端写在输出目录 `run.json`（`backend`、`forced`、`fallback_reason`、`local_errors`）。
 
@@ -81,7 +98,7 @@ description: Generate a photo of 小甜 (the xiaotian-wechat persona) with the b
 - **① 脸五视图 HARD**：`<profile>/canonical/sheet.png`（左侧脸 / 左 3/4 / 正脸 / 右 3/4 / 右侧脸）——**第一张** `-i`，唯一脸部身份标准。生成：`tools/frontal_extract.py` + `tools/gen_canonical.py`。
 - **② 身体五视图 HARD**（`appearance.body_orbit` / `body/body.json` `status=approved`）：`<profile>/canonical/body/sheet.png`——**第二张** `-i`，**只锁身形比例**（身高/头身比/四肢/多角度轮廓），**不是衣服参考**；模卡灰衣黑短裤禁止复刻。**不要**用 `body/front.png` 顶替这张必附槽；脸仍只认 ①。生成/晋级：`tools/gen_canonical_body.py` + SOP promote。
 - **③ 其余 3 槽 = `scene_refs`**：真实场景底板（`src/scene_refs.py`）。有 body sheet 时 **不附** 姿态 sheet、**不附** other 头肩裁图。
-- 无 approved body sheet 时退回旧逻辑：face sheet（± 姿态 sheet）+ `pick_identity` other 头肩 + 较少 scene_refs。
+- 新版默认/全身镜头缺少 approved body sheet 时停止；旧版 legacy 分支保留 face sheet（± 姿态 sheet）+ `pick_identity` other 头肩的回退。手/腿/第一视角按各自镜头所需身份参考验证。
 - 换人设：`appearance.profile` / `profile_dir` / `canonical_refs`。relay pending 含 `canonical_refs` / `other_refs` / `body_ref`。
 
 ## 会话：同一天复用一个 Codex 会话，跨天换新（2026-10-24）
@@ -90,7 +107,7 @@ description: Generate a photo of 小甜 (the xiaotian-wechat persona) with the b
 - 当天第一张：`codex exec --json ...` 新会话，从 `thread.started` 事件取 `thread_id` 存下；当天后续每张：`codex exec resume --json <id> - -i ...`（id 和 `-` 放在 `-i` 前）。
 - 日期一变就开新会话（旧 id 只进 history，不再 resume），避免上下文爆炸；当天记录的会话 resume 失败（`no rollout found` / `thread/resume failed`）→ 清掉、当天新开。
 - 复用会话时只解析 rollout 本次新增部分收图，不会把之前的图当成新图。`run.json` 记 `session`（new/resume）与 `session_id`。
-- MacBook `imagegen_macbook.sh` 同规则：`~/.xiaotian/codex_session_<YYYY-MM-DD>`，保留最近 14 个日期文件。
+- MacBook 复用同一 `src/codex_session.py`，状态为 `~/.xiaotian/macbook-image-session.json`（`SESSION_DIR` 可覆盖目录），文件锁串行执行；跨天或达到 `imagegen.max_session_count` 后新开，坏会话和超时清理当前 id，历史最多保留 14 个 id。
 - 提示词每次都说明“忽略本会话之前生成的画面，只按本条消息的参考图”。单张画一张；多张（N>1）在**同一条** prompt 内一次出齐 N 张，不要为凑数再 resume。
 
 ## 姿态五视图：仰头 / 低头 / 背影（2026-10-24）

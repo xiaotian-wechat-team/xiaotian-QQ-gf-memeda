@@ -19,6 +19,9 @@ def get_adapter(name: str):
     if n in ("doubao", "ark", "volc", "volcengine", "豆包"):
         from llm_adapters import doubao as m
         return m
+    if n == "codex_chatgpt":
+        from llm_adapters import codex_chatgpt as m
+        return m
     raise KeyError(f"unknown short adapter: {name!r}")
 
 

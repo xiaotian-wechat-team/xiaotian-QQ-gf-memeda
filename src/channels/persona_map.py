@@ -13,23 +13,35 @@ from config import load
 CLASSMATE_PREFIX = "classmate:"
 
 
-def allowed_peer(channel: str, peer_id: str, cfg: dict | None = None) -> bool:
-    """Runtime scope is contact demo_contact only; classmate settings cannot bypass it."""
+def allowed_peer(channel: str, peer_id: str, cfg: dict | None = None,
+                 bot_account_id: str | None = None) -> bool:
     cfg = cfg or load()
-    if resolve_contact_id(channel, str(peer_id), cfg) != "demo_contact":
+    runtime = cfg.get("identity_runtime") or {}
+    if runtime.get("schema_version") == 2:
+        return any(r.get("channel") == channel
+                   and r.get("bot_account_id") == str(bot_account_id or "")
+                   and r.get("peer_id") == str(peer_id)
+                   and r.get("peer_type") == "private"
+                   for r in runtime.get("routes", []))
+    if resolve_contact_id(channel, str(peer_id), cfg, bot_account_id) != couple_contact_id(cfg):
         return False
     if channel == "qq_onebot":
         ch = (persona_cfg(cfg).get("channels") or {}).get("qq") or {}
         allow = ch.get("allow_user_ids") or ch.get("allow_from") or []
         if isinstance(allow, (str, int)):
             allow = [allow]
-        return str(peer_id) in {str(x).strip() for x in allow}
+        if str(peer_id) not in {str(x).strip() for x in allow}:
+            return False
+        expected_bot = str(ch.get("bot_account_id") or "")
+        if expected_bot and str(bot_account_id or "") != expected_bot:
+            return False
     return True
 
 
-def require_allowed_peer(channel: str, peer_id: str, cfg: dict | None = None):
-    if not allowed_peer(channel, peer_id, cfg):
-        raise PermissionError("Only the explicitly mapped contact demo_contact may receive messages")
+def require_allowed_peer(channel: str, peer_id: str, cfg: dict | None = None,
+                         bot_account_id: str | None = None):
+    if not allowed_peer(channel, peer_id, cfg, bot_account_id):
+        raise PermissionError("Only the exact persona/channel/bot/peer route may receive messages")
 
 
 def persona_cfg(cfg: dict | None = None) -> dict:
@@ -39,10 +51,11 @@ def persona_cfg(cfg: dict | None = None) -> dict:
     primary = p.get("primary_contact_id") or contact.get("id") or "demo_contact"
     aliases = dict(p.get("contact_aliases") or {})
     # 内置：当前 Mac/OCR 微信联系人（明确 id，不用 * 通配）
-    aliases.setdefault(f"wechat_mac:{primary}", str(primary))
-    aliases.setdefault(f"wechat:{primary}", str(primary))
-    if contact.get("id"):
-        aliases.setdefault(f"wechat:{contact['id']}", str(primary))
+    if not cfg.get("identity_runtime"):
+        aliases.setdefault(f"wechat_mac:{primary}", str(primary))
+        aliases.setdefault(f"wechat:{primary}", str(primary))
+        if contact.get("id"):
+            aliases.setdefault(f"wechat:{contact['id']}", str(primary))
     return {
         "id": p.get("id") or "xiaotian",
         "primary_contact_id": str(primary),
@@ -68,24 +81,31 @@ def is_classmate_contact(cid: str) -> bool:
     return str(cid).startswith(CLASSMATE_PREFIX)
 
 
-def resolve_contact_id(channel: str, peer_id: str, cfg: dict | None = None) -> str:
-    """返回记忆键。情侣白名单 → primary；其余 → classmate:…（永不静默落到 primary）。"""
+def resolve_contact_id(channel: str, peer_id: str, cfg: dict | None = None,
+                       bot_account_id: str | None = None) -> str:
+    """Resolve an exact route; never fall back to another persona's partner."""
+    cfg = cfg or load()
+    if (cfg.get("identity_runtime") or {}).get("schema_version") == 2:
+        if allowed_peer(channel, peer_id, cfg, bot_account_id):
+            return str(cfg["persona"]["primary_contact_id"])
+        return classmate_contact_id(channel, peer_id)
     p = persona_cfg(cfg)
     primary = str(p["primary_contact_id"])
-    key = f"{channel}:{peer_id}"
     aliases = p["contact_aliases"]
+    if bot_account_id is not None:
+        full_key = f"{channel}:{bot_account_id}:{peer_id}"
+        if full_key in aliases:
+            return str(aliases[full_key])
+        if p.get("id") != "xiaotian":
+            return classmate_contact_id(channel, peer_id)
+    key = f"{channel}:{peer_id}"
     if key in aliases:
-        mapped = str(aliases[key])
-        # 显式绑到 primary 才算情侣；显式绑到其他 id 亦尊重
-        return mapped
-    # 通配：仅当明确配置，且目标不是「把所有人当地情侣」时才用
-    # 若 star → primary：视为危险旧配置，忽略，改走 classmate
+        return str(aliases[key])
     star = f"{channel}:*"
     if star in aliases:
         mapped = str(aliases[star])
         if mapped != primary:
             return mapped
-        # star→primary 忽略：防陌生人进情侣记忆
     return classmate_contact_id(channel, peer_id)
 
 

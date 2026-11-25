@@ -284,8 +284,27 @@ def qq_stt_fetch(
 
 
 def transcribe_file(path: str | pathlib.Path, *, cfg: dict | None = None, use_cache: bool = True) -> Optional[str]:
+    from config import snapshot
+    from runtime_policy import allowed
+    from personalization_runtime import report_loaded
+    with snapshot(load()) as full:
+        if not full.get("voice_asr", {}).get("enabled", True) or not (cfg or {}).get("enabled", True) or not allowed("voice_transcribe", full):
+            return None
+        result = _transcribe_file(path, cfg=cfg, use_cache=use_cache)
+        if result:
+            report_loaded("voice", full)
+        return result
+
+
+def _transcribe_file(path, *, cfg=None, use_cache=True):
     """Transcribe one local audio file via mlx-whisper. Soft-fail → None."""
+    full = load()
     cfg = cfg or _cfg()
+    if not cfg.get("enabled", True) or not full.get("voice_asr", {}).get("enabled", True):
+        return None
+    if (full.get("identity_runtime") or {}).get("schema_version") == 2:
+        from native_client import media_text
+        return media_text("voice_transcribe", path, full)
     if not cfg.get("enabled", True):
         return None
     if (cfg.get("backend") or "") == "none":
@@ -380,7 +399,10 @@ def enrich_text(
         "source": None,
     }
     text = text or ""
-    if not cfg.get("enabled", True):
+    full = load()
+    from runtime_policy import allowed
+    from personalization_runtime import report_loaded
+    if not cfg.get("enabled", True) or not full.get("voice_asr", {}).get("enabled", True) or not allowed("voice_transcribe", full):
         info["error"] = "disabled"
         return text, info
     if re.search(r"\[语音(?:\s*\d+秒)?：", text):
@@ -402,13 +424,14 @@ def enrich_text(
             info["text"] = tr
             info["source"] = "qq_inline"
             enriched = format_tag_with_transcript(m.group(0), tr)
+            report_loaded("voice", full)
             return text[: m.start()] + enriched + text[m.end() :], info
 
     # 2) NapCat fetch_ptt_text (QQ native translatePtt2Text)
     mid = qq_message_id
     if mid in (None, "") and isinstance(raw, dict):
         mid = raw.get("message_id") or (raw.get("_xiaotian_media") or {}).get("message_id")
-    if cfg.get("prefer_qq_stt", True) and mid not in (None, ""):
+    if (full.get("identity_runtime") or {}).get("schema_version") != 2 and cfg.get("prefer_qq_stt", True) and mid not in (None, ""):
         t0 = time.monotonic()
         tr = qq_stt_fetch(mid, cfg=cfg)
         if tr:
@@ -420,6 +443,7 @@ def enrich_text(
             info["message_id"] = mid
             info["latency_ms"] = int((time.monotonic() - t0) * 1000)
             enriched = format_tag_with_transcript(m.group(0), tr)
+            report_loaded("voice", full)
             return text[: m.start()] + enriched + text[m.end() :], info
         info["qq_stt_error"] = "fetch_failed_or_empty"
 

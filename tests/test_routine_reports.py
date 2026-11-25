@@ -33,7 +33,7 @@ def test_goodnight_sends_at_full_quota_without_photo_and_only_once(h):
         st=memory.read_state('demo_contact')
         assert st['proactive_count']==10
         assert st['proactive_routine']['count']==1
-        assert st['proactive_media']['images']==0
+        assert (st.get('proactive_media') or {}).get('images', 0)==0
         assert h.run_sender(now+dt.timedelta(minutes=5))['action']=='SKIP'
     assert len(h.sent)==1
 

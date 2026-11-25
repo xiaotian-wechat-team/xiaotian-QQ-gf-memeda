@@ -46,8 +46,12 @@ def test_ensure_day_probes_persists(tmp_path, monkeypatch):
              "scene_hints": ["食堂"], "photo_ok": True, "bucket": "campus_life"},
         ],
     }
+    # Provide reviewed common fixtures; unreviewed generic fallback is forbidden.
+    from test_scene_reference_safety import reviewed_pack
+    reviewed_pack(common_root, "canteen")
+    reviewed_pack(common_root, "library")
     # stub pick to avoid needing real sqlite hits
-    def fake_pick(scene, k=2, cfg=None, people_free_only=True, min_quality=0.0):
+    def fake_pick(scene, k=2, cfg=None, people_free_only=True, min_quality=0.0, **kwargs):
         p1 = tmp_path / f"{scene}-a.jpg"
         p2 = tmp_path / f"{scene}-b.jpg"
         p1.write_bytes(b"x"); p2.write_bytes(b"y")
@@ -236,11 +240,13 @@ def test_pick_prefers_slot_common_pack_over_outfit_id(tmp_path, monkeypatch):
     dorm_img = common_root / "dorm" / "images" / "d1.jpg"
     dorm_img.parent.mkdir(parents=True)
     dorm_img.write_bytes(b"dorm")
+    from test_scene_reference_safety import reviewed_pack
+    reviewed_pack(common_root, "dorm")
     monkeypatch.setattr(cs, "DEFAULT_COMMON_DIR", common_root)
 
     called = {"pick": []}
 
-    def fake_pick(scene, k=2, cfg=None, people_free_only=True, min_quality=0.0):
+    def fake_pick(scene, k=2, cfg=None, people_free_only=True, min_quality=0.0, **kwargs):
         called["pick"].append(scene)
         g = tmp_path / f"generic-{scene}.jpg"
         g.write_bytes(b"g")
@@ -264,7 +270,7 @@ def test_pick_falls_back_generic_when_slot_unmapped(tmp_path, monkeypatch):
     monkeypatch.setattr(cs, "DEFAULT_COMMON_DIR", tmp_path / "empty-common")
     monkeypatch.setattr(sr, "get_day_probe", lambda *a, **k: [])
 
-    def fake_pick(scene, k=2, cfg=None, people_free_only=True, min_quality=0.0):
+    def fake_pick(scene, k=2, cfg=None, people_free_only=True, min_quality=0.0, **kwargs):
         g = tmp_path / "generic-798.jpg"
         g.write_bytes(b"g")
         return [(g, {"source": "generic", "q": scene})]
@@ -283,6 +289,8 @@ def test_pick_falls_back_generic_when_slot_unmapped(tmp_path, monkeypatch):
 
 def test_plan_chat_images_forwards_slot_to_generate(monkeypatch):
     import chat_media
+    import photo_schedule
+    monkeypatch.setattr(photo_schedule, "bind", lambda scene, ctx, **kw: ctx)
     seen = {}
 
     def fake_gen(scene, **kw):

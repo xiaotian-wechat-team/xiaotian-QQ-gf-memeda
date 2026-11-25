@@ -50,6 +50,9 @@ assert "sheet.png" in cmd[i0 + 1]
 # --- chat skip face-fallback：mock generate_local 二次调用 ---
 calls = []
 real_gl = imagegen.generate_local
+import photo_schedule
+real_bind = photo_schedule.bind
+real_ensure = imagegen.ensure_magpie
 
 def fake_gl(scene, dry=False, cfg=None, outfit_scene=None, _exclude=(), _attempt=1, _plan=None, _meta=None, **ctx):
     calls.append(dict(_meta or {}))
@@ -59,6 +62,9 @@ def fake_gl(scene, dry=False, cfg=None, outfit_scene=None, _exclude=(), _attempt
     return ["codex"], [out]
 
 imagegen.generate_local = fake_gl
+imagegen.ensure_magpie = lambda *a, **k: True
+photo_schedule.bind = lambda scene, ctx, **kw: ctx
+old_guard = os.environ.pop("XIAOTIAN_TEST", None)
 try:
     calls.clear()
     imagegen.generate("x", dry=False, cfg=cfg, chat=True)
@@ -71,6 +77,10 @@ try:
     assert "skip_face_fallback" not in calls[0] and "chat" not in calls[0], calls
 finally:
     imagegen.generate_local = real_gl
+    imagegen.ensure_magpie = real_ensure
+    photo_schedule.bind = real_bind
+    if old_guard is not None:
+        os.environ["XIAOTIAN_TEST"] = old_guard
 
 # chat_media.generate_path 默认 chat=True
 seen = {}

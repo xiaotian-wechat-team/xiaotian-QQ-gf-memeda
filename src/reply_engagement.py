@@ -145,15 +145,11 @@ def select_response(activity, st, cid, text="", now=None, cfg=None):
 
 
 def effective_sleep_style(style, activity):
-    # This only changes a user-initiated reply. Never clear the persisted sleep
-    # state: proactive sends still obey the separate sleep gate.
-    if ((activity or {}).get("response_mode") == "enthusiastic"
-            and activity.get("reason") == "evening"):
-        return "normal"
+    # Enthusiasm applies only while awake. It must not override sleep policy.
     return style
 
 
-def pacing(activity):
+def _default_pacing(activity):
     mode = (activity or {}).get("response_mode")
     level = (activity or {}).get("level", "normal")
     if mode == "enthusiastic":
@@ -173,6 +169,17 @@ def pacing(activity):
     return {"budget_floor": 1, "max_chars": 80, "gap": {}}
 
 
+def pacing(activity, cfg=None):
+    result = _default_pacing(activity)
+    from personalization_runtime import option
+    mode = (activity or {}).get("response_mode")
+    if mode != "closing":
+        key = "chat.enthusiastic_chars" if mode == "enthusiastic" or (activity or {}).get("level") in ("dense", "active") and mode != "usual" else "chat.normal_chars"
+        result["max_chars"] = option(key, result["max_chars"], cfg=cfg)
+    result["budget_floor"] = min(result["budget_floor"], option("chat.max_bubbles", 8, cfg=cfg))
+    return result
+
+
 def prompt_block(activity):
     if not activity:
         return ""
@@ -187,8 +194,8 @@ def prompt_block(activity):
                  "不要只把同一句拆多条冒充热情；也不要因他只发一条就按数量配额收场。"
                  "他认真或难过时用认真关心的方式陪聊，不强行欢快或调侃。")
         if activity.get("reason") == "evening":
-            text += ("当前是晚间来聊，必须保持热情，不抽工作概率；日程忙碌或原有睡前/已睡状态"
-                     "不能让本轮敷衍收短、催睡或主动结束。日程事实照实，别虚构闲下来了。")
+            text += ("当前是清醒时的晚间来聊，保持热情，不抽工作概率；"
+                     "睡前收口和睡眠静默优先。日程事实照实，别虚构闲下来了。")
     elif activity.get("selector_applied"):
         text += "当前实际日程为白天实习，本轮沿用常规回复节奏：简短但接住主要内容，无需强行展开或密集连发。"
     elif mode == "closing":

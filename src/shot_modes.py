@@ -43,6 +43,7 @@ ALL_SHOTS = (
 
 # 用户请求种子（向量路由）；正则作 boost
 SEED_CLUSTERS = {
+    SHOT_THIRD: ("第三人称照片", "让朋友给你拍照", "别人拍的你", "他拍"),
     SHOT_MIRROR: (
         "对镜自拍", "镜子自拍", "试衣镜", "化妆镜自拍", "镜子里看看",
         "对镜拍一张", "镜前自拍", "mirror selfie", "看看镜子里",
@@ -79,6 +80,7 @@ SEED_CLUSTERS = {
 
 # 明显短语 → 直接命中（boost）；仍可与向量并用
 _REGEX_BOOST = {
+    SHOT_THIRD: re.compile(r"第三人称|他拍|别人拍的你|(?:让|叫|请)朋友.{0,6}拍|被朋友拍", re.I),
     # 顺序敏感：route_user_shot 先匹配 POV，避免「看看你拍的」落入 portrait
     SHOT_MIRROR: re.compile(
         r"对镜自拍|镜子自拍|试衣镜|化妆镜自拍|镜前自拍|镜子里看看|对镜拍|对镜|镜子里|镜前看看|拍对镜",
@@ -173,11 +175,12 @@ def route_user_shot(text: str | None, *, min_score: float = MIN_SCORE,
 
     优先正则 boost；否则 bge 向量对种子簇相似度（需 score≥min_score 且相对次优≥min_margin）。
     """
-    t = (text or "").strip()
+    from photo_request import positive_text
+    t = positive_text(text).strip()
     if not t:
         return None
     # 正则直接命中（先 POV/腿/手/全身，再「看看你」避免吞掉「看看你拍的」）
-    for shot in (SHOT_POV, SHOT_HAND, SHOT_MIRROR, SHOT_LEGS, SHOT_FULL_BODY, SHOT_PORTRAIT):
+    for shot in (SHOT_HAND, SHOT_LEGS, SHOT_FULL_BODY, SHOT_MIRROR, SHOT_POV, SHOT_PORTRAIT, SHOT_THIRD):
         rx = _REGEX_BOOST.get(shot)
         if rx and rx.search(t):
             return shot
@@ -210,7 +213,7 @@ def slot_activity_bits(slot: dict | None = None, today: dict | None = None) -> d
     hints = list(slot.get("scene_hints") or [])
     act = (slot.get("activity") or "").strip()
     bucket = slot.get("bucket") or today.get("photo_bias") or "campus_life"
-    place = hints[0] if hints else ""
+    place = slot.get("location") or (hints[0] if hints else "")
     return {
         "activity": act,
         "bucket": bucket,
@@ -315,3 +318,13 @@ def prompt_shot_block(shot: str | None, scene: str = "", bits: dict | None = Non
             "（canonical/sheet.png），无单独脸特写资产。前置自拍感，非必须对镜。\n"
         )
     return ""
+
+
+def select_requested_shot(user_text, model_shot=None):
+    """Explicit user framing wins; a valid model tag precedes fuzzy inference."""
+    from photo_request import positive_text
+    user_text = positive_text(user_text)
+    for shot in (SHOT_HAND, SHOT_LEGS, SHOT_FULL_BODY, SHOT_MIRROR, SHOT_POV, SHOT_PORTRAIT, SHOT_THIRD):
+        if _REGEX_BOOST[shot].search(user_text or ''):
+            return shot
+    return normalize_shot(model_shot) or route_user_shot(user_text)

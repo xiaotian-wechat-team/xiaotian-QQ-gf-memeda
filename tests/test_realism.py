@@ -53,7 +53,9 @@ def test_prompt_wiring():
     for seed in range(50):
         plan = imagegen.add_realism({"scene": "KTV", "vector": {}, "text": "t"}, "在KTV唱歌", seed=seed)
         if plan["realism"]["ids"]: break
-    p = imagegen.build_prompt("在KTV唱歌", "黑色长直发", plan["text"], plan["realism_text"])
+    p = imagegen.build_prompt(
+        "在KTV唱歌", "黑色长直发", plan["text"], plan["realism_text"], cfg={"imagegen": {}},
+    )
     assert "写实细节" in p and "脸始终清晰" in p and "不性感化" in p and "同一个女生" in p and p.rstrip().endswith("$imagegen")
     _, inner = imagegen.macbook_cmd("x", {"imagegen": {}}, "o", plan["realism_text"]); assert "REALISM_TEXT=" in inner
     import os; os.environ["REALISM"] = "0"

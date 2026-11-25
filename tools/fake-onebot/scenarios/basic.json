@@ -1,0 +1,15 @@
+{
+  "name": "history-and-identity",
+  "steps": [
+    {"inject": {"text": "我今天上班好累", "message_id": 10001}},
+    {"wait_turn": 1},
+    {"inject": {"text": "我刚才说我为什么累？", "message_id": 10002}},
+    {"wait_turn": 2},
+    {"inject": {"text": "我们怎么认识的，在一起多久了", "message_id": 10003}},
+    {"wait_turn": 3},
+    {"inject": {"text": "你是谁，我是谁", "message_id": 10004}},
+    {"wait_turn": 4},
+    {"inject": {"text": "重复事件不应回复", "message_id": 10004}},
+    {"wait_duplicate": true}
+  ]
+}

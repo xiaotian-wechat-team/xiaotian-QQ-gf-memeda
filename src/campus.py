@@ -13,6 +13,23 @@ KEYS = ["演出", "首演", "展演", "汇报", "比赛", "大赛", "桃李杯",
         "音乐会", "毕业", "开学", "招生", "考试", "排练", "剧目", "舞剧", "编导", "学生会", "社团", "志愿", "艺术节"]
 MINE = ["编导", "创意学院", "学生会", "社团", "影像社", "话剧社", "艺术节", "迎新"]   # 只用于话题相关性，不证明参与。
 
+def settings():
+    from config import load as load_config
+    from personalization_runtime import option
+    cfg = load_config()
+    if not cfg.get("persona_version"):
+        return cfg, OUT, SOURCES, MINE
+    sources = option("content.campus_sources", [], cfg=cfg) or []
+    d = cfg.get("role_dossier") or {}
+    school, orgs = d.get("school") or {}, d.get("orgs") or {}
+    mine = [school.get(k) for k in ("college", "major", "institution")]
+    mine += [row.get("name") for row in orgs.get("clubs") or []]
+    mine += [orgs.get("student_union", {}).get("org")]
+    key = hashlib.sha256(json.dumps([school.get("institution"), sources], ensure_ascii=False).encode()).hexdigest()[:16]
+    scope = cfg.get("identity_runtime") or {}
+    root = pathlib.Path(scope.get("runtime_root") or pathlib.Path(cfg["db_path"]).parent / "persona-content" / cfg["personalization"]["role_id"] / cfg["personalization"]["relation_id"])
+    return cfg, root / "campus" / (key + ".json"), sources, [str(value) for value in mine if value]
+
 def _robots_ok(url):
     base = "{0.scheme}://{0.netloc}".format(urllib.parse.urlparse(url))
     try:
@@ -37,18 +54,19 @@ def fetch(url):
 
 def extract(page, base):
     evs = []
+    mine = settings()[3]
     for href, inner in re.findall(r'<a[^>]+href="([^"]+)"[^>]*>(.*?)</a>', page, re.S | re.I):
         t = html.unescape(re.sub(r"<[^>]+>|\s+", " ", inner)).strip()
         t = re.sub(r"\s*发布时间[:：]\S*", "", re.sub(r"^(头条|要闻|置顶)\s+", "", t)).strip()
         t = re.sub(r"\s{2,}", " ", t)
         if not (8 <= len(t) <= 80) or not any(k in t for k in KEYS): continue
         evs.append({"title": t, "url": urllib.parse.urljoin(base, href.strip()),
-                    "tags": [k for k in KEYS if k in t], "mine": any(k in t for k in MINE)})
+                    "tags": [k for k in KEYS if k in t], "mine": any(k in t for k in mine)})
     return evs
 
 def load():
     try:
-        db = json.loads(OUT.read_text())
+        db = json.loads(settings()[1].read_text())
         # Older caches promoted relevant news to personal participation randomly.
         # Downgrade at read time, including before the next scheduled fetch.
         db["life"] = [life_event(e) for e in db.get("life", []) if e.get("title")]
@@ -77,15 +95,34 @@ def topics(n=3):
 
 def prompt_line():
     t = topics(2)
-    return ("校园新闻（只说明报道过，不证明小甜参与、在忙或活动正在进行）：" + "；".join(x["text"] for x in t)) if t else ""
+    return ("校园新闻（只说明报道过，不证明本人参与、在忙或活动正在进行）：" + "；".join(x["text"] for x in t)) if t else ""
 
 def run(write_state=True, rng=random, force=False):
+    from config import load as load_config, snapshot
+    with snapshot(load_config()) as cfg:
+        from runtime_policy import allowed
+        if cfg.get("persona_version") and write_state and not allowed("proactive", cfg):
+            return {"skipped": "当前人物未授权校园动态写入"}
+        result = _run(write_state, rng, force)
+        from personalization_runtime import report_loaded
+        report_loaded("content", cfg)
+        return result
+
+
+def _run(write_state=True, rng=random, force=False):
+    cfg, out, sources, _ = settings()
+    if not sources:
+        return {"skipped": "尚未配置学校公开来源"}
     sys.path.insert(0, str(ROOT / "src")); import source_poll   # 中心限速（北舞官网 >=6h±30%、2 次/天、01:00-07:30 静默）
-    ok, why = source_poll.check("bda_site")
-    if not ok and not force: return {"skipped": why}
-    gate = source_poll.Gate("bda_site", source_poll.cfg("bda_site"), datetime.datetime.now())
+    key = "bda_site"
+    if cfg.get("persona_version"):
+        key = "campus:" + cfg["personalization"]["role_id"] + ":" + cfg["personalization"]["relation_id"] + ":" + out.stem
+    limits = source_poll.cfg("bda_site")
+    ok, why = source_poll.check(key, force=force, policy=limits)
+    if not ok: return {"skipped": why}
+    gate = source_poll.Gate(key, limits, datetime.datetime.now())
     now = datetime.datetime.now().isoformat(timespec="seconds"); db = load(); log = []; evs = []; bad = False
-    for i, u in enumerate(SOURCES):
+    for i, u in enumerate(sources):
         if i: gate.sleep_action()
         gate.page(); st, body = fetch(u); log.append({"url": u, "status": st, "ts": now})
         if body and source_poll.looks_blocked(body[:3000]) and len(re.findall(r"<a", body)) < 20: bad = True; body = ""
@@ -96,10 +133,10 @@ def run(write_state=True, rng=random, force=False):
     life = [life_event(e, rng) for e in new if e["mine"]][:2] + [life_event(e, rng) for e in new if not e["mine"]][:1]
     db.setdefault("life", []).extend(life); db["life"] = db["life"][-30:]
     db["last_fetch"] = now; db["log"] = (db.get("log", []) + log)[-40:]
-    OUT.parent.mkdir(exist_ok=True); OUT.write_text(json.dumps(db, ensure_ascii=False, indent=1))
+    out.parent.mkdir(parents=True, exist_ok=True); out.write_text(json.dumps(db, ensure_ascii=False, indent=1))
     if write_state and db["life"]:
         sys.path.insert(0, str(ROOT / "src")); import memory
-        for cid in ("demo_contact",):                      # 唯一联系人（小熊）
+        for cid in (str((cfg.get("contact") or {}).get("id") or "demo_contact"),):
             memory.update_state(cid, campus_life=[x["text"] for x in db["life"][-3:]])
             for x in life: memory.append_diary(cid, f"[校园·{x['kind']}] {x['text']}")
     return {"log": log, "found": len(evs), "new": len(new), "life": life}

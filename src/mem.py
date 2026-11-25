@@ -91,9 +91,13 @@ def is_junk(text):
 
 def add(cid, fact, importance=5, kind="fact", source="chat", ts=None, evidence=None):
     """Store one fact for one contact. Skips near-exact duplicates (same normalized text or score>=0.95)."""
+    from personalization_runtime import option
+    if not option("memory.extract_enabled", True): return None
     fact = (fact or "").strip()
     if not fact: return None
-    for h in search(cid, fact, k=3):
+    result = client().search(fact, top_k=3, filters={"user_id": str(cid)})
+    hits = result.get("results", result) if isinstance(result, dict) else result
+    for h in hits:
         if _norm(h["memory"]) == _norm(fact) or h.get("score", 0) >= 0.95:
             return None
     meta = {"importance": int(importance), "kind": kind, "source": source, "ts": ts or ""}
@@ -102,21 +106,20 @@ def add(cid, fact, importance=5, kind="fact", source="chat", ts=None, evidence=N
     return client().add(fact, user_id=str(cid), metadata=meta, infer=False)
 
 def search(cid, query, k=8):
+    from personalization_runtime import option
+    if not option("memory.enabled", True): return []
     r = client().search(query, top_k=k, filters={"user_id": str(cid)})
     return r.get("results", r) if isinstance(r, dict) else r
 
 def all_for(cid):
+    from personalization_runtime import option
+    if not option("memory.enabled", True): return []
     r = client().get_all(filters={"user_id": str(cid)})
     return r.get("results", r) if isinstance(r, dict) else r
 
 def related(query, exclude, contacts, k=2):
-    """Cross-contact lookup (understanding only). Returns {cid: [memory,...]} for other contacts."""
-    out = {}
-    for c in contacts:
-        if str(c) == str(exclude): continue
-        hits = [h["memory"] for h in search(c, query, k) if h.get("score", 0) >= 0.3]
-        if hits: out[str(c)] = hits
-    return out
+    """Cross-identity retrieval is disabled; relationship prompts stay in their own namespace."""
+    return {}
 
 def retrieve_block(cid, query, k=8, budget=600):
     """Top-k memories for prompt, ranked by similarity×(0.5+importance/10), cut to a char budget.
@@ -181,15 +184,23 @@ def _user_evidence(chat_lines, who):
             rows.append({"source_index": i, "text": text.strip()})
     return rows
 
-def extract_prompt(chat_lines, who="小熊", today=None):
+def _partner_name(who=None):
+    return who or str((load().get("contact") or {}).get("name") or "对方")
+
+
+def extract_prompt(chat_lines, who=None, today=None):
     import datetime
+    who = _partner_name(who)
     d = today or datetime.date.today()
     if isinstance(d, str):
         d = datetime.date.fromisoformat(d)
     return EXTRACT.format(who=who, today=f"{d.isoformat()} 星期{'一二三四五六日'[d.weekday()]}",
                           chat=json.dumps(_user_evidence(chat_lines, who), ensure_ascii=False))
 
-def extract_facts(chat_lines, who="小熊", today=None):
+def extract_facts(chat_lines, who=None, today=None):
+    from personalization_runtime import option
+    if not option("memory.extract_enabled", True): return []
+    who = _partner_name(who)
     rows = {r["source_index"]: r["text"] for r in _user_evidence(chat_lines, who)}
     if not rows: return []
     # complete_json uses reuse_session=False: historical extraction must not see

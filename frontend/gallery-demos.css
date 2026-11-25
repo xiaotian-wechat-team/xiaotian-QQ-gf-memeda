@@ -1,0 +1,377 @@
+/* Shared print and playback controls. */
+#view-home[data-exhibition] { isolation: isolate; gap: clamp(10px, 2.6svh, 36px); }
+.exhibit-stage { position: relative; width: 100%; min-width: 0; user-select: none; -webkit-user-select: none; }
+.exhibit-print { box-sizing: border-box; margin: 0; }
+.exhibit-print img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.salon-viewport:focus-visible { outline: 1px solid currentColor; outline-offset: -3px; }
+.exhibit-controls {
+  display: flex; align-items: center; justify-content: center; width: max-content;
+  margin: clamp(12px, 2.2svh, 24px) auto 0; gap: 2px;
+}
+.exhibit-controls button {
+  position: relative; border: 0; background: none; color: inherit; cursor: pointer;
+  width: 40px; height: 36px; padding: 0; border-radius: 50%; opacity: .67;
+}
+.exhibit-controls button:hover, .exhibit-controls button:focus-visible { opacity: 1; background: #92836b1c; }
+.exhibit-controls button:focus-visible { outline: 1px solid currentColor; }
+.exhibit-controls button::before { content: ""; display: block; margin: auto; }
+.exhibit-controls [data-control="motion"]::before {
+  width: 7px; height: 10px; border-inline: 2px solid; box-sizing: border-box;
+}
+.exhibit-controls [data-control="motion"][aria-pressed="true"]::before {
+  width: 0; border: 0; border-left: 8px solid; border-block: 5px solid transparent;
+}
+
+/* Warm limewashed wall, brass picture rail, linen mats, and overlapping walnut frames. */
+#view-home[data-exhibition="wall"] {
+  background: radial-gradient(ellipse at 26% 12%, #fffcf3, transparent 64%),
+              linear-gradient(155deg, #f0eadf, #e1d7c7 76%, #ece5d9); color: #514437;
+}
+.salon-viewport {
+  position: relative; overflow: clip; width: 100%;
+  font-size: min(.70svh, 1.09vw, 7.8px);
+  background: linear-gradient(180deg, transparent 10%, #fffaf016 55%, #c4b69b1a);
+  border-bottom: 1px solid #8d7a5c38;
+  box-shadow: 0 2px 0 #ffffff52, 0 16px 26px -27px #3e3024;
+}
+.salon-viewport::before {
+  content: ""; position: absolute; inset: 3em 0 auto; height: 2px;
+  background: linear-gradient(#c5b69c, #fcfaf0); box-shadow: 0 2px 3px #6d594025;
+}
+.salon-track { display: flex; width: max-content; animation: salon-passage var(--passage) linear infinite; }
+.salon-run { display: flex; align-items: center; justify-content: space-around; min-width: 100vw; }
+.salon-bay { position: relative; flex: none; width: 117em; height: 98em; }
+.salon-bay .exhibit-print {
+  position: absolute; top: var(--top); left: var(--left); width: var(--width); aspect-ratio: 3/4;
+  padding: 1.65em; background: #f7f4ea; border: .68em solid;
+  border-color: #846846 #594734 #493b2e #947957;
+  box-shadow: inset 0 0 0 .15em #b8ac96, .45em .65em .82em #43382932, 1.2em 2.8em 3em -1.5em #41301e70;
+  transform: rotate(var(--angle));
+}
+.salon-bay .exhibit-print::before {
+  content: ""; position: absolute; bottom: calc(100% + .65em); left: 50%; width: 1px;
+  height: calc(var(--top) - 3.4em); transform-origin: 50% 100%; transform: rotate(calc(-1 * var(--angle)));
+  background: #8d7c5f61;
+}
+.salon-bay .exhibit-print:nth-child(1) { --top: 13em; --left: 6em; --width: 52em; --angle: -.85deg; }
+.salon-bay .exhibit-print:nth-child(2) {
+  --top: 53em; --left: 53.5em; --width: 27em; --angle: 1.3deg; z-index: 1;
+  border-color: #e2d5bc #b9a991 #ab9a80 #dfd2ba; padding: 1.35em;
+}
+.salon-bay .exhibit-print:nth-child(3) {
+  --top: 13em; --left: 77em; --width: 36em; --angle: .55deg;
+  border-color: #6d6455 #423d34 #36342c #685e4e;
+}
+.salon-bay:nth-child(even) .exhibit-print:nth-child(1) { --top: 22em; --angle: .75deg; }
+.salon-bay:nth-child(even) .exhibit-print:nth-child(2) { --top: 10em; --left: 53em; --angle: -1.3deg; }
+.salon-bay:nth-child(even) .exhibit-print:nth-child(3) { --top: 40em; --left: 76em; }
+@keyframes salon-passage { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.exhibit-stage[data-paused="true"] .salon-track { animation-play-state: paused; }
+
+/* Reserve the bottom line for the entry and let each new exhibition use the rest of the first screen. */
+#view-home.active-view[data-exhibition]:not([data-exhibition="wall"]) {
+  --footer-height: clamp(58px, 8.5svh, 84px);
+  height: 100vh; height: 100svh; min-height: 0;
+  grid-template-rows: minmax(0, 1fr) var(--footer-height);
+  align-content: stretch; gap: 0;
+  padding: env(safe-area-inset-top, 0px) 0 max(3px, env(safe-area-inset-bottom, 0px));
+}
+[data-exhibition]:not([data-exhibition="wall"]) .exhibit-stage { height: 100%; min-height: 0; }
+[data-exhibition]:not([data-exhibition="wall"]) .exhibit-controls {
+  position: absolute; top: 100%; right: max(12px, 3vw, env(safe-area-inset-right, 0px)); z-index: 3;
+  margin: 0; height: var(--footer-height);
+}
+[data-exhibition]:not([data-exhibition="wall"]) .gallery-enter { align-self: center; }
+.exhibit-viewport, .lightbox-room {
+  position: relative; width: 100%; height: 100%; overflow: clip; isolation: isolate; container-type: size;
+}
+.exhibit-viewport, .film-window, .lightbox-focus { touch-action: pan-y pinch-zoom; -webkit-tap-highlight-color: transparent; }
+.exhibit-viewport, .film-window { cursor: grab; }
+.exhibit-viewport:active, .film-window:active { cursor: grabbing; }
+:is(.exhibit-viewport, .film-window, .lightbox-focus):focus-visible { outline: 2px solid currentColor; outline-offset: -3px; }
+.exhibit-reel { position: relative; display: flex; height: 100%; width: max-content; z-index: 1; }
+.exhibit-run { display: flex; flex: none; height: 100%; width: max-content; min-width: 100vw; justify-content: space-around; }
+.exhibit-bay { position: relative; flex: none; height: 100%; }
+.exhibit-print { min-height: 0; min-width: 0; }
+.exhibit-viewport img, .lightbox-room img { object-position: 50% 35%; }
+
+/* Editorial spreads alternate the full-height portrait and its two smaller insets. */
+#view-home[data-exhibition="editorial"] { background: #f2eee5; color: #392f29; }
+[data-exhibition="editorial"] .exhibit-viewport {
+  --gutter: clamp(4px, .85cqh, 10px);
+  background: #eae6dd; border-block: 1px solid #978e7c7a;
+}
+[data-exhibition="editorial"] .exhibit-bay {
+  display: grid; grid-template-columns: 66cqh 34cqh; grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: var(--gutter); padding: clamp(9px, 1.7cqh, 20px) calc(var(--gutter) / 2);
+}
+[data-exhibition="editorial"] .exhibit-print {
+  position: relative; background: #fffcf6; border: 1px solid #b6ad9c;
+  box-shadow: 0 1px 2px #463d2e21; padding: clamp(2px, .65cqh, 7px);
+}
+[data-exhibition="editorial"] .exhibit-hero { grid-column: 1; grid-row: 1 / 3; }
+[data-exhibition="editorial"] .exhibit-bay:nth-child(even) { grid-template-columns: 34cqh 66cqh; }
+[data-exhibition="editorial"] .exhibit-bay:nth-child(even) .exhibit-hero { grid-column: 2; }
+
+/* Both photo arrangements use the console's white paper, blush ground and rose accent. */
+#view-home:is([data-exhibition="table"], [data-exhibition="studio"]) {
+  --paper-edge: color-mix(in srgb, var(--pink) 25%, var(--panel));
+  --rose-ink: color-mix(in srgb, var(--soft) 75%, var(--pink));
+  --paper-shadow: 0 1px 2px #51394330, .22cqh .55cqh .7cqh #65485627, .9cqh 1.6cqh 2.2cqh -.65cqh #75526036;
+  background: var(--bg); color: var(--soft);
+}
+:is([data-exhibition="table"], [data-exhibition="studio"]) .gallery-enter { border-bottom-color: var(--paper-edge); }
+:is([data-exhibition="table"], [data-exhibition="studio"]) .gallery-arrow { color: var(--rose-ink); }
+:is([data-exhibition="table"], [data-exhibition="studio"]) .gallery-enter:hover { color: var(--rose-ink); border-color: currentColor; }
+:is([data-exhibition="table"], [data-exhibition="studio"]) .gallery-enter:focus-visible { outline-color: var(--rose-ink); }
+:is([data-exhibition="table"], [data-exhibition="studio"]) .exhibit-controls button:hover { background: var(--panel-2); }
+
+/* Loose proofs on a blush worktable in soft window light. */
+[data-exhibition="table"] .exhibit-viewport {
+  background: radial-gradient(ellipse at 16% 8%, var(--panel), transparent 62%),
+    linear-gradient(118deg, var(--bg), var(--panel-2) 40%, color-mix(in srgb, var(--pink) 23%, var(--panel)));
+  box-shadow: inset 0 -1px var(--paper-edge);
+}
+[data-exhibition="table"] .exhibit-bay { width: 91cqh; }
+[data-exhibition="table"] .exhibit-print {
+  position: absolute; aspect-ratio: 3 / 4; background: var(--panel);
+  padding: clamp(4px, 1cqh, 11px); padding-bottom: clamp(8px, 2.1cqh, 24px);
+  transform: rotate(var(--turn)); border: 1px solid var(--paper-edge);
+  box-shadow: var(--paper-shadow);
+}
+[data-exhibition="table"] .exhibit-hero { --turn: -4deg; width: 49cqh; top: 15cqh; left: 3cqh; }
+[data-exhibition="table"] .exhibit-print:nth-child(2) { --turn: 5deg; width: 32cqh; top: 4cqh; left: 56cqh; }
+[data-exhibition="table"] .exhibit-print:nth-child(3) { --turn: 3deg; width: 33cqh; bottom: 4cqh; left: 45cqh; }
+[data-exhibition="table"] .exhibit-bay:nth-child(even) .exhibit-hero { --turn: 3deg; top: 27cqh; }
+[data-exhibition="table"] .exhibit-bay:nth-child(even) .exhibit-print:nth-child(2) { --turn: -4deg; left: 43cqh; }
+[data-exhibition="table"] .exhibit-bay:nth-child(even) .exhibit-print:nth-child(3) { --turn: -3deg; left: 61cqh; }
+
+/* Two fixed oak ledges. Portraits rest on the upper shelf and smaller frames stand in front. */
+#view-home[data-exhibition="shelves"] { background: #d9dcd6; color: #354039; }
+[data-exhibition="shelves"] .exhibit-viewport {
+  --back-shelf: 68%; --front-shelf: 94%;
+  background: radial-gradient(ellipse at 17% 7%, #f2f3e7, transparent 65%), linear-gradient(115deg, #c4cbc0, #a9b6ab);
+}
+[data-exhibition="shelves"] .exhibit-viewport::before, [data-exhibition="shelves"] .exhibit-viewport::after {
+  content: ""; position: absolute; inset-inline: 0; top: var(--back-shelf); height: clamp(6px, 1.6cqh, 18px);
+  border-top: 2px solid #c5a98b; border-bottom: 2px solid #74583f;
+  background: repeating-linear-gradient(178deg, #ae8c6b 0 2px, #b29170 3px 5px, #a98665 6px 7px);
+  box-shadow: 0 1.4cqh 1.7cqh -.5cqh #38493966;
+}
+[data-exhibition="shelves"] .exhibit-viewport::after { top: var(--front-shelf); height: clamp(8px, 2.1cqh, 22px); }
+[data-exhibition="shelves"] .exhibit-bay { width: 68cqh; }
+[data-exhibition="shelves"] .exhibit-print {
+  position: absolute; aspect-ratio: 3 / 4; bottom: calc(100% - var(--front-shelf)); transform-origin: center bottom;
+  padding: clamp(4px, .9cqh, 12px); background: #f3efe1; border: clamp(3px, .65cqh, 7px) solid;
+  border-color: #b7a180 #897353 #6f5a41 #ad9572;
+  box-shadow: inset 0 0 .5cqh #725f3d44, .5cqh .4cqh .7cqh #28372c50, 1.3cqh .8cqh 2cqh -.5cqh #2c3e305c;
+}
+[data-exhibition="shelves"] .exhibit-hero {
+  left: 9cqh; width: 47cqh; bottom: calc(100% - var(--back-shelf)); transform: rotate(-.8deg);
+  border-color: #6d6150 #443c32 #373128 #6c5b4a; border-width: clamp(3px, .75cqh, 8px);
+}
+[data-exhibition="shelves"] .exhibit-print:nth-child(2) { left: 1cqh; width: 22cqh; transform: rotate(1.1deg); }
+[data-exhibition="shelves"] .exhibit-print:nth-child(3) {
+  left: 37cqh; width: 27cqh; transform: rotate(-1.1deg); border-color: #e2d8c5 #b9ae98 #a79b85 #ddd4bf;
+}
+[data-exhibition="shelves"] .exhibit-bay:nth-child(even) .exhibit-hero { transform: rotate(1deg); }
+[data-exhibition="shelves"] .exhibit-bay:nth-child(even) .exhibit-print:nth-child(2) { width: 25cqh; }
+
+/* A long foreground ledge ties together individual short shelves at different heights. */
+[data-exhibition="studio"] .exhibit-viewport {
+  --front-level: 94%;
+  background: radial-gradient(ellipse at 21% 8%, var(--panel) 5%, transparent 63%),
+    linear-gradient(132deg, var(--bg) 4%, var(--panel-2) 62%, color-mix(in srgb, var(--pink) 18%, var(--panel)));
+}
+[data-exhibition="studio"] .exhibit-viewport::after {
+  content: ""; position: absolute; inset: var(--front-level) 0 0;
+  border-top: 1px solid var(--paper-edge);
+  background: linear-gradient(to bottom, var(--panel) 0 2px, var(--paper-edge) 3px, var(--panel-2) 7px, var(--bg) 65%);
+  box-shadow: 0 -.6cqh 1.6cqh -.65cqh #a965842b; pointer-events: none;
+}
+[data-exhibition="studio"] .exhibit-bay {
+  --bay-width: 85cqh; --page-width: 101vw; --back-level: 71%; --shelf-start: 1%; --shelf-span: 72%;
+  --lead-size: 49cqh; --lead-edge: 5%; --lead-turn: -2.4deg; --lead-foot: 0%;
+  --proof-size: 26cqh; --proof-edge: 3%; --proof-top: 6%; --proof-turn: 3.7deg;
+  --front-size: 30cqh; --front-edge: 47%; --front-turn: -2.8deg;
+  width: min(var(--bay-width), var(--page-width));
+}
+[data-exhibition="studio"] .exhibit-bay::before {
+  content: ""; position: absolute; top: var(--back-level); inset-inline-start: var(--shelf-start);
+  width: var(--shelf-span); height: clamp(5px, 1.05cqh, 12px); border-radius: 1px;
+  border-top: 1px solid white; border-bottom: 1px solid #bf8fa45e;
+  background: linear-gradient(var(--panel), var(--panel-2) 44%, var(--paper-edge));
+  box-shadow: .15cqh .7cqh .9cqh -.25cqh #80596b3b;
+}
+[data-exhibition="studio"] .exhibit-print {
+  position: absolute; aspect-ratio: 3 / 4; padding: clamp(4px, 1.05cqh, 12px);
+  border: 1px solid var(--paper-edge); background: var(--panel); box-shadow: var(--paper-shadow);
+}
+[data-exhibition="studio"] .exhibit-hero {
+  z-index: 1; width: min(var(--lead-size), 77vw); inset-inline-start: var(--lead-edge);
+  bottom: calc(100% - var(--back-level)); transform: rotate(var(--lead-turn)); transform-origin: var(--lead-foot) 100%;
+  border-width: clamp(2px, .5cqh, 5px); border-style: solid;
+  border-color: var(--panel) var(--paper-edge) #c5a3b2 #ead8e0;
+  box-shadow: inset 0 0 0 1px #e7dbe1, 0 0 0 1px #b58b9e75, var(--paper-shadow);
+}
+[data-exhibition="studio"] .exhibit-print:nth-child(2) {
+  z-index: 2; width: min(var(--proof-size), 34vw); inset-inline-end: var(--proof-edge); top: var(--proof-top);
+  transform: rotate(var(--proof-turn)); transform-origin: center bottom;
+}
+[data-exhibition="studio"] .exhibit-print:nth-child(2)::before {
+  content: ""; position: absolute; z-index: 1; top: -2.4%; left: 38%; width: 23%; height: 4.3%;
+  background: color-mix(in srgb, var(--paper-edge) 65%, transparent);
+  border-block: 1px solid #fffc; transform: rotate(-4deg); pointer-events: none;
+}
+[data-exhibition="studio"] .exhibit-print:nth-child(3) {
+  z-index: 3; width: min(var(--front-size), 47vw); inset-inline-start: var(--front-edge); bottom: calc(100% - var(--front-level));
+  transform: rotate(var(--front-turn)); transform-origin: 50% 100%; padding-bottom: clamp(8px, 2.1cqh, 23px);
+  box-shadow: 1px 2px var(--panel-2), 2px 3px var(--paper-edge), var(--paper-shadow);
+}
+/* The coordinate system changes sides. The photos keep their original orientation. */
+[data-exhibition="studio"] .exhibit-bay:nth-child(4n + 2) {
+  direction: rtl; --bay-width: 91cqh; --page-width: 106vw; --back-level: 80%; --shelf-span: 68%;
+  --lead-size: 46cqh; --lead-edge: 8%; --lead-turn: 2deg; --lead-foot: 100%;
+  --proof-size: 29cqh; --proof-edge: 2%; --proof-top: 4%; --proof-turn: -3.3deg;
+  --front-size: 27cqh; --front-edge: 53%; --front-turn: 2.7deg;
+}
+[data-exhibition="studio"] .exhibit-bay:nth-child(4n + 3) {
+  --bay-width: 76cqh; --page-width: 98vw; --back-level: 67%; --shelf-span: 74%;
+  --lead-size: 44cqh; --lead-edge: 3%; --lead-turn: -1.1deg;
+  --proof-size: 23cqh; --proof-edge: 1%; --proof-top: 18%; --proof-turn: 1.8deg;
+  --front-size: 32cqh; --front-edge: 43%; --front-turn: -3.6deg;
+}
+[data-exhibition="studio"] .exhibit-bay:nth-child(4n) {
+  --bay-width: 90cqh; --page-width: 107vw; --back-level: 76%; --shelf-start: 18%; --shelf-span: 72%;
+  --lead-size: 48cqh; --lead-edge: 24%; --lead-turn: 1.6deg; --lead-foot: 100%;
+  --proof-size: 24cqh; --proof-edge: 66%; --proof-top: 5%; --proof-turn: -4.2deg;
+  --front-size: 26cqh; --front-edge: 63%; --front-turn: 1.6deg;
+}
+[data-exhibition="studio"] .exhibit-bay:nth-child(5n) { direction: rtl; }
+
+/* Each hinged pair has a broad silk-covered face and a narrower, shaded return. */
+#view-home[data-exhibition="fold"] { background: #d6d6c3; color: #333c32; }
+[data-exhibition="fold"] .exhibit-viewport {
+  background: radial-gradient(ellipse at 53% 12%, #e4e5d4, #b8bfab 65%, #9ba795);
+}
+[data-exhibition="fold"] .exhibit-viewport::before {
+  content: ""; position: absolute; inset: 89% 0 -3%;
+  background: linear-gradient(180deg, #62736155, transparent);
+}
+[data-exhibition="fold"] .exhibit-bay { display: flex; align-items: center; height: 100%; }
+.screen-leaf {
+  --rise: 4%; position: relative; display: grid; height: 96cqh; padding: 6.5cqh 2.4cqh;
+  border-inline: 2px solid #8d8164;
+}
+.screen-front {
+  width: 54cqh; background: linear-gradient(99deg, #aaa181, #ddd6af 13%, #d3cbaa 89%, #ab9c79);
+  clip-path: polygon(0 var(--rise), 100% 0, 100% calc(100% - var(--rise)), 0 100%);
+}
+.screen-side {
+  width: 33cqh; grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 1.8cqh;
+  background: linear-gradient(93deg, #747e67, #a8ac8b 36%, #9a9e7d 80%, #848969);
+  clip-path: polygon(0 0, 100% var(--rise), 100% 100%, 0 calc(100% - var(--rise)));
+}
+.screen-leaf::after {
+  content: ""; position: absolute; inset: 0 0 0 auto; width: 4px;
+  background: linear-gradient(180deg, transparent 15%, #c8ba8a 15% 20%, transparent 20% 48%, #c8ba8a 48% 53%, transparent 53% 80%, #c8ba8a 80% 85%, transparent 85%);
+}
+.screen-leaf .exhibit-print {
+  position: relative; background: #efecda; padding: clamp(4px, 1.1cqh, 12px); border: 1px solid #817c62;
+  box-shadow: 0 0 0 2px #c2b996, inset 0 0 3px #82795360;
+}
+.screen-front .exhibit-print { transform: skewY(-2.2deg); }
+.screen-side .exhibit-print { transform: skewY(3.4deg); }
+.screen-side img { filter: brightness(.93); }
+[data-exhibition="fold"] .exhibit-run { justify-content: flex-start; }
+
+/* A photographic light table, with two perforated film strips around a still central enlargement. */
+#view-home[data-exhibition="lightbox"] { background: #25292a; color: #f6eddb; }
+.lightbox-room {
+  display: grid; grid-template-rows: minmax(0, 19fr) minmax(0, 62fr) minmax(0, 19fr);
+  gap: max(4px, .8svh); padding-block: max(8px, 1.55svh);
+  background: radial-gradient(ellipse at 50% 46%, #767268, #393d3b 52%, #1b2020 94%);
+}
+.film-window {
+  position: relative; min-height: 0; overflow: clip; container-type: size;
+  background: #292725; border-block: 1px solid #151815;
+  box-shadow: 0 1px 1px #f4e3b655, 0 3px 6px #0007;
+}
+.film-window::before, .film-window::after {
+  content: ""; position: absolute; z-index: 2; left: 0; right: 0; top: 4%; height: 4%;
+  background: radial-gradient(ellipse 34% 50% at 50% 50%, #d4cbb6 85%, transparent 100%) left center / 17px 100% repeat-x;
+  pointer-events: none;
+}
+.film-window::after { top: auto; bottom: 4%; }
+.film-run { align-items: center; padding-inline: 2px; gap: 5px; }
+.film-run .exhibit-print {
+  position: relative; flex: none; height: 75%; aspect-ratio: 3 / 4; border: 1px solid #ded4bb85;
+  background: #f4edda;
+}
+.lightbox-focus { position: relative; min-height: 0; }
+.lightbox-spread {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: min(8vw, 18cqh);
+  padding: max(4px, .8svh) 0; overflow: clip;
+}
+.lightbox-spread .exhibit-print {
+  position: relative; flex: none; height: 57%; aspect-ratio: 3 / 4; padding: max(4px, .7svh);
+  background: #f3efe5; border: 2px solid #69685e; box-shadow: 0 0 0 1px #161a18, 0 7px 14px #10181280;
+}
+.lightbox-spread .exhibit-hero {
+  height: 100%; border-color: #d9d0bc; box-shadow: 0 0 0 1px #655f53, 0 0 1.8cqh #ede4c952, 0 9px 22px #141a18b0;
+}
+.lightbox-spread .exhibit-print:first-child { transform: translateY(-9%); }
+.lightbox-spread .exhibit-print:last-child { transform: translateY(9%); }
+.lightbox-step {
+  position: absolute; z-index: 2; top: 50%; transform: translateY(-50%); width: 44px; height: 44px;
+  border: 1px solid #eee3c24a; border-radius: 50%; color: #fff9e9; background: #242927bf; cursor: pointer;
+}
+.lightbox-step[data-control="prev"] { left: max(8px, 2vw); }
+.lightbox-step[data-control="next"] { right: max(8px, 2vw); }
+.lightbox-step::before { content: ""; display: block; width: 8px; height: 8px; margin: auto; border: solid currentColor; border-width: 1px 1px 0 0; transform: rotate(45deg); }
+.lightbox-step[data-control="prev"]::before { transform: rotate(-135deg); }
+.lightbox-step:is(:hover, :focus-visible) { background: #1b201df0; outline: 1px solid #e3d9be; }
+[data-exhibition="lightbox"] .gallery-enter { border-color: #a49e8c; }
+
+@media (max-width: 650px) and (orientation: portrait) {
+  [data-exhibition="editorial"] .exhibit-bay, [data-exhibition="editorial"] .exhibit-bay:nth-child(even) {
+    width: 95vw; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: minmax(0, 1.95fr) minmax(0, 1fr);
+  }
+  [data-exhibition="editorial"] .exhibit-hero, [data-exhibition="editorial"] .exhibit-bay:nth-child(even) .exhibit-hero {
+    grid-column: 1 / -1; grid-row: 1;
+  }
+  [data-exhibition="editorial"] .exhibit-bay:nth-child(even) { grid-template-rows: minmax(0, 1fr) minmax(0, 1.95fr); }
+  [data-exhibition="editorial"] .exhibit-bay:nth-child(even) .exhibit-hero { grid-row: 2; }
+  [data-exhibition="table"] .exhibit-bay { width: 104vw; }
+  [data-exhibition="table"] .exhibit-hero, [data-exhibition="table"] .exhibit-bay:nth-child(even) .exhibit-hero {
+    left: 4vw; top: 26cqh; width: min(75vw, 43cqh);
+  }
+  [data-exhibition="table"] .exhibit-print:nth-child(2), [data-exhibition="table"] .exhibit-bay:nth-child(even) .exhibit-print:nth-child(2) {
+    left: 56vw; top: 3.5cqh; width: min(43vw, 27cqh);
+  }
+  [data-exhibition="table"] .exhibit-print:nth-child(3), [data-exhibition="table"] .exhibit-bay:nth-child(even) .exhibit-print:nth-child(3) {
+    left: 53vw; bottom: 4cqh; width: min(46vw, 29cqh);
+  }
+  [data-exhibition="shelves"] .exhibit-viewport { --back-shelf: 65%; }
+  [data-exhibition="shelves"] .exhibit-bay { width: 96vw; }
+  [data-exhibition="shelves"] .exhibit-hero { left: 7vw; width: min(81vw, 46.5cqh); }
+  [data-exhibition="shelves"] .exhibit-print:nth-child(2), [data-exhibition="shelves"] .exhibit-bay:nth-child(even) .exhibit-print:nth-child(2) {
+    left: 1.5vw; width: min(39vw, 27cqh);
+  }
+  [data-exhibition="shelves"] .exhibit-print:nth-child(3) { left: 47vw; width: min(44vw, 29cqh); }
+  .screen-front { width: 66vw; }
+  .screen-side { width: 34vw; }
+  .screen-leaf { padding: 6.4cqh 1.6vw; }
+  .screen-leaf .exhibit-print { padding: 4px; }
+  .lightbox-spread { gap: 6vw; }
+  .lightbox-spread .exhibit-hero { max-width: 78vw; }
+  .lightbox-spread .exhibit-print:not(.exhibit-hero) { display: none; }
+}
+@media (max-width: 650px) {
+  .exhibit-controls button { width: 44px; height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .salon-viewport { overflow-x: auto; overflow-y: hidden; }
+  .salon-track { animation: none; }
+  .salon-run[aria-hidden], .exhibit-controls [data-control="motion"] { display: none; }
+}

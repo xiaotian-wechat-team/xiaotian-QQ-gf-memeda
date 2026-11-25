@@ -18,6 +18,12 @@ sweet_mode：把「日常 / 想你升糖 / 难过关心」门控成一行提示�
 import math, datetime
 import nickname
 
+
+def _preference(key, default):
+    from personalization_runtime import option
+    value = option("emotion." + key, default)
+    return default if value is None else value
+
 # 日常情侣基线：偏平静正常，不要永远「心情不错+高亲昵」
 BASELINE = {"pleasure": 0.12, "arousal": 0.22, "dominance": 0.55}
 HALF_LIFE_H = 4.0  # 更快回到日常基线，制造波动（原 6h）
@@ -159,6 +165,10 @@ def derived(emo, energy_bias=0.0):
     mood = round(5 + 5 * p, 1)
     energy = round(max(0, min(10, 5 + 5 * a + energy_bias)), 1)
     stage = next(n for t, n in STAGES if emo.get("intimacy", INTIMACY_DEFAULT) < t)
+    from config import load
+    cfg = load()
+    if cfg.get("persona_version") and cfg.get("relationship_kind") != "romantic_partner":
+        stage = next(n for t, n in ((20, "初识"), (50, "逐渐熟悉"), (80, "信任"), (101, "默契")) if emo.get("intimacy", INTIMACY_DEFAULT) < t)
     return {"mood": mood, "energy": energy, "intimacy": round(float(emo.get("intimacy", INTIMACY_DEFAULT)), 1), "stage": stage}
 
 def describe(emo, energy_bias=0.0):
@@ -231,6 +241,10 @@ def reviewed_schedule_feed(st, now=None):
     cur = st.get("life_now") if isinstance(st.get("life_now"), dict) else None
     try:
         import life_calendar as _lc
+        from shared_schedule import enabled
+        if enabled():
+            today = _lc.get_day(now.date())
+            cur = None
         cur = _lc.resolve_life_now(st, now)
     except Exception:
         pass
@@ -370,14 +384,15 @@ def hour_soft_bias(now=None):
     now = now or datetime.datetime.now()
     band = hour_band_for(now)
     spec = HOUR_BIAS.get(band) or HOUR_BIAS["day"]
+    scale = float(_preference("hour_bias_scale", 1.))
     out = zero_schedule_bias()
     out["hour_band"] = band
-    out["pleasure_delta"] = float(spec["pleasure"])
-    out["arousal_delta"] = float(spec["arousal"])
-    out["intimacy_delta"] = float(spec["intimacy"])
-    out["tease_lean"] = float(spec["tease_lean"])
-    out["playful_lean"] = float(spec["playful_lean"])
-    out["sweet_lean"] = float(spec["sweet_lean"])
+    out["pleasure_delta"] = float(spec["pleasure"]) * scale
+    out["arousal_delta"] = float(spec["arousal"]) * scale
+    out["intimacy_delta"] = float(spec["intimacy"]) * scale
+    out["tease_lean"] = float(spec["tease_lean"]) * scale
+    out["playful_lean"] = float(spec["playful_lean"]) * scale
+    out["sweet_lean"] = float(spec["sweet_lean"]) * scale
     out["reason_codes"] = [f"hour_{band}"]
     out["fields_used"] = {
         "hour": now.hour,
@@ -436,7 +451,7 @@ def apply_soft_pad(emo, bias, *, mutate=False):
                 base[k] = v
         base["pad"] = dict(base["pad"])
     pad = base["pad"]
-    for d, key in (("pleasure", "pleasure_delta"), ("arousal", "arousal_delta"), ("dominance", None)):
+    for d, key in (("pleasure", "pleasure_delta"), ("arousal", "arousal_delta"), ("dominance", "dominance_delta")):
         if key:
             pad[d] = _clip(float(pad.get(d, BASELINE[d])) + float(bias.get(key, 0.0)))
         else:
@@ -504,7 +519,7 @@ def apply_daily_caps(bias, emo, now=None):
     used = daily_happy_slots(emo, now)
     if sk and sk in used:
         return bias
-    if len(used) >= DAILY_HAPPY_SLOT_MAX:
+    if len(used) >= int(_preference("daily_happy_max", DAILY_HAPPY_SLOT_MAX)):
         # flatten happy nudge; keep prefer_idle false but no free_room candy
         bias["pleasure_delta"] = min(0.0, float(bias.get("pleasure_delta") or 0.0))
         bias["arousal_delta"] = min(0.0, float(bias.get("arousal_delta") or 0.0))
@@ -558,6 +573,8 @@ def emotion_view_for(st, now=None, emo=None):
     bias = schedule_soft_bias(feed) if feed else zero_schedule_bias()
     bias = apply_daily_caps(bias, emo, now)
     bias = merge_soft_bias(bias, hour_soft_bias(now))
+    for name in ("pleasure", "arousal", "dominance"):
+        bias[name + "_delta"] = float(bias.get(name + "_delta", 0)) + float(_preference(name + "_bias", 0))
     return apply_soft_pad(emo, bias), bias
 
 
@@ -598,7 +615,7 @@ def sweet_mode(emo, msg, last_reply_at=None, now=None,
     prefer_idle = bool(bias.get("prefer_idle"))
     free_room = bool(bias.get("free_room"))
     sweet_today = daily_sweet_count(emo, now)
-    daily_sweet_forced = sweet_today >= DAILY_SWEET_MAX
+    daily_sweet_forced = sweet_today >= int(_preference("daily_sweet_max", DAILY_SWEET_MAX))
     _sleep = (sleep_style or "").strip()
     if _sleep in ("pre_sleep", "asleep"):
         prefer_idle = True
@@ -645,7 +662,7 @@ def sweet_mode(emo, msg, last_reply_at=None, now=None,
                 want_warm = True
                 why = f"隔了约{int(h)}小时"
         # consecutive-sweet forced cooldown
-        if want_warm and (consecutive_sweet >= CONSECUTIVE_SWEET_MAX or cooldown_left > 0):
+        if want_warm and (consecutive_sweet >= int(_preference("consecutive_sweet_max", CONSECUTIVE_SWEET_MAX)) or cooldown_left > 0):
             want_warm = False
             cooldown_forced = True
         # same-day hard cap: after DAILY_SWEET_MAX warms → idle/tease, not sweet
@@ -691,6 +708,15 @@ def sweet_mode(emo, msg, last_reply_at=None, now=None,
             tip += "；可略黏，亲密一点，仍嘴硬心软"
     elif mode == "warm" and sweet_lean >= HOUR_SWEET_TIP_MIN and "略黏" not in tip:
         tip += "；可略黏"
+    from config import load
+    cfg = load()
+    if cfg.get("persona_version"):
+        tone = {"idle": "自然日常", "warm": "温暖回应", "care": "优先接住难过和实际需要"}.get(mode, "自然回应")
+        tip = f"gate={mode} {tone}；表达遵循当前人物性格和关系，不套用其他人物的口头禅。"
+        if cfg.get("relationship_kind") != "romantic_partner":
+            tip += "当前关系不使用恋爱专属称呼、关系阶段或承诺。"
+        if cooldown_forced:
+            tip += "连续或当日亲密表达已达上限，本轮收敛表达。"
     return {
         "mode": mode,
         "tip": tip,

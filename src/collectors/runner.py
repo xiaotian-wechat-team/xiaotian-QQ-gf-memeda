@@ -29,11 +29,23 @@ def collectors():
 
 def run_all(names=None, force=False, do_ocr=True, do_lcu=False, gap=(20, 60), sleep=time.sleep, factory=None, lock_path=LOCK):
     """持锁期间逐个平台串行执行，平台之间随机 sleep。"""
-    reg = factory or collectors(); names = names or list(reg); reps = []
+    from config import load, snapshot
+    with snapshot(load()) as cfg:
+        return _run_all(cfg, names, force, do_ocr, do_lcu, gap, sleep, factory, lock_path)
+
+
+def _run_all(cfg, names, force, do_ocr, do_lcu, gap, sleep, factory, lock_path):
+    reg = factory or collectors(); names = list(reg) if names is None else names; reps = []
+    if cfg.get("persona_version"):
+        from personalization_runtime import option
+        selected = option("content.platforms", [], cfg=cfg) or []
+        names = [name for name in names if name in selected]
     with global_lock(lock_path, wait_s=0):
         for i, n in enumerate(names):
             if i: sleep(random.uniform(*gap))
             reps.append(reg[n]().run(force=force, do_ocr=do_ocr, do_lcu=do_lcu))
+    from personalization_runtime import report_loaded
+    report_loaded("content", cfg)
     return reps
 
 if __name__ == "__main__":

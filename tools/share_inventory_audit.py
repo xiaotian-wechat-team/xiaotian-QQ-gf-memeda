@@ -18,6 +18,7 @@ def audit(path):
     examples = collections.defaultdict(list)
     with sqlite3.connect(pathlib.Path(path).expanduser().resolve().as_uri()+'?mode=ro', uri=True) as db:
         db.row_factory = sqlite3.Row
+        associations = db.execute("SELECT 1 FROM sqlite_master WHERE name='item_media'").fetchone()
         for row in db.execute("SELECT * FROM items WHERE platform IN ('xiaohongshu','douyin') AND expires_at>?", (time.time(),)):
             item = dict(row)
             title = (item.get('title') or item.get('text') or '').strip()
@@ -26,7 +27,9 @@ def audit(path):
                 continue
             if not urlsplit(url).hostname or 'search_result' in url:
                 continue
-            media = db.execute("SELECT local_path FROM media WHERE item_id=? AND kind='image'", (item['id'],)).fetchall()
+            media = db.execute(
+                "SELECT m.local_path FROM media m JOIN item_media im ON im.media_id=m.id WHERE im.item_id=? AND m.kind='image'"
+                if associations else "SELECT local_path FROM media WHERE item_id=? AND kind='image'", (item['id'],)).fetchall()
             if not any(m[0] and pathlib.Path(m[0]).is_file() for m in media):
                 continue
             item['tags'] = json.loads(item.get('tags') or '[]')

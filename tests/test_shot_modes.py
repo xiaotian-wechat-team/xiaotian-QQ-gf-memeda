@@ -125,7 +125,10 @@ def test_hand_pov_skip_hard_face_body():
 
 
 def test_prompt_default_unchanged_third_person():
-    prompt = imagegen.build_prompt("食堂吃饭", "desc", "穿搭日常", "", n_canonical=2, n_scene_refs=3, body_kind="sheet")
+    prompt = imagegen.build_prompt(
+        "食堂吃饭", "desc", "穿搭日常", "", n_canonical=2, n_scene_refs=3,
+        body_kind="sheet", cfg={"imagegen": {}},
+    )
     assert "hand_closeup" not in prompt
     assert "正视标准肖像五视图" in prompt
 
@@ -232,7 +235,7 @@ def test_legs_focus_prompt_not_face_five_view():
     prompt = imagegen.build_prompt(
         "宿舍腿部特写", "desc", "穿搭", "", n_canonical=1, n_scene_refs=2,
         shot_type="legs_focus",
-        shot_bits={"activity": "宿舍", "place": "宿舍"},
+        shot_bits={"activity": "宿舍", "place": "宿舍"}, cfg={"imagegen": {}},
     )
     assert "legs_focus" in prompt
     assert "腿" in prompt

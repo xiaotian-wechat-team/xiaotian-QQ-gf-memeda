@@ -58,7 +58,7 @@ def test_qq_callback_receives_all_messages_while_worker_waits(monkeypatch):
     monkeypatch.setattr(runner, '_handle_event', lambda ev, inbound: received.append(inbound))
     import json
     for i in range(3):
-        runner.on_message(None, json.dumps(qq.make_private_event('10001', f'part{i}')))
+        runner.on_message(None, json.dumps(qq.make_private_event('10001', f'part{i}', message_id=i)))
     assert entered.wait(1)
     worker = runner._burst_worker
     assert runner._has_newer('10001')
@@ -105,7 +105,8 @@ def test_ilink_live_batch_preserves_order_and_other_peer(monkeypatch):
     runner = iw.ILinkWeixinRunner(dry=True, typing=False)
     runner._ensure_inbox()
     monkeypatch.setattr(iw, 'resolve_contact_id', lambda *a: 'demo_contact')
-    parts = [Inbound('wechat_ilink', 'demo@im.wechat', f'part{i}', msg_id=str(i)) for i in range(3)]
+    peer = 'demo@im.wechat'
+    parts = [Inbound('wechat_ilink', peer, f'part{i}', msg_id=str(i)) for i in range(3)]
     other = Inbound('wechat_ilink', 'other-peer', 'not this conversation')
     runner._inbox.put(parts[1])
     runner._inbox.put(other)

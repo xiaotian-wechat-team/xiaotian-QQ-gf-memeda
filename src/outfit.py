@@ -7,7 +7,7 @@ sportiness 运动感、coziness 居家舒适 + 扩展 warmth 保暖↔清凉、o
 加先验：旧 8 场景推断（作息/工作日周末/情绪/聊天正则 infer_weights）、周末晚上偏出门/约会、季节不符小幅扣分。
 cosine top-k(8) 温度采样出主场景（权重0.7）+ 其余前几名软混合（0.3），加 ±0.05 抖动。模型不可用时退回别名+字符二元组匹配。
 exposure 量化成 0~3 级并受主场景 cap 限制；最高一级也只是「更显身材、更精致」，始终得体、不暴露、不性感化；审核拦截时由 imagegen 逐级降级。
-季节/天气：只用月份 + weather.get(place, cache_only=True)（默认 bda=海淀北舞，不额外联网）或调用方传入的 weather 文本；目的地场景（climate）用目的地气候。
+季节/天气：只用月份 + 未过期的 weather 缓存或当天预报（默认 bda=海淀北舞，不额外联网）。过期快照不当成现在。调用方也可直接传入 weather 文本；目的地场景（climate）用目的地气候。
 用法：python3 outfit.py ["画面"] [--scene 约会]"""
 import datetime, hashlib, json, math, os, pathlib, random, re, sys
 
@@ -152,15 +152,20 @@ SEASON = {12: .1, 1: .05, 2: .12, 3: .32, 4: .5, 5: .68, 6: .85, 7: .92, 8: .9, 
 
 def season_warmth(now=None, weather=None, place="bda"):
     """weather：调用方给的天气文本（如 weather.get("bda")["text"]）。
-    没有且 now≈当前时刻时，只读 weather 工具缓存（cache_only，默认 BDA=海淀北舞，不读用户燕园）；
-    历史/未来 now 用月份，避免串季。"""
+    没有且 now≈当前时刻时，只用未过期的天气缓存或当天预报（默认 BDA=海淀北舞，不读用户良乡，不联网）；
+    过期缓存忽略，退回月份。历史/未来 now 用月份，避免串季。"""
     now = now or datetime.datetime.now()
     if weather is None:
         try:
             import weather as _w
             if abs((now - datetime.datetime.now()).total_seconds()) < 6 * 3600:
                 r = _w.get(place or "bda", cache_only=True)
-                weather = r.get("text")
+                if r.get("why") in ("ok", "cache") and r.get("text"):
+                    weather = r.get("text")
+                else:
+                    obs = _w.ambient_observation(place or "bda")
+                    temp = ((obs or {}).get("snap") or {}).get("temp")
+                    weather = None if temp is None else f"{float(temp):.0f}°C"
         except Exception:
             weather = None
     m = re.search(r"(-?\d+)°C", weather or "")
@@ -327,12 +332,17 @@ def choose(ranked, k=8, temperature=0.03, rng=None):
 
 def _state():
     try:
-        import memory; return memory.read_state("demo_contact")
+        import memory; return memory.read_state(str(memory.CFG["contact"]["id"]))
     except Exception: return {}
 
 def _chat(n=6):
     try:
-        import memory; c = memory.db(); return [t for _, t in memory.history(c, "demo_contact", n) if t]
+        import memory
+        c = memory.db()
+        try:
+            return [t for _, t in memory.history(c, str(memory.CFG["contact"]["id"]), n) if t]
+        finally:
+            c.close()
     except Exception: return []
 
 def prefer_place_scene(text="", activity=None, chat=None):
@@ -370,9 +380,11 @@ def prefer_place_scene(text="", activity=None, chat=None):
             return []
         return [x for x in seq if isinstance(x, str) and x]
 
-    primary_blob = " ".join(_str_bits(text, activity))
+    primary_blob = text or ""
     chat_blob = " ".join(_chat_bits(chat))
     primary = _best(primary_blob)
+    if primary is None or primary == "看展":
+        primary = _best(" ".join(_str_bits(activity))) or primary
     name = primary or _best(chat_blob)
     if not name:
         return None
@@ -390,7 +402,7 @@ def prefer_place_scene(text="", activity=None, chat=None):
         if len(coarse) <= len(name):
             return name
         return None
-    if not coarse:
+    if not coarse or text != name:
         return name
     return None
 
@@ -417,7 +429,10 @@ def plan(text="", scene=None, now=None, rng=None, jitter=0.05, k=8, temperature=
     """返回 {"scene","category","weights","top","vector","level","cap","text","emotion","emotion_text"}。
     scene 显式覆盖推断（名称/id/别名）。ctx 可传 activity/emo/campus_life/chat/weather，不传就自动读取。
     emotion_text：与 STATE.emotion + schedule soft-bias view（PAD→mood/energy）一致的表情加权提示，供 imagegen 缓解僵硬表情。"""
-    rng = rng or random.Random(); now = now or datetime.datetime.now()
+    from image_context import resolve as resolve_context
+    ctx = resolve_context(text, dict(ctx, now=now))
+    now = ctx.pop("now")
+    rng = rng or random.Random()
     # 情绪始终可读（显式 scene 时也要挂表情提示；测试可传 emo=None → emotion.default）
     if "emo" not in ctx or "campus_life" not in ctx:
         st = _state(); ctx.setdefault("emo", st.get("emotion")); ctx.setdefault("campus_life", st.get("campus_life"))
@@ -451,6 +466,11 @@ def plan(text="", scene=None, now=None, rng=None, jitter=0.05, k=8, temperature=
         upgrade = prefer_place_scene(text, ctx.get("activity"), ctx.get("chat"))
         if upgrade:
             sc = upgrade
+        elif text:
+            try:
+                sc = resolve(text)
+            except ValueError:
+                pass
     # rank 只吃白名单参数；shot_type/user_text/slot 等不得再 TypeError 拖进保守兜底
     _RANK_KEYS = ("activity", "emo", "campus_life", "chat", "weather", "k", "use_embed", "shot_type")
     rank_ctx = {k: ctx[k] for k in _RANK_KEYS if k in ctx}
@@ -506,7 +526,7 @@ def plan(text="", scene=None, now=None, rng=None, jitter=0.05, k=8, temperature=
         if _persist_ok and (bias or {}).get("free_room") and float(emeta.get("mood") or 0) >= 6.5:
             try:
                 import memory as _mem
-                cid = "demo_contact"
+                cid = str(_mem.CFG["contact"]["id"])
                 st0 = _mem.read_state(cid) or {}
                 emo0 = dict(st0.get("emotion") or _em.default())
                 emo1 = _em.bump_daily_happy_slot(emo0, bias, now)
@@ -525,6 +545,12 @@ def plan(text="", scene=None, now=None, rng=None, jitter=0.05, k=8, temperature=
     extra = wear_request_bits(text, ctx.get("user_text"), chat_blob)
     if extra:
         outfit_text = outfit_text.rstrip("。") + "；" + "；".join(extra) + "。"
+    from personalization_runtime import option
+    preferences = [("image.wardrobe", "日常衣橱偏好"), ("image.avoid", "避用服装与颜色"), ("image.makeup", "妆造偏好")]
+    for key, label in preferences:
+        value = option(key)
+        if value:
+            outfit_text += f"\n{label}：{value}。偏好仍需符合当前季节、活动与实际地点。"
     return {"scene": primary, "category": d["category"], "weights": weights, "top": top[:5], "vector": vec,
             "level": lvl, "cap": cap, "text": outfit_text,
             "emotion": emeta, "emotion_text": emeta.get("text") or ""}

@@ -136,6 +136,8 @@ def surf_limit_reason(now, st, cfg):
 
 
 def limit_reason(now, st, cfg, ctx, beat=None):
+    if cfg.get("no_double_text") and not is_routine(beat) and not (beat or {}).get("soft_reach") and (ctx or {}).get("unanswered_proactive_turns", (st or {}).get("proactive_unanswered_turns", 0)) > 0:
+        return "对方尚未回复，普通主动联系已暂停"
     beat = beat or {}
     import idle_contact
     if beat.get("id") == idle_contact.BEAT:
@@ -216,12 +218,19 @@ def record_success(cid, item, now):
     bm = meta.get("beat_meta") or {}
     routine = is_routine(bm)
     idle = bm.get("id") == "idle_contact"
+    complete = item.get("delivery_complete", True)
     key = meta.get("beat_done_key") or bm.get("done_key") or bm.get("id")
     def change(st):
         receipts = dict(st.get("proactive_receipts") or {})
-        if receipt in receipts:
+        partials = dict(st.get("proactive_partial_receipts") or {})
+        prior = partials.get(receipt) or {}
+        has_image = bool(meta.get("has_image"))
+        first = receipt not in receipts
+        if not first and receipt not in partials:
             return {}
-        receipts[receipt] = now.isoformat(sep=" ", timespec="seconds")
+        if not first and not complete and (prior.get("has_image") or not has_image):
+            return {}
+        receipts.setdefault(receipt, now.isoformat(sep=" ", timespec="seconds"))
         receipts = dict(sorted(receipts.items(), key=lambda x: x[1])[-256:])
         day = now.date().isoformat()
         state_day = str(st.get("proactive_day") or "")
@@ -229,34 +238,41 @@ def record_success(cid, item, now):
         stamp = receipts[receipt]
         kv = {"proactive_receipts": receipts,
               "last_proactive_at": max(str(st.get("last_proactive_at") or ""), stamp)}
-        if state_day <= day:
+        if first and state_day <= day:
             kv.update(proactive_day=day, proactive_count=count + (0 if routine or idle else 1))
-        if idle:
+        if first and idle:
             old = st.get("proactive_idle") or {}
             n = int(old.get("count", 0)) if old.get("day") == day else 0
             if str(old.get("day") or "") <= day:
                 kv["proactive_idle"] = {"day": day, "count": n + 1}
             kv["last_idle_contact_at"] = max(str(st.get("last_idle_contact_at") or ""), stamp)
-        if routine:
+        if first and routine:
             old = st.get('proactive_routine') or {}
             if str(old.get('day') or '') <= day:
                 n = int(old.get('count', 0)) if old.get('day') == day else 0
                 kv['proactive_routine'] = {'day': day, 'count': n + 1}
             if 'last_budgeted_proactive_at' not in st:
                 kv['last_budgeted_proactive_at'] = st.get('last_proactive_at')
-        elif not idle:
+        elif first and not idle:
             kv['last_budgeted_proactive_at'] = max(str(st.get('last_budgeted_proactive_at') or ''), stamp)
         import proactive_media
-        kv.update(proactive_media.receipt_patch(st, item, now))
-        import share_dedupe
-        kv.update(share_dedupe.receipt_patch(st, item, now))
+        if has_image and not prior.get("has_image"):
+            kv.update(proactive_media.receipt_patch(st, item, now))
         # Recovery may happen after a real inbound or on a later day: never undo it.
-        if str(st.get("last_inbound_at") or "") < stamp:
+        if first and str(st.get("last_inbound_at") or "") < stamp:
             kv["proactive_unanswered_turns"] = int(st.get("proactive_unanswered_turns", 0)) + 1
             import sleep_chat as sc
             if sc.is_goodnight_text(item.get("text")):
                 _, sleep = sc.note_outbound(item["text"], st, now)
                 kv[sc.STATE_KEY] = sleep
+        if not complete:
+            partials[receipt] = {"at": stamp, "has_image": has_image or bool(prior.get("has_image"))}
+            kv["proactive_partial_receipts"] = {key: value for key, value in partials.items() if key in receipts}
+            return kv
+        partials.pop(receipt, None)
+        kv["proactive_partial_receipts"] = partials
+        import share_dedupe
+        kv.update(share_dedupe.receipt_patch(st, item, now))
         bs = pb._beats_state(st, now)
         if key and str((st.get("proactive_beats") or {}).get("day") or "") <= day:
             material = bm.get("material") or {}
@@ -266,7 +282,7 @@ def record_success(cid, item, now):
                 bs = pb.mark_beat_done(bs, merged, now, slot=bm.get("slot"))
             kv["proactive_beats"] = bs
             import schedule_fidelity as sf
-            if sf.beat_meta_marks_ask_his_day(bm, done_key=key):
+            if sf.beat_meta_marks_ask_his_day(bm, done_key=key) and sf.actual_day_question(item.get("text")):
                 kv["user_day_curiosity"] = sf.mark_asked_his_day(
                     st.get("user_day_curiosity"), now, question=(item.get("text") or "")[:80])
         return kv
@@ -275,6 +291,13 @@ def record_success(cid, item, now):
 
 def record_outbox_success(item, now):
     """Only the primary proactive round carries a receipt; mirror sends do not."""
+    progress = item.get("proactive_progress")
+    if progress:
+        actual = {**progress, "delivery_complete": False,
+                  "text": " / ".join(item.get("sent_bubbles") or []),
+                  "meta": {**(progress.get("meta") or {}), "has_image": bool(item.get("image_sent"))}}
+        if actual["text"] or item.get("link_sent") or item.get("image_sent"):
+            return record_success(str(item.get("contact") or "demo_contact"), actual, now)
     original = item.get("proactive_round")
     if original:
         return record_success(str(item.get("contact") or "demo_contact"), original, now)

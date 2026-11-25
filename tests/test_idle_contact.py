@@ -34,6 +34,7 @@ def day(date):
 @pytest.fixture
 def env(monkeypatch, tmp_path):
     full = copy.deepcopy(config.load())
+    full.pop('shared_life_schedule', None)  # Nap fixtures use their own STATE calendar.
     full["proactive"]["idle_contact"] = {"enabled": True, "interval_sec": [5400, 9000]}
     full["proactive"].update(transport="onebot", primary_channel="qq_onebot", channel_policy="primary")
     monkeypatch.setattr(config, "load", lambda: full)
@@ -157,7 +158,7 @@ def force_style(monkeypatch, style):
     monkeypatch.setattr(idle, "_draw", lambda key: style if key.startswith("idle-style:") else draw(key))
 
 
-def test_deadline_overrides_lottery_budget_media_and_model_skip(env, monkeypatch):
+def test_deadline_overrides_lottery_budget_but_respects_model_skip(env, monkeypatch):
     full, st, _ = env
     force_style(monkeypatch, 0)
     st.update(proactive_day="2026-10-29", proactive_count=10,
@@ -166,8 +167,8 @@ def test_deadline_overrides_lottery_budget_media_and_model_skip(env, monkeypatch
     clock = idle.advance(NOW, st, [], pc)
     assert limiter.limit_reason(NOW, st, pc, {"unanswered_proactive_turns": 0})
     r = scheduler.tick(NOW, pc, st, [], idle_clock=clock, draft_fn=lambda: None)
-    assert r["action"] == "DRAFT" and r["beat"] == idle.BEAT and r["draft"]
-    assert r["idle_fallback"]
+    assert r["action"] == "SKIP" and r["beat"] == idle.BEAT and r.get("draft") is None
+    assert not r.get("idle_fallback")
     for override in ({"proactive_paused": True}, {"last_inbound_at": idle.iso(NOW)}):
         r = scheduler.tick(NOW, pc, {**st, **override}, [], idle_clock=clock, draft_fn=lambda: "在干嘛呢")
         assert r["action"] == "SKIP"
@@ -224,13 +225,15 @@ def test_photo_only_one_and_no_opener(env, monkeypatch, tmp_path):
     assert memory.read_state("demo_contact")["last_reply_at"] == idle.iso(NOW)
 
 
-def test_failed_photo_falls_back_to_text_without_claiming_sent_photo(env, monkeypatch):
+def test_failed_photo_does_not_send_text_or_reset_the_clock(env, monkeypatch):
     force_style(monkeypatch, 2)
     monkeypatch.setattr("chat_media.plan_chat_images", Mock(side_effect=RuntimeError("offline image failure")))
     sent = []
     confirm_sender(monkeypatch, sent)
-    assert run(env)["action"] == "SENT"
-    assert sent and all("WANT_IMAGE" not in x and "图片" not in x for x in sent)
+    assert run(env)["action"] == "DROP"
+    assert not sent
+    assert sender.load_q(env[2])["idle_contact"]["due"]
+    assert memory.read_state("demo_contact")["last_reply_at"] == "2026-10-29 09:01:00"
 
 
 def test_new_inbound_during_generation_cancels_photo(env, monkeypatch, tmp_path):

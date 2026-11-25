@@ -73,10 +73,13 @@ def test_timeout_blocks_repeat_and_late_duplicate_ack_finishes_once(tmp_path):
 @pytest.fixture
 def isolated(tmp_path, monkeypatch):
     import image_caption, voice_asr, reply_engagement, bubble_split
+    monkeypatch.setattr('sleep_chat.scheduled_sleep', lambda *a, **k: False)
     cfg = {'contact': {'id': 'demo_contact'}, 'persona': {'primary_contact_id': 'demo_contact',
         'contact_aliases': {'qq_onebot:123': 'demo_contact', 'wechat_ilink:wx-peer': 'demo_contact'},
         'channels': {'qq': {'allow_user_ids': ['123']}}, 'classmate': {'enabled': True}}}
     monkeypatch.setattr(persona_map, 'load', lambda: cfg)
+    import config
+    monkeypatch.setattr(config, 'load', lambda: cfg)
     monkeypatch.setattr(memory, 'CFG', {**memory.CFG, 'db_path': str(tmp_path / 'chat.db')})
     monkeypatch.setattr(memory, 'DL', tmp_path / 'life')
     (memory.DL / 'contacts' / 'demo_contact').mkdir(parents=True)
@@ -152,8 +155,7 @@ def test_failed_image_does_not_reuse_success_caption(isolated, monkeypatch):
     sent=[]
     out=bridge.handle_inbound(Inbound('qq_onebot','123','发张自拍',msg_id='photo'),dry=False,send=lambda o:sent.append(o),reply_fn=reply)
     assert out['image_generation_failed']
-    assert [o.text for o in sent] == ['照片这次没弄好，没发成']
-    assert all('image_path' not in o.meta for o in sent)
+    assert not sent and out['reply'] == ''
 
 
 def test_outbox_late_ack_updates_real_sent_prefix_without_retransmit(isolated, monkeypatch):
@@ -210,7 +212,11 @@ def test_proactive_partial_counts_one_round_and_only_confirmed_content(status, m
         assert saved['id'] == item['id'] and sender.due({'items':[saved]}, now) is None
         state = memory.read_state('demo_contact')
         assert state['proactive_count'] == 1
-        assert state['proactive_media']['images'] == 0
+        assert (state.get('proactive_media') or {}).get('images', 0) == 0
+        if status == 'failed':
+            from channels import outbox_store
+            queued = outbox_store.load('onebot')['items']
+            assert queued[0]['text'] == '第三句'
         with memory.db() as db:
             assert db.execute("SELECT text FROM messages WHERE sender='me'").fetchall() == [('第一句',),('第二句',)]
         assert committed.call_count == 2
@@ -270,6 +276,254 @@ def _assert_database_unlocked(path):
         db.rollback()
     finally:
         db.close()
+
+
+def _make_recovery_due():
+    with memory.db() as db:
+        db.execute('UPDATE inbound_turns SET next_attempt=0,lease=0')
+
+
+def test_failed_model_turn_recovers_without_new_inbound_or_duplicate_emotion(isolated):
+    from channels.turn_store import TurnStore
+    import emotion
+    send = Mock()
+    model = Mock(side_effect=[TimeoutError('provider offline'), '恢复啦'])
+    msg = Inbound('wechat_ilink', 'wx-peer', '在吗', msg_id='model-retry')
+    with patch.object(emotion, 'appraise', wraps=emotion.appraise) as appraisal:
+        with pytest.raises(TimeoutError):
+            bridge.handle_inbound(msg, dry=False, send=send, reply_fn=model)
+        assert not send.called
+        _make_recovery_due()
+        assert len(TurnStore().pending('wechat_ilink')) == 1
+        recovered = bridge.recover_pending('wechat_ilink', send=send, reply_fn=model)
+        assert recovered[0]['delivery_status'] == 'confirmed'
+        assert appraisal.call_count == 1
+    assert model.call_count == 2 and send.call_count == 1
+    assert not TurnStore().pending('wechat_ilink')
+    with memory.db() as db:
+        assert db.execute("SELECT text,replied FROM messages WHERE sender='them'").fetchall() == [('在吗', 1)]
+    _assert_database_unlocked(isolated / 'chat.db')
+
+
+@pytest.mark.parametrize('failed_step', ['database', 'diary', 'state'])
+def test_confirmed_delivery_replays_bookkeeping_and_immutable_unsent_suffix(isolated, failed_step):
+    from channels.turn_store import TurnStore
+    msg = Inbound('wechat_ilink', 'wx-peer', '聊聊', msg_id='bookkeeping-retry')
+    model = Mock(return_value='收到\n继续聊')
+    sent = []
+    def send(out):
+        sent.append(out.text)
+    original_insert = memory.insert
+    original_diary = memory.append_delivery_diary
+    original_mutate = memory.mutate_state
+    def insert(db, cid, sender, *a, **kw):
+        if sender == 'me' and failed_step == 'database':
+            raise sqlite3.OperationalError('temporary disk failure')
+        return original_insert(db, cid, sender, *a, **kw)
+    def diary(*a, **kw):
+        if failed_step == 'diary':
+            raise OSError('temporary diary failure')
+        return original_diary(*a, **kw)
+    def mutate(cid, change):
+        if failed_step == 'state' and change.__name__ == 'state_patch':
+            raise OSError('temporary state failure')
+        return original_mutate(cid, change)
+    with patch.object(memory, 'insert', insert), patch.object(memory, 'append_delivery_diary', diary), \
+            patch.object(memory, 'mutate_state', mutate):
+        first = bridge.handle_inbound(msg, dry=False, send=send, reply_fn=model)
+    assert first['delivery_status'] == 'bookkeeping_pending' and sent == ['收到']
+    _make_recovery_due()
+    recovered = bridge.recover_pending('wechat_ilink', send=send,
+                                      reply_fn=Mock(side_effect=AssertionError('must reuse plan')))
+    assert recovered[0]['delivery_status'] == 'confirmed'
+    assert sent == ['收到', '继续聊'] and model.call_count == 1
+    assert not TurnStore().pending('wechat_ilink')
+    with memory.db() as db:
+        assert db.execute("SELECT text FROM messages WHERE sender='me'").fetchall() == [('收到',), ('继续聊',)]
+        assert db.execute("SELECT replied FROM messages WHERE sender='them'").fetchone() == (1,)
+    contents = ''.join(p.read_text() for p in (memory.DL/'contacts/demo_contact/diary').glob('*.md'))
+    assert contents.count('我回「收到」') == contents.count('我回「继续聊」') == 1
+    before = memory.read_state('demo_contact')
+    bridge.handle_inbound(msg, dry=False, send=send, reply_fn=model)
+    assert memory.read_state('demo_contact') == before and len(sent) == 2
+
+
+def test_crash_after_transport_confirmation_recovers_without_resending(isolated):
+    from channels.turn_store import TurnStore
+    msg = Inbound('wechat_ilink', 'wx-peer', '你好', msg_id='crash-after-ack')
+    send = Mock()
+    with patch.object(memory, 'append_delivery_diary', side_effect=KeyboardInterrupt):
+        with pytest.raises(KeyboardInterrupt):
+            bridge.handle_inbound(msg, dry=False, send=send, reply_fn=lambda *a: '收到')
+    assert send.call_count == 1
+    _make_recovery_due()  # another process acquires the expired worker lease
+    result = bridge.recover_pending('wechat_ilink', send=send)
+    assert result[0]['delivery_status'] == 'confirmed' and send.call_count == 1
+    assert not TurnStore().pending('wechat_ilink')
+
+
+def test_recovered_bookkeeping_uses_receipt_time_not_restart_time(isolated):
+    import datetime as dt
+    msg = Inbound('wechat_ilink', 'wx-peer', '你好', msg_id='receipt-time')
+    send = Mock()
+    with patch.object(memory, 'append_delivery_diary', side_effect=OSError('disk unavailable')):
+        bridge.handle_inbound(msg, dry=False, send=send, reply_fn=lambda *a: '收到')
+    actual_send = dt.datetime.now().replace(microsecond=0)-dt.timedelta(hours=2)
+    with memory.db() as db:
+        db.execute("UPDATE receipts SET updated=? WHERE status='confirmed'", (actual_send.timestamp(),))
+    _make_recovery_due()
+    bridge.recover_pending('wechat_ilink', send=send)
+    assert send.call_count == 1
+    assert memory.read_state('demo_contact')['last_reply_at'] == actual_send.strftime('%Y-%m-%d %H:%M:%S')
+
+
+def test_unknown_delivery_is_never_automatically_recovered(isolated):
+    from channels.turn_store import TurnStore
+    send = Mock(side_effect=DeliveryUnknown('response lost'))
+    msg = Inbound('wechat_ilink', 'wx-peer', '你好', msg_id='unknown-no-resend')
+    bridge.handle_inbound(msg, dry=False, send=send, reply_fn=lambda *a: '收到')
+    _make_recovery_due()
+    assert TurnStore().pending('wechat_ilink') == []
+    assert bridge.recover_pending('wechat_ilink', send=send) == []
+    assert send.call_count == 1
+
+
+def test_retry_generation_can_finish_with_skip(isolated):
+    from channels.turn_store import TurnStore
+    msg = Inbound('wechat_ilink', 'wx-peer', '在吗', msg_id='retry-then-skip')
+    with pytest.raises(TimeoutError):
+        bridge.handle_inbound(msg, dry=False, send=Mock(), reply_fn=Mock(side_effect=TimeoutError))
+    _make_recovery_due()
+    send = Mock()
+    bridge.recover_pending('wechat_ilink', send=send, reply_fn=lambda *a: '[SKIP]')
+    _make_recovery_due()
+    assert not TurnStore().pending('wechat_ilink') and not send.called
+
+
+def test_late_ack_bookkeeping_failure_recovers_without_resending(isolated):
+    tracker = AckTracker(timeout=.01, journal=ReceiptJournal(isolated/'ack.db'))
+    socket = Socket(tracker, ack=False)
+    def send(out):
+        return tracker.send(socket, {}, operation_id=out.meta['delivery_id'], on_confirmed=out.meta['_on_confirmed'])
+    msg = Inbound('qq_onebot', '123', '你好', msg_id='late-bookkeeping')
+    bridge.handle_inbound(msg, dry=False, send=send, reply_fn=lambda *a: '收到')
+    with patch.object(memory, 'append_delivery_diary', side_effect=OSError('disk unavailable')):
+        tracker.resolve(receipt(socket.sent[0]['echo']))
+        tracker._late.join()
+    _make_recovery_due()
+    result = bridge.recover_pending('qq_onebot', send=send)
+    assert result[0]['delivery_status'] == 'confirmed' and len(socket.sent) == 1
+    with memory.db() as db:
+        assert db.execute("SELECT replied FROM messages WHERE sender='them'").fetchone() == (1,)
+
+
+def test_confirmed_photo_bookkeeping_is_repaired_even_after_slot_expires(isolated, monkeypatch):
+    import photo_schedule
+    image = isolated/'photo.png'
+    image.write_bytes(b'fixture')
+    monkeypatch.setattr(bridge, '_plan_want_image', lambda *a, **k: {
+        'paths': [str(image)], 'texts': [], 'photo_schedule': {'fixture': True}})
+    def reply(*a):
+        brain.LAST['want_image'] = '自拍'
+        return ''
+    send = Mock()
+    gate = Mock()
+    monkeypatch.setattr(photo_schedule, 'check', gate)
+    msg = Inbound('wechat_ilink', 'wx-peer', '发张自拍', msg_id='photo-ack-before-expiry')
+    with patch.object(memory, 'append_delivery_diary', side_effect=OSError('disk unavailable')):
+        first = bridge.handle_inbound(msg, dry=False, send=send, reply_fn=reply)
+    assert first['delivery_status'] == 'bookkeeping_pending'
+    gate.side_effect = ValueError('photo slot expired')
+    _make_recovery_due()
+    result = bridge.recover_pending('wechat_ilink', send=send)
+    assert result[0]['delivery_status'] == 'confirmed'
+    assert send.call_count == gate.call_count == 1
+
+
+def test_held_but_confirmed_unbookkept_turn_is_reconciled_after_restart(isolated):
+    msg = Inbound('wechat_ilink', 'wx-peer', '你好', msg_id='held-ack-before-crash')
+    send = Mock()
+    with patch.object(memory, 'append_delivery_diary', side_effect=OSError('disk unavailable')):
+        bridge.handle_inbound(msg, dry=False, send=send, reply_fn=lambda *a: '收到')
+    # Reproduce timeout/late-ACK crash ordering: transport confirmed while the
+    # turn still has the persisted unknown/held status from its timeout.
+    with memory.db() as db:
+        db.execute("UPDATE inbound_turns SET phase='held',lease=0,next_attempt=0")
+    result = bridge.recover_pending('wechat_ilink', send=send)
+    assert result[0]['delivery_status'] == 'confirmed' and send.call_count == 1
+
+
+def test_recovery_repairs_bookkeeping_but_drops_suffix_covered_by_new_reply(isolated):
+    sent = []
+    def send(out):
+        sent.append(out.text)
+    old = Inbound('wechat_ilink', 'wx-peer', '聊聊', msg_id='older-plan')
+    with patch.object(memory, 'append_delivery_diary', side_effect=OSError('disk unavailable')):
+        bridge.handle_inbound(old, dry=False, send=send, reply_fn=lambda *a: '收到\n旧的后半句')
+    bridge.handle_inbound(Inbound('wechat_ilink', 'wx-peer', '不用了', msg_id='newer-plan'),
+                          dry=False, send=send, reply_fn=lambda *a: '好呀')
+    _make_recovery_due()
+    bridge.recover_pending('wechat_ilink', send=send)
+    assert sent == ['收到', '好呀']
+    diary = ''.join(p.read_text() for p in (memory.DL/'contacts/demo_contact/diary').glob('*.md'))
+    assert diary.count('我回「收到」') == 1 and '旧的后半句' not in diary
+
+
+def test_turn_claim_is_exclusive_and_stale_owner_cannot_overwrite(isolated):
+    from concurrent.futures import ThreadPoolExecutor
+    from channels.turn_store import TurnStore
+    msg = Inbound('wechat_ilink', 'wx-peer', '你好', msg_id='exclusive')
+    store = TurnStore()
+    with ThreadPoolExecutor(4) as workers:
+        turns = list(workers.map(lambda _: store.claim('same-key', msg, create=True), range(4)))
+    claimed = [turn for turn in turns if turn]
+    assert len(claimed) == 1
+    _make_recovery_due()
+    replacement = TurnStore().claim('same-key', msg)
+    replacement.update('complete')
+    claimed[0].update('retry_generate')
+    with memory.db() as db:
+        assert db.execute("SELECT phase FROM inbound_turns WHERE key='same-key'").fetchone() == ('complete',)
+
+
+@pytest.mark.parametrize('transport', ['ws', 'http'])
+def test_onebot_worker_recovers_failed_model_without_new_event(isolated, transport):
+    msg = Inbound('qq_onebot', '123', '在吗', msg_id='runner-recovery', bot_account_id='bot-1')
+    with pytest.raises(TimeoutError):
+        bridge.handle_inbound(msg, dry=False, send=Mock(), reply_fn=Mock(side_effect=TimeoutError))
+    _make_recovery_due()
+    if transport == 'ws':
+        runner = qq.OneBotQQRunner('ws://unused', dry=False, reply_fn=lambda *a: '恢复啦')
+        runner._login_info = {'user_id':'bot-1'}
+    else:
+        runner = qq.OneBotHttpRunner('127.0.0.1:0', 'http://unused', dry=False, reply_fn=lambda *a: '恢复啦')
+    with patch.object(runner, '_send_outbound', Mock()) as send:
+        runner._recover_pending()
+        assert send.call_count == 1
+        runner.dry = True
+        with patch.object(bridge, 'recover_pending') as recovery:
+            runner._recover_pending()
+            assert not recovery.called
+
+
+def test_ilink_worker_recovers_on_restart_without_new_event(isolated, monkeypatch):
+    from types import SimpleNamespace
+    from channels import ilink_weixin as iw
+    msg = Inbound('wechat_ilink', 'wx-peer', '在吗', msg_id='ilink-runner-restart')
+    with pytest.raises(TimeoutError):
+        bridge.handle_inbound(msg, dry=False, send=Mock(), reply_fn=Mock(side_effect=TimeoutError))
+    _make_recovery_due()
+    runner = iw.ILinkWeixinRunner(dry=False)
+    bot = SimpleNamespace(messages=lambda: iter(()), stop=Mock())
+    monkeypatch.setattr(runner, '_build_bot', lambda: bot)
+    monkeypatch.setattr(iw, '_warmup_mem_async', lambda: None)
+    monkeypatch.setattr(brain, 'reply', lambda *a, **k: '恢复啦')
+    send = Mock()
+    monkeypatch.setattr(runner, '_send', send)
+    runner.run()
+    assert send.call_count == 1
+    with memory.db() as db:
+        assert db.execute("SELECT replied FROM messages WHERE sender='them'").fetchone() == (1,)
 
 
 def test_bridge_search_diagnostics_contain_only_summary_and_unsigned_links(isolated):

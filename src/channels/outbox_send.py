@@ -7,10 +7,22 @@ from sleep_chat import ProactiveSleepBlocked
 
 
 def check_proactive_sleep(item: dict, now=None) -> None:
-    """Guard primary, mirror and legacy proactive retries; direct replies still work."""
-    original = item.get("proactive_round") or {}
+    """All retries obey sleep; proactive retries also obey their beat gates."""
+    original = item.get("proactive_round") or item.get("proactive_progress") or {}
     if not (original or item.get("beat_id") or
             str(item.get("reason") or "").startswith("proactive ")):
+        try:
+            from config import load
+            if (load().get("identity_runtime") or {}).get("schema_version") != 2:
+                import memory
+                from sleep_chat import reply_suppression_reason
+                reason = reply_suppression_reason(memory.read_state(contact_for_item(item)), now)
+                if reason:
+                    raise ProactiveSleepBlocked(reason)
+        except ProactiveSleepBlocked:
+            raise
+        except Exception as exc:
+            raise ProactiveSleepBlocked(f"睡眠状态读取失败，停止补发: {type(exc).__name__}") from exc
         return
     import memory
     import sleep_chat as sc
@@ -110,14 +122,20 @@ def persist_outbound_bubble(
     *,
     occ: Any = "outbox",
     type_: str = "outbox",
+    now=None,
 ) -> bool:
     """Insert one me-bubble into chat.db (bridge-compatible fingerprint).
 
     Returns True if inserted, False on dup fp / error. Never raises to callers.
     """
-    if cid != "demo_contact" or not (bub or "").strip():
+    if not (bub or "").strip():
         return False
     try:
+        from config import load
+        cfg = load()
+        primary = str((cfg.get("persona") or {}).get("primary_contact_id") or (cfg.get("contact") or {}).get("id") or "")
+        if cid != primary:
+            return False
         import memory
         c = memory.db()
         # Stable operation identity makes late/duplicate ACK bookkeeping idempotent.
@@ -127,13 +145,29 @@ def persist_outbound_bubble(
         finally:
             c.close()
         if inserted:
-            import datetime
+            import sleep_chat
+            stamp = sleep_chat._now(now)
             memory.append_diary(cid, f"[{channel}] 我发「{bub}」")
-            memory.update_state(cid, last_reply_at=__import__("timeutil").now_local().strftime("%Y-%m-%d %H:%M:%S"))
+            memory.mutate_state(cid, lambda st: {
+                "last_reply_at": max(str(st.get("last_reply_at") or ""), sleep_chat._iso(stamp)),
+                **sleep_chat.confirmed_outbound_patch(bub, st, stamp)})
         return inserted
     except Exception as e:
         print(f"[outbox] persist bubble skip: {e!r}", flush=True)
         return False
+
+
+def continuation_block(item: dict, items: list[dict]) -> tuple[str, str] | None:
+    """A later payload must wait for its predecessor's confirmed receipt."""
+    previous = item.get("after_delivery_id")
+    if not previous:
+        return None
+    receipt = next((row for row in items if row.get("id") == previous), None)
+    if receipt and receipt.get("status") == "sent":
+        return None
+    if receipt and receipt.get("status") in ("dropped", "expired", "failed", "cleared"):
+        return "dropped", "前序内容已取消，停止后续发送"
+    return "hold", "等待前序内容确认送达"
 
 
 def contact_for_item(item: dict | None, default: str = "demo_contact") -> str:

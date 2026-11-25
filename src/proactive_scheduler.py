@@ -7,7 +7,7 @@ Persona SSOT: data/persona_dossier.json.
 """
 import argparse, datetime, math, random, re
 from config import load
-import memory, schedule, proactive, nickname
+import memory, schedule, proactive, proactive_media, nickname
 
 # 作息活动 → 主动意愿权重（越高越闲）；同时用于推算 Busy B
 # 意愿权重：越高越闲。按 life_calendar 活动名/前缀对齐；缺省再看 bucket。
@@ -307,26 +307,17 @@ def bad_draft(text):
     return bool(EMPTY_HOOK.match(str(text).strip()))
 
 def repeated_draft(text, rows, now):
-    """Reject a repeated recent own message, not a new report on the same topic.
+    """Check whole messages, copied clauses and same-meal complaint paraphrases."""
+    from proactive_repetition import repeated
+    return repeated(text, rows, now)
 
-    Conservative exact comparison ignores spacing/punctuation only. No semantic
-    similarity threshold: a changed meal, time, feeling or fact must remain valid.
-    """
-    import unicodedata
-    def norm(value):
-        return "".join(c for c in unicodedata.normalize("NFKC", str(value))
-                       if not c.isspace() and unicodedata.category(c)[0] not in "PZ")
-    candidate = norm(text)
-    if len(candidate) < 6:
-        return False
-    for row in rows or []:
-        if len(row) < 3 or row[0] != "me":
-            continue
-        stamp = _ts(row[2])
-        if stamp is not None and 0 <= (now - stamp).total_seconds() <= 6 * 3600:
-            if candidate == norm(row[1]):
-                return True
-    return False
+
+def _draft_task(cid, hist, now, task, draft_fn):
+    if draft_fn is not None:
+        return draft_fn(), None, None
+    import brain
+    draft = brain.reply(cid, hist, dry=True, now=now, task=task)
+    return draft, brain.LAST.get("proactive_skip_reason"), brain.LAST.get("proactive_photo")
 
 
 def next_consider(now, st=None, cfg=None, rng=random, after_send=False, unanswered_turns=None):
@@ -386,7 +377,11 @@ def tick(now=None, cfg=None, st=None, rows=None, rng=random, force=False, use_ll
         candidates.insert(0, idle)
     eligible = []
     for candidate in candidates:
-        import proactive_media
+        if (candidate.get("id") == idle_contact.BEAT and candidate.get("idle_style") == "photo"
+                and not proactive_media.planned_scene(candidate)):
+            out["events"].append({"key": candidate.get("done_key") or candidate["id"],
+                                  "status": "limited", "reason": "当前日程没有可拍的照片场景"})
+            continue
         if candidate.get("id") != idle_contact.BEAT:
             candidate = proactive_media.prepare(candidate, st, now, cfg)
         if candidate is None:
@@ -400,11 +395,10 @@ def tick(now=None, cfg=None, st=None, rows=None, rng=random, force=False, use_ll
         beat = dict(eligible[0])
         # One natural message covers waking + today's plan; one round of budget.
         if beat["id"] in ("morning", "schedule_brief"):
-            other = "schedule_brief" if beat["id"] == "morning" else "morning"
-            brief = next((b for b in eligible if b["id"] == other), None)
-            if brief:
-                beat["merged_keys"] = [brief["done_key"]]
-                beat["day_line"] = beat.get("day_line") or brief.get("day_line")
+            morning = next((b for b in eligible if b["id"] == "morning"), None)
+            brief = next((b for b in eligible if b["id"] == "schedule_brief"), None)
+            if morning and brief:
+                beat = {**morning, "merged_keys": [brief["done_key"]]}
     elif candidates:
         return dict(out, action="SKIP", reason=(out["events"][0]["reason"] if out["events"] else "当前日程不适合拍照，等待合适时机"), beat=None)
     out["beat"] = (beat or {}).get("id")
@@ -429,47 +423,78 @@ def tick(now=None, cfg=None, st=None, rows=None, rng=random, force=False, use_ll
         if not use_llm:
             return dict(out, action="DRAFT", reason="清醒期久未联系计时已到（未调模型）", task=task)
         if beat.get("idle_style") == "photo":
+            scene = proactive_media.planned_scene(beat)
+            if not scene:
+                return dict(out, action="SKIP", reason="当前日程没有可拍的照片场景")
             return dict(out, action="DRAFT", reason="久未联系，随手发一张照片", idle_fallback=True,
-                        draft="WANT_IMAGE:" + beat["image"]["scene"])
+                        draft="WANT_IMAGE:" + scene)
         try:
-            import brain
-            d = (draft_fn or (lambda: brain.reply(cid, [(r[0], r[1]) for r in rows[-10:]],
-                                                 dry=True, now=now, task=task)))()
+            d, reject, _ = _draft_task(cid, [(r[0], r[1]) for r in rows[-10:]], now, task, draft_fn)
+            if reject:
+                return dict(out, action="SKIP", reason=reject)
             if d:
                 d = "\n".join(line for line in d.splitlines() if not line.strip().upper().startswith("WANT_IMAGE"))
         except Exception as exc:
-            d = None
-            out["generation_error"] = type(exc).__name__
+            return dict(out, action="SKIP", reason=f"主动草稿生成失败（{type(exc).__name__}）", draft=None)
+        if not d or "[SKIP]" in d:
+            return dict(out, action="SKIP", reason="模型选择不主动联系 [SKIP]", draft=None)
         if bad_draft(d) or repeated_draft(d, rows, now):
-            d = idle_contact.fallback(rows, idle_clock["anchor_at"])
-            out["idle_fallback"] = True
+            return dict(out, action="SKIP", reason="主动草稿无有效新内容", draft=None)
         return dict(out, action="DRAFT", reason="清醒期久未联系计时已到", draft=d)
 
     if beat:
         import proactive_beats as beats
         topic = beats.beat_topic_name(beat)
         task = beats.build_beat_task(beat, st, now=now)
-        if beat.get("image_required"):
-            task += " 本轮会附图，配文自然衔接图片与聊天，不解释生图技术或配额。图只来自实际日程中的场景。"
-        task += " " + CONTENT_RULES
+        if beat["id"] == "surf_share":
+            out.update(topic=topic, p=1.0, beat_done_key=beat.get("done_key") or beat["id"])
+            if not use_llm:
+                return dict(out, action="DRAFT", reason="分享候选（未调模型）", task=task)
+            import share_caption
+            try:
+                if draft_fn is None:
+                    import brain
+                    raw = brain.draft_share([(r[0], r[1]) for r in rows[-10:]], task, now=now)
+                else:
+                    raw = draft_fn()
+            except Exception as exc:
+                return dict(out, action="SKIP", reason=f"分享判断失败（{type(exc).__name__}）", draft=None)
+            decision = share_caption.parse_decision(raw)
+            if decision is None:
+                return dict(out, action="SKIP", reason="模型未返回可用分享决定", draft=None)
+            if decision.action == "skip":
+                return dict(out, action="SKIP", reason="模型觉得这条不必分享", share_declined=True, draft=None)
+            caption = decision.caption
+            if caption and (bad_draft(caption) or repeated_draft(caption, rows, now)):
+                caption = ""
+            if not caption:
+                material = dict(beat["material"], without_caption=True)
+                if material.get("invitation"):
+                    material["invitation"] = dict(material["invitation"], include=False)
+                out["beat_meta"]["material"] = material
+            return dict(out, action="DRAFT", reason="模型选择分享原帖", draft=caption)
+
+        from proactive_repetition import context_note
+        task += " " + CONTENT_RULES + context_note(rows, now)
         if B >= 60:
             task += " 此刻忙，简短说一句近况即可；忙碌或对方未回本身不是沉默理由。"
         out["topic"] = topic
         out["p"] = 1.0
         if not use_llm:
             return dict(out, action="DRAFT", reason=f"节拍 {beat['id']} busy={B:.0f}（未调模型）", task=task)
-        import brain
-        d = (draft_fn or (lambda: brain.reply(cid, memory.history(memory.db(), cid, 10), dry=True, now=now, task=task)))()
+        hist = memory.history(memory.db(), cid, 10) if draft_fn is None else []
+        d, reject, photo = _draft_task(cid, hist, now, task, draft_fn)
+        if reject:
+            return dict(out, action="SKIP", reason=reject)
         if d is None:
             return dict(out, action="SKIP", reason=f"节拍 {beat['id']} 模型沉默 [SKIP]", draft=None)
         if repeated_draft(d, rows, now):
             return dict(out, action="SKIP", reason="近期已说过同样内容，等新进展", draft=None)
         if bad_draft(d):
             return dict(out, action="SKIP", reason=f"节拍 {beat['id']} 草稿无钩子，丢弃", draft=d)
-        return dict(out, action="DRAFT", reason=f"节拍 {beat['id']} 发送", draft=d,
+        return dict(out, action="DRAFT", reason=f"节拍 {beat['id']} 发送", draft=d, photo_intent=photo,
                     beat_done_key=beat.get("done_key") or beat["id"])
 
-    import proactive_media
     if proactive_media.required(st, now, cfg):
         return dict(out, action="SKIP", reason="等待日程图片机会，不用文字补足配额")
     # 弱化 lottery：默认 probability=0 → 交给模型决定；>0 时仍可作软过滤
@@ -481,17 +506,21 @@ def tick(now=None, cfg=None, st=None, rows=None, rng=random, force=False, use_ll
         return dict(out, action="SKIP", reason=f"软过滤未过 p={p:.2f}")
     w = topic_weights(cfg, ctx, now); topic = rng.choices(list(w), weights=list(w.values()))[0]
     out["topic"] = topic
+    from proactive_repetition import context_note
+    task = build_task(topic, ctx) + context_note(rows, now)
     if not use_llm:
-        return dict(out, action="DRAFT", reason=f"考虑触发 busy={B:.0f}（未调模型）", task=build_task(topic, ctx))
-    import brain
-    d = (draft_fn or (lambda: brain.reply(cid, memory.history(memory.db(), cid, 10), dry=True, now=now, task=build_task(topic, ctx))))()
+        return dict(out, action="DRAFT", reason=f"考虑触发 busy={B:.0f}（未调模型）", task=task)
+    hist = memory.history(memory.db(), cid, 10) if draft_fn is None else []
+    d, reject, photo = _draft_task(cid, hist, now, task, draft_fn)
+    if reject:
+        return dict(out, action="SKIP", reason=reject)
     if d is None:
         return dict(out, action="SKIP", reason=f"模型选择沉默 [SKIP] busy={B:.0f}", draft=None)
     if repeated_draft(d, rows, now):
         return dict(out, action="SKIP", reason="近期已说过同样内容，等新进展", draft=None)
     if bad_draft(d):
         return dict(out, action="SKIP", reason=f"草稿无具体钩子，丢弃 busy={B:.0f}", draft=d)
-    return dict(out, action="DRAFT", reason=f"模型决定发送 busy={B:.0f}", draft=d)
+    return dict(out, action="DRAFT", reason=f"模型决定发送 busy={B:.0f}", draft=d, photo_intent=photo)
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("--now"); ap.add_argument("--force", action="store_true"); ap.add_argument("--no-llm", action="store_true")

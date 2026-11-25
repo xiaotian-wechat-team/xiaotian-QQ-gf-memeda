@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#fffafd" />
+    <title>Persona Runtime Dev Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="location.css?v=location-agent-2" />
+    <link rel="stylesheet" href="onboarding.css?v=portrait-gallery-49-2" />
+    <link rel="stylesheet" href="gallery-demos.css?v=gallery-studies-3" />
+    <link rel="help" href="assets/home-portraits/credits.html?v=49-2" title="肖像图片署名" />
+  </head>
+  <body>
+    <div class="app-shell companion-shell">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <a href="/" class="brand" aria-label="Persona Runtime 首页">
+            <div class="brand-mark">PR</div>
+            <div>
+              <p class="eyebrow">DEV CONSOLE</p>
+              <h1>Persona Runtime</h1>
+            </div>
+          </a>
+          <button id="navToggle" type="button" class="button button-ghost nav-toggle" aria-expanded="false" aria-controls="nav">工作台菜单</button>
+        </div>
+        <div class="env-chip"><span class="pulse"></span> local / safe mode</div>
+        <nav id="nav" class="nav-list" aria-label="主导航">
+          <div class="nav-heading">日常使用</div>
+          <button class="nav-item active" data-view="overview"><span>01</span>我的人设</button>
+          <button class="nav-item" data-view="intimacy"><span>02</span>关系与亲密度</button>
+          <button class="nav-item" data-view="schedule"><span>03</span>日程安排</button>
+          <button class="nav-item" data-view="location"><span>04</span>人物位置</button>
+          <div class="nav-heading">个性化设置</div>
+          <button class="nav-item" data-view="persona"><span>05</span>个性化设置</button>
+          <button class="nav-item" data-view="providers"><span>06</span>能力设置</button>
+          <div class="nav-heading">高级配置</div>
+          <button class="nav-item" data-view="deployment"><span>07</span>部署绑定</button>
+          <button class="nav-item" data-view="runtime"><span>08</span>Runtime 隔离</button>
+          <button class="nav-item" data-view="flow"><span>09</span>工作流诊断</button>
+        </nav>
+        <div class="sidebar-footer">
+          <div class="safe-note"><strong>先预览，再应用</strong><span>人物草稿保存在本地后台。应用状态以工作流实际加载的版本为准。</span></div>
+          <button id="exportAll" class="button button-ghost full">导出当前配置 ↓</button>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" id="breadcrumb">PERSONA RUNTIME / OVERVIEW</p>
+            <h2 id="pageTitle" tabindex="-1">可替换人设工作台</h2>
+          </div>
+          <div class="topbar-actions">
+            <span class="branch-pill" aria-label="当前服务的 Git 分支"><span class="branch-dot" aria-hidden="true"></span><span id="branchName">读取分支…</span></span>
+            <button id="resetAll" class="icon-button" title="刷新后台状态，保留未保存的人物编辑" aria-label="刷新后台状态">↻</button>
+          </div>
+        </header>
+
+        <section id="view-home" class="view active-view"></section>
+        <section id="view-onboarding" class="view"></section>
+        <section id="view-overview" class="view"></section>
+        <section id="view-intimacy" class="view"></section>
+        <section id="view-schedule" class="view"></section>
+        <section id="view-location" class="view"></section>
+        <section id="view-persona" class="view"></section>
+        <section id="view-providers" class="view"></section>
+        <section id="view-deployment" class="view"></section>
+        <section id="view-runtime" class="view"></section>
+        <section id="view-flow" class="view"></section>
+      </main>
+    </div>
+    <div id="toast" class="toast" role="status"></div>
+    <script src="app.js?v=companion-onboarding"></script>
+    <script src="location-geography.js?v=location-agent-2"></script>
+    <script src="location-map.js?v=location-agent-3"></script>
+    <script src="location.js?v=location-agent-3"></script>
+    <script src="personalization.js?v=personalization-2"></script>
+    <script src="appearance.js?v=personalization-2"></script>
+    <script src="home-portraits.js?v=49-2"></script>
+    <script src="gallery-demos.js?v=gallery-studies-49-2"></script>
+    <script src="onboarding.js?v=portrait-gallery-49-2"></script>
+  </body>
+</html>

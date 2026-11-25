@@ -31,9 +31,14 @@ def main():
         if not r.get("ok") and not (r.get("why") or "").startswith("cache"):
             print(json.dumps({"attach": False, "reason": r.get("why")}, ensure_ascii=False) if a.json else f"ERR {r.get('why')}")
             return 2
-    snap = weather.current_snap(place=a.place)
+    obs = weather.ambient_observation(a.place)
+    snap = obs["snap"] if obs else None
     base = weather.baseline_means(place=a.place)
-    ok, reason = weather.should_attach(snap=snap, baseline=base, place=a.place)
+    if snap is None:
+        cached = weather.current_snap(place=a.place)
+        ok, reason = False, ("stale" if cached else "no-snap")
+    else:
+        ok, reason = weather.should_attach(snap=snap, baseline=base, place=a.place)
     if a.json:
         print(json.dumps({"attach": ok, "reason": reason, "place": a.place, "snap": snap, "baseline": base}, ensure_ascii=False))
     else:

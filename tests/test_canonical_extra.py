@@ -11,6 +11,7 @@ import gen_canonical_extra as gx, gen_canonical as gc
 
 def _cfg(root, tmp):
     cfg = copy.deepcopy(config.load()); cfg["appearance"]["profile_dir"] = str(root); cfg["appearance"]["canonical_refs"] = ["sheet.png"]
+    cfg["imagegen"].pop("prompt_recipe", None)  # Explicit legacy pose-only coverage.
     cfg["imagegen"]["out_dir"] = str(tmp / "out"); cfg["imagegen"]["session_state"] = str(tmp / "s.json"); return cfg
 
 def test_extra_kind_and_pick(tmp_path=None):
@@ -38,14 +39,22 @@ def test_extra_kind_and_pick(tmp_path=None):
     p1 = imagegen.build_prompt("咖啡店自拍", "d", n_canonical=1, pose_kind=None, cfg=cfg)
     assert "姿态五视图" not in p1 and "低头五视图" not in p1 and "仰头五视图" not in p1
     assert "任务核心是场景与活动" in p1 and "正视标准肖像五视图" in p1
-    assert "五视图（身份标准）；第 2 张" not in imagegen.build_prompt("x", "d", n_canonical=1)
+    assert "五视图（身份标准）；第 2 张" not in imagegen.build_prompt("x", "d", n_canonical=1, cfg=cfg)
     # n_canonical>1 但无 pose_kind：不写「头部角度」诱导
-    p2 = imagegen.build_prompt("x", "d", n_canonical=2, pose_kind=None); assert "头部角度" not in p2 and "画低头姿态" not in p2
+    p2 = imagegen.build_prompt("x", "d", n_canonical=2, pose_kind=None, cfg=cfg); assert "头部角度" not in p2 and "画低头姿态" not in p2
     cfg["appearance"]["extra_sheets"] = False; assert len(refpick.pick_identity("仰头", 3, cfg, seed=1)[0]) == 1
     cfg["appearance"]["extra_sheets"] = True
-    job = imagegen.write_pending("背影走在操场", "inner", {"text": "t"}, cfg, {}, "err"); d = json.loads(job.read_text())
+    import photo_schedule
+    from unittest.mock import patch
+    slot = {"start": "00:00", "end": "24:00", "activity": "操场散步", "location": "操场", "photo_ok": True}
+    snapshot = {"date": "2026-11-05", "historical": False,
+                "depiction_time": "2026-11-05T12:00:00", "slot": slot}
+    with patch.object(photo_schedule, "check", return_value=None):
+        job = imagegen.write_pending("背影走在操场", "inner", {"text": "t", "photo_schedule": snapshot}, cfg, {}, "err")
+    d = json.loads(job.read_text())
     assert d["extra_sheet"].endswith("back/sheet.png") and d["canonical_refs"][1] == d["extra_sheet"] and len(d["reference_images"]) == 5
-    assert "背影五视图" in d["prompt"] and "173" in d["prompt"]
+    assert d["prompt_recipe"] == "freefield_creatoros_v1" and d["reasoning_effort"] == "high"
+    assert d["photo_request"]["scene"] == "背影走在操场" and d["photo_request"]["photo_schedule"] == snapshot
 
 def _sheet(path, n=5, h=200):
     im = Image.new("RGB", (n * 100 if n else 300, h), (200, 200, 200))

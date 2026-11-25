@@ -5,6 +5,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 import imagegen
 import chat_media
 
+LEGACY_PROMPT_CONFIG = {"imagegen": {}}
+
 
 def test_build_quantity_prompt_isolated():
     q1 = imagegen.build_quantity_prompt(1)
@@ -22,7 +24,7 @@ def test_build_quantity_prompt_isolated():
 
 
 def test_build_prompt_n1_unchanged_stop():
-    p = imagegen.build_prompt("图书馆", "黑色长直发", n_images=1)
+    p = imagegen.build_prompt("图书馆", "黑色长直发", n_images=1, cfg=LEGACY_PROMPT_CONFIG)
     assert "【数量指令】" in p
     assert "生成一张图片" in p or "本次生成 1 张" in p
     assert "生成一张后停止" in p
@@ -34,7 +36,7 @@ def test_build_prompt_n1_unchanged_stop():
 def test_build_prompt_n_multi_one_shot():
     p = imagegen.build_prompt(
         "宿舍追剧", "黑色长直发",
-        n_images=3,
+        n_images=3, cfg=LEGACY_PROMPT_CONFIG,
         shot_briefs=["对镜自拍", "第一人称手部", "全身"],
     )
     assert "本次生成 3 张" in p
@@ -51,7 +53,7 @@ def test_build_prompt_n_multi_one_shot():
 
 
 def test_build_prompt_n_clamped():
-    p = imagegen.build_prompt("x", "d", n_images=99)
+    p = imagegen.build_prompt("x", "d", n_images=99, cfg=LEGACY_PROMPT_CONFIG)
     assert "本次生成 5 张" in p
     assert "本次生成 6 张" not in p
     assert chat_media.MAX_CHAT_IMAGES_ABS == 5
@@ -59,7 +61,10 @@ def test_build_prompt_n_clamped():
 
 def test_build_prompt_shared_refs_note_not_per_image():
     """N>1 只改张数文案；refs 槽位仍由 cap_refs/MAX_IMAGE_REFS 单次挂载（非每张一套）。"""
-    p = imagegen.build_prompt("宿舍", "黑色长直发", n_images=3, n_canonical=2, n_scene_refs=3)
+    p = imagegen.build_prompt(
+        "宿舍", "黑色长直发", n_images=3, n_canonical=2, n_scene_refs=3,
+        cfg=LEGACY_PROMPT_CONFIG,
+    )
     assert "本次生成 3 张" in p
     assert "画新的 3 张" in p or "画新的" in p
 

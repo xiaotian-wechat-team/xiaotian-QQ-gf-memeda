@@ -116,8 +116,27 @@ def prep_jpeg_b64(path: str | pathlib.Path, *, max_edge: int = 1280, quality: in
 
 
 def caption_image(path: str | pathlib.Path, *, cfg: dict | None = None, use_cache: bool = True) -> Optional[str]:
+    from config import snapshot
+    from runtime_policy import allowed
+    from personalization_runtime import report_loaded
+    with snapshot(load()) as full:
+        if not full.get("image_caption", {}).get("enabled", True) or not (cfg or {}).get("enabled", True) or not allowed("image_caption", full):
+            return None
+        result = _caption_image(path, cfg=cfg, use_cache=use_cache)
+        if result:
+            report_loaded("caption", full)
+        return result
+
+
+def _caption_image(path, *, cfg=None, use_cache=True):
     """Caption one local image via Magpie. Soft-fail → None."""
+    full = load()
     cfg = cfg or _cfg()
+    if not cfg.get("enabled", True) or not full.get("image_caption", {}).get("enabled", True):
+        return None
+    if (full.get("identity_runtime") or {}).get("schema_version") == 2:
+        from native_client import media_text
+        return media_text("image_caption", path, full)
     if not cfg.get("enabled", True):
         return None
     p = pathlib.Path(path).expanduser()

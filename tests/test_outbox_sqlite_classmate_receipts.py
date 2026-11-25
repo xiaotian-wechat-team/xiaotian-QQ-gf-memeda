@@ -56,9 +56,10 @@ def test_qq_receipts_ttl(tmp_path, monkeypatch):
     qr.purge()
     assert qr.stats()["count"] == 0
 
-def test_ilink_fatal_exit_code():
+def test_ilink_fatal_exit_code(monkeypatch):
     """Feeder fatal → run returns 1 (launchd KeepAlive)."""
     from channels import ilink_weixin as iw
+    monkeypatch.setattr(iw, '_warmup_mem_async', lambda: None)
     class FakeBot:
         def messages(self):
             raise ConnectionError("disconnect")
@@ -75,7 +76,7 @@ def test_ilink_fatal_exit_code():
     code = r.run()
     assert code == 1, code
 
-def test_bridge_classmate_no_image(monkeypatch):
+def test_bridge_non_primary_is_blocked_without_image(monkeypatch):
     from channels.types import Inbound
     from channels import bridge
     from channels import classmate as cm_mod
@@ -88,10 +89,8 @@ def test_bridge_classmate_no_image(monkeypatch):
     monkeypatch.setattr(mem, "DB_PATH", pathlib.Path(td) / "cm.db")
     msg = Inbound(channel="qq_onebot", peer_id="555", text="在吗", raw={"sender": {"nickname": "测试"}})
     out = bridge.handle_inbound(msg, dry=False, send=lambda o: sent.append(o), persist=True, reply_fn=None)
-    # Runtime hard-gate: only demo_contact couple path is live; classmate contacts are blocked.
-    assert out.get("contact_id", "").startswith("classmate:")
     assert out.get("blocked") is True
-    assert out.get("reason") == "contact_not_allowed"
+    assert out.get("want_image") is None
     assert sent == []
 
 if __name__ == "__main__":

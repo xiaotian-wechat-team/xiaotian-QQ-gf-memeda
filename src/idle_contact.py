@@ -45,7 +45,8 @@ def _sleep_ranges(start, end, st):
     day = start.date()
     while day <= end.date():
         midnight = dt.datetime.combine(day, dt.time())
-        today = st.get("life_today") or {}
+        from shared_schedule import enabled
+        today = {} if enabled() else st.get("life_today") or {}
         if today.get("date") != day.isoformat() or not today.get("slots"):
             today = lc.get_day(day) or {}
         slots = today.get("slots") or []
@@ -137,8 +138,6 @@ def candidate(clock, st, now):
             import schedule_shot
             beat["image"] = schedule_shot.image_hint_for_beat("life_photo", usable, today)
             beat["image_slot"] = usable
-        if not (beat.get("image") or {}).get("scene"):
-            beat["idle_style"] = "share"
     return beat
 
 
@@ -166,17 +165,5 @@ def task(beat):
               "他先前情绪不好时温柔关心，不用调侃或抱怨口吻。"
               "撒娇是亲昵语气，不把未回当作生气或不爱你的事实，不编造他的行踪。"
               "本轮文字即可，不输出WANT_IMAGE，不提定时器、时长阈值、程序或配额；"
-              "不要因忙碌、未回或没有新鲜话题输出[SKIP]，简单表达想找他也成立。")
-
-
-def fallback(rows, anchor):
-    options = ["小熊，在忙什么呀，想找你说说话", "怎么半天没理我呀，想你了🥺",
-               "你那边忙完没，来陪我说两句呀", "想你了，跑来找你贴一下", "小熊，忙完记得来找我玩呀"]
-    import memory
-    recent = {memory.norm(r[1]) for r in rows[-30:] if r[0] == "me"}
-    start = _draw("idle-fallback:" + anchor) % len(options)
-    for i in range(len(options)):
-        choice = options[(start + i) % len(options)]
-        if memory.norm(choice) not in recent:
-            return choice
-    return options[start]
+              "自己判断此刻有没有值得说的话，简单表达想找他也成立；"
+              "没有合适内容就只输出[SKIP]，不为完成联系次数编造话题。")

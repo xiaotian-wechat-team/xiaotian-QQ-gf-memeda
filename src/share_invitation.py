@@ -26,7 +26,8 @@ def plan(material, shares, now, rng=None):
             return {'eligible': True, 'include': False, 'probability': 0.0, 'reason': '12h_cooldown'}
         if age <= 168:
             exposure += 2 ** (-age / 48)
-    probability = .35 * (.4 ** exposure)
+    from personalization_runtime import option
+    probability = float(option("content.invitation_probability", .35) or 0) * (.4 ** exposure)
     if rng is None:
         key = now.date().isoformat() + '|' + str(material.get('source_url')) + '|' + '|'.join(str(s.get('shared_at')) for s in shares)
         rng = random.Random(hashlib.sha256(key.encode()).digest())

@@ -36,13 +36,15 @@ from .outbox_store import serialized as _serialize_outbox
 from proactive_limiter import serialized_retry as _serialize_proactive_retry
 
 try:
-    from config import ROOT as _CFG_ROOT
+    from config import ROOT as _CFG_ROOT, load as _load_config
     ROOT = Path(_CFG_ROOT)
 except Exception:  # pragma: no cover
     ROOT = Path(__file__).resolve().parents[2]
+    _load_config = dict
 
 OUTBOX_FILE = ROOT / "data" / "qq_outbox.json"  # legacy; runtime uses outbox_store SQLite
-MEDIA_IN_DIR = ROOT / "data" / "media" / "qq_in"
+_MEDIA_ROOT = (_load_config().get("identity_runtime") or {}).get("media_root")
+MEDIA_IN_DIR = Path(_MEDIA_ROOT) / "qq_in" if _MEDIA_ROOT else ROOT / "data" / "media" / "qq_in"
 
 try:
     import websocket  # websocket-client
@@ -62,8 +64,9 @@ def _qq_allow_ids(cfg: dict | None = None) -> set[str]:
     return {str(x).strip() for x in raw if str(x).strip()}
 
 
-def _is_allowed_peer(peer_id: str, cfg: dict | None = None) -> bool:
-    return allowed_peer(CHANNEL, peer_id, cfg)
+def _is_allowed_peer(peer_id: str, cfg: dict | None = None,
+                     bot_account_id: str | None = None) -> bool:
+    return allowed_peer(CHANNEL, peer_id, cfg, bot_account_id)
 
 
 def _classmate_media_flags(cfg: dict | None = None) -> tuple[bool, bool]:
@@ -76,8 +79,14 @@ def _classmate_media_flags(cfg: dict | None = None) -> tuple[bool, bool]:
 
 
 def _outbound_media_permitted(peer_id: str, kind: str, cfg: dict | None = None) -> bool:
-    """Only the explicitly allowlisted peer mapped to contact demo_contact may receive media."""
-    return _is_allowed_peer(peer_id, cfg)
+    """Use the fixed worker bot as well as the peer for identity-scoped routes."""
+    cfg = cfg or _load_config()
+    bot = ((persona_cfg(cfg).get("channels") or {}).get("qq") or {}).get("bot_account_id")
+    if (cfg.get("identity_runtime") or {}) and kind == "image":
+        from runtime_policy import allowed
+        if not allowed("image_send", cfg):
+            return False
+    return _is_allowed_peer(peer_id, cfg, bot_account_id=bot)
 
 
 def _gated_send_image(send_image, peer_id: str, path: str, caption=None):
@@ -114,24 +123,33 @@ def _outbox_is_goodnight(text: str) -> bool:
 
 
 def _is_night_hour(now=None) -> bool:
-    """Night/quiet window for stale-goodnight drop; reads proactive.quiet_hours."""
-    import timeutil as _tu
-    return _tu.in_quiet_hours(now)
+    from timeutil import in_quiet_hours
+    return in_quiet_hours(now)
 
 
 def enqueue_outbox(
     *,
     peer: str,
     text: str,
-    contact: str = "demo_contact",
+    contact: str | None = None,
     reason: str = "",
     item_id: str | None = None,
     image_path: str | None = None,
+    bot_account_id: str | None = None,
+    authorization_action: str | None = None,
 ) -> str:
     """Shared QQ outbox enqueue (proactive / fail-closed send)."""
-    require_allowed_peer(CHANNEL, peer)
-    if str(contact) != "demo_contact":
-        raise PermissionError("Only contact demo_contact may enter the outbox")
+    from config import load
+    from timeutil import now_local
+    cfg = load()
+    if cfg.get("identity_runtime"):
+        from runtime_policy import require_queued_send
+        require_queued_send({"authorization_action": authorization_action}, image=bool(image_path))
+    primary = str((cfg.get("persona") or {}).get("primary_contact_id") or "")
+    contact = str(contact or primary)
+    require_allowed_peer(CHANNEL, peer, cfg, bot_account_id)
+    if contact != primary:
+        raise PermissionError("Only the current partner may enter the outbox")
     ob = _load_outbox()
     oid = item_id or f"qq-{int(time.time())}"
     ids = {x.get("id") for x in (ob.get("items") or [])}
@@ -143,9 +161,14 @@ def enqueue_outbox(
         "contact": contact,
         "text": text or "",
         "reason": reason,
-        "created": __import__("timeutil").now_local().strftime("%Y-%m-%d %H:%M:%S"),
+        "created": now_local().strftime("%Y-%m-%d %H:%M:%S"),
         "status": "pending",
         "channel": "onebot",
+        "persona_id": (cfg.get("persona") or {}).get("id"),
+        "partner_id": contact,
+        "bot_account_id": bot_account_id or (persona_cfg(cfg).get("channels") or {}).get("qq", {}).get("bot_account_id"),
+        "operation_id": oid,
+        "authorization_action": authorization_action,
     }
     if image_path:
         it["image_path"] = str(image_path)
@@ -163,6 +186,7 @@ def flush_qq_outbox(
     peer_id: str,
     after_inbound_text: str | None = None,
     now=None,
+    bot_account_id: str | None = None,
 ) -> list[dict]:
     """Flush pending QQ outbox AFTER current inbound reply.
 
@@ -171,7 +195,7 @@ def flush_qq_outbox(
     require_media / image_path: never degrade to text-only if image cannot send.
     Persists each sent bubble; resumes from sent_bubbles (no prefix resend).
     """
-    if not peer_id or send_text is None or not _is_allowed_peer(peer_id):
+    if not peer_id or send_text is None or not _is_allowed_peer(peer_id, bot_account_id=bot_account_id):
         return []
     data = _load_outbox()
     items = data.get("items") or []
@@ -182,6 +206,7 @@ def flush_qq_outbox(
     from channels.outbox_send import (
         ProactiveSleepBlocked,
         check_proactive_sleep,
+        continuation_block,
         already_sent_count,
         channel_tag,
         contact_for_item,
@@ -191,7 +216,7 @@ def flush_qq_outbox(
         split_outbound_bubbles,
     )
     fixed_now = now
-    send_now = lambda: fixed_now if fixed_now is not None else __import__("timeutil").now_local()
+    send_now = lambda: fixed_now if fixed_now is not None else _dt.datetime.now()
     now = send_now()
     in_chat = bool((after_inbound_text or "").strip())
     night = _is_night_hour(now)
@@ -211,6 +236,11 @@ def flush_qq_outbox(
         except ProactiveSleepBlocked as exc:
             it.update(status="dropped", note=str(exc), dropped_at=send_now().isoformat(sep=" "))
             results.append({"id": it.get("id"), "ok": False, "dropped": True, "why": str(exc)})
+            changed = True
+            continue
+        blocked = continuation_block(it, items)
+        if blocked:
+            it.update(status=blocked[0], note=blocked[1])
             changed = True
             continue
         from proactive_limiter import retry_reason
@@ -246,7 +276,7 @@ def flush_qq_outbox(
                 changed = True
                 continue
             image = None
-        if not text and not image:
+        if not text and not image and not it.get("link_url"):
             it["status"] = "dropped"
             it["note"] = "empty"
             changed = True
@@ -274,12 +304,9 @@ def flush_qq_outbox(
             results.append({"id": it.get("id"), "ok": False, "dropped": True, "why": "fidelity_error"})
             changed = True
             continue
-        if text and _outbox_is_goodnight(text) and (night or in_chat):
+        if _outbox_is_goodnight(it.get("orig_text") or text):
             it["status"] = "dropped"
-            it["note"] = (
-                f"stale goodnight dropped (night={night} in_chat={in_chat}); "
-                "current them already answered first"
-            )
+            it["note"] = "stale goodnight dropped: 旧晚安不补发"
             it["dropped_at"] = now.strftime("%Y-%m-%d %H:%M:%S")
             print(
                 f"[onebot] outbox drop stale goodnight id={it.get('id')} "
@@ -291,13 +318,15 @@ def flush_qq_outbox(
             continue
 
         cid = contact_for_item(it)
-        if cid != "demo_contact":
+        if cid != contact_for_item({}):
             continue
         it["status"] = "sending"
         _save_outbox(data)
         oid = str(it.get("id") or "out")
 
         def _deliver(fn, value, index, kind="text", item_ref=it, delivery_cid=cid, delivery_oid=oid, stamp=now):
+            from runtime_policy import require_queued_send
+            require_queued_send(item_ref, image=kind == "image")
             # Freeze the item id and payload in this per-operation closure.
             operation = f"outbox:{delivery_oid}:{index}"
             worker_ident = threading.get_ident()
@@ -317,18 +346,21 @@ def flush_qq_outbox(
                         return
                     record_sent_bubble(target, value)
                     piece = value
-                persist_outbound_bubble(delivery_cid, ch_tag, piece, occ=operation, type_="outbox")
-                original = target.get("proactive_round") or {}
+                persist_outbound_bubble(delivery_cid, ch_tag, piece, occ=operation, type_="outbox", now=stamp)
+                original = target.get("proactive_round") or target.get("proactive_progress") or {}
                 pending = (original.get("meta") or {}).get("pending_delivery")
                 if pending:
                     import brain
-                    brain.commit_delivery(delivery_cid, pending, delivery_id=f"proactive:{delivery_oid}", sent_text=piece)
+                    brain.commit_delivery(delivery_cid, pending, delivery_id=f"proactive:{original.get('id') or delivery_oid}", sent_text=piece)
+                if target.get("proactive_progress"):
+                    from proactive_limiter import record_outbox_success
+                    record_outbox_success(target, stamp)
                 complete = (not target.get("text") and
                             (not target.get("link_url") or target.get("link_sent")) and
                             (not target.get("image_path") or target.get("image_sent")))
                 target["status"] = "sent" if complete else "hold"
                 if complete:
-                    target["sent_at"] = __import__("timeutil").now_local().strftime("%Y-%m-%d %H:%M:%S")
+                    target["sent_at"] = stamp.strftime("%Y-%m-%d %H:%M:%S")
                     from proactive_limiter import record_outbox_success
                     record_outbox_success(target, stamp)
             def confirmed():
@@ -416,7 +448,7 @@ def flush_qq_outbox(
                 _deliver(send_text, link, "link", "link")
                 changed = True
             it["status"] = "sent"
-            it["sent_at"] = __import__("timeutil").now_local().strftime("%Y-%m-%d %H:%M:%S")
+            it["sent_at"] = now.strftime("%Y-%m-%d %H:%M:%S")
             it["note"] = f"outbox flush after_inbound={bool(after_inbound_text)}"
             it["text"] = ""
             print(f"[onebot] outbox flushed id={it.get('id')}", flush=True)
@@ -521,7 +553,8 @@ def normalize_event(ev: dict) -> Optional[Inbound]:
     if ev.get("message_type") not in ("private", "friend"):
         return None  # 群聊暂不接
     user_id = str(ev.get("user_id") or (ev.get("sender") or {}).get("user_id") or "")
-    if not user_id or not _is_allowed_peer(user_id):
+    bot_account_id = str(ev.get("self_id") or "")
+    if not user_id or not _is_allowed_peer(user_id, bot_account_id=bot_account_id):
         return None
     message = ev.get("message") or ev.get("raw_message") or ""
     plain = _seg_text(message).strip()
@@ -611,6 +644,8 @@ def normalize_event(ev: dict) -> Optional[Inbound]:
         ts=str(ev.get("time") or ""),
         msg_type=msg_type,
         raw=raw,
+        bot_account_id=bot_account_id,
+        peer_type=str(ev.get("message_type") or ""),
     )
 
 
@@ -629,8 +664,9 @@ def make_private_event(user_id: str, text: str, message_id: int = 1, ts: int | N
 
 
 def send_private_text_ws(ws, user_id: str, text: str, echo: str = "xiaotian", *,
-                         tracker=None, on_confirmed=None, operation_id=None) -> dict:
-    require_allowed_peer(CHANNEL, user_id)
+                         tracker=None, on_confirmed=None, operation_id=None,
+                         bot_account_id: str | None = None) -> dict:
+    require_allowed_peer(CHANNEL, user_id, bot_account_id=bot_account_id)
     payload = {
         "action": "send_private_msg",
         "params": {"user_id": int(user_id) if str(user_id).isdigit() else user_id, "message": text},
@@ -668,9 +704,10 @@ def send_private_text_http(api_base: str, user_id: str, text: str, token: str = 
 
 
 def send_private_record_ws(ws, user_id: str, file_ref: str, echo: str = "xiaotian_voice", *,
-                           tracker=None, on_confirmed=None, operation_id=None) -> dict:
+                           tracker=None, on_confirmed=None, operation_id=None,
+                           bot_account_id: str | None = None) -> dict:
     """发 QQ 语音条。file_ref: 本地路径 / URL / base64://…；NapCat 会转 SILK。"""
-    require_allowed_peer(CHANNEL, user_id)
+    require_allowed_peer(CHANNEL, user_id, bot_account_id=bot_account_id)
     payload = {
         "action": "send_private_msg",
         "params": {
@@ -734,9 +771,12 @@ def send_private_image_ws(
     caption: str | None = None,
     echo: str = "xiaotian_image",
     tracker=None, on_confirmed=None, operation_id=None,
+    bot_account_id: str | None = None,
 ) -> dict:
     """发私聊图片（OneBot v11 image 段；可选同条 text 配文）。"""
-    require_allowed_peer(CHANNEL, user_id)
+    require_allowed_peer(CHANNEL, user_id, bot_account_id=bot_account_id)
+    from photo_schedule import check_file
+    check_file(image_ref)
     ref = _file_ref_for_onebot(image_ref)
     segs: list[dict] = []
     cap = (caption or "").strip()
@@ -766,6 +806,8 @@ def send_private_image_http(
 ) -> dict:
     """OneBot HTTP API：POST /send_private_msg（image 段）。"""
     require_allowed_peer(CHANNEL, user_id)
+    from photo_schedule import check_file
+    check_file(image_ref)
     ref = _file_ref_for_onebot(image_ref)
     segs: list[dict] = []
     cap = (caption or "").strip()
@@ -800,9 +842,11 @@ def process_inbound(
 ) -> dict:
     from .bridge import handle_inbound
 
-    cid = resolve_contact_id(inbound.channel, inbound.peer_id)
+    cid = resolve_contact_id(inbound.channel, inbound.peer_id,
+                             bot_account_id=inbound.bot_account_id)
     print(
-        f"[onebot] in peer={inbound.peer_id} → contact={cid} text={inbound.text[:80]!r}",
+        f"[onebot] in channel={inbound.channel} bot={inbound.bot_account_id or '-'} "
+        f"peer={inbound.peer_id} → contact={cid} text={inbound.text[:80]!r}",
         flush=True,
     )
     result = handle_inbound(inbound, dry=dry, send=send, reply_fn=reply_fn, persist=persist, should_cancel=should_cancel)
@@ -925,7 +969,7 @@ class OneBotQQRunner:
                                 "params": {
                                     "flag": flag,
                                     "approve": approve,
-                                    "remark": "小熊" if approve else "",
+                                    "remark": "演示联系人" if approve else "",
                                 },
                                 "echo": "friend_req",
                             },
@@ -937,7 +981,7 @@ class OneBotQQRunner:
             return
         peer = str(ev.get("user_id") or (ev.get("sender") or {}).get("user_id") or "")
         if (ev.get("post_type") == "message" and ev.get("message_type") in ("private", "friend")
-                and _is_allowed_peer(peer)):
+                and _is_allowed_peer(peer, bot_account_id=str(ev.get("self_id") or ""))):
             # Keep the websocket callback free to receive the rest of the turn.
             with self._burst_lock:
                 self._burst_events.append(ev)
@@ -966,6 +1010,8 @@ class OneBotQQRunner:
     def _run_bursts(self):
         from .reply_burst import collect, combine
         from reply_engagement import snapshot
+        from config import load
+        cid = str((load().get("contact") or {}).get("id") or "")
         while True:
             with self._burst_lock:
                 if not self._burst_events or self._stop:
@@ -974,7 +1020,7 @@ class OneBotQQRunner:
                 first = self._burst_events.pop(0)
             try:
                 peer = self._event_peer(first)
-                events = collect(first, lambda: self._drain_peer(peer), activity=snapshot("demo_contact"))
+                events = collect(first, lambda: self._drain_peer(peer), activity=snapshot(cid))
                 messages = [m for e in events if (m := normalize_event(e)) is not None]
                 if messages:
                     print(f"[onebot] reply burst messages={len(messages)}", flush=True)
@@ -982,57 +1028,68 @@ class OneBotQQRunner:
             except Exception as exc:
                 print(f"[onebot] reply burst error: {exc!r}", file=sys.stderr, flush=True)
 
+    def _send_outbound(self, out: Outbound, account=""):
+        require_allowed_peer(CHANNEL, out.peer_id, bot_account_id=out.bot_account_id or account)
+        bot_account_id = out.bot_account_id or account
+        ack = dict(tracker=self._receipts,
+                   on_confirmed=(out.meta or {}).get("_on_confirmed"),
+                   operation_id=(out.meta or {}).get("delivery_id"),
+                   bot_account_id=bot_account_id)
+        # Acknowledged text, image and voice use the same receipt tracker.
+        voice = (out.meta or {}).get("voice_path") or (out.meta or {}).get("record_path")
+        if voice:
+            if not _outbound_media_permitted(out.peer_id, "voice"):
+                print(
+                    f"[onebot] REJECT voice to non-couple peer={out.peer_id}",
+                    flush=True,
+                )
+                if out.text:
+                    send_private_text_ws(self._ws, out.peer_id, out.text, bot_account_id=bot_account_id)
+                return
+            from pathlib import Path as _P
+            import base64 as _b64
+            p = _P(str(voice))
+            if p.is_file():
+                ref = "base64://" + _b64.b64encode(p.read_bytes()).decode("ascii")
+            else:
+                ref = str(voice)
+            return send_private_record_ws(self._ws, out.peer_id, ref, **ack)
+        image = (out.meta or {}).get("image_path")
+        if image:
+            if not _outbound_media_permitted(out.peer_id, "image"):
+                print(
+                    f"[onebot] REJECT image to non-couple peer={out.peer_id}",
+                    flush=True,
+                )
+                raise PermissionError("image route is not authorized")
+            # Prefer independent text bubble then image-only (no fused caption)
+            if (out.text or "").strip():
+                send_private_text_ws(self._ws, out.peer_id, out.text, tracker=self._receipts, bot_account_id=bot_account_id)
+            return send_private_image_ws(
+                self._ws, out.peer_id, str(image), caption=None, **ack
+            )
+        if out.text:
+            return send_private_text_ws(self._ws, out.peer_id, out.text, **ack)
+
+    def _recover_pending(self):
+        if self.dry or not self._login_info.get('user_id'):
+            return
+        from .bridge import recover_pending
+        account = str(self._login_info['user_id'])
+        recover_pending(CHANNEL, send=lambda out: self._send_outbound(out, account),
+                        reply_fn=self.reply_fn, bot_account_id=account)
+
     def _handle_event(self, ev, inbound=None):
         inbound = inbound or normalize_event(ev)
         if not inbound:
             return
         # Contact scope is checked before any reply or media access.
-        couple_peer = _is_allowed_peer(inbound.peer_id)
+        couple_peer = _is_allowed_peer(inbound.peer_id, bot_account_id=inbound.bot_account_id)
         if not couple_peer:
             return
 
-        def _send(out: Outbound):
-            require_allowed_peer(CHANNEL, out.peer_id)
-            ack = dict(tracker=self._receipts,
-                       on_confirmed=(out.meta or {}).get("_on_confirmed"),
-                       operation_id=(out.meta or {}).get("delivery_id"))
-            # Acknowledged text, image and voice use the same receipt tracker.
-            voice = (out.meta or {}).get("voice_path") or (out.meta or {}).get("record_path")
-            if voice:
-                if not _outbound_media_permitted(out.peer_id, "voice"):
-                    print(
-                        f"[onebot] REJECT voice to non-couple peer={out.peer_id}",
-                        flush=True,
-                    )
-                    if out.text:
-                        send_private_text_ws(self._ws, out.peer_id, out.text)
-                    return
-                from pathlib import Path as _P
-                import base64 as _b64
-                p = _P(str(voice))
-                if p.is_file():
-                    ref = "base64://" + _b64.b64encode(p.read_bytes()).decode("ascii")
-                else:
-                    ref = str(voice)
-                return send_private_record_ws(self._ws, out.peer_id, ref, **ack)
-            image = (out.meta or {}).get("image_path")
-            if image:
-                if not _outbound_media_permitted(out.peer_id, "image"):
-                    print(
-                        f"[onebot] REJECT image to non-couple peer={out.peer_id}",
-                        flush=True,
-                    )
-                    if out.text:
-                        send_private_text_ws(self._ws, out.peer_id, out.text)
-                    return
-                # Prefer independent text bubble then image-only (no fused caption)
-                if (out.text or "").strip():
-                    send_private_text_ws(self._ws, out.peer_id, out.text, tracker=self._receipts)
-                return send_private_image_ws(
-                    self._ws, out.peer_id, str(image), caption=None, **ack
-                )
-            if out.text:
-                return send_private_text_ws(self._ws, out.peer_id, out.text, **ack)
+        def _send(out):
+            return self._send_outbound(out, inbound.bot_account_id)
 
         result = process_inbound(
             inbound,
@@ -1041,20 +1098,31 @@ class OneBotQQRunner:
             reply_fn=self.reply_fn,
             should_cancel=lambda: self._has_newer(inbound.peer_id),
         )
-        if not self.dry and not result.get("cancelled") and not result.get("delivery_error") and not self._has_newer(inbound.peer_id):
+        if not self.dry and not result.get("blocked") and not result.get("cancelled") and not result.get("delivery_error") and not self._has_newer(inbound.peer_id):
             try:
                 def outbox_text(peer, txt, **ack):
-                    return send_private_text_ws(self._ws, peer, txt, tracker=self._receipts, **ack)
+                    return send_private_text_ws(self._ws, peer, txt, tracker=self._receipts,
+                                                bot_account_id=inbound.bot_account_id, **ack)
                 def outbox_image(peer, path, caption=None, **ack):
-                    return send_private_image_ws(self._ws, peer, path, caption=caption, tracker=self._receipts, **ack)
+                    return send_private_image_ws(self._ws, peer, path, caption=caption, tracker=self._receipts,
+                                                 bot_account_id=inbound.bot_account_id, **ack)
                 outbox_text.ack_aware = outbox_image.ack_aware = True
                 flush_qq_outbox(
                     outbox_text, outbox_image,
                     peer_id=inbound.peer_id,
                     after_inbound_text=inbound.text,
+                    bot_account_id=inbound.bot_account_id,
                 )
             except Exception as e:
                 print(f"[onebot] outbox flush error: {e!r}", file=sys.stderr, flush=True)
+        print("[onebot] turn_complete " + json.dumps({
+            "msg_id": inbound.msg_id, "bot": inbound.bot_account_id,
+            "peer": inbound.peer_id, "status": result.get("delivery_status"),
+            "blocked": bool(result.get("blocked")),
+            "cancelled": bool(result.get("cancelled")),
+            "sent": len(result.get("sent_bubbles") or []),
+            "error": bool(result.get("delivery_error")),
+        }), flush=True)
         self._got += 1
         if self.once and self._ws and not result.get("cancelled"):
             self._stop = True
@@ -1073,6 +1141,7 @@ class OneBotQQRunner:
         )
         backoff = 1.0
         while not self._stop:
+            self._login_info = {}  # Recovery waits for this connection's login ACK.
             self._ws = websocket.WebSocketApp(
                 self._uri(),
                 header=self._headers(),
@@ -1091,6 +1160,9 @@ class OneBotQQRunner:
                 return 0
             try:
                 while t.is_alive() and not self._stop:
+                    # The websocket thread keeps consuming ACKs while this worker
+                    # retries durable unsent turns or confirmed bookkeeping.
+                    self._recover_pending()
                     time.sleep(0.5)
             except KeyboardInterrupt:
                 self._stop = True
@@ -1207,59 +1279,10 @@ class _HttpEventHandler(BaseHTTPRequestHandler):
         inbound = normalize_event(ev)
         if inbound:
 
-            def _send(out: Outbound):
-                try:
-                    voice = (out.meta or {}).get("voice_path") or (out.meta or {}).get("record_path")
-                    if voice:
-                        if not _outbound_media_permitted(out.peer_id, "voice"):
-                            print(
-                                f"[onebot-http] REJECT voice to non-couple peer={out.peer_id}",
-                                flush=True,
-                            )
-                            if out.text:
-                                send_private_text_http(
-                                    runner.api_base, out.peer_id, out.text, token=runner.token
-                                )
-                            return
-                        send_private_record_http(
-                            runner.api_base, out.peer_id, str(voice), token=runner.token
-                        )
-                        return
-                    image = (out.meta or {}).get("image_path")
-                    if image:
-                        if not _outbound_media_permitted(out.peer_id, "image"):
-                            print(
-                                f"[onebot-http] REJECT image to non-couple peer={out.peer_id}",
-                                flush=True,
-                            )
-                            if out.text:
-                                send_private_text_http(
-                                    runner.api_base, out.peer_id, out.text, token=runner.token
-                                )
-                            return
-                        if (out.text or "").strip():
-                            send_private_text_http(
-                                runner.api_base, out.peer_id, out.text, token=runner.token
-                            )
-                        send_private_image_http(
-                            runner.api_base,
-                            out.peer_id,
-                            str(image),
-                            caption=None,
-                            token=runner.token,
-                        )
-                    elif out.text:
-                        send_private_text_http(
-                            runner.api_base, out.peer_id, out.text, token=runner.token
-                        )
-                except Exception as e:
-                    print(f"[onebot-http] send fail: {e}", file=sys.stderr)
-                    raise
-
             process_inbound(
                 inbound,
                 dry=runner.dry,
-                send=None if runner.dry else _send,
+                send=None if runner.dry else runner._send_outbound,
                 reply_fn=runner.reply_fn,
             )
             if not runner.dry:
@@ -1312,6 +1335,69 @@ class OneBotHttpRunner:
         self.dry = dry
         self.reply_fn = reply_fn
         self.got = 0
+        self._recovery_stop = threading.Event()
+
+    def _recover_pending(self):
+        if self.dry:
+            return
+        from .bridge import recover_pending
+        account = ((persona_cfg().get('channels') or {}).get('qq') or {}).get('bot_account_id')
+        recover_pending(CHANNEL, send=self._send_outbound, reply_fn=self.reply_fn,
+                        bot_account_id=str(account) if account else None)
+
+    def _recovery_loop(self):
+        while not self._recovery_stop.wait(1):
+            try:
+                self._recover_pending()
+            except Exception as exc:
+                print(f"[onebot-http] recovery deferred: {exc!r}", file=sys.stderr, flush=True)
+
+    def _send_outbound(self, out: Outbound):
+        require_allowed_peer(CHANNEL, out.peer_id, bot_account_id=out.bot_account_id)
+        try:
+            voice = (out.meta or {}).get("voice_path") or (out.meta or {}).get("record_path")
+            if voice:
+                if not _outbound_media_permitted(out.peer_id, "voice"):
+                    print(
+                        f"[onebot-http] REJECT voice to non-couple peer={out.peer_id}",
+                        flush=True,
+                    )
+                    if out.text:
+                        send_private_text_http(
+                            self.api_base, out.peer_id, out.text, token=self.token
+                        )
+                    return
+                send_private_record_http(
+                    self.api_base, out.peer_id, str(voice), token=self.token
+                )
+                return
+            image = (out.meta or {}).get("image_path")
+            if image:
+                if not _outbound_media_permitted(out.peer_id, "image"):
+                    print(
+                        f"[onebot-http] REJECT image to non-couple peer={out.peer_id}",
+                        flush=True,
+                    )
+                    raise PermissionError("image route is not authorized")
+                if (out.text or "").strip():
+                    send_private_text_http(
+                        self.api_base, out.peer_id, out.text, token=self.token
+                    )
+                send_private_image_http(
+                    self.api_base,
+                    out.peer_id,
+                    str(image),
+                    caption=None,
+                    token=self.token,
+                )
+            elif out.text:
+                send_private_text_http(
+                    self.api_base, out.peer_id, out.text, token=self.token
+                )
+        except Exception as e:
+            print(f"[onebot-http] send fail: {e}", file=sys.stderr)
+            raise
+
 
     def run(self) -> int:
         httpd = ThreadingHTTPServer((self.host, self.port), _HttpEventHandler)
@@ -1326,19 +1412,37 @@ class OneBotHttpRunner:
             "发信用 api_base /send_private_msg",
             flush=True,
         )
+        self._recovery_stop.clear()
+        if not self.dry:
+            threading.Thread(target=self._recovery_loop, daemon=True, name='onebot-http-recovery').start()
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
             print("[onebot-http] stop", flush=True)
         finally:
+            self._recovery_stop.set()
             httpd.server_close()
         return 0
+
+
+def read_token_file(path: str | Path) -> str:
+    import stat
+    file_path = Path(path).expanduser()
+    mode = stat.S_IMODE(file_path.stat().st_mode)
+    if mode & (stat.S_IRWXG | stat.S_IRWXO):
+        raise PermissionError(f"OneBot token file must not be accessible by group/other: {file_path}")
+    token = file_path.read_text(encoding="utf-8").strip()
+    if not token or any(ch in token for ch in "\r\n") or any(ch.isspace() for ch in token):
+        raise ValueError("OneBot token file must contain one non-empty token")
+    return token
 
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description="QQ OneBot → 小甜 brain")
     ap.add_argument("--ws", default=None, help="OneBot 正向 WS，默认 config.persona.channels.qq.ws_uri")
-    ap.add_argument("--token", default=None)
+    ap.add_argument("--token", default=None, help="兼容旧启动方式；推荐 --token-file，避免 ps 暴露")
+    ap.add_argument("--token-file", default=None,
+                    help="token 文件（权限 600/400）；也可用 XIAOTIAN_ONEBOT_TOKEN_FILE 或 ONEBOT_TOKEN_FILE")
     ap.add_argument("--http-api", default=None, help="OneBot HTTP API 根，默认 http://127.0.0.1:3000")
     ap.add_argument("--http-listen", default=None, help="收事件 POST，如 127.0.0.1:8765")
     ap.add_argument("--dry-run", action="store_true", default=True)
@@ -1354,43 +1458,55 @@ def main(argv=None):
     args = ap.parse_args(argv)
 
     if args.self_test:
-        qq_cfg = (persona_cfg().get("channels") or {}).get("qq") or {}
-        allow = qq_cfg.get("allow_user_ids") or [10001]
-        if isinstance(allow, (str, int)):
-            allow = [allow]
-        peer = str(allow[0])
-        ev = make_private_event(peer, "在吗")
-        m = normalize_event(ev)
-        assert m and m.peer_id == peer and m.text == "在吗"
-        assert resolve_contact_id(m.channel, m.peer_id)
-        assert normalize_event({"post_type": "meta_event"}) is None
-        ev_img = {
-            "post_type": "message",
-            "message_type": "private",
-            "user_id": peer,
-            "message": [{"type": "image", "data": {"file": "file://dummy.jpg"}}],
-            "message_id": 2,
-            "time": int(time.time()),
+        from config import snapshot
+        demo = {
+            "persona": {
+                "id": "xiaotian",
+                "primary_contact_id": "demo_contact",
+                "contact_aliases": {"qq_onebot:12345": "demo_contact"},
+                "channels": {"qq": {"allow_user_ids": ["12345"]}},
+            }
         }
-        mi = normalize_event(ev_img)
-        assert mi and mi.msg_type == "image" and "[图片]" in mi.text
-        ev_voice = {
-            "post_type": "message",
-            "message_type": "private",
-            "user_id": peer,
-            "message": [{"type": "record", "data": {"file": "file://dummy.silk"}}],
-            "message_id": 3,
-            "time": int(time.time()),
-        }
-        mv = normalize_event(ev_voice)
-        assert mv and mv.msg_type == "record" and "[语音]" in mv.text
+        with snapshot(demo):
+            ev = make_private_event("12345", "在吗")
+            m = normalize_event(ev)
+            assert m and m.peer_id == "12345" and m.text == "在吗"
+            assert resolve_contact_id(m.channel, m.peer_id)
+            assert normalize_event({"post_type": "meta_event"}) is None
+            ev_img = {
+                "post_type": "message",
+                "message_type": "private",
+                "user_id": 12345,
+                "message": [{"type": "image", "data": {"file": "file://dummy.jpg"}}],
+                "message_id": 2,
+                "time": int(time.time()),
+            }
+            mi = normalize_event(ev_img)
+            assert mi and mi.msg_type == "image" and "[图片]" in mi.text
+            ev_voice = {
+                "post_type": "message",
+                "message_type": "private",
+                "user_id": 12345,
+                "message": [{"type": "record", "data": {"file": "file://dummy.silk"}}],
+                "message_id": 3,
+                "time": int(time.time()),
+            }
+            mv = normalize_event(ev_voice)
+            assert mv and mv.msg_type == "record" and "[语音]" in mv.text
         print("OK self-test")
         return 0
 
     cfg = persona_cfg()
     qq = (cfg.get("channels") or {}).get("qq") or {}
     uri = args.ws or qq.get("ws_uri") or "ws://127.0.0.1:3001"
-    token = args.token if args.token is not None else qq.get("ws_token") or ""
+    import os
+    token_file = args.token_file or os.environ.get("XIAOTIAN_ONEBOT_TOKEN_FILE") or os.environ.get("ONEBOT_TOKEN_FILE")
+    if args.token is not None:
+        token = args.token
+    elif token_file:
+        token = read_token_file(token_file)
+    else:
+        token = qq.get("ws_token") or ""
     api = args.http_api or qq.get("http_api") or "http://127.0.0.1:3000"
     dry = not args.send
 

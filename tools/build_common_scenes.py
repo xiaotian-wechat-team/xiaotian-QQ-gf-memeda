@@ -349,6 +349,8 @@ def write_pack_meta(pack_id, kept, rejected, centroid, family, queries, notes=No
             except Exception:
                 pass
     meta = {
+        "visual_review_required": True,
+        "review_note": "Query embeddings and pHash are candidate filters, not image-content approval. Runtime requires visual_review.json bound to file SHA256.",
         "pack_id": pack_id,
         "zh": cs.PACKS[pack_id]["zh"],
         "campus": cs.CAMPUS_NAME,

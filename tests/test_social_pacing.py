@@ -124,6 +124,13 @@ def test_bridge_remembers_successful_waiting_bubble_across_requests(tmp_path, mo
     monkeypatch.setattr(bridge, '_human_wait_for_send', lambda *a,**k:0)
     monkeypatch.setattr(bridge, '_interruptible_sleep', lambda *a,**k:False)
     monkeypatch.setattr(bridge, '_mem_release', lambda:None)
+    import schedule_fidelity as sf
+    slot = {'start':'00:00', 'end':'24:00', 'activity':'宿舍休息', 'location':'宿舍', 'photo_ok':True}
+    def fake_schedule(*args, **kwargs):
+        now = dt.datetime.now()
+        return {'slot':slot, 'date':now.date().isoformat(), 'historical':False,
+                'now':now, 'today':{'date':now.date().isoformat(), 'slots':[slot]}}, None
+    monkeypatch.setattr(sf, 'resolve_photo_schedule', fake_schedule)
     (tmp_path/'contacts/demo_contact').mkdir(parents=True)
     seen=[]
     def hold(**kw):

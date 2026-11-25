@@ -15,6 +15,7 @@ def iso(tmp_path, monkeypatch):
     monkeypatch.setattr(source_poll, "STATE", tmp_path / "state.json")
     monkeypatch.setattr(weather, "CACHE_FILE", tmp_path / "weather_cache.json")
     monkeypatch.setattr(weather, "BASELINE_FILE", tmp_path / "weather_baseline.json")
+    monkeypatch.setattr(weather, "FORECAST_FILE", tmp_path / "weather_forecast.json")
     monkeypatch.setattr(weather, "_cache", {})
     monkeypatch.setattr(weather, "_fetch", lambda u: pytest.fail("network!"))
     monkeypatch.setattr(source_poll, "in_quiet", lambda p, now: False)
@@ -99,10 +100,12 @@ def test_prompt_line_on_demand(tmp_path, monkeypatch):
     weather.get("bda", fetch=lambda u: D, w=wcfg)
     # needs → attach
     line = weather.prompt_line("今天穿什么", w=wcfg)
-    assert line and line.startswith("天气：") and "北舞" in line
-    # variance rain on cache → attach without needs
+    assert line and line.startswith("天气：") and "海淀" in line
+    assert "湿度" not in line and "体感" not in line and "°C" not in line
+    # variance rain on fresh cache → short line, not the broadcast table
     line2 = weather.prompt_line("哈哈", w=wcfg)
-    assert line2 and "天气：" in line2
+    assert line2 and line2.startswith("天气：")
+    assert "湿度" not in line2 and "体感" not in line2 and "°C" not in line2
 
 def test_should_attach_variance(tmp_path, monkeypatch):
     monkeypatch.setattr(weather, "CACHE_FILE", tmp_path / "weather_cache.json")

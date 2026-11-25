@@ -26,6 +26,10 @@ class DeliveryUnknown(RuntimeError):
     delivery_status = "unknown"
 
 
+class DeliveryBookkeepingPending(RuntimeError):
+    delivery_status = 'bookkeeping_pending'
+
+
 def checked_receipt(receipt):
     if not isinstance(receipt, dict):
         raise DeliveryUnknown(f"OneBot missing receipt: {receipt!r}")
@@ -40,7 +44,9 @@ def checked_receipt(receipt):
 
 class ReceiptJournal:
     def __init__(self, path=None):
-        self.path = Path(path or ROOT / "data" / "onebot_delivery.db")
+        from config import load
+        configured = (load().get("qq_receipts") or {}).get("db")
+        self.path = Path(path or configured or ROOT / "data" / "onebot_delivery.db")
 
     def connect(self):
         self.path.parent.mkdir(parents=True, exist_ok=True)
@@ -66,6 +72,12 @@ class ReceiptJournal:
                       "WHERE operation_id=? AND status NOT IN ('confirmed','failed')",
                       (status, json.dumps(receipt) if receipt is not None else None,
                        time.time(), operation_id))
+
+    def confirmed_at(self, operation_id):
+        with contextlib.closing(self.connect()) as c:
+            row = c.execute("SELECT updated FROM receipts WHERE operation_id=? AND status='confirmed'",
+                            (operation_id,)).fetchone()
+            return row[0] if row else None
 
 
 class AckTracker:
@@ -167,7 +179,7 @@ class AckTracker:
         return checked_receipt(receipt)
 
 
-def send_with_confirmation(send, out, callback):
+def send_with_confirmation(send, out, callback, *, before_send=None):
     """Carry a once-only callback to WS; checked HTTP/iLink use the returned receipt."""
     journal = None
     operation_id = (out.meta or {}).get("delivery_id")
@@ -177,6 +189,11 @@ def send_with_confirmation(send, out, callback):
         operation_id = "bridge:" + operation_id
         status, old = journal.reserve(operation_id, operation_id)
         if status == "confirmed":
+            out.meta['_confirmed_at'] = journal.confirmed_at(operation_id)
+            try:
+                callback()
+            except Exception as exc:
+                raise DeliveryBookkeepingPending(str(exc)) from exc
             return old
         if status in ("pending", "unknown"):
             raise DeliveryUnknown(f"Delivery unresolved; refusing resend id={operation_id}")
@@ -189,14 +206,22 @@ def send_with_confirmation(send, out, callback):
                 return
             if journal:
                 journal.record(operation_id, "confirmed")
-            callback()
+                out.meta['_confirmed_at'] = journal.confirmed_at(operation_id)
+            try:
+                callback()
+            except Exception as exc:
+                raise DeliveryBookkeepingPending(str(exc)) from exc
             called = True
     out.meta = {**(out.meta or {}), "_on_confirmed": once}
+    attempted = False
     try:
+        if before_send:
+            before_send()
+        attempted = True
         result = send(out)
     except Exception as exc:
         if journal:
-            journal.record(operation_id, getattr(exc, "delivery_status", "unknown"))
+            journal.record(operation_id, getattr(exc, "delivery_status", "unknown") if attempted else "failed")
         raise
     # Existing checked HTTP/iLink transports raise on failure and return on success.
     if isinstance(result, dict) and "retcode" in result:

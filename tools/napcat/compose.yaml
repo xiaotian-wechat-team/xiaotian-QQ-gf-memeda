@@ -1,16 +1,16 @@
 services:
   napcat:
     image: mlikiowa/napcat-docker:latest
-    container_name: napcat
+    container_name: ${NAPCAT_CONTAINER_NAME:-napcat}
     restart: unless-stopped
     environment:
       MODE: ws
       WEBUI_TOKEN: ${WEBUI_TOKEN}
     ports:
-      - "127.0.0.1:6099:6099"
-      - "127.0.0.1:3001:3001"
-      - "127.0.0.1:3000:3000"
+      - "127.0.0.1:${NAPCAT_WEBUI_PORT:-6099}:6099"
+      - "127.0.0.1:${NAPCAT_WS_PORT:-3001}:3001"
+      - "127.0.0.1:${NAPCAT_HTTP_PORT:-3000}:3000"
     volumes:
-      - ./data/qq:/app/.config/QQ
-      - ./data/config:/app/napcat/config
-      - ./data/plugins:/app/napcat/plugins
+      - ${NAPCAT_DATA_DIR:-./data}/qq:/app/.config/QQ
+      - ${NAPCAT_DATA_DIR:-./data}/config:/app/napcat/config
+      - ${NAPCAT_DATA_DIR:-./data}/plugins:/app/napcat/plugins

@@ -1,7 +1,7 @@
 """生图 Codex 会话按天轮换：同一天所有生图复用同一个 Codex 会话（`codex exec resume <id>`），日期一变就开全新会话，
 避免上下文无限增长；当天记录的会话丢失/坏掉（resume 报 no rollout found / thread/resume failed）就为当天新开一个。
 状态文件：imagegen.session_state（默认 data/codex_session.json，不入库）= {"date": "YYYY-MM-DD", "session_id": ..., "count": n, "history": [...]}；
-history 只留最近 14 天的 id 便于排查，不会再被 resume。MacBook 应急脚本用同样规则（~/.xiaotian/codex_session_<date>）。"""
+history 只留最近 14 个 id 便于排查，不会再被 resume。MacBook 应急也复用本模块（~/.xiaotian/macbook-image-session.json）。"""
 import datetime, json, os, pathlib, re
 
 RESUME_BROKEN = ("no rollout found", "thread/resume failed", "session not found", "could not find session", "no such session")
@@ -9,6 +9,16 @@ THREAD_RE = re.compile(r'"type"\s*:\s*"thread\.started"[^}]*"thread_id"\s*:\s*"(
 
 def state_path(cfg):
     p = (cfg.get("imagegen") or {}).get("session_state")
+    if cfg.get("persona_version"):
+        from role_registry import identifier
+        scope = cfg.get("identity_runtime") or {}
+        role = identifier(scope.get("persona_id") or (cfg.get("persona") or {}).get("id") or "xiaotian")
+        relation = identifier(scope.get("partner_id") or (cfg.get("personalization") or {}).get("relation_id") or "partner")
+        version = cfg["persona_version"]
+        if not re.fullmatch(r"[a-f0-9]{64}", version):
+            raise ValueError("invalid persona session version")
+        original = pathlib.Path(os.path.expanduser(p)) if p else pathlib.Path(cfg["llm"]["workspace"]) / "image-session.json"
+        return original.with_name(f"{original.stem}.{role}.{relation}.{version}{original.suffix}")
     if p: return pathlib.Path(os.path.expanduser(p))
     if os.environ.get("XIAOTIAN_TEST"):   # 测试绝不碰真实会话状态
         import tempfile; return pathlib.Path(tempfile.gettempdir()) / f"xiaotian-test-codex-session-{os.getpid()}.json"
@@ -54,7 +64,7 @@ def forget(cfg, now=None):
 def build(codex, refs, out_dir, session_id=None, extra_args=None):
     """返回 (cmd, cwd)。新会话：codex exec --json ... -C out_dir -i...（提示词走 stdin）；
     复用：codex exec resume --json <id> - -i ...（resume 不支持 -C/--sandbox，沿用会话设置；位置参数放在 -i 前面，-i 是多值参数会吞后面的参数）。
-    extra_args：插在 -i 之前（如 -c model_reasoning_effort=low），生图用低推理避免 ultra 空转。"""
+    extra_args：插在 -i 之前；生图调用方显式传 -c model_reasoning_effort=high，避免继承全局设置。"""
     extra = list(extra_args or [])
     if session_id:
         cmd = [codex, "exec", "resume", "--json", "--skip-git-repo-check", *extra, session_id, "-"]

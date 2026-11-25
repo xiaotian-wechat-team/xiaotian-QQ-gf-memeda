@@ -1,0 +1,10 @@
+**
+!src/
+!src/**/
+!src/**/*.py
+!tools/
+!tools/onebot_qq_run.py
+!tools/onebot_mock_server.py
+!tools/fake-onebot/
+!tools/fake-onebot/worker.Dockerfile
+!tools/fake-onebot/worker.Dockerfile.dockerignore

@@ -8,7 +8,7 @@ Code rules (not prompt bloat):
 - Shared day mark user_day_curiosity.last_asked = 「今日已问安排」/「回执绿」
   (schedule_brief/activity_end ask_him ↔ ask_his_day mutual exclusion).
   Set only on real send success (immediate SENT or outbox flush ok) — never on HOLD/enqueue.
-  Mark only when ask planned (ask_him / ask_his_day); never by beat id alone or text regex.
+  Require both planned ask metadata and an actual question in confirmed prose.
 - image_pendulum_allow: deterministic time-bucket roll so proactive
   baobei/meal/activity_end images are optional (~p), not forced.
 - 查岗-style outbox asks (silence_nudge / 在干嘛…) drop when stale vs current slot.
@@ -122,38 +122,13 @@ def user_internship_assumed(text: str | None) -> bool:
     return bool(_USER_INTERNSHIP_ASK.search(t))
 
 
-def _fallback_line(slot: dict | None) -> str:
-    if not slot:
-        return "嗯"
-    act = (slot.get("activity") or "").strip()
-    bucket = slot.get("bucket") or ""
-    if bucket == "work_internship":
-        return "我这会儿在实习"
-    if bucket == "school_class":
-        return "我这会儿有课"
-    if bucket == "school_rehearsal":
-        return "我这会儿在排练"
-    if "吃" in act or "食堂" in act:
-        return "我这会儿在吃饭"
-    if bucket == "weekend_home":
-        return "我在宿舍"
-    if bucket == "sleep":
-        # A scheduled sleep slot cannot prove that a person replying is asleep.
-        return "我在呢"
-    if act:
-        # keep short: first 8 chars of activity as soft claim
-        short = act.split("·")[0][:10]
-        return f"在{short}" if not short.startswith("在") else short
-    return "嗯"
-
-
 def enforce_outbound_text(
     text: str | None,
     slot: dict | None,
     *,
     drop_user_internship_ask: bool = True,
 ) -> str:
-    """Repair only incompatible clauses; keep other content and image intent."""
+    """Drop incompatible clauses; retain other content without inventing filler."""
     raw = (text or "").strip()
     if not raw:
         return ""
@@ -167,16 +142,12 @@ def enforce_outbound_text(
             if drop_user_internship_ask and user_internship_assumed(part):
                 continue
             if text_violates_slot(part, slot):
-                # Preserve its punctuation and the rest of the response.
-                tail = re.search(r"[，,。.!！?？；;\n]+$", part)
-                repaired.append(_fallback_line(slot) + (tail.group() if tail else ""))
+                continue
             else:
                 repaired.append(part)
         line = "".join(repaired).strip(" ，,；;\n")
         if line:
             kept.append(line)
-    if not kept and body:
-        kept = ["你今天忙什么呢"]
     return "\n".join(kept + want[:1]).strip()
 
 
@@ -303,6 +274,18 @@ def outbox_item_stale(
 ) -> tuple[bool, str]:
     """Return (stale, reason). Drop mocked / expired / slot-mismatched pending items."""
     now = now_local(now)
+    if item.get("image_path"):
+        from photo_schedule import check_file
+        try:
+            check_file(item["image_path"], now)
+        except (ValueError, KeyError, TypeError):
+            return True, "photo_schedule_unverified"
+    if item.get("photo_schedule"):
+        try:
+            from photo_schedule import check
+            check(item["photo_schedule"], now)
+        except (ValueError, KeyError, TypeError):
+            return True, "photo_schedule_changed"
     reason = str(item.get("reason") or "")
     note = str(item.get("note") or "")
     if _MOCK_REASON.search(reason) or _MOCK_REASON.search(note):
@@ -316,6 +299,10 @@ def outbox_item_stale(
         if created.date() != now.date():
             return True, "expired other_day"
     text = (item.get("text") or "").strip()
+    # Source posts keep their own URL/screenshot and time validity. A change
+    # in her unrelated activity is not a reason to discard that external post.
+    if item.get("beat_id") == "surf_share" or item.get("surf_require_media"):
+        return False, ""
     if slot is None:
         slot = resolve_slot(now=now)
     if text and text_violates_slot(text, slot):
@@ -473,6 +460,21 @@ def mark_asked(st_blob: dict | None, now: dt.datetime, *, question: str = "") ->
     return blob
 
 
+def actual_day_question(text: str | None) -> bool:
+    """Conservative evidence of the optional question in confirmed prose."""
+    from conversation_semantics import unquoted
+    for part in clauses(unquoted(text or "")):
+        part = part.strip()
+        if re.search(r"^(?:那|对了|顺便问问|想问问)?你(?:今天|明天|上午|下午|晚上|待会|现在|这会儿)?"
+                     r"(?:那边)?(?:在干嘛|在忙啥|在忙什么|忙什么|忙啥|干什么|干嘛|有啥安排|有什么安排|啥安排|什么安排|有安排吗|有空吗|怎么安排|咋安排)", part):
+            return True
+        if re.fullmatch(r"(?:那)?(?:今天|明天|上午|下午|晚上|待会)(?:你)?"
+                        r"(?:怎么安排|咋安排|有什么安排|什么安排|啥安排|干嘛)[的呀呢啊嘛？?。！!\s]*"
+                        r"|你呢[？?。！!\s]*", part):
+            return True
+    return False
+
+
 def beat_meta_marks_ask_his_day(
     bm: dict | None,
     done_key: str | None = None,
@@ -524,6 +526,10 @@ def mark_asked_his_day_on_flush_success(
     """
     if not outbox_item_marks_ask_his_day(item):
         return False
+    question = str((item or {}).get("orig_text") or "\n".join((item or {}).get("sent_bubbles") or [])
+                   or (item or {}).get("text") or "")
+    if not actual_day_question(question):
+        return False
     now = now_local(now)
     cid = str((item or {}).get("contact") or "demo_contact")
     try:
@@ -532,7 +538,7 @@ def mark_asked_his_day_on_flush_success(
         blob = mark_asked_his_day(
             (st or {}).get("user_day_curiosity"),
             now,
-            question=str((item or {}).get("text") or "")[:80],
+            question=question[:80],
         )
         memory.update_state(cid, user_day_curiosity=blob)
         return True
@@ -618,13 +624,35 @@ def maybe_capture_answer(st: dict | None, user_text: str, *, now: dt.datetime | 
     blob = (st or {}).get("user_day_curiosity") or {}
     if not blob.get("pending_ask"):
         return None
+    now = now_local(now)
+    asked = parse_created(blob.get("asked_at"))
+    if (not actual_day_question(blob.get("pending_question")) or asked is None
+            or not 0 <= (now - asked).total_seconds() <= 1800):
+        return {**blob, "pending_ask": False, "pending_question": ""}
     t = (user_text or "").strip()
     if not t or len(t) < 2:
         return None
     # ignore pure emoji / 嗯哦
     if re.fullmatch(r"[嗯哦啊哈嘿唉呃吧呀嘛呢\s~.。!！?？~～]+", t):
         return None
-    return record_his_answer(blob, t, now=now, cid=cid)
+    # Retain only an explicit self plan. Unrelated comments, questions, source
+    # links and attachment placeholders must never become schedule facts.
+    from conversation_semantics import unquoted
+    answer = []
+    for part in clauses(unquoted(t)):
+        part = part.strip()
+        if not part or re.search(r"[？?]|https?://|\[.{0,30}\]", part):
+            continue
+        subject = re.search(r"你们|他们|她们|我们|我|你|您|他|她|室友|导师|同学|朋友|小熊", part)
+        if subject and subject.group() != "我":
+            continue
+        if re.search(r"^(?:我)?(?:今天|明天|上午|下午|晚上|待会|一会|等会|刚|正在|现在|准备|打算|计划|要|去|在|没安排|没有安排|还没想好|没啥安排|没什么安排|休息|上班|上课|开会|回家|不出门)", part):
+            # A time word alone ("今天这个视频真好笑") is not a plan.
+            if re.search(r"去|在|准备|打算|计划|上班|上课|开会|回家|休息|安排|没想好|不出门|写|工作|忙|逛|看书|排练|吃饭|学习", part):
+                answer.append(part)
+    if not answer:
+        return {**blob, "pending_ask": False, "pending_question": ""}
+    return record_his_answer(blob, "".join(answer), now=now, cid=cid)
 
 
 def prompt_lines(st: dict | None) -> list[str]:
@@ -648,3 +676,186 @@ def slot_force_line(slot: dict | None) -> str:
         f"{slot.get('bucket')}）。自称场景必须贴这个槽；"
         f"禁止声称与槽冲突的下课/回宿舍/上课/片场等。"
     )
+
+
+# Explicit location/activity aliases. Unrecognized scene content fails closed.
+_PHOTO_CONCEPTS = (
+    r'食堂', r'宿舍', r'图书馆', r'教室|上课', r'排练|练功|基训',
+    r'逛街|购物|商场|太古里', r'三里屯', r'公司|实习',
+    r'公园|郊游|徒步|爬山', r'咖啡店|咖啡馆', r'海边|沙滩', r'游泳|泳池',
+    r'早饭|早餐', r'午饭|午餐', r'晚饭|晚餐',
+)
+_PHOTO_FRAMING = re.compile(
+    r'第三人称|第一视角|手部特写|腿部特写|上半身|全身照?|半身照?|对镜自拍|自拍|近景|特写|'
+    r'让朋友|叫朋友|请朋友|被朋友拍|别人拍的你|他拍|随手拍|拍摄|照片|图片|画面|'
+    r'前两天|前天|昨天|今天|当时|现在|现场|刚才|一张|两张|几张|[一二三四五多几\d]+张|'
+    r'发一下|看一下|看看|给我|给你|发来|来张|拍张|发张|生成|拍照|拍|发|照|图|'
+    r'你|她|我|的|在|里|吃|站着|坐着|吧|呀|啊|呢|一下|一眼|一|张|请|想看|想要|要')
+
+
+def _scene_conflict(value, slot, depicted=None):
+    from photo_request import positive_text
+    value = positive_text(value)
+    import shot_modes
+    if value in {shot_modes.schedule_scene_for_shot(shot, slot) for shot in shot_modes.ALL_SHOTS}:
+        return None
+    evidence = ' '.join(str(slot.get(k) or '') for k in ('activity', 'location', 'scene_hints'))
+    grounded_school = None
+    # Stable dorm details may refine a recorded school dorm, never a different venue.
+    if '宿舍' in str(slot.get('location') or ''):
+        from config import load
+        from persona_context import DOSSIER
+        cfg = load()
+        dossier = cfg.get('role_dossier')
+        if dossier is None:
+            from identity import load_identity
+            role = (cfg.get('persona') or {}).get('id', 'xiaotian')
+            dossier = (load_identity(role, cfg).dossier if role != 'xiaotian'
+                       else json.loads(DOSSIER.read_text()))
+        grounded_school = (dossier.get('school') or {}).get('institution')
+        dorm = str((dossier.get('school') or {}).get('dorm') or '')
+        details = re.findall(r'学生宿舍综合楼|[一二三四五六七八九十\d]+\s*层|[一二三四五六七八九十\d]+人间', dorm)
+        for detail in details:
+            detail = re.sub(r'\s+', '', detail)
+            value = value.replace(detail, '')
+            for digit, chinese in zip('123456789', '一二三四五六七八九'):
+                value = value.replace(detail.replace(digit, chinese), '')
+        if '作业' in evidence or '笔记' in evidence:
+            value = re.sub(r'书桌上|摊着|和', '', value)
+            if '看片笔记' in evidence:
+                value = value.replace('看片笔记', '')
+    # Preserve compound recorded names before removing concept aliases:
+    # stripping 宿舍 first turns the valid 学校宿舍 into an unknown 学校.
+    # Validate concepts without modifying the text, then remove exact evidence.
+    for pattern in _PHOTO_CONCEPTS:
+        if re.search(pattern, value):
+            if not re.search(pattern, evidence):
+                return 'schedule_activity_or_location_mismatch'
+    for detail in sorted(re.findall(r'[\u4e00-\u9fffA-Za-z0-9]+', evidence), key=len, reverse=True):
+        value = value.replace(detail, '')
+    for pattern in _PHOTO_CONCEPTS:
+        if re.search(pattern, value):
+            value = re.sub(pattern, '', value)
+    school = _slot_school(slot) or grounded_school
+    for name in _schools(value):
+        if name != school and name not in evidence:
+            return 'schedule_school_mismatch'
+        for alias in _SCHOOL_ALIASES.get(name, (name,)):
+            value = value.replace(alias, '')
+    # A period claim is supported by the selected slot, not the current clock.
+    start = str(slot.get('start') or '')
+    hour = depicted.hour if depicted is not None else (int(start.split(':')[0]) if re.fullmatch(r'\d\d:\d\d', start) else None)
+    for pattern, hours in ((r'夜景|晚上|夜晚', set(range(18,24)) | set(range(6))),
+                           (r'早上|早晨', set(range(5,12))), (r'中午', set(range(10,16))),
+                           (r'下午', set(range(12,19)))):
+        if re.search(pattern, value):
+            if not re.search(pattern, evidence) and (hour is None or hour not in hours):
+                return 'schedule_time_mismatch'
+            value = re.sub(pattern, '', value)
+    value = re.sub(r'\d{4}-\d{2}-\d{2}|\d{1,2}:\d{2}', '', value)
+    if '作业' in evidence:
+        value = value.replace('作业', '').replace('写', '')
+    # Exact recorded details have already been removed before concept aliases.
+    residue = _PHOTO_FRAMING.sub('', value)
+    if re.search(r'[\u4e00-\u9fffA-Za-z]', residue):
+        return 'schedule_scene_unverified'
+    return None
+
+
+def image_request_block_reason(user_text, scene, slot, now=None):
+    if not slot or not slot.get('activity'):
+        return 'schedule_unknown'
+    from schedule_execution import blocked
+    if blocked(slot) or slot.get('leg') in ('outbound', 'return') or slot.get('photo_ok') is False or slot.get('bucket') == 'sleep':
+        return 'schedule_photo_unavailable'
+    for value in (user_text, scene):
+        for match in re.finditer(r'(?<!\d)([01]?\d|2[0-3]):([0-5]\d)', value or ''):
+            t = f'{int(match[1]):02}:{match[2]}'
+            if not str(slot.get('start', '')) <= t < str(slot.get('end', '')):
+                return 'schedule_time_mismatch'
+        reason = _scene_conflict(value or '', slot, now)
+        if reason:
+            return reason
+    return None
+
+
+def resolve_photo_schedule(user_text, scene, st=None, now=None):
+    """Resolve the requested date before validating. History is recorded-only."""
+    from photo_request import positive_text
+    import life_calendar as lc
+    now = now_local(now)
+    text = positive_text(user_text)
+    day = now.date()
+    if re.search(r'前两天|前天', text):
+        day -= dt.timedelta(days=2)
+    elif '昨天' in text:
+        day -= dt.timedelta(days=1)
+    match = re.search(r'\d{4}-\d{2}-\d{2}', text)
+    if match:
+        try:
+            day = dt.date.fromisoformat(match.group())
+        except ValueError:
+            return None, 'invalid_photo_date'
+    if day > now.date() or re.search(r'明天|后天|想象|假设|虚构', text):
+        return None, 'not_recorded_schedule'
+    model_text = positive_text(scene)
+    model_day = None
+    if re.search(r'前两天|前天', model_text):
+        model_day = now.date() - dt.timedelta(days=2)
+    elif '昨天' in model_text:
+        model_day = now.date() - dt.timedelta(days=1)
+    elif re.search(r'现在|今天|现场', model_text):
+        model_day = now.date()
+    model_date = re.search(r'\d{4}-\d{2}-\d{2}', model_text)
+    if model_date:
+        try:
+            model_day = dt.date.fromisoformat(model_date.group())
+        except ValueError:
+            return None, 'invalid_photo_date'
+    if model_day is not None and model_day != day:
+        return None, 'model_photo_date_mismatch'
+    historical = day < now.date()
+    if historical:
+        recorded = lc.recorded_day(day)
+        if not recorded:
+            return None, 'historical_schedule_missing'
+        candidates = recorded.get('slots') or []
+    else:
+        recorded = lc.recorded_day(day) or {}
+        current_time = now.strftime('%H:%M')
+        candidates = [s for s in recorded.get('slots', [])
+                      if str(s.get('start', '')) <= current_time < str(s.get('end', ''))]
+        if len(candidates) != 1:
+            return None, 'current_schedule_missing_or_ambiguous'
+
+    requested_time = re.search(r'(?<!\d)([01]?\d|2[0-3]):([0-5]\d)', text)
+    if requested_time:
+        expected = (int(requested_time[1]), int(requested_time[2]))
+        if any((int(m[1]), int(m[2])) != expected for m in re.finditer(r'(?<!\d)([01]?\d|2[0-3]):([0-5]\d)', model_text)):
+            return None, 'model_photo_time_mismatch'
+    valid = []
+    for original in candidates:
+        if not original:
+            continue
+        slot = {**original, 'date': day.isoformat()}
+        if requested_time:
+            t = f'{int(requested_time[1]):02}:{requested_time[2]}'
+            if not (str(slot.get('start', '')) <= t < str(slot.get('end', ''))):
+                continue
+        candidate_time = (dt.datetime.combine(day, dt.time.fromisoformat(t)) if requested_time
+                          else dt.datetime.combine(day, dt.time.fromisoformat(slot['start'])) if historical else now)
+        from photo_schedule import location
+        if location(slot) and image_request_block_reason(text, scene, slot, candidate_time) is None:
+            valid.append(slot)
+    if not valid:
+        return None, 'schedule_mismatch_or_unverified'
+    # An old generic photo can use any recorded photo-permitted slot.
+    slot = valid[0]
+    if requested_time:
+        depicted = dt.datetime.combine(day, dt.time.fromisoformat(t))
+        if depicted > now:
+            return None, 'future_photo_time'
+    else:
+        depicted = dt.datetime.combine(day, dt.time.fromisoformat(slot['start'])) if historical else now
+    return {'slot': slot, 'date': day.isoformat(), 'historical': historical, 'now': depicted,
+            'today': {'date': day.isoformat(), 'slots': [slot]}}, None

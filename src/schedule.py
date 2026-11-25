@@ -99,7 +99,23 @@ def _static(now, blocks):
     return _b("发呆", "", [5, 30], 0)
 
 def current(now=None):
-    now = now or now_local(); fixed = load().get("schedule")
+    now = now or now_local()
+    if now.tzinfo:
+        now = now.astimezone(TZ).replace(tzinfo=None)
+    # Explicit edits from the local Persona Runtime console take precedence
+    # over generated slots for the matching weekday, while retaining the same
+    # activity/tone/delay shape consumed by brain and channel bridges.
+    try:
+        from ui_schedule import day_for, slot_for
+        override_slot = slot_for(now)
+        if override_slot:
+            return override_slot
+        override = day_for(now.date())
+        if override is not None:
+            return _b("日程空档", "", [5, 30], 0)
+    except Exception:
+        pass
+    fixed = load().get("schedule")
     if fixed: return _static(now, fixed)
     # 人设落盘/自动日程优先（life_calendar）
     try:

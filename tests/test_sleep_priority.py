@@ -118,11 +118,12 @@ class SleepPriority(unittest.TestCase):
             self.assertIsNotNone(sc.should_suppress_proactive(self.state, D(2026, 10, 28, 9)))
             self.assertIsNone(sc.should_suppress_proactive(self.state, D(2026, 10, 28, 10, 12)))
 
-    def test_night_ping_can_get_reply_without_resuming_shares(self):
+    def test_night_ping_cannot_wake_or_resume_shares(self):
         self.goodnight(D(2026, 10, 27, 22, 47))
         mode, b, style = sc.note_inbound("还在吗", self.state, D(2026, 10, 27, 23, 2))
         self.assertEqual(style, "asleep")
-        self.assertIn(mode, ("normal", "pre_sleep"))
+        self.assertEqual(mode, "asleep")
+        self.assertIsNotNone(sc.reply_suppression_reason(self.state, D(2026, 10, 27, 23, 2)))
         self.state[sc.STATE_KEY] = b
         self.assertIsNotNone(sc.should_suppress_proactive(self.state, D(2026, 10, 27, 23, 3)))
 

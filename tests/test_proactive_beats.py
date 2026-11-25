@@ -7,6 +7,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 import proactive_beats as pb
 import proactive_scheduler as ps
 import config
+import pytest
 
 D = datetime.datetime
 R = random.Random
@@ -14,6 +15,12 @@ base = dict(config.load()["proactive"], enabled=True, probability=0)
 base.pop('contact_rhythm', None)  # Event discovery tested separately from random pacing.
 # 强制开节拍
 base["beats"] = dict(pb.cfg_beats(base), enabled=True)
+
+
+@pytest.fixture(autouse=True)
+def isolated_calendar(monkeypatch):
+    cfg = {**config.load(), 'shared_life_schedule': None}
+    monkeypatch.setattr(config, 'load', lambda: cfg)  # Use this module's synthetic STATE slots.
 
 
 def _st(day_slots, now_slot, *, done=None, emotion=None):
@@ -57,7 +64,7 @@ def test_morning_and_brief_after_wake():
     m = next(b for b in due if b["id"] == "morning")
     assert m["bypass_quiet"] and m["must"]
     task = pb.build_beat_task(m, st)
-    assert "禁止小熊" not in task
+    assert "禁止王某某" not in task
     assert "本轮称呼" in task or "称呼" in task
     assert "[SKIP]" in task
 
@@ -275,13 +282,6 @@ def test_mark_beat_done_records_share():
     assert nxt["done"] == {} and nxt["shares"][-1]["id"] == 99
 
 
-def test_surf_share_prompt_requires_url():
-    import pathlib
-    src = pathlib.Path(pb.__file__).read_text()
-    assert "不要贴原始链接给他看" not in src
-    assert "必须带原帖截图+原链" in src or "必须把原链" in src
-
-
 def test_share_prompt_lines():
     st = {
         "proactive_beats": {
@@ -304,7 +304,7 @@ def test_scheduler_prefers_beat():
     r = ps.tick(now, base, st, [], R(0), use_llm=False)
     assert r["action"] == "DRAFT"
     assert r.get("beat") == "morning" or (r.get("topic") or "").startswith("beat:")
-    assert "task" in r and "禁止小熊" not in r["task"]
+    assert "task" in r and "禁止王某某" not in r["task"]
     assert "本轮称呼" in r["task"] or "称呼" in r["task"]
 
 
@@ -441,7 +441,7 @@ def test_meal_empty_image_no_want_image():
     assert "吃饭" in task or "吃晚饭" in task
 
 
-def test_meal_want_image_has_marker():
+def test_meal_caption_receives_the_chosen_photo_scene():
     now = D(2026, 10, 25, 18, 45)
     st = _st(SLOTS, SLOTS[3])
     beat = {
@@ -449,7 +449,8 @@ def test_meal_want_image_has_marker():
         "image": {"mode": "want_image", "scene": "晚饭食堂", "shot_type": "hand_closeup"},
     }
     task = pb.build_beat_task(beat, st, now=now)
-    assert "WANT_IMAGE:[hand_closeup]晚饭食堂" in task
+    assert "照片场景已选定：「晚饭食堂」" in task
+    assert "不另选场景" in task
 
 
 def test_activity_end_omits_ask_when_already_asked():

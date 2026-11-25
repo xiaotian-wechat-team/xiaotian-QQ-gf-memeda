@@ -75,7 +75,7 @@ def _inside_quote(prefix):
     return closing is not None
 
 
-def enforce(text, search=None, *, weather=None):
+def enforce(text, search=None, *, weather=None, life_order=None):
     """Narrow first-person assertions only; preserve questions, quotes and negation."""
     valid_search = bool(search and search.get("status") == "ok" and search.get("sources"))
     valid_weather = bool(weather and weather.get("tool") == "get_weather"
@@ -113,4 +113,10 @@ def enforce(text, search=None, *, weather=None):
         if re.match(r"^(?:我)?(?:已经|已)(?:写入|存入|保存到)(?:了)?长期记忆", part):
             part = "我会记着"
         parts[i] = part
-    return "".join(parts)
+    text = "".join(parts)
+    try:
+        from life_order.evidence import scrub_order_claims
+        text = scrub_order_claims(text, life_order)
+    except Exception:
+        pass
+    return text

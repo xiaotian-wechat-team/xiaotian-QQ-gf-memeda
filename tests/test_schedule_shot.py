@@ -67,7 +67,9 @@ def test_meal_image_hint_uses_schedule_shot():
     task = pb.build_beat_task({
         "id": "meal", "slot": slot, "today": {}, "image": h,
     })
-    assert f"WANT_IMAGE:[{h['shot_type']}]" in task
+    assert f"照片场景已选定：「{h['scene']}」" in task
+    assert "不输出 WANT_IMAGE" in task
+    assert f"WANT_IMAGE:[{h['shot_type']}]" not in task
 
 
 def test_activity_end_task_optional_want_image():
@@ -77,8 +79,9 @@ def test_activity_end_task_optional_want_image():
     task = pb.build_beat_task({
         "id": "activity_end", "slot": ended, "today": {}, "ended": ended, "image": img,
     })
-    assert "WANT_IMAGE:[" in task
-    assert img["shot_type"] in task
+    assert f"照片场景已选定：「{img['scene']}」" in task
+    assert "不输出 WANT_IMAGE" in task
+    assert "WANT_IMAGE:[" not in task
 
 
 def test_cli_describe():

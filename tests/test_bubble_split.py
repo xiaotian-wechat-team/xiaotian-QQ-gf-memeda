@@ -128,9 +128,11 @@ def test_split_respects_budget_via_max():
     assert "句子0" in out[0]
 
 
-def test_bridge_uses_budget_and_image_unit(monkeypatch):
+def test_bridge_uses_budget_and_image_unit(monkeypatch, tmp_path):
     """Budget limits captions; each image remains its own outbound after the text."""
     import brain, image_caption, voice_asr, photo_scene
+    monkeypatch.setattr('sleep_chat.scheduled_sleep', lambda *a, **k: False)
+    monkeypatch.setattr('memory.read_state', lambda *a: {})
     from channels import bridge
     from channels.types import Inbound
     monkeypatch.setattr(brain, "LAST", {})
@@ -140,8 +142,11 @@ def test_bridge_uses_budget_and_image_unit(monkeypatch):
     monkeypatch.setattr(bridge, "_mem_release", lambda: None)
     monkeypatch.setattr(bridge, "_sleep_split_gap", lambda style: ({}, {}))
     monkeypatch.setattr(bridge, "_interruptible_sleep", lambda *a: False)
+    paths = [str(tmp_path / name) for name in ("first.png", "second.png")]
+    for path in paths:
+        pathlib.Path(path).write_bytes(b"fixture")
     monkeypatch.setattr(bridge, "_plan_want_image", lambda *a, **k: {
-        "paths": ["first.png", "second.png"], "texts": ["第一张", "第二张", "看看"],
+        "paths": paths, "texts": ["第一张", "第二张", "看看"],
     })
 
     def reply(*args):
@@ -153,7 +158,7 @@ def test_bridge_uses_budget_and_image_unit(monkeypatch):
                           dry=False, persist=False, reply_fn=reply, send=sent.append)
     assert len(sent) == 3
     assert sent[0].text and not (sent[0].meta or {}).get("image_path")
-    assert [out.meta["image_path"] for out in sent[1:]] == ["first.png", "second.png"]
+    assert [out.meta["image_path"] for out in sent[1:]] == paths
     assert all(not out.text for out in sent[1:])
 
 

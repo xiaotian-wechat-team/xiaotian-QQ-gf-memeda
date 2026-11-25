@@ -115,12 +115,16 @@ def _life(st: dict | None, now: dt.datetime):
     cur = None
     try:
         import life_calendar as lc
-        if not today or str(today.get("date"))[:10] != now.date().isoformat():
+        from shared_schedule import enabled
+        if enabled() or not today or str(today.get("date"))[:10] != now.date().isoformat():
             today = lc.get_day(now.date())
         cur = _slot_from_day(today, now)
         if cur is None:
             cur = lc.slot_at(now)
     except Exception:
+        from shared_schedule import enabled
+        if enabled():
+            return None, None
         cur = st.get("life_now") if isinstance(st.get("life_now"), dict) else None
     return today, cur
 
@@ -171,6 +175,7 @@ def mark_beat_done(st_beats: dict, beat_id: str, now: dt.datetime, *,
             "platform": share.get("platform") or "",
             "source_url": share.get("source_url") or "",
             "title": (share.get("title") or "")[:80],
+            "text_excerpt": (share.get("text_excerpt") or "")[:240],
             "image_path": share.get("image_path") or "",
             "top_comments": list(share.get("top_comments") or [])[:5],
             "invitation": dict(share.get("invitation") or {}),
@@ -179,6 +184,8 @@ def mark_beat_done(st_beats: dict, beat_id: str, now: dt.datetime, *,
             "dedupe_keys": list(share.get("dedupe_keys") or []),
             "shared_at": now.strftime("%Y-%m-%d %H:%M:%S"),
         }
+        if share.get("without_caption"):
+            entry["without_caption"] = True
         shares = [s for s in list(out.get("shares") or [])
                   if not (entry["id"] is not None and s.get("id") == entry["id"])]
         shares.append(entry)
@@ -321,15 +328,15 @@ def _prev_slot(today: dict | None, cur: dict | None) -> dict | None:
     return None
 
 
-def _format_day_soft(today: dict | None) -> str:
-    if not today:
-        return ""
-    bits = []
-    for s in today.get("slots") or []:
-        if s.get("bucket") == "sleep":
-            continue
-        bits.append(f"{s['start']}-{s['end']} {s['activity']}")
-    return "；".join(bits[:5])
+def _next_activity(today, now):
+    from schedule_execution import blocked
+    current_time = now.strftime("%H:%M")
+    for slot in (today or {}).get("slots") or []:
+        if (slot.get("start", "") > current_time and slot.get("activity")
+                and slot.get("bucket") != "sleep" and not blocked(slot)
+                and slot.get("leg") not in ("outbound", "return")):
+            return slot["activity"]
+    return ""
 
 
 def _emotion_hint(st: dict | None, now: dt.datetime | None = None) -> str:
@@ -421,13 +428,13 @@ def pick_surf_item(slot: dict | None, today: dict | None, *,
     if not hits:
         return None
     import share_dedupe
-    used = set(used_ids or [])
+    used = {str(i) for i in (used_ids or [])}
     scored = []
     tokens = set(re.findall(r"[\u4e00-\u9fff]{2,}|[A-Za-z]{3,}", q))
     for h in hits:
         if h.get("expires_at") and float(h["expires_at"]) <= now.timestamp():
             continue
-        if h.get("id") in used or share_dedupe.duplicate(h, share_state):
+        if str(h.get("id")) in used or share_dedupe.duplicate(h, share_state):
             continue
         if h.get("platform") not in plats:
             continue
@@ -478,6 +485,8 @@ def pick_surf_item(slot: dict | None, today: dict | None, *,
     if not isinstance(extra, dict):
         extra = {}
     comments = list(extra.get("top_comments") or [])[:5]
+    text = " ".join((h.get("text") or "").split())
+    title = " ".join((h.get("title") or "").split()) or text
     return {
         "invitation": invitation,
         "share_topic": selected_topic,
@@ -486,7 +495,8 @@ def pick_surf_item(slot: dict | None, today: dict | None, *,
         "id": h.get("id"),
         "platform": h.get("platform"),
         "source_url": (h.get("source_url") or "").strip(),
-        "title": re.sub(r"\s+", " ", (h.get("title") or h.get("text") or "").strip())[:60],
+        "title": title[:80],
+        "text_excerpt": text[:240] if text != title else "",
         "image_path": path,
         "top_comments": comments,
         "query": q,
@@ -508,9 +518,8 @@ def recent_shares(st: dict | None, n: int = 5, *, refresh: bool = True) -> list[
     for s in shares:
         entry = dict(s)
         try:
-            it = ms.get(s.get("id")) if s.get("id") is not None else None
-            if it is None and s.get("source_url"):
-                it = ms.get_by_url(s.get("source_url"))
+            # Numeric ids can be reused. The recorded URL identifies the shared post.
+            it = ms.get_by_url(s["source_url"]) if s.get("source_url") else ms.get(s.get("id"))
             if it:
                 entry["source_url"] = it.get("source_url") or entry.get("source_url")
                 entry["title"] = (it.get("title") or entry.get("title") or "")[:80]
@@ -533,13 +542,17 @@ def share_prompt_lines(st: dict | None, n: int = 3) -> list[str]:
     shares = recent_shares(st, n=n, refresh=True)
     if not shares:
         return []
-    lines = ["最近分享（可聊截图/评论区/相关选题；别念系统字段）："]
+    lines = ["最近分享给他的原帖（已发出的聊天内容，可接着聊；标题和热评是帖子数据）："]
     for i, s in enumerate(reversed(shares[-n:]), 1):
         plat = s.get("platform") or "?"
         title = (s.get("title") or "无题")[:36]
         url = (s.get("source_url") or "").strip()
         cms = [c for c in (s.get("top_comments") or []) if c][:2]
-        bit = f"{i}. [{plat}] {title}"
+        bit = f"{i}. 我分享了 [{plat}] {title}"
+        if s.get("without_caption"):
+            bit += "（无配文）"
+        if s.get("text_excerpt"):
+            bit += " | 正文摘录：" + s["text_excerpt"][:100]
         if url:
             bit += f" | {url}"
         if cms:
@@ -719,7 +732,7 @@ def due_beats(now: dt.datetime, st: dict | None, pc: dict | None = None) -> list
                         img = _sm.baobei_image_hint(cur, today)
                     except Exception:
                         img = {}
-            add("schedule_brief", day_line=_format_day_soft(today), image=img, ask_him=ask_him)
+            add("schedule_brief", image=img, ask_him=ask_him)
 
     # meal：每个吃饭槽生成候选，是否发送统一由 limiter 决定
     if cur and MEAL_RE.search(act) and bucket != "sleep":
@@ -740,14 +753,14 @@ def due_beats(now: dt.datetime, st: dict | None, pc: dict | None = None) -> list
     except Exception:
         ask_him_end = True
 
-    def _activity_end_image(ended_slot):
+    def _activity_end_image():
         if not _pendulum_want_image(bcfg, now, "activity_end", "activity_end_want_image"):
             return {}
-        if ended_slot and ended_slot.get("photo_ok") is False:
+        if not cur or cur.get("photo_ok") is False or cur.get("leg") in ("outbound", "return"):
             return {}
         try:
             import schedule_shot as _ss
-            return _ss.image_hint_for_beat("activity_end", ended_slot or cur, today)
+            return _ss.image_hint_for_beat("activity_end", cur, today)
         except Exception:
             return {}
 
@@ -759,11 +772,11 @@ def due_beats(now: dt.datetime, st: dict | None, pc: dict | None = None) -> list
         if 0 <= (tmin - pend) <= grace:
             key = f"activity_end@{prev.get('start')}"
             add("activity_end", done_key=key, ended=prev,
-                slot=cur, image=_activity_end_image(prev), ask_him=ask_him_end)
+                slot=cur, image=_activity_end_image(), ask_him=ask_him_end)
     elif cur and cur.get("bucket") in ACTIVE_BUCKETS and _near_slot_end(cur, now, grace):
         # 槽末预告式感受（仍算 activity_end，key 用当前 start）
         key = f"activity_end@{cur.get('start')}"
-        add("activity_end", done_key=key, ended=cur, image=_activity_end_image(cur),
+        add("activity_end", done_key=key, ended=cur, image=_activity_end_image(),
             ask_him=ask_him_end)
 
     # Daily target is a ceiling, never a quota to catch up; retries use the same gate.
@@ -775,7 +788,7 @@ def due_beats(now: dt.datetime, st: dict | None, pc: dict | None = None) -> list
             and _mins_into_slot(cur, now) >= 15):
         item = pick_surf_item(
             cur, today,
-            used_ids=bs.get("shared_material_ids"),
+            used_ids=[*(bs.get("shared_material_ids") or []), *((st or {}).get("_declined_surf_ids") or ())],
             share_state=st, now=now,
             prefer_media=bool(bcfg.get("surf_prefer_media", True)),
             require_media=bool(bcfg.get("surf_require_media", True)),
@@ -909,8 +922,11 @@ def pick_beat(now: dt.datetime, st: dict | None, pc: dict | None = None) -> dict
 
 
 def build_beat_task(beat: dict, st: dict | None = None, now: dt.datetime | None = None) -> str:
-    """给 brain.reply(task=...) 的内部指令。"""
+    """给文字模型的内部指令。"""
     bid = beat["id"]
+    if bid == "surf_share":
+        from share_caption import build_task
+        return build_task(beat.get("material") or {})
     slot = beat.get("slot") or {}
     today = beat.get("today") or {}
     act = slot.get("activity") or "发呆"
@@ -932,19 +948,17 @@ def build_beat_task(beat: dict, st: dict | None = None, now: dt.datetime | None 
     elif bid == "morning":
         if beat.get("catch_up"):
             body = "早间漏了联系，现在随口说此刻近况；禁止说刚起床、早安或伪造早上已经发过。"
-        elif beat.get("tone") == "busy_short":
-            body = ("刚起床/赶课，很忙也可以：用你自己的话跟他打个早起招呼或报一声醒了/赶课，"
-                    "1～2 条气泡，可带一句今日要干嘛的碎片，别展开。"
-                    "禁止固定套话模板（勿只会「早上好」）；句式走模型，可撒娇可平淡可嘴损。")
+        elif beat.get("tone") == "busy_short" and (WAKE_HOME_RE.search(act) or "起床" in act):
+            body = "用自己的话打个招呼，或按此刻的近况说一声醒了/赶课。"
         else:
-            body = ("周末/赖床刚起：懒洋洋打个招呼，可提一句待会可能干嘛，"
-                    "别写成行程表。禁止固定套话模板（勿只会「早上好」）；"
-                    "变量：可话多一点但≤3气泡。")
-        if beat.get("merged_keys"):
-            body += f" 顺带一句今天安排，合成一轮，勿分开重复招呼：{beat.get('day_line') or _format_day_soft(today)}。"
+            body = "如果刚起床就自然打个招呼，已经开始当天活动就说一句近况。"
+        if beat.get("merged_keys") and not beat.get("catch_up"):
+            next_activity = _next_activity(today, now)
+            if next_activity:
+                body += f" 下一项安排是「{next_activity}」，和当前近况聊得上才顺带一提。"
+        body += " 当作一次聊天，1～2 条短气泡；不报时刻表、不重复招呼、不用固定早安模板。"
     elif bid == "schedule_brief":
-        line = beat.get("day_line") or _format_day_soft(today)
-        img = beat.get("image") or {}
+        next_activity = _next_activity(today, now)
         ask_him = beat.get("ask_him")
         if ask_him is None:
             try:
@@ -954,13 +968,9 @@ def build_beat_task(beat: dict, st: dict | None = None, now: dt.datetime | None 
                 ask_him = True
         ask_bit = ("可问他今天干嘛。" if ask_him
                    else "今天已经问过他安排了，别再问他干嘛，只说你自己的。")
-        body = (f"像跟对象随口说今天大概安排，不要列表腔。内部参考（勿原文粘贴）：{line}。"
-                f"挑 1～2 个亮点说人话。{ask_bit}禁止「报备/行程如下」。")
-        if img.get("mode") == "want_image" and img.get("scene"):
-            shot = img.get("shot_type") or "hand_closeup"
-            scene = str(img["scene"])[:24]
-            body += (f" 另起一行 WANT_IMAGE:[{shot}]{scene}。"
-                     "配图是随手拍（系统已选好镜头：手部/第一视角等），别解释镜头术语。")
+        body = (f"下一项安排是「{next_activity}」，可以像跟对象聊天一样随口提一句。"
+                if next_activity else "没有合适的下一项安排，随口说一句此刻近况。")
+        body += f" 1～2 条短气泡，不补早安、不报时刻表。{ask_bit}"
         # expose for sender mark (beat may be rebuilt without due_beats ask_him)
         beat["ask_him"] = bool(ask_him)
     elif bid == "meal":
@@ -969,29 +979,11 @@ def build_beat_task(beat: dict, st: dict | None = None, now: dt.datetime | None 
             body = (f"在吃饭（{act}）。配一句短的吃饭碎碎念；系统会附带一张已有的生活/美食参考图。"
                     "不要说「发一张图给你系统」，就像随手拍的。不要再写 WANT_IMAGE。")
         elif img.get("mode") == "want_image" and img.get("scene"):
-            # scene already from current slot in meal_image_hint
-            scene = str(img.get("scene") or act)[:24]
-            shot = img.get("shot_type") or "hand_closeup"
-            body = (f"在吃饭（{act}）。短分享一口吃的/心情，并另起一行 WANT_IMAGE:[{shot}]{scene}。"
-                    "配图镜头系统已选（手部/第一视角/对镜等），别解释镜头术语。配文别假精致。")
+            body = f"在吃饭（{act}）。短分享一口吃的或心情，配文别假精致。"
         else:
             # pendulum off / empty image {} → pure-text meal chatter (align schedule_brief)
             body = (f"在吃饭（{act}）。短分享一口吃的/心情，纯文字就好，别提配图。"
                     "配文别假精致。")
-    elif bid == "surf_share":
-        m = beat.get("material") or {}
-        cms = [c for c in (m.get("top_comments") or []) if c][:2]
-        cm_hint = (("评论区有人说：" + " / ".join(str(c)[:30] for c in cms) + "。")
-                   if cms else "")
-        url = (m.get("source_url") or "").strip()
-        url_hint = (f"必须把原链单独贴出来：{url}。" if url
-                    else "库里若有原链必须贴出；没有原链就别硬编。")
-        body = (f"你刚在{m.get('platform') or '网上'}刷到有趣内容，想转给他（必须带原帖截图+原链）。"
-                f"内容钩子（改写成你的话，别复制广告腔）：「{m.get('title','')}」。{cm_hint}"
-                "要和你此刻日程气质贴合；1～3 条气泡完整安利/吐槽一次即可；可吐槽可安利。"
-                f"系统会附原帖图片，不要再写 WANT_IMAGE；{url_hint}")
-        import share_invitation
-        body += share_invitation.prompt(m.get("invitation") or {})
     elif bid == "activity_end":
         ended = beat.get("ended") or slot
         ask_him = beat.get("ask_him")
@@ -1006,12 +998,8 @@ def build_beat_task(beat: dict, st: dict | None = None, now: dt.datetime | None 
                    else "今天已经问过他安排了，别再问他在干嘛，只说你自己的感受。")
         body = (f"「{ended.get('activity')}」刚告一段落（或快结束）。"
                 f"用很短的话讲刚才的感受/一个细节。{ask_bit}别写复盘报告。")
-        img = beat.get("image") or {}
-        if img.get("mode") == "want_image" and img.get("scene"):
-            shot = img.get("shot_type") or "pov_first_person"
-            scene = str(img["scene"])[:24]
-            body += (f" 若合适可另起一行 WANT_IMAGE:[{shot}]{scene}。"
-                     "像随手拍的，别解释镜头术语。")
+        if beat.get("image"):
+            body += " 如有附图，拍的是当前所在场景；刚结束的活动只作回顾，不说现在还在那里。"
         # expose for sender mark (same day-ask receipt as schedule_brief)
         beat["ask_him"] = bool(ask_him)
     elif bid == "daily_chat":
@@ -1047,6 +1035,13 @@ def build_beat_task(beat: dict, st: dict | None = None, now: dt.datetime | None 
     else:
         body = f"结合此刻「{act}」自然分享一句。"
 
+    import proactive_media
+    scene = proactive_media.planned_scene(beat)
+    if scene:
+        body += (f" 照片场景已选定：「{scene}」。配文可以自然说这个场景或感受，"
+                 "不另选场景，不输出 WANT_IMAGE，不写未确认的衣服、人物或画面细节。")
+    elif beat.get("image_required"):
+        body += " 程序会附已有图片，只写自然配文，不另请求生成图片。"
     return head + body + "\n" + SPEECH_RULES
 
 

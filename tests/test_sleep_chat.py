@@ -51,18 +51,18 @@ def test_asleep_after_his_goodnight_she_silent():
     assert m2 == "asleep"
 
 
-def test_she_replies_clears_his_pending():
+def test_his_ack_does_not_undo_her_goodnight():
     now = dt.datetime(2026, 10, 26, 0, 30, 0)
     _, blob, _ = sc.note_inbound("晚安呀", {}, now)
     mode2, blob2 = sc.note_outbound("嗯\n晚安", {sc.STATE_KEY: blob}, now + dt.timedelta(minutes=1))
     assert blob2.get("pending_goodnight", {}).get("from") == "me"  # her goodnight restarts (b)
-    # he replies quickly → clear
+    # An acknowledgement cannot wake her or erase bedtime.
     mode3, blob3, style3 = sc.note_inbound("嗯收到", {sc.STATE_KEY: blob2}, now + dt.timedelta(minutes=2))
-    assert blob3.get("pending_goodnight") in (None, {})
-    assert style3 in ("pre_sleep", "normal")
+    assert blob3["pending_goodnight"] == blob2["pending_goodnight"]
+    assert style3 == "asleep"
 
 
-def test_wake_on_ping_keeps_asleep_style_once():
+def test_ping_does_not_wake_sleeping_persona():
     now = dt.datetime(2026, 10, 26, 3, 0, 0)
     blob = {
         "mode": "asleep",
@@ -71,9 +71,9 @@ def test_wake_on_ping_keeps_asleep_style_once():
         "last_them_at": "2026-10-26 00:30:00",
     }
     mode, blob2, style = sc.note_inbound("还在吗", {sc.STATE_KEY: blob}, now)
-    assert style == "asleep"  # first reply still minimal
-    assert mode in ("normal", "pre_sleep")
-    assert blob2.get("mode") != "asleep" or blob2.get("wake_reason") == "them_ping"
+    assert style == "asleep"
+    assert mode == "asleep"
+    assert blob2.get("wake_reason") != "them_ping"
 
 
 def test_gates_suppress_when_asleep():

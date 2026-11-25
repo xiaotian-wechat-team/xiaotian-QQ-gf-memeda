@@ -137,6 +137,10 @@ def _norm_channel(channel: str) -> str:
 
 
 def _migrate_legacy(channel: str) -> None:
+    from config import load
+    if load().get("identity_runtime"):
+        # A new identity must never consume or rename the legacy owner's queue.
+        return
     path = LEGACY_JSON.get(channel)
     if not path or not path.is_file():
         return

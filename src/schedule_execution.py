@@ -10,6 +10,9 @@ def blocked(slot):
 
 def beat_blocked(beat, now, state=None):
     """Recheck queued snapshots against the current day's authoritative plan."""
+    # An external post does not claim that the activity in its timing slot happened.
+    if (beat or {}).get('id') == 'surf_share':
+        return False
     slots = [(beat or {}).get(k) for k in ('slot', 'ended', 'image_slot')]
     slots = [s for s in slots if isinstance(s, dict)
              and not (s.get('original_plan_status') in ('pending','cancelled')

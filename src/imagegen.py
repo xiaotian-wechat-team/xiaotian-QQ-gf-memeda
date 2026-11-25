@@ -14,10 +14,37 @@ import argparse, base64, datetime, json, os, pathlib, re, shutil, subprocess, sy
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from config import load
 
+class RelayPendingError(RuntimeError):
+    """Local image generation handed the scene to a relay pending job.
+
+    Still a RuntimeError so existing callers keep failing closed. Proactive
+    resume only continues jobs that carry resume_protocol 1.
+    """
+    def __init__(self, message, job_path, job):
+        super().__init__(message)
+        job = job or {}
+        self.job_path = str(job_path)
+        self.job_id = job.get("job_id")
+        self.status = job.get("status")
+        self.result_path = job.get("result_path")
+        self.resume_protocol = job.get("resume_protocol")
+
 def codex_home(): return pathlib.Path(os.environ.get("CODEX_HOME", pathlib.Path.home() / ".codex"))
 
 def appearance(cfg=None):
-    a = (cfg or load())["appearance"]; root = pathlib.Path(a["assets_dir"]); prof = a["profiles"][a["profile"]]
+    cfg = cfg or load()
+    a = cfg["appearance"]
+    if cfg.get("persona_version"):
+        from personalization_runtime import image_preferences
+        return image_preferences(cfg), []
+    if a.get("profile_dir"):
+        profile = pathlib.Path(a["profile_dir"]).expanduser()
+        desc_file = profile / "description.md"
+        desc = desc_file.read_text() if desc_file.is_file() else ""
+        refs_dir = profile / "refs"
+        refs = sorted(p for p in refs_dir.glob("*") if p.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp")) if refs_dir.is_dir() else []
+        return desc, refs
+    root = pathlib.Path(a["assets_dir"]); prof = a["profiles"][a["profile"]]
     desc = (root / prof["description_file"]).read_text() if prof.get("description_file") else prof.get("description", "")
     refs = sorted(p for p in (root / prof.get("ref_dir", "")).glob("*") if p.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp")) \
         if prof.get("ref_dir") else [root / a["profile"] / r for r in prof.get("ref_images", [])]
@@ -25,8 +52,11 @@ def appearance(cfg=None):
 
 def body_metrics(cfg=None):
     """身高/体重锁定（appearance.body 或默认 173cm/50kg）。用于提示词比例与场景尺度。"""
-    a = (cfg or load()).get("appearance", {})
+    cfg = cfg or load()
+    a = cfg.get("appearance", {})
     b = a.get("body") or {}
+    if cfg.get("persona_version"):
+        return b.get("height_cm"), b.get("weight_kg")
     try: h = int(b.get("height_cm", 173))
     except (TypeError, ValueError): h = 173
     try: w = int(b.get("weight_kg", 50))
@@ -45,9 +75,12 @@ def _is_night_hour(now=None, hour=None):
 
 
 def _scene_night(scene, plan=None, now=None, imagined=False):
-    """Fiction follows the depicted time; ordinary photos keep wall-clock rules."""
+    """Use the same depicted time as clothing and realism, including schedule slots."""
     if not imagined:
-        return bool(((plan or {}).get("realism") or {}).get("night")) or _is_night_hour(now)
+        from image_context import resolve as resolve_context
+        context = {k: (plan or {})[k] for k in ("slot", "date") if k in (plan or {})}
+        context["now"] = now or (plan or {}).get("depiction_time")
+        return _is_night_hour(resolve_context(scene, context)["now"])
     if re.search(r"白天|白昼|日光|阳光|晴天|清晨|早晨|早上|上午|中午|午后|下午|黄昏|夕阳|日落|晚霞|daytime|daylight", scene or "", re.I):
         return False
     return bool(re.search(r"夜晚|夜里|夜景|夜空|夜色|深夜|午夜|凌晨|晚上|星空|星光|月光|night", scene or "", re.I))
@@ -87,19 +120,45 @@ def build_quantity_prompt(n_images=1, *, max_n=None) -> str:
     )
 
 
-def build_prompt(scene, desc, outfit_text="穿着日常、得体、保守。", realism_text="", n_canonical=0, n_scene_refs=0, scene_mode="match", pose_kind=None, cfg=None, emotion_text="", body_kind=None, night=False, shot_type=None, shot_bits=None, n_images=1, shot_briefs=None, reference_roles=None):
+def build_prompt(scene, desc, outfit_text="穿着日常、得体、保守。", realism_text="", n_canonical=0, n_scene_refs=0, scene_mode="match", pose_kind=None, cfg=None, emotion_text="", body_kind=None, night=False, shot_type=None, shot_bits=None, n_images=1, shot_briefs=None, reference_roles=None, lighting_text=None):
     """以场景+活动为核心任务；n_canonical = 身份(+body/+姿态)张数（第 1 张永远是正视五视图 HARD）；
     n_scene_refs = 紧随其后的真实场景底板张数。scene_mode 默认 match（更自然）；insert 仅显式开启。
     pose_kind: 'up'/'down'/'back'/None —— 仅当实际附了姿态 sheet 时传入，避免无姿态 sheet 仍写头部角度。
     body_kind: 'front'/'sheet'/truthy/None —— 实际附了 canonical/body 时传入；槽位在 face sheet 之后、姿态之前。
     n_images: 本次要出的张数（绝对顶 5；demand/proactive 均∈[1,5]）。先由调用方随机/按需定 N；数量指令走 build_quantity_prompt 独立通道，不与场景/妆造/构图混写。N>1 时一次 Codex 调用出齐，禁止串行多轮 resume 凑数。N 张共享同一套 -i 参考图（≤MAX_IMAGE_REFS），禁止每张各挂 refs。
     shot_briefs: 可选，长度≤n_images 的每张镜头短说明（多图异卡时用）。"""
+    recipe = (cfg or load()).get("imagegen", {}).get("prompt_recipe")
+    if recipe:
+        from photo_recipe import RECIPE, compile_plan, render
+        if recipe != RECIPE:
+            raise ValueError(f"unknown photo prompt recipe: {recipe}")
+        import shot_modes
+        try:
+            n_images = max(1, min(5, int(n_images or 1)))
+        except (TypeError, ValueError):
+            n_images = 1
+        h, w = body_metrics(cfg)
+        plan = compile_plan(
+            scene, desc, outfit_text, realism_text, n_canonical=n_canonical,
+            n_scene_refs=n_scene_refs, scene_mode=scene_mode, pose_kind=pose_kind,
+            emotion_text=emotion_text, body_kind=body_kind, night=night,
+            shot_type=shot_type, shot_block=shot_modes.prompt_shot_block(shot_type, scene, shot_bits),
+            n_images=n_images, shot_briefs=shot_briefs, reference_roles=reference_roles,
+            lighting_text=lighting_text, height_cm=h, weight_kg=w,
+        )
+        return build_quantity_prompt(n_images) + "\n\n" + render(plan)
     h, w = body_metrics(cfg)
     body_lock = (f"体型锁定：身高约 {h} cm、体重约 {w} kg，纤细修长；头身比与四肢长度符合这个身高，"
                  f"与场景中门框/桌椅/走廊透视尺度一致，不要画成偏矮或头大身小。")
+    if (cfg or load()).get("persona_version"):
+        known = "、".join(f"{label}{value}{unit}" for label, value, unit in (("身高", h, "cm"), ("体重", w, "kg")) if value is not None)
+        body_lock = ("已确认体型参数：" + known + "。" if known else "身高体重未提供，不猜数值。") + "身形比例遵循本次身体参考，与场景透视尺度一致。"
     # 核心：场景+活动在前，姿态语言不默认出现
     core = (f"任务核心是场景与活动（不是摆姿势）：{scene}。"
-            f"按这个场景里自然会发生的动作来画，不要为了好看而额外加歪头/托腮/回眸等定型姿势。")
+            f"按这个场景里自然会发生的动作来画，不要为了好看而额外加歪头/托腮/回眸等定型姿势。"
+            "本次是独立拍摄：即使复用会话，也只按本条消息的日程场景、镜头与参考图生成；"
+            "不要沿用之前生成画面的构图、餐具或动作，不得用上一轮图片或旧文件替代本次生成。"
+            "在同一日程地点内自然改变取景，不得为了变化换到别的地点。")
     if n_canonical:
         refs = (f"本条消息附带的参考图：前 {n_canonical} 张是同一个女生（小甜）的身份参考。"
                 f"第 1 张「正视标准肖像五视图」（canonical）是默认必附的唯一身份标准：脸型、五官比例、眼睛、眉毛、鼻子、嘴唇、黑色长直发、肤色必须和它一致；"
@@ -136,11 +195,11 @@ def build_prompt(scene, desc, outfit_text="穿着日常、得体、保守。", r
         if scene_mode == "insert":
             scene_block = (
                 f"{label} 是真实场景照片（场景底板）。以它为底图编辑：把小甜放进该照片的空间里，"
-                f"尽量保留原图的相机机位、透视、焦距感、背景陈设与光影方向/色温；只新增/替换人物与她的穿着动作，不要另造一座建筑或换地点。"
+                f"尽量保留原图的空间结构；光照必须按日程拍摄时刻调整；只新增/替换人物与她的穿着动作，不要另造一座建筑或换地点。"
                 f"人物身高约 {h} cm，比例、站位、遮挡关系要与场景尺度一致；若原图有路人则避开或让路人保持远处模糊。\n")
         else:
             scene_block = (
-                f"{label} 是真实场景参考照片。地点、陈设、空间结构和光影（光源方向、色温、对比、环境反射）要贴近这些照片；"
+                f"{label} 是真实场景参考照片。地点、陈设、空间结构和光影（光源方向、色温、对比、环境反射）可参考这些照片，但日程地点与拍摄时刻优先于参考图；"
                 f"允许为了构图轻微重绘，但不要换成另一个地点。把小甜自然放进该场景，动作与上述场景活动匹配；"
                 f"身高约 {h} cm，与门框/家具透视比例正确。\n")
         scene_block += ("身份仍严格以第 1 张 canonical 为准；场景图里若有人脸不要模仿。"
@@ -149,7 +208,9 @@ def build_prompt(scene, desc, outfit_text="穿着日常、得体、保守。", r
     night_lock = (
         "光照硬约束：室内夜灯/台灯暖光，窗外是黑夜；禁止白天日光、明亮天空或午后自然光。"
         "若场景参考图为白天，只借空间与陈设，光照必须改成夜晚。"
-    ) if night else ""
+    ) if night else "光照约束：画面时段为白天；可见窗外或室外保持白天自然光，不沿用夜景参考的黑夜天空。封闭室内仍服从场所照明。"
+    if lighting_text:
+        night_lock = lighting_text
     shot_block = ""
     try:
         import shot_modes as _sm
@@ -226,6 +287,13 @@ def build_prompt(scene, desc, outfit_text="穿着日常、得体、保守。", r
         refs = refs.replace("画新的一张。", f"画新的 {n_out} 张。")
         refs = refs.replace("只按本条消息的参考图和要求画新的一张。",
                             f"只按本条消息的参考图和要求画新的 {n_out} 张。")
+    if (cfg or load()).get("persona_version"):
+        def current_identity(text):
+            return (text.replace("小甜", "当前人物").replace("女生", "人物")
+                    .replace("黑色长直发", "参考图中的发型").replace("她", "该人物")
+                    .replace("人物身高约 None cm", "人物身高未提供，以参考比例为准")
+                    .replace("身高约 None cm", "身高未提供，以参考比例为准"))
+        refs, scene_block, shot_block = map(current_identity, (refs, scene_block, shot_block))
     # 内容 prompt：场景/妆造/构图/refs —— 不含数量指令
     content = (
         f"{core}\n{shot_block}{brief_block}{refs}{scene_block}"
@@ -281,6 +349,15 @@ def _body_kind_from_refs(can):
             return "front" if p.name.startswith("front") else "sheet"
     return None
 
+def _reference_roles_from_paths(can):
+    """Describe the actual attachments, including hand/leg and mixed batches."""
+    roles = []
+    for path in can:
+        parent = pathlib.Path(path).parent.name
+        roles.append({"canonical": "face", "body": "body", "hands": "hands", "legs": "legs",
+                      "up": "pose", "down": "pose", "back": "pose"}.get(parent, "identity"))
+    return roles
+
 def pick_refs(scene, cfg, exclude=(), shot_type=None):
     """(canonical, others)：默认 face+body；hand/POV 见 refpick.pick_identity(shot_type=...)。"""
     ig = cfg.get("imagegen", {})
@@ -290,11 +367,12 @@ def pick_refs(scene, cfg, exclude=(), shot_type=None):
     except FileNotFoundError:
         return [], appearance(cfg)[1][: ig.get("max_refs", 3)]
 
-def pick_scene_refs(scene, plan, cfg, k=None, *, slot=None, date=None):
+def pick_scene_refs(scene, plan, cfg, k=None, *, slot=None, date=None, rotate=False):
     """从本地 scene_refs 库按场景向量取 top-k 真实场景图。返回 [Path,...]。
 
-    日程路径：pack resolve 用 slot + 中文 scene；outfit id 仅作泛化 pick_key，
-    不得抢 common pack 解析。无 pack 时回退 generic，不留空。
+    校内 common pack 仍只走已审核素材。有日程槽但没有 common pack 时，
+    按 location / scene_hints 的地点标签命中已入库环境图（优先 travel-*），
+    不用穿搭编号或全库向量相似图顶替日程地点。
     """
     ig = cfg.get("imagegen", {})
     if os.environ.get("XIAOTIAN_TEST") == "1": return []
@@ -332,16 +410,21 @@ def pick_scene_refs(scene, plan, cfg, k=None, *, slot=None, date=None):
                     date = _lc.today_local().isoformat()
                 except Exception:
                     date = None
-        if (slot or {}).get("scene_id"):
-            hit = scene_refs.pick(slot["scene_id"], k=k, cfg=cfg,
-                                  people_free_only=bool(ig.get("scene_refs_people_free", True)))
-            if hit:
-                return [p for p, _ in hit]
+        import common_scenes as cs
+        external = cs.explicit_external_scene(scene)
         # 中文 scene 留给 pack resolve；outfit id 只进 pick_key
         pack_scene = scene
         if getattr(scene_refs, "is_outfit_scene_id", lambda _x: False)(scene):
             pack_scene = None
-        pick_key = outfit_key or scene
+        pick_key = (slot.get("scene_id") or slot.get("location")) if slot else (scene if external else (outfit_key or scene))
+        if slot and not cs.resolve_pack_from_slot(slot, scene):
+            # Recorded place text only. Outfit ids and embedding neighbors are not the venue.
+            picked = scene_refs.pick_scheduled_environment(
+                slot, k=k, cfg=cfg,
+                people_free_only=bool(ig.get("scene_refs_people_free", True)),
+                date=str(date) if date else None, rotate=rotate,
+            )
+            return [p for p, _meta in picked]
         picker = getattr(scene_refs, "pick_with_common_and_probes", None)
         if picker:
             hit = picker(
@@ -350,10 +433,12 @@ def pick_scene_refs(scene, plan, cfg, k=None, *, slot=None, date=None):
                 date=str(date) if date else None,
                 slot=slot,
                 pick_key=pick_key,
-                pack_scene=pack_scene,
+                pack_scene=pack_scene, rotate=rotate,
             )
+        elif slot:
+            return []
         else:
-            hit = scene_refs.pick(pick_key, k=k, cfg=cfg, people_free_only=bool(ig.get("scene_refs_people_free", True)))
+            hit = scene_refs.pick(pick_key, k=k, cfg=cfg, people_free_only=bool(ig.get("scene_refs_people_free", True)), date=date, rotate=rotate)
         return [p for p, _ in hit]
     except Exception as e:
         print(f"[imagegen] scene_refs 不可用：{e}", file=sys.stderr); return []
@@ -472,7 +557,7 @@ def cap_refs(can, srefs, oth, max_refs=None, shot_type=None, required_refs=None)
         out_oth.append(p); slots -= 1
     return out_can, out_srefs, out_oth
 
-def build_cmd(scene, cfg=None, out_dir=None, exclude=(), session_id=None, refs=None, scene_refs=None, shot_type=None, required_refs=None):
+def build_cmd(scene, cfg=None, out_dir=None, exclude=(), session_id=None, refs=None, scene_refs=None, shot_type=None, required_refs=None, reasoning_effort=None):
     """codex 命令。参考图顺序：canonical(+姿态) → scene_refs → 其余角度参考；硬上限 MAX_IMAGE_REFS。"""
     cfg = cfg or load(); ig = cfg.get("imagegen", {})
     can, oth = refs if refs is not None else pick_refs(scene, cfg, exclude, shot_type=shot_type)
@@ -481,7 +566,8 @@ def build_cmd(scene, cfg=None, out_dir=None, exclude=(), session_id=None, refs=N
                              required_refs=required_refs)
     import codex_session
     extra = []
-    effort = os.environ.get("IMAGEGEN_REASONING_EFFORT", ig.get("reasoning_effort") or "").strip()
+    effort = (reasoning_effort if reasoning_effort is not None else
+              os.environ.get("IMAGEGEN_REASONING_EFFORT", ig.get("reasoning_effort") or "")).strip()
     if effort:
         extra += ["-c", f"model_reasoning_effort={effort}"]
     cmd, _ = codex_session.build(ig.get("cmd", "codex"), list(can) + srefs + list(oth), out_dir or ig["out_dir"], session_id, extra_args=extra)
@@ -514,18 +600,130 @@ def batch_identity_refs(cfg, shot_types):
             selected += [(p, "body") for p in refpick.body_orbit_refs(cfg)]
     return [p for p, _ in selected], [role for _, role in selected]
 
-def _new_images(since):
-    d = codex_home() / "generated_images"
+def prepare_photo(scene, cfg, plan, context=None, exclude=(), *, rotate=False, render_prompt=True):
+    """Shared local/MacBook selection and prompt; caller owns the calendar check.
+
+    The sending host binds the recorded schedule. A MacBook request carries that
+    snapshot unchanged; its local calendar must not replace the depicted facts.
+    """
+    ctx = dict(context or {})
+    _plan = dict(plan)
+    _exclude = exclude
+    ig = cfg.get("imagegen", {})
+    import shot_modes as sm
+    shot_type = sm.normalize_shot(ctx.get("shot_type") or _plan.get("shot_type"))
+    shot_bits = ctx.get("shot_bits")
+    try:
+        from chat_media import MAX_CHAT_IMAGES_ABS as _MAX_N
+        n_out = max(1, min(int(_MAX_N), int(ctx.get("n_images") or 1)))
+    except (TypeError, ValueError):
+        n_out = 1
+    raw_types = ctx.get("shot_types")
+    shot_types = ([sm.normalize_shot(s) or sm.SHOT_THIRD for s in raw_types[:n_out]]
+                  if isinstance(raw_types, (list, tuple)) and raw_types else None)
+    if shot_types:
+        shot_types += [shot_types[-1]] * (n_out - len(shot_types))
+        shot_type = shot_type or shot_types[0]
+    mixed_shots = bool(shot_types and len(set(shot_types)) > 1)
+    required_refs = reference_roles = None
+    if mixed_shots:
+        can, reference_roles = batch_identity_refs(cfg, shot_types)
+        required_refs, oth = list(can), []
+    else:
+        can, oth = pick_refs(scene, cfg, _exclude, shot_type=shot_type)
+    max_refs = int(ig.get("max_image_refs", MAX_IMAGE_REFS))
+    # 脸五视图+身体五视图占 2 槽时，其余全部给场景（通常 3）；hand/POV 给更多 scene
+    if mixed_shots:
+        k_scene = max(0, max_refs - len(can))
+    elif shot_type in ("hand_closeup", "pov_first_person", "mirror_selfie", "legs_focus", "portrait"):
+        k_scene = max(0, max_refs - len(can))
+        if shot_type == "pov_first_person":
+            k_scene = max(k_scene, max_refs - 1)  # POV 场景优先
+        if shot_type == "mirror_selfie":
+            k_scene = max(k_scene, max_refs - 2)  # face(+hands) + 场景
+    elif any(_is_body_sheet(p) for p in can):
+        k_scene = max(0, max_refs - len(can))
+    else:
+        k_scene = None  # pick_scene_refs 用 config scene_refs_k
+    srefs = pick_scene_refs(
+        scene, _plan, cfg, k=k_scene,
+        slot=_plan.get("slot") if isinstance(_plan.get("slot"), dict) else None,
+        date=_plan.get("date"), rotate=rotate,
+    )
+    can, srefs, oth = cap_refs(can, srefs, oth, max_refs, shot_type=shot_type, required_refs=required_refs)
+    if ig.get("prompt_recipe") and reference_roles is None:
+        reference_roles = _reference_roles_from_paths(can)
+    refs = (can, oth)
+    prompt = None
+    if render_prompt:
+        if ig.get("prompt_recipe"):
+            from photo_recipe import validate_reference_roles
+            for shot in shot_types or [shot_type]:
+                validate_reference_roles(reference_roles, shot)
+        desc, _ = appearance(cfg)
+        mode = os.environ.get("SCENE_REFS_MODE") or ig.get("scene_refs_mode", "match")
+        _now = ctx.get("now")
+        _night = _scene_night(scene, _plan, _now, imagined=bool(ctx.get("imagined") or _plan.get("imagined")))
+        # hand/POV/legs/mirror/portrait：body_kind 不按 body sheet 硬写（legs 有腿模时也不写 body HARD 话术）
+        _body_kind = None if shot_type in ("hand_closeup", "pov_first_person", "mirror_selfie", "portrait", "legs_focus") else _body_kind_from_refs(refs[0])
+        # 张数：调用方先随机/按需定 N，再写入同一次 prompt；N>1 一次 Codex 出齐（禁止 Python 侧串行 resume 凑数）。
+        # All N shots share <=5 inputs. Mixed batches reserve the union of required
+        # face/body/hand/leg references before filling remaining slots with scenery.
+        shot_briefs = None
+        if n_out > 1:
+            try:
+                import shot_modes as _smb
+                bits = shot_bits if isinstance(shot_bits, dict) else {}
+                types_for_brief = shot_types or ([shot_type] * n_out if shot_type else [None] * n_out)
+                shot_briefs = []
+                for st in types_for_brief:
+                    blk = (_smb.prompt_shot_block(st, scene, bits) or "").strip()
+                    shot_briefs.append(blk or (f"镜头 {st}" if st else "同场景自然变体构图"))
+            except Exception:
+                shot_briefs = [f"第 {i+1} 张：同场景不同构图" for i in range(n_out)]
+        prompt = build_prompt(scene, desc, _plan["text"], _plan.get("realism_text", ""), len(refs[0]), len(srefs), mode, pose_kind=_pose_kind_from_refs(refs[0], scene), cfg=cfg, emotion_text=_plan.get("emotion_text", ""), body_kind=_body_kind, night=_night, shot_type=shot_type, shot_bits=shot_bits, n_images=n_out, shot_briefs=shot_briefs, reference_roles=reference_roles, lighting_text=(_plan.get("lighting") or {}).get("text"))
+        if ctx.get("photo_schedule"):
+            from photo_schedule import prompt as schedule_prompt
+            prompt = schedule_prompt(ctx["photo_schedule"]) + "\n" + prompt
+        _plan = dict(_plan, scene_refs=[str(p) for p in srefs], scene_refs_mode=mode, shot_type=shot_type, n_images=n_out, shot_types=shot_types)
+    return dict(refs=refs, scene_refs=srefs, required_refs=required_refs,
+                reference_roles=reference_roles, shot_type=shot_type, shot_types=shot_types,
+                n_images=n_out, prompt=prompt, plan=_plan)
+
+
+def photo_input_meta(prepared, cfg):
+    """Record the same inputs for local, MacBook and relay jobs."""
+    import hashlib
+    can, oth = prepared["refs"]
+    srefs, plan = prepared["scene_refs"], prepared["plan"]
+    def role_path(role):
+        return next((str(p) for p in can if p.parent.name == role), None)
+    ig = cfg.get("imagegen", {})
+    return dict(canonical_refs=list(map(str, can)), other_refs=list(map(str, oth)),
+                scene_refs=list(map(str, srefs)), scene_refs_mode=plan.get("scene_refs_mode"),
+                body_ref=role_path("body"), hands_ref=role_path("hands"), legs_ref=role_path("legs"),
+                shot_type=prepared["shot_type"], shot_types=prepared["shot_types"],
+                n_images=prepared["n_images"], reference_roles=prepared["reference_roles"],
+                photo_schedule=plan.get("photo_schedule"), lighting=plan.get("lighting"),
+                prompt_recipe=ig.get("prompt_recipe") or "legacy",
+                reasoning_effort=os.environ.get("IMAGEGEN_REASONING_EFFORT", ig.get("reasoning_effort") or "").strip(),
+                reference_sha256={str(p): hashlib.sha256(p.read_bytes()).hexdigest()
+                                  for p in can + srefs + oth if p.is_file()},
+                prompt_sha256=hashlib.sha256(prepared["prompt"].encode()).hexdigest())
+
+
+def _new_images(since, home=None):
+    d = (home or codex_home()) / "generated_images"
     return sorted((p for p in d.rglob("*.png") if p.stat().st_mtime >= since), key=lambda p: p.stat().st_mtime) if d.exists() else []
 
-def rollout_sizes():
+def rollout_sizes(home=None):
     """各 rollout 文件当前大小；复用会话时只解析本次追加的部分，避免把当天之前的图又捞出来。"""
-    d = codex_home() / "sessions"
+    d = (home or codex_home()) / "sessions"
     return {str(f): f.stat().st_size for f in d.rglob("rollout-*.jsonl")} if d.exists() else {}
 
-def _from_rollouts(since, out_dir, offsets=None):
+def _from_rollouts(since, out_dir, offsets=None, home=None):
     out = []
-    for f in (codex_home() / "sessions").rglob("rollout-*.jsonl"):
+    for f in ((home or codex_home()) / "sessions").rglob("rollout-*.jsonl"):
         if f.stat().st_mtime < since: continue
         with open(f, "rb") as fh:
             fh.seek((offsets or {}).get(str(f), 0)); text = fh.read().decode(errors="ignore")
@@ -545,25 +743,49 @@ def _from_rollouts(since, out_dir, offsets=None):
 
 MB_SCRIPT = "~/xiaotian-assets/bin/imagegen_macbook.sh"
 
-def macbook_cmd(scene, cfg=None, outfit_text=None, realism_text=None, emotion_text=None):
+def macbook_cmd(scene, cfg=None, outfit_text=None, realism_text=None, emotion_text=None, photo_request=None):
     """在 MacBook 上要执行的命令（字符串）。ssh_host 非空时包成 ssh。outfit_text 经 OUTFIT_TEXT 环境变量传给脚本。"""
     import shlex
+    from imagegen_scope import forbid_xiaosu_fallback
+    forbid_xiaosu_fallback(cfg or load())
+    if (cfg or load()).get("persona_version"):
+        raise PermissionError("当前人物版本未接入MacBook应急素材与会话，请使用本人物本机或原生生图服务")
     ig = (cfg or load()).get("imagegen", {}); inner = f"{ig.get('macbook_script', MB_SCRIPT)} {shlex.quote(scene)}"
     if outfit_text: inner = f"OUTFIT_TEXT={shlex.quote(outfit_text)} {inner}"
     if realism_text is not None: inner = f"REALISM_TEXT={shlex.quote(realism_text)} {inner}"   # 空串 = 本张不加
     if emotion_text: inner = f"EMOTION_TEXT={shlex.quote(emotion_text)} {inner}"
+    if photo_request is not None:
+        inner = f"PHOTO_REQUEST_JSON={shlex.quote(json.dumps(photo_request, ensure_ascii=False))} {inner}"
+    inner = "IMAGEGEN_REASONING_EFFORT=high " + inner
     return (["ssh", "-o", "BatchMode=yes", ig["ssh_host"], inner] if ig.get("ssh_host") else None), inner
 
-def generate_macbook(scene, dry=False, cfg=None, outfit_scene=None, **ctx):
-    ctx = dict(ctx); _meta = ctx.pop("_meta", None); ctx_m = {"_meta": _meta}
+
+def macbook_photo_request(scene, plan, context=None, cfg=None):
+    ctx = context or {}
+    return dict(scene=scene, photo_schedule=plan.get("photo_schedule"), lighting=plan.get("lighting"),
+                scene_refs_mode=(cfg or {}).get("imagegen", {}).get("scene_refs_mode", "match"),
+                **{k: ctx[k] for k in ("shot_type", "shot_types", "shot_bits", "n_images") if k in ctx})
+
+def generate_macbook(scene, dry=False, cfg=None, outfit_scene=None, relay_resume=None, **ctx):
+    relay_resume = relay_resume or ctx.pop("relay_resume", None)
+    from imagegen_scope import forbid_xiaosu_fallback
+    forbid_xiaosu_fallback(cfg or load())
+    if ((cfg or load()).get("identity_runtime") or {}).get("schema_version") == 2:
+        raise PermissionError("registered roles must use the native service")
+    if os.environ.get("XIAOTIAN_TEST") and not dry:
+        raise RuntimeError("live image generation is forbidden in test mode; inject a fake provider")
+    if not dry:
+        from photo_schedule import bind
+        ctx = bind(scene, ctx)
+    ctx = dict(ctx); _meta = ctx.pop("_meta", None)
     cfg = cfg or load(); ig = cfg.get("imagegen", {}); plan = outfit_plan(scene, outfit_scene, cfg, **ctx)
     if ctx.get("imagined"): plan["imagined"] = True
-    ctx = ctx_m
-    ssh, inner = macbook_cmd(scene, cfg, plan["text"], plan.get("realism_text"), plan.get("emotion_text"))
+    request = macbook_photo_request(scene, plan, ctx, cfg)
+    ssh, inner = macbook_cmd(scene, cfg, plan["text"], plan.get("realism_text"), plan.get("emotion_text"), request)
     if dry: return (ssh or ["# 在 MacBook 上运行:", inner]), []
     if not ssh:
-        job = write_pending(scene, inner, plan, cfg, ctx.get("_meta") or {}, "imagegen.ssh_host 为空")
-        raise RuntimeError(f"Mac mini 无法直接调 MacBook（imagegen.ssh_host 为空）。任务已写到 {job}" + _relay_note(job, inner, ig))
+        job = write_pending(scene, inner, plan, cfg, _meta or {}, "imagegen.ssh_host 为空", resume=relay_resume, photo_request=request)
+        _raise_relay("Mac mini 无法直接调 MacBook（imagegen.ssh_host 为空）。任务已写到 ", job, inner, ig)
     try:
         r = subprocess.run(ssh, capture_output=True, text=True, timeout=ig.get("timeout", 600))
         remote = [l.strip() for l in r.stdout.splitlines() if l.strip().endswith(".png")]
@@ -571,35 +793,62 @@ def generate_macbook(scene, dry=False, cfg=None, outfit_scene=None, **ctx):
     except (RuntimeError, subprocess.TimeoutExpired, OSError) as e:
         import relay
         if not relay.configured(): raise
-        job = write_pending(scene, inner, plan, cfg, ctx.get("_meta") or {}, f"ssh 失败：{e}")
-        raise RuntimeError(f"ssh 到 MacBook 失败（{str(e)[:200]}）。任务已写到 {job}" + _relay_note(job, inner, ig)) from e
+        job = write_pending(scene, inner, plan, cfg, _meta or {}, f"ssh 失败：{e}", resume=relay_resume, photo_request=request)
+        try:
+            _raise_relay(f"ssh 到 MacBook 失败（{str(e)[:200]}）。任务已写到 ", job, inner, ig)
+        except RelayPendingError as relay_error:
+            raise relay_error from e
     out_dir = pathlib.Path(ig["out_dir"]) / datetime.datetime.now().strftime("%Y%m%d-%H%M%S"); out_dir.mkdir(parents=True, exist_ok=True)
     for f in remote: subprocess.run(["scp", "-o", "BatchMode=yes", f"{ig['ssh_host']}:{f}", str(out_dir)], check=True, timeout=120)
-    write_meta(out_dir, dict(ctx.get("_meta") or {}, backend="macbook"))
+    write_meta(out_dir, dict(_meta or {}, backend="macbook", photo_schedule=plan.get("photo_schedule"),
+                            lighting=plan.get("lighting"), prompt_recipe="freefield_creatoros_v1", reasoning_effort="high"))
     return ssh, sorted(out_dir.glob("*.png"))
 
 def _pending_refs(scene, cfg):
     try:
         can, oth = pick_refs(scene, cfg)
+        can, _, oth = cap_refs(can, [], oth, cfg.get("imagegen", {}).get("max_image_refs", MAX_IMAGE_REFS))
     except Exception:
         can, oth = [], []
     return [str(pathlib.Path(r).resolve()) for r in can], [str(pathlib.Path(r).resolve()) for r in oth]
 
-def write_pending(scene, inner, plan, cfg, meta, error):
+def write_pending(scene, inner, plan, cfg, meta, error, resume=None, photo_request=None):
     """写 pending/<job_id>.json（含 prompt、穿搭、写实修饰、参考图绝对路径、期望结果路径）。返回路径。"""
+    from imagegen_scope import forbid_xiaosu_fallback
+    forbid_xiaosu_fallback(cfg)
+    from photo_schedule import check
+    check(plan["photo_schedule"])
     ig = cfg.get("imagegen", {}); now = datetime.datetime.now(); job_id = now.strftime("%Y%m%d-%H%M%S-%f")[:-3]
     pend = pathlib.Path(ig["out_dir"]).resolve() / "pending"; pend.mkdir(parents=True, exist_ok=True)
-    try: desc = appearance(cfg)[0]
-    except Exception: desc = ""
-    job = pend / f"{job_id}.json"; can, oth = _pending_refs(scene, cfg)
-    job.write_text(json.dumps({"scene": scene, "macbook_cmd": inner, **meta, "backend": "macbook", "job_id": job_id, "status": "pending",
-        "created_at": now.isoformat(timespec="seconds"), "prompt": build_prompt(scene, desc, plan["text"], plan.get("realism_text", ""), len(can), pose_kind=_pose_kind_from_refs(can, scene), cfg=cfg, emotion_text=plan.get("emotion_text", ""), body_kind=_body_kind_from_refs(can), night=_scene_night(scene, plan, imagined=plan.get("imagined", False))),
+    request = photo_request or macbook_photo_request(scene, plan, cfg=cfg)
+    # Source paths are advisory: the emergency host can have the only usable
+    # assets. It must resolve real attachments and compile the final prompt.
+    can, oth = _pending_refs(scene, cfg)
+    from photo_schedule import prompt as schedule_prompt
+    from photo_recipe import RECIPE
+    job = pend / f"{job_id}.json"
+    import image_relay_resume as _resume
+    _protocol = _resume.protocol_fields(resume) or {}
+    job.write_text(json.dumps({"photo_schedule": plan["photo_schedule"], "scene": scene, "macbook_cmd": inner, **meta, "backend": "macbook", "job_id": job_id, "status": "pending",
+        **_protocol,
+        "prompt_recipe": RECIPE, "reasoning_effort": "high", "photo_request": request,
+        "lighting": plan.get("lighting"), "n_images": request.get("n_images", 1),
+        "shot_type": request.get("shot_type"), "shot_types": request.get("shot_types"),
+        "created_at": now.isoformat(timespec="seconds"),
+        "prompt": schedule_prompt(plan["photo_schedule"]) + "\n" +
+            "这是应急待执行请求：使用 macbook_cmd，在 MacBook 解析实际人物参考图，复用 prepare_photo 编译分层提示词并以 High 调用内置 image_gen。"
+            "参考图锁身份与比例，穿搭和动作按场景适配；不得无参考生成人像，不得用文字声明代替附件。最终 prompt.txt 和参考图审计保存在 MacBook 输出目录。 $imagegen",
         "outfit_text": plan["text"], "realism_text": plan.get("realism_text", ""), "emotion_text": plan.get("emotion_text", ""), "reference_images": can + oth, "canonical_refs": can, "other_refs": oth, "extra_sheet": next((c for c in can if pathlib.Path(c).parent.name in ("up", "down", "back")), None),
         "body_ref": next((c for c in can if pathlib.Path(c).parent.name == "body"), None),
         "session_policy": "MacBook 端同一天复用一个 Codex 会话（codex exec resume），跨天新开；见 tools/imagegen_macbook.sh",
         "result_path": str(pathlib.Path(ig["out_dir"]).resolve() / f"relay-{job_id}" / "result.png"), "error": (f"本机失败：{meta['fallback_reason']}；" if meta.get("fallback_reason") else "") + str(error)[:1000]},
         ensure_ascii=False, indent=1))
     return job
+
+def _raise_relay(prefix, job, inner, ig):
+    note = _relay_note(job, inner, ig)
+    data = json.loads(pathlib.Path(job).read_text())
+    raise RelayPendingError(prefix + str(job) + note, job, data)
 
 def _relay_note(job, inner, ig):
     import relay
@@ -610,14 +859,24 @@ def _relay_note(job, inner, ig):
 
 def relay_done(job_id, image_path, cfg=None):
     """开发助手从 MacBook 拿回图后调用：把图放到 result_path，pending json 标 done，写 run.json。"""
-    cfg = cfg or load(); job = pathlib.Path(cfg["imagegen"]["out_dir"]).resolve() / "pending" / f"{job_id}.json"
+    cfg = cfg or load()
+    from imagegen_scope import forbid_xiaosu_fallback
+    forbid_xiaosu_fallback(cfg)
+    job = pathlib.Path(cfg["imagegen"]["out_dir"]).resolve() / "pending" / f"{job_id}.json"
     if not job.exists(): raise FileNotFoundError(f"找不到 pending 任务 {job}")
-    d = json.loads(job.read_text()); src = pathlib.Path(image_path).expanduser()
+    d = json.loads(job.read_text())
+    import image_relay_resume as _resume
+    if d.get("resume_protocol") == _resume.PROTOCOL and d.get("status") in _resume.CLOSED:
+        # A finished protocol job is not a new delivery. Leave the file untouched.
+        return pathlib.Path(d.get("result") or d.get("result_path"))
+    from photo_schedule import check
+    check(d["photo_schedule"])
+    src = pathlib.Path(image_path).expanduser()
     if not src.is_file(): raise FileNotFoundError(f"图片不存在：{src}")
     dst = pathlib.Path(d["result_path"]); dst.parent.mkdir(parents=True, exist_ok=True); shutil.copy2(src, dst)
     d.update(status="done", done_at=datetime.datetime.now().isoformat(timespec="seconds"), result=str(dst))
     job.write_text(json.dumps(d, ensure_ascii=False, indent=1))
-    write_meta(dst.parent, {k: d.get(k) for k in ("backend", "job_id", "fallback_reason", "forced")} | {"status": "ok", "relayed": True, "images": [dst.name]})
+    write_meta(dst.parent, {k: d.get(k) for k in ("backend", "job_id", "fallback_reason", "forced", "photo_schedule", "lighting", "prompt_recipe", "reasoning_effort", "shot_type", "shot_types", "n_images")} | {"status": "ok", "relayed": True, "images": [dst.name]})
     return dst
 
 BLOCK_WORDS = ("moderation", "safety", "content policy", "content_policy", "policy violation", "blocked", "审核", "违反", "不能生成")
@@ -631,8 +890,14 @@ def outfit_plan(scene, outfit_scene=None, cfg=None, **ctx):
     """场景驱动的浮动穿搭（src/outfit.py）。outfit_scene 显式指定场景；推断失败退回保守描述。"""
     # generate(..., chat=True) puts a bool in ctx; outfit.plan expects chat as message list.
     chat_flag = bool(ctx.get("chat")) if not isinstance(ctx.get("chat"), (list, tuple)) else True
+    from image_context import resolve as resolve_context
+    ctx = resolve_context(scene, ctx)
     octx = {k: v for k, v in ctx.items() if k != "chat"}
-    if isinstance(ctx.get("chat"), (list, tuple)):
+    if ctx.get("photo_schedule"):
+        if outfit_scene is not None:
+            raise ValueError("scheduled photos cannot override the recorded outfit scene")
+        octx["chat"] = []
+    if not ctx.get("photo_schedule") and isinstance(ctx.get("chat"), (list, tuple)):
         octx["chat"] = ctx["chat"]
     try:
         import outfit; plan = outfit.plan(scene, outfit_scene, **octx)
@@ -640,6 +905,11 @@ def outfit_plan(scene, outfit_scene=None, cfg=None, **ctx):
     except Exception as e:
         print(f"[imagegen] 穿搭推断失败，用保守描述：{e}", file=sys.stderr)
         plan = {"weights": {}, "vector": {}, "level": 0, "text": "穿着日常、得体、保守。", "emotion": {}, "emotion_text": ""}
+    plan.update(depiction_time=ctx["now"].isoformat(), depiction_time_source=ctx["depiction_time_source"])
+    plan.update({k: ctx[k] for k in ("slot", "date", "photo_schedule") if k in ctx})
+    if ctx.get("photo_schedule"):
+        import photo_lighting
+        plan["lighting"] = photo_lighting.resolve(ctx["now"], ctx["slot"], cfg)
     if ctx.get("imagined"): plan["imagined"] = True
     return add_realism(plan, scene, ctx.get("now"), cfg=cfg, chat=chat_flag, imagined=bool(ctx.get("imagined")))
 
@@ -670,12 +940,14 @@ def add_realism(plan, scene, now=None, seed=None, cfg=None, chat=False, photo_mo
             hour=hour, seed=seed,
             photo_mode=mode, casual_p=casual_p, force_selfie=force_selfie,
         )
-        if imagined:
-            # Time weights are soft in realism.pick; never add a contradicting
-            # night/day modifier to an explicitly fictional scene.
-            keep = [i for i in sel["ids"] if realism.BY_ID[i].get("time", "any") in ("any", "night" if hour == 21 else "day")]
-            sel = dict(sel, ids=keep, n=len(keep), **{key: [realism.BY_ID[i][field] for i in keep]
+        # Time weights are soft; reject modifiers contradicting the depiction time.
+        keep = [i for i in sel["ids"] if realism.BY_ID[i].get("time", "any") in ("any", "night" if (plan.get("lighting", {}).get("period") == "night" if plan.get("lighting") else _is_night_hour(hour=hour)) else "day")]
+        if plan.get("lighting", {}).get("period") in ("twilight", "unknown"):
+            keep = [i for i in keep if realism.BY_ID[i].get("time", "any") == "any"]
+        sel = dict(sel, ids=keep, n=len(keep), **{key: [realism.BY_ID[i][field] for i in keep]
                 for key, field in (("en", "en"), ("zh", "zh"), ("groups", "group"))})
+        if plan.get("lighting"):
+            sel["night"] = plan["lighting"]["period"] == "night"
         plan["realism"], plan["realism_text"] = sel, realism.text(sel)
     except Exception as e:
         print(f"[imagegen] 写实修饰失败，跳过：{e}", file=sys.stderr); plan["realism"], plan["realism_text"] = None, ""
@@ -710,12 +982,41 @@ def resolve_backend(cfg=None):
     return ("macbook", True) if b == "macbook" else ("local", False)
 
 def generate(scene, dry=False, cfg=None, outfit_scene=None, chat=False, skip_face_fallback=None, **ctx):
+    from config import snapshot
+    from preview_mode import preview
+    with snapshot(cfg) as current, preview(dry):
+        result = _generate_selected(scene, dry=dry, cfg=current, outfit_scene=outfit_scene, chat=chat, skip_face_fallback=skip_face_fallback, **ctx)
+        if result:
+            from personalization_runtime import report_loaded
+            report_loaded("image", current)
+        return result
+
+
+def _generate_selected(scene, dry=False, cfg=None, outfit_scene=None, chat=False, skip_face_fallback=None, **ctx):
     """默认 Mac mini 本机；本机非审核失败重试 1 次后自动切 MacBook 应急；IMAGEGEN_BACKEND=macbook 强制 MacBook。
 
     chat=True（聊天发图）：只跑 scene_refs 第一张，跳过 face-fallback 第二次 Codex。
     skip_face_fallback=True：同上。研究/离线 A/B 保持默认（config/env SCENE_REFS_FACE_FALLBACK）。
     """
-    cfg = cfg or load(); backend, forced = resolve_backend(cfg)
+    relay_resume = ctx.pop("relay_resume", None)
+    cfg = cfg or load()
+    if (cfg.get("identity_runtime") or {}).get("schema_version") == 2:
+        if dry:
+            return []
+        from photo_schedule import bind
+        ctx = bind(scene, ctx)
+        from native_client import generate as native_generate
+        return native_generate(scene, cfg, **ctx)
+    if cfg.get("imagegen", {}).get("enabled") is False:
+        if dry:
+            return []
+        raise RuntimeError("image generation is disabled for this identity")
+    if os.environ.get("XIAOTIAN_TEST") and not dry:
+        raise RuntimeError("live image generation is forbidden in test mode; inject a fake provider")
+    if not dry:
+        from photo_schedule import bind
+        ctx = bind(scene, ctx)
+    backend, forced = resolve_backend(cfg)
     # 聊天路径永远跳过双跑；显式 skip_face_fallback 也可；否则交给 generate_local 读 config/env
     skip_fb = True if chat else (bool(skip_face_fallback) if skip_face_fallback is not None else None)
     def _meta(base):
@@ -723,7 +1024,7 @@ def generate(scene, dry=False, cfg=None, outfit_scene=None, chat=False, skip_fac
         if skip_fb is True: m["skip_face_fallback"] = True
         if chat: m["chat"] = True
         return m
-    if forced: return generate_macbook(scene, dry, cfg, outfit_scene, _meta=_meta({"backend": "macbook", "forced": True}), **ctx)
+    if forced: return generate_macbook(scene, dry, cfg, outfit_scene, relay_resume=relay_resume, _meta=_meta({"backend": "macbook", "forced": True}), **ctx)
     errs = []
     if not dry:
         try:
@@ -733,7 +1034,7 @@ def generate(scene, dry=False, cfg=None, outfit_scene=None, chat=False, skip_fac
             errs.append(f"{type(e).__name__}: {e}"[:500])
             print(f"[imagegen] greenlight 失败：{errs[-1]}", file=sys.stderr)
             print("[imagegen] 本机后端不可用，切 MacBook 应急路线", file=sys.stderr)
-            return generate_macbook(scene, dry, cfg, outfit_scene, _meta=_meta({"backend": "macbook", "forced": False, "fallback_reason": errs[-1], "local_errors": errs}), **ctx)
+            return generate_macbook(scene, dry, cfg, outfit_scene, relay_resume=relay_resume, _meta=_meta({"backend": "macbook", "forced": False, "fallback_reason": errs[-1], "local_errors": errs}), **ctx)
     for i in range(1, LOCAL_TRIES + 1):
         try: return generate_local(scene, dry, cfg, outfit_scene, _meta=_meta({"backend": "local", "local_try": i, "local_errors": errs[:]}), **ctx)
         except ModerationBlocked: raise
@@ -746,15 +1047,46 @@ def generate(scene, dry=False, cfg=None, outfit_scene=None, chat=False, skip_fac
             except Exception as fe:
                 print(f"[imagegen] forget 会话失败：{fe}", file=sys.stderr)
     print("[imagegen] 本机后端两次失败，切 MacBook 应急路线", file=sys.stderr)
-    return generate_macbook(scene, dry, cfg, outfit_scene, _meta=_meta({"backend": "macbook", "forced": False, "fallback_reason": errs[-1], "local_errors": errs}), **ctx)
+    return generate_macbook(scene, dry, cfg, outfit_scene, relay_resume=relay_resume, _meta=_meta({"backend": "macbook", "forced": False, "fallback_reason": errs[-1], "local_errors": errs}), **ctx)
 
 def generate_local(scene, dry=False, cfg=None, outfit_scene=None, _exclude=(), _attempt=1, _plan=None, _meta=None, **ctx):
+    cfg = cfg or load()
+    if (cfg.get("identity_runtime") or {}).get("schema_version") == 2:
+        raise PermissionError("registered roles must use the native service")
+    if os.environ.get("XIAOTIAN_TEST") and not dry:
+        raise RuntimeError("live image generation is forbidden in test mode; inject a fake provider")
+    if dry or ctx.get("_scope_locked", False):
+        return _generate_local(scene, dry, cfg, outfit_scene, _exclude, _attempt, _plan, _meta, **ctx)
+    # Reject invalid requests before waiting behind a long-running Codex job.
+    # _generate_local rechecks the snapshot after the wait, before dispatch.
+    from photo_schedule import bind
+    ctx = bind(scene, ctx)
+    from imagegen_scope import locked
+    with locked(cfg):
+        return _generate_local(scene, dry, cfg, outfit_scene, _exclude, _attempt, _plan, _meta, _scope_locked=True, **ctx)
+
+
+def _generate_local(scene, dry=False, cfg=None, outfit_scene=None, _exclude=(), _attempt=1, _plan=None, _meta=None, **ctx):
     """被安全审核拦截时：第 1 次换一组参考图重试；之后每次把放开程度降一级再试（降到 0 级仍被拦就报错）。
     outfit_scene：显式指定穿搭场景（如 "约会"、"见老师/学生会正式场合"），不传则按作息/校园/情绪/聊天推断。"""
+    if not dry:
+        from photo_schedule import bind
+        ctx = bind(scene, ctx)
+    from image_context import resolve as resolve_context
+    ctx = resolve_context(scene, ctx)
     cfg = cfg or load(); ig = cfg.get("imagegen", {})
+    if (cfg.get("identity_runtime") or {}).get("schema_version") == 2:
+        raise PermissionError("registered roles must use the native service")
+    if os.environ.get("XIAOTIAN_TEST") and not dry:
+        raise RuntimeError("live image generation is forbidden in test mode; inject a fake provider")
     if _plan is None: _plan = outfit_plan(scene, outfit_scene, cfg, **ctx)
     # 日程槽透传：供 pick_scene_refs 优先 resolve common pack（勿丢 slot）
     _plan = dict(_plan or {})
+    if ctx.get("photo_schedule"):
+        import photo_lighting
+        _plan.update(photo_schedule=ctx["photo_schedule"], slot=ctx["slot"], date=ctx["date"],
+                     depiction_time=ctx["now"].isoformat(), depiction_time_source="recorded_schedule",
+                     lighting=photo_lighting.resolve(ctx["now"], ctx["slot"], cfg))
     if isinstance(ctx.get("slot"), dict):
         _plan.setdefault("slot", ctx["slot"])
     if ctx.get("date"):
@@ -762,89 +1094,44 @@ def generate_local(scene, dry=False, cfg=None, outfit_scene=None, _exclude=(), _
     elif isinstance(ctx.get("today"), dict) and ctx["today"].get("date"):
         _plan.setdefault("date", ctx["today"]["date"])
         _plan.setdefault("today", ctx["today"])
-    out_dir = pathlib.Path(ig["out_dir"]) / (datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + ("" if _attempt == 1 else f"-retry{_attempt}") + ("" if (_meta or {}).get("local_try", 1) == 1 else f"-try{_meta['local_try']}"))
+    out_dir = pathlib.Path(ig["out_dir"]) / (datetime.datetime.now().strftime("%Y%m%d-%H%M%S-%f") + ("" if _attempt == 1 else f"-retry{_attempt}") + ("" if (_meta or {}).get("local_try", 1) == 1 else f"-try{_meta['local_try']}"))
     import codex_session
-    shot_type = ctx.get("shot_type") or (_plan or {}).get("shot_type") or (_meta or {}).get("shot_type")
-    shot_bits = ctx.get("shot_bits")
-    try:
-        from chat_media import MAX_CHAT_IMAGES_ABS as _MAX_N
-        n_out = max(1, min(int(_MAX_N), int(ctx.get("n_images") or (_meta or {}).get("n_images") or 1)))
-    except (TypeError, ValueError):
-        n_out = 1
-    import shot_modes as sm
-    raw_types = ctx.get("shot_types")
-    shot_types = ([sm.normalize_shot(s) or sm.SHOT_THIRD for s in raw_types[:n_out]]
-                  if isinstance(raw_types, (list, tuple)) and raw_types else None)
-    if shot_types:
-        shot_types += [shot_types[-1]] * (n_out - len(shot_types))
-    mixed_shots = bool(shot_types and len(set(shot_types)) > 1)
-    required_refs = reference_roles = None
-    if mixed_shots:
-        can, reference_roles = batch_identity_refs(cfg, shot_types)
-        required_refs, oth = list(can), []
-    else:
-        can, oth = pick_refs(scene, cfg, _exclude, shot_type=shot_type)
-    max_refs = int(ig.get("max_image_refs", MAX_IMAGE_REFS))
-    # 脸五视图+身体五视图占 2 槽时，其余全部给场景（通常 3）；hand/POV 给更多 scene
-    if mixed_shots:
-        k_scene = max(0, max_refs - len(can))
-    elif shot_type in ("hand_closeup", "pov_first_person", "mirror_selfie", "legs_focus", "portrait"):
-        k_scene = max(0, max_refs - len(can))
-        if shot_type == "pov_first_person":
-            k_scene = max(k_scene, max_refs - 1)  # POV 场景优先
-        if shot_type == "mirror_selfie":
-            k_scene = max(k_scene, max_refs - 2)  # face(+hands) + 场景
-    elif any(_is_body_sheet(p) for p in can):
-        k_scene = max(0, max_refs - len(can))
-    else:
-        k_scene = None  # pick_scene_refs 用 config scene_refs_k
-    srefs = pick_scene_refs(
-        scene, _plan, cfg, k=k_scene,
-        slot=_plan.get("slot") if isinstance(_plan.get("slot"), dict) else None,
-        date=_plan.get("date"),
-    )
-    can, srefs, oth = cap_refs(can, srefs, oth, max_refs, shot_type=shot_type, required_refs=required_refs)
-    refs = (can, oth)
+    prepared = prepare_photo(scene, cfg, _plan, {**ctx,
+        "shot_type": ctx.get("shot_type") or (_meta or {}).get("shot_type"),
+        "n_images": ctx.get("n_images") or (_meta or {}).get("n_images") or 1},
+        _exclude, rotate=not dry, render_prompt=not dry)
+    refs, srefs = prepared["refs"], prepared["scene_refs"]
+    can, oth = refs
+    required_refs, reference_roles = prepared["required_refs"], prepared["reference_roles"]
+    shot_type, shot_types, n_out = prepared["shot_type"], prepared["shot_types"], prepared["n_images"]
     sid = codex_session.current(cfg)
     cmd = build_cmd(scene, cfg, out_dir, _exclude, sid, refs, srefs, shot_type=shot_type, required_refs=required_refs)
     if dry: return cmd, []
-    out_dir.mkdir(parents=True, exist_ok=True); t0 = time.time() - 1; offs = rollout_sizes()
-    desc, _ = appearance(cfg)
-    mode = os.environ.get("SCENE_REFS_MODE") or ig.get("scene_refs_mode", "match")
-    _now = ctx.get("now")
-    _night = _scene_night(scene, _plan, _now, imagined=bool(ctx.get("imagined") or _plan.get("imagined")))
-    # hand/POV/legs/mirror/portrait：body_kind 不按 body sheet 硬写（legs 有腿模时也不写 body HARD 话术）
-    _body_kind = None if shot_type in ("hand_closeup", "pov_first_person", "mirror_selfie", "portrait", "legs_focus") else _body_kind_from_refs(refs[0])
-    # 张数：调用方先随机/按需定 N，再写入同一次 prompt；N>1 一次 Codex 出齐（禁止 Python 侧串行 resume 凑数）。
-    # All N shots share <=5 inputs. Mixed batches reserve the union of required
-    # face/body/hand/leg references before filling remaining slots with scenery.
-    shot_briefs = None
-    if n_out > 1:
-        try:
-            import shot_modes as _smb
-            bits = shot_bits if isinstance(shot_bits, dict) else {}
-            types_for_brief = shot_types or ([shot_type] * n_out if shot_type else [None] * n_out)
-            shot_briefs = []
-            for st in types_for_brief:
-                blk = (_smb.prompt_shot_block(st, scene, bits) or "").strip()
-                shot_briefs.append(blk or (f"镜头 {st}" if st else "同场景自然变体构图"))
-        except Exception:
-            shot_briefs = [f"第 {i+1} 张：同场景不同构图" for i in range(n_out)]
-    prompt = build_prompt(scene, desc, _plan["text"], _plan.get("realism_text", ""), len(refs[0]), len(srefs), mode, pose_kind=_pose_kind_from_refs(refs[0], scene), cfg=cfg, emotion_text=_plan.get("emotion_text", ""), body_kind=_body_kind, night=_night, shot_type=shot_type, shot_bits=shot_bits, n_images=n_out, shot_briefs=shot_briefs, reference_roles=reference_roles)
-    _plan = dict(_plan, scene_refs=[str(p) for p in srefs], scene_refs_mode=mode, shot_type=shot_type, n_images=n_out, shot_types=shot_types)
+    from imagegen_scope import paths as scope_paths, environment as scope_environment
+    child_env = scope_environment(cfg)
+    _, scoped_home = scope_paths(cfg)
+    out_dir.mkdir(parents=True, exist_ok=True); t0 = time.time(); offs = rollout_sizes(scoped_home)
+    prompt, _plan = prepared["prompt"], prepared["plan"]
     (out_dir / "outfit.json").write_text(json.dumps(_plan, ensure_ascii=False, indent=1))
-    meta = dict(_meta or {"backend": "local"}, moderation_attempt=_attempt, canonical_refs=[str(p) for p in refs[0]], other_refs=[str(p) for p in refs[1]], scene_refs=[str(p) for p in srefs], scene_refs_mode=mode, body_ref=next((str(p) for p in refs[0] if pathlib.Path(p).parent.name == "body"), None), shot_type=shot_type, hands_ref=next((str(p) for p in refs[0] if pathlib.Path(p).parent.name == "hands"), None), legs_ref=next((str(p) for p in refs[0] if pathlib.Path(p).parent.name == "legs"), None), n_images=n_out, shot_types=shot_types)
-    # Persist exact input for diagnosis; no need to reconstruct a prompt from logs.
+    meta = dict(_meta or {"backend": "local"}, moderation_attempt=_attempt,
+                **photo_input_meta(prepared, cfg))
     (out_dir / "prompt.txt").write_text(prompt, encoding="utf-8")
-    import hashlib
-    meta.update(reference_roles=reference_roles,
-                reference_sha256={str(p): hashlib.sha256(p.read_bytes()).hexdigest()
-                                  for p in can + srefs + oth if p.is_file()},
-                prompt_sha256=hashlib.sha256(prompt.encode()).hexdigest())
+    meta.update(codex_home=str(scoped_home), process_home=child_env["HOME"])
     timeout = float(ig.get("timeout", 900))
     def run(c):
+        import imagegen_audit
+        from photo_schedule import check
+        check(ctx["photo_schedule"])
+        evidence = imagegen_audit.invocation(out_dir, c)
+        meta["invocation_log"] = "invocations.jsonl"
+        meta["actual_cli_references"] = evidence["references"]
         try:
-            return subprocess.run(c, input=prompt, capture_output=True, text=True, timeout=timeout, cwd=str(out_dir))
+            result = subprocess.run(c, input=prompt, capture_output=True, text=True, timeout=timeout, cwd=str(out_dir), env=child_env)
+            observation = imagegen_audit.tool_references(result.stdout)
+            with (out_dir / "tool_references.jsonl").open("a", encoding="utf-8") as audit:
+                audit.write(json.dumps(observation, ensure_ascii=False) + "\n")
+            meta["tool_reference_evidence"] = observation
+            return result
         except subprocess.TimeoutExpired:
             # sticky resume 超时后必须清会话，否则下一轮还 resume 同一个膨胀上下文
             try: codex_session.forget(cfg)
@@ -864,7 +1151,7 @@ def generate_local(scene, dry=False, cfg=None, outfit_scene=None, _exclude=(), _
     if new_sid and not (r.returncode and codex_session.resume_broken(r.stderr)): codex_session.save(cfg, new_sid)
     meta.update(session_id=new_sid, session="resume" if sid else "new")
     (out_dir / "codex.log").write_text(r.stdout + "\n--- stderr ---\n" + r.stderr)
-    imgs = [pathlib.Path(shutil.copy2(p, out_dir / p.name)) for p in _new_images(t0)] or _from_rollouts(t0, out_dir, offs)
+    imgs = [pathlib.Path(shutil.copy2(p, out_dir / p.name)) for p in _new_images(t0, scoped_home)] or _from_rollouts(t0, out_dir, offs, scoped_home)
     imgs += [p for p in (out_dir / "generated_images").glob("*.png")] if (out_dir / "generated_images").exists() else []
     # 去重保序，多图只取本次最多 n_out 张；不足也不串行补跑（禁止一张一张凑数）
     seen = set(); uniq = []

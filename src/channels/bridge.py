@@ -13,6 +13,9 @@ import functools
 import copy
 import hashlib
 import uuid
+import contextvars
+import contextlib
+from dataclasses import asdict
 from typing import Callable, Optional
 from preview_mode import preview
 from .types import Inbound, Outbound
@@ -22,13 +25,29 @@ from .send_receipts import send_with_confirmation
 # brain.LAST, the local vector store and send bookkeeping are shared. Keep the
 # complete turn (including delayed media/send consumers) on one worker at a time.
 _TURN_LOCK = threading.RLock()
+_RECOVERY = contextvars.ContextVar('bridge_recovery', default=None)
 
 
 def _serial_turn(fn):
     @functools.wraps(fn)
     def wrapped(*args, **kwargs):
-        with _TURN_LOCK, preview(kwargs.get("dry", True)):
-            return fn(*args, **kwargs)
+        from config import load, snapshot
+        with _TURN_LOCK, preview(kwargs.get("dry", True)), snapshot(load()):
+            state = {}
+            token = _RECOVERY.set(state)
+            try:
+                result = fn(*args, **kwargs)
+                if state.get('turn') and state['turn'].phase in ('generating', 'retry_generate'):
+                    state['turn'].update('held')  # deliberate SKIP/empty/cancelled draft
+                return result
+            except Exception:
+                if state.get('turn'):
+                    state['turn'].failed()
+                raise
+            finally:
+                if state.get('db') is not None:
+                    state['db'].close()
+                _RECOVERY.reset(token)
     return wrapped
 
 
@@ -85,7 +104,7 @@ def _human_wait_for_send(elapsed: float, text: str, *, now: datetime.datetime | 
         "think_max_awake_sec": 5,
     }
     rc.update(cfg.get("reply") or {})
-    now = now or __import__("timeutil").now_local()
+    now = now or datetime.datetime.now()
     # 睡觉/醒着同一短 cap；不再读 think_max_sleeping_sec
     cap = float(rc.get("think_max_awake_sec") or 5)
     max_delay = float(cfg.get("max_reply_delay_sec") or 300)
@@ -127,14 +146,40 @@ def _plan_want_image(
     """brain.LAST want_image → chat_media.plan_chat_images；可选 hold_on 文本气泡。
 
     hold_on /「马上发你」仅当 allow_hold_on=True（对方明确要图且正在生图）。
-    返回 img_plan dict 或 None（生图失败则退回纯文本）。
+    返回 img_plan dict 或 None；无图时整轮取消，不保留配文。
     """
     import chat_media
     from config import load
     cfg = load()
     ig = cfg.get("imagegen") or {}
+    def sleep_guard():
+        if (cfg.get("identity_runtime") or {}).get("schema_version") != 2:
+            import memory, sleep_chat
+            sleep_chat.check_reply_send(memory.read_state(str((cfg.get("contact") or {}).get("id") or "demo_contact")),
+                                        datetime.datetime.now())
+    sleep_guard()
+    # No hold message or provider call before the schedule gate has passed.
+    import schedule_fidelity as sf
+    import memory as photo_memory
+    now = sf.now_local()
+    photo_context, reason = sf.resolve_photo_schedule(
+        user_text or "", scene, photo_memory.read_state(str((cfg.get("contact") or {}).get("id") or "demo_contact")), now)
+    if reason:
+        print(f"[bridge] image schedule gate: {reason}", flush=True)
+        return None
+    if photo_context["historical"]:
+        text = f"按{photo_context['date']}的日程还原给你看"
+
+    if (cfg.get("identity_runtime") or {}).get("schema_version") == 2:
+        try:
+            from runtime_policy import require
+            require("image_send", cfg)
+        except Exception as exc:
+            print(f"[bridge] registered native image failed: {type(exc).__name__}", file=sys.stderr, flush=True)
+            return None
     if (
         allow_hold_on
+        and (cfg.get("identity_runtime") or {}).get("schema_version") != 2
         and ig.get("hold_on_before_generate", True)
         and os.environ.get("IMAGEGEN_HOLD_ON", "1") not in ("0", "false", "no")
     ):
@@ -148,35 +193,37 @@ def _plan_want_image(
                 send_with_confirmation(
                     send, Outbound(channel=peer_channel, peer_id=peer_id, text=hold),
                     lambda: on_hold_sent(hold) if on_hold_sent else None,
+                    before_send=sleep_guard,
                 )
                 print(f"[bridge] hold_on: {hold}", flush=True)
         except Exception as he:
+            from sleep_chat import ReplySleepBlocked
+            if isinstance(he, ReplySleepBlocked):
+                raise
             print(f"[bridge] hold_on send failed: {he!r}", file=sys.stderr, flush=True)
+    sleep_guard()
     try:
         try:
-            import timeutil as _tu
-            now = _tu.now_local()
+            import life_calendar as lc
+            now = lc.now_local()
         except Exception:
-            try:
-                import life_calendar as lc
-                now = lc.now_local()
-            except Exception:
-                now = datetime.datetime.now()
-        # 把墙钟/life_now 时刻传给生图，供 night lighting（hour≥19）；shot_type 来自 brain.LAST
-        shot_type = None
+            now = datetime.datetime.now()
+        # 传递请求时刻；生图解析器再按日程槽/画面时段确定光照。
         shot_bits = None
         try:
             import brain as _br
-            shot_type = (getattr(_br, "LAST", None) or {}).get("shot_type")
+            shot_type = shot_type or (getattr(_br, "LAST", None) or {}).get("shot_type")
             shot_bits = (getattr(_br, "LAST", None) or {}).get("shot_bits")
         except Exception:
             pass
         return chat_media.plan_chat_images(
-            scene, caption=text or None, now=now, shot_type=shot_type, shot_bits=shot_bits,
-            user_text=user_text, image_lane="demand", imagined=imagined,
+            scene, caption=text or None, cfg=cfg, now=photo_context["now"], shot_type=shot_type, shot_bits=shot_bits,
+            user_text=user_text, image_lane="demand", imagined=False,
+            slot=photo_context["slot"], today=photo_context["today"], date=photo_context["date"],
+            shot_lock=bool(shot_type),
         )
     except Exception as e:
-        print(f"[bridge] want_image generate failed, text-only: {e!r}", file=sys.stderr, flush=True)
+        print(f"[bridge] photo turn cancelled: {e!r}", file=sys.stderr, flush=True)
         return None
 
 
@@ -238,6 +285,16 @@ def _plan_want_voice(text: str, *, channel: str) -> str | None:
         return None
 
 
+def _silence_turn(cid, inbound_ids, turn):
+    """Keep night inputs as context; do not replay their obsolete replies at dawn."""
+    import memory
+    with contextlib.closing(memory.db()) as db, db:
+        db.executemany("UPDATE messages SET replied=1 WHERE contact=? AND id=? AND sender='them'",
+                       [(cid, mid) for mid in inbound_ids])
+    if turn:
+        turn.update('complete')
+
+
 @_serial_turn
 def handle_inbound(
     msg: Inbound,
@@ -247,6 +304,7 @@ def handle_inbound(
     reply_fn=None,
     persist: Optional[bool] = None,
     should_cancel: Optional[Callable[[], bool]] = None,
+    _turn_key=None,
 ) -> dict:
     """处理一条私聊入站。默认 dry：只算回复不发送。
 
@@ -261,10 +319,23 @@ def handle_inbound(
     图片/语音及睡聊仍允许取消（已发气泡立即入库）。
     """
     persist = False if dry else (True if persist is None else persist)
-    cid = resolve_contact_id(msg.channel, msg.peer_id)
-    if cid != "demo_contact" or not allowed_peer(msg.channel, msg.peer_id):
+    from config import load
+    cfg = load()
+    primary = str((cfg.get("persona") or {}).get("primary_contact_id") or (cfg.get("contact") or {}).get("id") or "")
+    cid = resolve_contact_id(msg.channel, msg.peer_id, cfg, msg.bot_account_id)
+    if (cid != primary or msg.peer_type != "private" or
+            not allowed_peer(msg.channel, msg.peer_id, cfg, msg.bot_account_id)):
         return {"contact_id": cid, "reply": "", "dry": dry, "persist": False,
-                "blocked": True, "reason": "contact_not_allowed"}
+                "blocked": True, "reason": "unknown_route"}
+    runtime = cfg.get("identity_runtime") or {}
+    registered_role = runtime.get("schema_version") == 2
+    from runtime_policy import allowed, require
+    if not allowed("dry_run" if dry else "auto_reply", cfg):
+        return {"contact_id": cid, "reply": "", "dry": dry, "persist": False,
+                "blocked": True, "reason": "capability_disabled"}
+    import memory, sleep_chat
+    quiet = (None if registered_role else
+             sleep_chat.reply_suppression_reason(memory.read_state(cid), datetime.datetime.now()))
     # Keep each attachment's own metadata while reading a burst, then present
     # all messages together as one conversational turn (and one stored text).
     burst = (msg.raw or {}).get("burst_messages")
@@ -272,7 +343,7 @@ def handle_inbound(
         from .reply_burst import combine
         enriched = []
         for part in burst:
-            if not dry:
+            if not dry and not quiet:
                 for module in ("image_caption", "voice_asr"):
                     try:
                         part, _ = __import__(module).enrich_inbound(part)
@@ -283,7 +354,7 @@ def handle_inbound(
     # After channel image cache / before brain: Magpie caption → enrich [图片]
     try:
         import image_caption as _ic
-        msg, _cap_info = _ic.enrich_inbound(msg) if not dry and not burst else (msg, {})
+        msg, _cap_info = _ic.enrich_inbound(msg) if not dry and not burst and not quiet else (msg, {})
         if _cap_info.get("ok") and _cap_info.get("caption"):
             print(
                 f"[bridge] image_caption ok cached={_cap_info.get('cached')} "
@@ -298,7 +369,7 @@ def handle_inbound(
     # After channel voice cache / before brain: local ASR → enrich [语音]
     try:
         import voice_asr as _va
-        msg, _asr_info = _va.enrich_inbound(msg) if not dry and not burst else (msg, {})
+        msg, _asr_info = _va.enrich_inbound(msg) if not dry and not burst and not quiet else (msg, {})
         if _asr_info.get("ok") and _asr_info.get("text"):
             print(
                 f"[bridge] voice_asr ok source={_asr_info.get('source')} "
@@ -316,11 +387,20 @@ def handle_inbound(
     hist: list = []
     emo = None
     if persist:
+        from .turn_store import TurnStore
+        store = TurnStore()
+        _RECOVERY.get()['db'] = c
         prev = (memory.tail(c, cid, 1) or [(0, "", "")])[-1][2]
-        fp = (hashlib.sha256(f"received:{msg.alias_key}:{msg.msg_id}".encode()).hexdigest()
+        fp = _turn_key or (hashlib.sha256(f"received:{msg.alias_key}:{msg.msg_id}".encode()).hexdigest()
               if msg.msg_id else memory.fingerprint(cid, "them", f"{msg.channel}:{msg.text}", prev, 0))
         fresh_inbound = memory.insert(c, cid, "them", msg.text, fp, type=msg.msg_type or "text",
-                      sent_at=msg.ts or None)
+                      sent_at=msg.ts or None, commit=False)
+        if fresh_inbound:
+            turn = store.claim(fp, msg, create=True, connection=c)
+        else:
+            c.rollback()
+            turn = store.claim(fp, msg)
+        _RECOVERY.get()['turn'] = turn
         if not fresh_inbound:
             # A UNIQUE conflict leaves SQLite's transaction open. Release it
             # before any receipt-journal writer can run, then stop this turn:
@@ -333,8 +413,15 @@ def handle_inbound(
                 ).fetchone()
                 completed = bool(original and original[0])
             finally:
+                c.rollback()
+            if turn and turn.plan:
                 c.close()
-            return {"contact_id": cid, "reply": "", "dry": dry, "persist": True,
+                return _resume_plan(msg, cid, turn, send, should_cancel)
+            if completed and turn:
+                turn.update('complete')
+            if completed or not turn:
+                c.close()
+                return {"contact_id": cid, "reply": "", "dry": dry, "persist": True,
                     "channel": msg.channel, "peer_id": msg.peer_id, "duplicate": True,
                     "reason": "duplicate_inbound", "inbound_replied": completed,
                     "delivery_status": "confirmed" if completed else "recovery_needed",
@@ -346,7 +433,7 @@ def handle_inbound(
             # 他开口 → 未回主动轮次归零（按轮次不是气泡）
             from proactive_limiter import inbound_patch
             memory.update_state(cid, emotion=emo,
-                                **inbound_patch(msg.text, __import__("timeutil").now_local()),
+                                **inbound_patch(msg.text, datetime.datetime.now()),
                                 **{k: v for k, v in emotion.derived(emo).items() if k in ("mood", "energy")})
         hist = memory.history(c, cid, 20)
     else:
@@ -356,12 +443,25 @@ def handle_inbound(
     inbound_ids = ([r[0] for r in c.execute(
         "SELECT id FROM messages WHERE contact=? AND sender='them' AND replied=0", (cid,))]
         if persist else [])
+    if c is not None:
+        c.close()
+        c = None
+
+    quiet = (None if registered_role else
+             sleep_chat.reply_suppression_reason(memory.read_state(cid), datetime.datetime.now()))
+    if quiet:
+        if persist:
+            _silence_turn(cid, inbound_ids, (_RECOVERY.get() or {}).get('turn'))
+        return {"contact_id": cid, "reply": "", "dry": dry, "persist": persist,
+                "channel": msg.channel, "peer_id": msg.peer_id, "blocked": True,
+                "sleep_suppressed": True, "reason": quiet, "delivery_status": "suppressed",
+                "bubbles": [], "sent_bubbles": [], "n_images": 0}
 
     # Preserve the real number and times of messages hidden by burst.combine.
     # Atomic merge also handles simultaneous QQ / iLink arrivals and retries.
     import reply_engagement as engagement
     parts = (msg.raw or {}).get("burst_messages") or [msg]
-    activity_now = __import__("timeutil").now_local()
+    activity_now = datetime.datetime.now()
     if persist:
         activity_state = memory.mutate_state(cid, lambda current: {
             engagement.STATE_KEY: engagement.record(current.get(engagement.STATE_KEY), parts, activity_now)})
@@ -370,18 +470,19 @@ def handle_inbound(
         activity_blob = engagement.record({}, parts, activity_now)
         activity_state = memory.read_state(cid)
     activity = {**engagement.profile(activity_blob, activity_now), "user_bubbles": len(parts)}
-    activity = engagement.select_response(activity, activity_state, cid, msg.text, activity_now)
+    if not registered_role:
+        activity = engagement.select_response(activity, activity_state, cid, msg.text, activity_now)
 
     sleep_style = "normal"
     try:
         import sleep_chat as _sc
-        if persist:
+        if persist and not registered_role:
             st0 = memory.read_state(cid)
-            _mode, _blob, sleep_style = _sc.note_inbound(msg.text, st0, __import__("timeutil").now_local())
+            _mode, _blob, sleep_style = _sc.note_inbound(msg.text, st0, datetime.datetime.now())
             memory.update_state(cid, **{_sc.STATE_KEY: _blob})
             brain.LAST["sleep_chat_mode"] = _mode
             brain.LAST["sleep_chat_style"] = sleep_style
-        elif _sc.is_goodnight_text(msg.text) or _sc.in_pre_sleep_window(__import__("timeutil").now_local()):
+        elif not registered_role and (_sc.is_goodnight_text(msg.text) or _sc.in_pre_sleep_window(datetime.datetime.now())):
             sleep_style = "pre_sleep"
     except Exception as e:
         print(f"[bridge] sleep_chat inbound skip: {e!r}", file=sys.stderr, flush=True)
@@ -391,7 +492,8 @@ def handle_inbound(
     try:
         if reply_fn is None:
             text = brain.reply(cid, hist, dry=(dry or not persist), now=activity_now, activity=activity,
-                               user_text=msg.text)
+                               user_text=msg.text,
+                               peer=f"{msg.channel}:{msg.peer_id}", channel=msg.channel)
         else:
             text = reply_fn(cid, hist)
     finally:
@@ -459,7 +561,7 @@ def handle_inbound(
         # bounded text turn; the runner retains all newer messages for its next turn.
         should_cancel = None
     # 真聊（persist）才垫作息延时；smoke/stub 的 persist=False 不睡，避免测试卡死
-    if persist:
+    if persist and not registered_role:
         try:
             delay = _human_wait_for_send(time.monotonic() - _t, text or ("[图片]" if scene else ""),
                                          activity=activity if sleep_style == "normal" else None)
@@ -475,6 +577,13 @@ def handle_inbound(
             print(f"[bridge] schedule delay skip: {e!r}", file=sys.stderr, flush=True)
 
     # 发送前再看一眼：新消息 → 丢弃本轮未发草稿，交给上层重生成
+    quiet = (None if registered_role else
+             sleep_chat.reply_suppression_reason(memory.read_state(cid), datetime.datetime.now()))
+    if quiet:
+        if persist:
+            _silence_turn(cid, inbound_ids, (_RECOVERY.get() or {}).get('turn'))
+        out.update(reply="", blocked=True, sleep_suppressed=True, reason=quiet, delivery_status="suppressed")
+        return out
     if should_cancel and should_cancel():
         print("[bridge] cancel before send → drop unsent draft", flush=True)
         out["cancelled"] = True
@@ -496,10 +605,22 @@ def handle_inbound(
             flush=True,
         )
         scene = None
-        out["want_image"] = None
+        if persist:
+            _silence_turn(cid, inbound_ids, (_RECOVERY.get() or {}).get('turn'))
+        out.update(reply="", want_image=None, image_rejected=True)
+        return out  # An unverified photo caption cannot become a text-only send.
+    if scene and not ((runtime.get("capabilities") or {}).get("image_generate", True)):
+        if persist:
+            _silence_turn(cid, inbound_ids, (_RECOVERY.get() or {}).get('turn'))
+        out.update(reply="", want_image=None, image_generation_disabled=True, delivery_status="suppressed")
+        return out
 
     img_plan = None
     if scene:
+        if persist:
+            # A hold message can leave the process before image planning ends.
+            # Do not regenerate that turn blindly after a crash.
+            _RECOVERY.get()['turn'].update('held', release=False)
         _shot_for_hold = (getattr(brain, "LAST", None) or {}).get("shot_type")
         # 最近己方气泡供 hold_on LLM 去重（与 hold_on_line.recent_outbound 对齐）
         _recent_out = [t for s, t in (hist or []) if s == "me" and t][-8:]
@@ -520,24 +641,30 @@ def handle_inbound(
             # Acknowledging the photo does not mark the full request replied.
             memory.mutate_state(cid, lambda current: {
                 "recent_photo_holds": (list(current.get("recent_photo_holds") or []) + [hold])[-8:],
-                "last_reply_at": __import__("timeutil").now_local().strftime("%Y-%m-%d %H:%M:%S")})
+                "last_reply_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")})
 
-        img_plan = _plan_want_image(
-            scene,
-            text,
-            send=send,
-            peer_channel=msg.channel,
-            peer_id=msg.peer_id,
-            allow_hold_on=user_asked_photo,
-            user_text=msg.text,
-            shot_type=_shot_for_hold,
-            recent_outbound=_recent_out,
-            on_hold_sent=record_hold, imagined=imagined,
-        )
+        try:
+            img_plan = _plan_want_image(
+                scene, text, send=send, peer_channel=msg.channel, peer_id=msg.peer_id,
+                allow_hold_on=user_asked_photo, user_text=msg.text, shot_type=_shot_for_hold,
+                recent_outbound=_recent_out, on_hold_sent=record_hold, imagined=imagined,
+            )
+        except sleep_chat.ReplySleepBlocked as exc:
+            if persist:
+                _silence_turn(cid, inbound_ids, (_RECOVERY.get() or {}).get('turn'))
+            out.update(reply="", blocked=True, sleep_suppressed=True, reason=str(exc), delivery_status="suppressed")
+            return out
 
     if persist and img_plan:
         from pathlib import Path
-        img_plan = {**img_plan, "paths": [p for p in (img_plan.get("paths") or []) if Path(p).is_file()]}
+        if any(not Path(p).is_file() for p in (img_plan.get("paths") or [])):
+            img_plan = None
+
+    if scene and not (img_plan and img_plan.get("paths")):
+        if persist:
+            _silence_turn(cid, inbound_ids, (_RECOVERY.get() or {}).get('turn'))
+        out.update(reply="", want_image=None, image_generation_failed=True, delivery_status="suppressed")
+        return out
 
     voice_path = None
     if want_voice and not img_plan:
@@ -560,15 +687,18 @@ def handle_inbound(
     except Exception:
         pass
 
-    # A failed generation must never reuse a caption claiming the photo exists.
-    if scene and not (img_plan and img_plan.get("paths")):
-        text = "照片这次没弄好，没发成"
-        out["image_generation_failed"] = True
-
     planned = []
     def add(piece, **meta):
-        planned.append((piece, Outbound(channel=msg.channel, peer_id=msg.peer_id,
-                                       text="" if meta else piece, meta=meta)))
+        operation_id = f"{turn_id}:{len(planned)}"
+        outbound_meta = meta
+        if runtime.get("local_companion"):
+            outbound_meta = {**meta, "persona_version": cfg.get("persona_version")}
+        planned.append((piece, Outbound(
+            channel=msg.channel, peer_id=msg.peer_id,
+            text="" if meta else piece, meta=outbound_meta,
+            bot_account_id=msg.bot_account_id,
+            persona_id=str((cfg.get("persona") or {}).get("id") or ""),
+            partner_id=cid, request_id=turn_id, operation_id=operation_id)))
 
     if img_plan and img_plan.get("paths"):
         paths = img_plan["paths"]
@@ -577,7 +707,7 @@ def handle_inbound(
         for bub in _apply_nick_bubbles(split_bubbles(cap, **_sk) or ([cap] if cap else []), nick):
             add(bub)
         for path in paths:
-            add(f"[图片:{'想象场景：' if imagined else ''}{scene}]", image_path=str(path), imagined_scene=imagined)
+            add(f"[图片:{'想象场景：' if imagined else ''}{scene}]", image_path=str(path), imagined_scene=imagined, photo_schedule=img_plan.get("photo_schedule"))
     else:
         if voice_path:
             add("[语音]", voice_path=voice_path)
@@ -586,6 +716,55 @@ def handle_inbound(
         for bub in _apply_nick_bubbles(split_bubbles(text, **_sk) or ([text] if text else []), nick):
             add(bub)
 
+    turn = (_RECOVERY.get() or {}).get('turn')
+    delivery_day = datetime.datetime.now().date().isoformat()
+    if turn:
+        turn_id = f"received:{turn.key}"
+        # Delivery ids and exact pieces survive a crash; never regenerate a
+        # different draft against an existing receipt index.
+        for index, (_, outbound) in enumerate(planned):
+            outbound.operation_id = f"{turn_id}:{index}"
+        turn.update('planned', release=False, plan={
+            'planned': [(piece, asdict(outbound)) for piece, outbound in planned],
+            'out': out, 'turn_id': turn_id, 'inbound_ids': inbound_ids,
+            'pending_delivery': pending_delivery, 'registered_role': registered_role,
+            'imagined': imagined, 'img_plan': img_plan, 'gap': _gk, 'delivery_day': delivery_day})
+    return _deliver_plan(msg, cid, planned, send=send, persist=persist, out=out,
+        turn_id=turn_id, inbound_ids=inbound_ids, pending_delivery=pending_delivery,
+        registered_role=registered_role, imagined=imagined, img_plan=img_plan,
+        should_cancel=should_cancel, _gk=_gk, turn=turn, delivery_day=delivery_day)
+
+
+def _resume_plan(msg, cid, turn, send, should_cancel):
+    data = turn.plan
+    out = {**data['out'], 'recovered': True}
+    for key in ('delivery_status', 'delivery_error', 'cancelled'):
+        out.pop(key, None)
+    return _deliver_plan(msg, cid, [(piece, Outbound(**out)) for piece, out in data['planned']],
+        send=send, persist=True, out=out,
+        turn_id=data['turn_id'], inbound_ids=data['inbound_ids'], pending_delivery=data['pending_delivery'],
+        registered_role=data['registered_role'], imagined=data['imagined'], img_plan=data['img_plan'],
+        should_cancel=should_cancel, _gk=data['gap'], turn=turn, delivery_day=data['delivery_day'])
+
+
+def recover_pending(channel, *, send, reply_fn=None, bot_account_id=None):
+    """Called by the existing worker, including after restart. No unknown resend."""
+    from .turn_store import TurnStore
+    results = []
+    for key, msg in TurnStore().pending(channel, bot_account_id=bot_account_id):
+        try:
+            results.append(handle_inbound(msg, dry=False, send=send, reply_fn=reply_fn, _turn_key=key))
+        except Exception as exc:
+            print(f"[bridge] pending recovery deferred: {type(exc).__name__}", file=sys.stderr, flush=True)
+    return results
+
+
+def _deliver_plan(msg, cid, planned, *, send, persist, out, turn_id, inbound_ids,
+                  pending_delivery, registered_role, imagined, img_plan, should_cancel,
+                  _gk, turn=None, delivery_day=None):
+    import memory, brain
+    from bubble_split import bubble_gap_sec
+    from runtime_policy import require
     confirmed = {}
     confirm_lock = threading.RLock()
     finished = False
@@ -601,29 +780,54 @@ def handle_inbound(
             done_db.commit()
         finally:
             done_db.close()
+        if turn:
+            turn.update('complete')
 
     def confirm(index, piece):
+        try:
+            record_confirmation(index, piece)
+        except Exception:
+            if turn:
+                # This can run after a timeout on the late-ACK worker. The
+                # transport journal is already confirmed, so only bookkeeping
+                # (and the never-attempted suffix) may be recovered.
+                turn.update('retry_plan', delay=10)
+            raise
+
+    def record_confirmation(index, piece):
         with confirm_lock:
             if index in confirmed:
+                return
+            if turn and index in (turn.plan.get('bookkept') or []):
+                confirmed[index] = piece
+                mark_complete()
                 return
             # Late ACK callbacks run on a worker: never reuse the caller's SQLite connection.
             if persist:
                 done_db = memory.db()
                 fp = hashlib.sha256(f"{turn_id}:{index}:{piece}".encode()).hexdigest()
                 try:
-                    inserted = memory.insert(done_db, cid, "me", piece, fp)
+                    memory.insert(done_db, cid, "me", piece, fp)
                 finally:
                     done_db.close()
-                if inserted:
-                    memory.append_diary(cid, f"[{msg.channel}] TA说「{msg.text[:40]}」，我回「{piece}」")
-                confirmed_at = datetime.datetime.now()
+                memory.append_delivery_diary(cid, f"[{msg.channel}] TA说「{msg.text[:40]}」，我回「{piece}」",
+                                             f"{turn_id}:{index}", day=delivery_day)
+                receipt_time = planned[index][1].meta.get('_confirmed_at')
+                confirmed_at = datetime.datetime.fromtimestamp(receipt_time) if receipt_time else datetime.datetime.now()
                 def state_patch(current):
-                    patch = {"last_reply_at": confirmed_at.strftime("%Y-%m-%d %H:%M:%S")}
+                    delivery = hashlib.sha256(f'{turn_id}:{index}'.encode()).hexdigest()
+                    recorded = list(current.get('confirmed_delivery_state') or [])
+                    if delivery in recorded:
+                        return {}
+                    patch = {"last_reply_at": max(str(current.get('last_reply_at') or ''),
+                                                   confirmed_at.strftime("%Y-%m-%d %H:%M:%S")),
+                             'confirmed_delivery_state': (recorded + [delivery])[-256:]}
+                    if registered_role:
+                        return patch
                     try:
                         import sleep_chat as _sc
-                        mode, blob = _sc.note_outbound(piece, current, confirmed_at)
-                        patch[_sc.STATE_KEY] = blob
-                        out["sleep_chat_mode"] = mode
+                        patch.update(_sc.confirmed_outbound_patch(piece, current, confirmed_at))
+                        out["sleep_chat_mode"] = (patch.get(_sc.STATE_KEY) or {}).get("mode")
                     except Exception as exc:
                         print(f"[bridge] sleep_chat outbound skip: {exc!r}", file=sys.stderr, flush=True)
                     return patch
@@ -631,6 +835,8 @@ def handle_inbound(
                 if pending_delivery and hasattr(brain, "commit_delivery"):
                     brain.commit_delivery(cid, pending_delivery, delivery_id=turn_id,
                                           sent_text=piece, now=confirmed_at)
+                if turn:
+                    turn.bookkept(index)
             confirmed[index] = piece
             mark_complete()
 
@@ -644,9 +850,59 @@ def handle_inbound(
             break
         outbound.meta.update(delivery_id=f"{turn_id}:{index}", pending_delivery=pending_delivery, persist_delivery=persist, imagined_scene=imagined)
         try:
-            send_with_confirmation(send, outbound, lambda i=index, p=piece: confirm(i, p))
+            def before_send():
+                if not registered_role:
+                    from sleep_chat import check_reply_send
+                    check_reply_send(memory.read_state(cid), datetime.datetime.now())
+                if persist and inbound_ids:
+                    # A newer response may have covered this inbound while
+                    # generation/bookkeeping was deferred. Repair confirmed
+                    # pieces, but do not send its now-obsolete unsent suffix.
+                    check_db = memory.db()
+                    try:
+                        pending = check_db.execute(
+                            "SELECT 1 FROM messages WHERE contact=? AND sender='them' AND replied=0 AND id IN ("
+                            + ','.join('?' for _ in inbound_ids) + ') LIMIT 1', (cid, *inbound_ids)).fetchone()
+                    finally:
+                        check_db.close()
+                    if not pending:
+                        from .send_receipts import DeliveryFailed
+                        raise DeliveryFailed('Inbound already covered by a newer response')
+                if img_plan and img_plan.get("photo_schedule"):
+                    from photo_schedule import check
+                    check(img_plan["photo_schedule"])
+                if img_plan:
+                    from pathlib import Path
+                    from photo_schedule import check_file
+                    for path in img_plan.get("paths") or []:
+                        if not Path(path).is_file():
+                            from .send_receipts import DeliveryFailed
+                            raise DeliveryFailed("图片结果缺失，取消本轮剩余内容")
+                        check_file(path)
+                require("auto_reply")
+                if outbound.meta.get("image_path"):
+                    require("image_send")
+            send_with_confirmation(send, outbound, lambda i=index, p=piece: confirm(i, p),
+                                   before_send=before_send)
         except Exception as exc:
+            from sleep_chat import ReplySleepBlocked
+            if isinstance(exc, ReplySleepBlocked):
+                out.update(blocked=True, sleep_suppressed=True, reason=str(exc), delivery_status="suppressed")
+                if persist:
+                    _silence_turn(cid, inbound_ids, turn)
+                break
+            from photo_schedule import SchedulePhotoError
+            if isinstance(exc, SchedulePhotoError):
+                out.update(image_rejected=True, reason=str(exc), delivery_status="suppressed")
+                if persist:
+                    _silence_turn(cid, inbound_ids, turn)
+                break
             out["delivery_status"] = getattr(exc, "delivery_status", "unknown")
+            if turn:
+                if out["delivery_status"] == 'bookkeeping_pending':
+                    turn.failed()
+                else:
+                    turn.update('held')
             out["delivery_error"] = str(exc)
             print(f"[bridge] send {out['delivery_status']}; confirmed={len(confirmed)}: {exc!r}",
                   file=sys.stderr, flush=True)
@@ -661,8 +917,8 @@ def handle_inbound(
     out["n_images"] = sum(piece.startswith("[图片:") for piece in sent_parts)
     if cancelled_mid:
         out["cancelled"] = True
+        if turn:
+            turn.update('held')
     if "delivery_status" not in out:
         out["delivery_status"] = "confirmed" if len(sent_parts) == len(planned) else "partial"
-    if c is not None:
-        c.close()
     return out

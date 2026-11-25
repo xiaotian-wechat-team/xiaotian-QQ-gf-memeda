@@ -27,7 +27,7 @@ Source modules use top-level imports from `src/`; retain that convention unless 
 
 - Tests and demos must not contact real QQ/WeChat accounts, operate WeChat UI, or require private credentials.
 - Use temporary directories and simulated transports for persistence and delivery tests. Mock OneBot listens only on loopback addresses.
-- Do not commit `config.json`, real `.env` files, channel credentials, runtime databases, logs, chat exports, UI captures, or personal reference images.
+- Do not commit `config.json`, real `.env` files, channel credentials, runtime databases, logs, chat exports, live messaging captures, or personal reference images. Public console screenshots use the gallery or isolated example data.
 - Keep fictional demo identities such as `demo_contact`; do not replace them with real user information.
 - Real sending and UI automation are outside the public verification path. Do not turn a demo into a live send without an explicit user request.
 

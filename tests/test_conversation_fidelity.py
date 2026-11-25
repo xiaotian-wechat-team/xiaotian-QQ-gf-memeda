@@ -94,10 +94,13 @@ class ConversationFidelity(unittest.TestCase):
                      "我不想你。\n才怪，你已经在我脑子里转了好久根本停不下来",
                      "如果你困了，等你把刚刚那个故事完整地讲完我就不再拉着你聊"):
             for mode in ("pre_sleep", "asleep"):
-                self.assertEqual(sleep.tighten_text(text, mode), "我在呢")
+                result = sleep.tighten_text(text, mode)
+                self.assertNotEqual(result, "我在呢")
+                self.assertTrue(not result or result.replace("\n", "") == text.replace("\n", ""))
         raw = "我不是不想陪你说话，只是你刚刚讲的故事我还想听下去\n你接着说，我在听呢"
         activity = {"response_mode": "enthusiastic", "reason": "evening"}
-        self.assertEqual(sleep.tighten_text(raw, engagement.effective_sleep_style("asleep", activity)), raw)
+        self.assertEqual(engagement.effective_sleep_style("asleep", activity), "asleep")
+        self.assertEqual(sleep.tighten_text(raw, "asleep"), "你接着说，我在听呢")
 
     def test_other_people_future_past_negated_and_conditional_clauses_survive(self):
         cases = [({"bucket": "sleep", "activity": "睡觉"}, "你明天上课别迟到"),
@@ -123,30 +126,30 @@ class ConversationFidelity(unittest.TestCase):
         result = sf.enforce_outbound_text(text, INTERN)
         self.assertNotIn("下课", result)
         self.assertIn("你实验没成功也别急，我想陪你慢慢说", result)
-        self.assertIn("实习", result)
+        self.assertNotIn("实习", result)  # no unrelated replacement claim
         self.assertEqual(sf.enforce_outbound_text("实习摸鱼两秒 屏幕好刺眼", INTERN), "实习摸鱼两秒 屏幕好刺眼")
 
     def test_university_ownership_precedes_generic_campus_hint(self):
-        bad = "北京大学校园里 晴天 学生气OOTD全身随手拍"
+        bad = "清华大学校园里 晴天 学生气OOTD全身随手拍"
         self.assertFalse(sf.scene_matches_slot(bad, CAMPUS))
         result = sf.force_scene_for_slot(CAMPUS, bad)
         self.assertIn("北京舞蹈学院", result)
-        self.assertNotIn("北京大学", result)
+        self.assertNotIn("清华大学", result)
         self.assertIn("OOTD全身", result)
         self.assertTrue(sf.scene_matches_slot(result, CAMPUS))
         self.assertFalse(sf.scene_matches_slot("厦门大学校园里的自拍", CAMPUS))
 
     def test_explicit_imagination_is_allowed_without_mutating_reality(self):
         before = copy.deepcopy(CAMPUS)
-        scene = "北京大学校园里的想象照"
+        scene = "北京理工大学校园里的想象照"
         self.assertTrue(sf.scene_matches_slot(scene, CAMPUS, imagined=True))
         self.assertEqual(sf.force_scene_for_slot(CAMPUS, scene, imagined=True), scene)
         self.assertEqual(CAMPUS, before)
-        visit = {**CAMPUS, "location": "北京大学", "activity": "参观校园"}
-        self.assertTrue(sf.scene_matches_slot("北京大学校园里随手拍", visit))
+        visit = {**CAMPUS, "location": "北京理工大学", "activity": "参观校园"}
+        self.assertTrue(sf.scene_matches_slot("北理工校园里随手拍", visit))
 
     def test_only_explicit_unnegated_unquoted_fiction_authorizes_bypass(self):
-        for text in ("想象你在北京大学校园里，画一张", "假如你在月球上，给我看张照片",
+        for text in ("想象你在北理工校园里，画一张", "假如你在月球上，给我看张照片",
                      "生成一张幻想中的海底图", "给我看虚构场景的照片"):
             self.assertTrue(semantic.is_imagined_request(text), text)
             self.assertTrue(photo_scene.user_asks_photo(text), text)
@@ -163,20 +166,12 @@ class ConversationFidelity(unittest.TestCase):
                                                     imagined=True, force_schedule=True), "宿舍被窝里看雪")
             self.assertEqual(chat_media.enrich_scene(None, chat_tail=request, imagined=True), request)
 
-    def test_fiction_plan_does_not_inject_real_props_or_claim_casual_photo(self):
-        with patch.object(chat_media, "generate_paths", return_value=[pathlib.Path("/fixture/imagined.png")]) as generate:
-            result = chat_media.plan_chat_images("想象月球", caption="月球上看地球", imagined=True,
-                n_images=1, slot=INTERN, today={"date": "2026-10-29"},
-                shot_type="portrait", shot_bits={"props": "公司剪辑机"})
-        self.assertTrue(result["imagined"])
-        self.assertIsNone(result["slot"])
-        self.assertTrue(result["texts"][0].startswith("想象场景"))
-        kwargs = generate.call_args.kwargs
-        self.assertNotIn("shot_bits", kwargs)
-        self.assertNotIn("slot", kwargs)
-        self.assertNotIn("today", kwargs)
-        self.assertEqual(kwargs["activity"], "")
-        self.assertFalse(kwargs["persist_happy_slot"])
+    def test_fiction_plan_is_refused_before_provider(self):
+        from photo_schedule import SchedulePhotoError
+        with patch.object(chat_media, "generate_paths") as generate:
+            with self.assertRaises(SchedulePhotoError):
+                chat_media.plan_chat_images("想象月球", imagined=True, n_images=1)
+            generate.assert_not_called()
 
     def test_brain_integrates_early_fiction_and_real_school_guard(self):
         import brain, chat_search, llm, memory, weather
@@ -202,17 +197,31 @@ class ConversationFidelity(unittest.TestCase):
             stack.enter_context(patch.object(llm, "complete", side_effect=AssertionError("no live model")))
             cases = [
                 ("想象你在宿舍被窝里看雪，画一张", "画好了\nWANT_IMAGE:宿舍被窝里看雪", "宿舍被窝里", True),
-                ("想象你在北京大学校园里，画一张", "好呀", "想象你在北京大学", True),
-                ("生成一张今天的照片", "给你看\nWANT_IMAGE:北京大学校园里OOTD", "北京舞蹈学院", False),
-                ("不要想象，给我看今天照片", "给你看\nWANT_IMAGE:北京大学校园里OOTD", "北京舞蹈学院", False),
+                ("想象你在北理工校园里，画一张", "好呀", "想象你在北理工", True),
+                ("生成一张今天的照片", "给你看\nWANT_IMAGE:北京理工大学校园里OOTD", "北京舞蹈学院", False),
+                ("不要想象，给我看今天照片", "给你看\nWANT_IMAGE:北京理工大学校园里OOTD", "北京舞蹈学院", False),
             ]
             for request, raw, expected, imagined in cases:
                 with self.subTest(request=request), patch.dict(brain.BACKENDS, {"deepseek": lambda *a: raw}):
                     brain.reply("demo_contact", [("them", request)], dry=True, now=now)
                     self.assertEqual(brain.LAST["imagined_scene"], imagined)
-                    self.assertIn(expected, brain.LAST["want_image"])
+                    self.assertIsNone(brain.LAST.get("want_image"))  # reject, never rewrite mismatched photos
                     if imagined:
                         self.assertIsNone(brain.LAST.get("shot_bits"))
+
+
+            historical = {"date": "2026-10-27", "slots": [{
+                "activity": "吃午饭", "location": "食堂", "bucket": "campus_life",
+                "start": "15:00", "end": "15:30", "photo_ok": True}]}
+            with patch.object(lc, "recorded_day", return_value=historical), patch.dict(
+                brain.BACKENDS, {"deepseek": lambda *a: "给你看看\nWANT_IMAGE:[third_person] 食堂午饭"}
+            ):
+                brain.reply("demo_contact", [("them", "发一下前两天的午饭照片")], dry=True, now=now)
+                self.assertIsNotNone(brain.LAST["want_image"])
+                self.assertEqual(brain.LAST["shot_type"], "third_person")
+                self.assertEqual(brain.LAST["photo_schedule"]["date"], "2026-10-27")
+                self.assertEqual(brain.LAST["photo_schedule"]["slot"]["start"], "15:00")
+                self.assertIn("吃午饭", brain.LAST["want_image"])
 
 
 class ImaginedLighting(unittest.TestCase):
@@ -231,40 +240,15 @@ class ImaginedLighting(unittest.TestCase):
             self.assertTrue(real["realism"]["night"])
             self.assertTrue(imagegen._scene_night("晴天海边", real, at))
 
-    def test_local_and_macbook_pending_do_not_force_fictional_day_to_night(self):
-        import imagegen, codex_session
-        from contextlib import ExitStack
-        at = dt.datetime(2026, 10, 29, 2)
-        scene = "想象白天在海边晒太阳"
-        # Keep an intentionally stale night flag: explicit fiction must win.
-        plan = {"text": "日常穿搭", "realism": {"night": True}, "imagined": True}
-        class PromptCaptured(Exception):
-            pass
-        with tempfile.TemporaryDirectory() as directory, ExitStack() as stack:
-            cfg = {"imagegen": {"out_dir": directory, "ssh_host": ""}}
-            for obj, name, value in ((imagegen, "pick_refs", lambda *a, **k: ([], [])),
-                    (imagegen, "pick_scene_refs", lambda *a, **k: []),
-                    (imagegen, "appearance", lambda *a: ("", [])),
-                    (imagegen, "rollout_sizes", lambda: {}),
-                    (imagegen, "build_cmd", lambda *a, **k: ["never-run"]),
-                    (codex_session, "current", lambda *a: None)):
-                stack.enter_context(patch.object(obj, name, value))
-            stack.enter_context(patch.object(imagegen.subprocess, "run", side_effect=AssertionError("no process")))
-            with patch.object(imagegen, "build_prompt", side_effect=PromptCaptured) as prompt:
-                with self.assertRaises(PromptCaptured):
-                    imagegen.generate_local(scene, cfg=cfg, _plan=plan, imagined=True, now=at)
-                self.assertFalse(prompt.call_args.kwargs["night"])
-                with self.assertRaises(PromptCaptured):
-                    imagegen.generate_local(scene, cfg=cfg, _plan={**plan, "imagined": False}, now=at)
-                self.assertTrue(prompt.call_args.kwargs["night"])
-            with patch.object(imagegen, "_is_night_hour", return_value=True), \
-                    patch.object(imagegen, "outfit_plan", return_value=copy.deepcopy(plan)), \
-                    patch.object(imagegen, "_relay_note", return_value=""):
-                with self.assertRaisesRegex(RuntimeError, "ssh_host"):
-                    imagegen.generate_macbook(scene, cfg=cfg, imagined=True, now=at)
-                job = json.loads(next((pathlib.Path(directory) / "pending").glob("*.json")).read_text())
-                self.assertNotIn("光照硬约束", job["prompt"])
-                self.assertIn(scene, job["prompt"])
+    def test_local_and_macbook_refuse_fiction_before_side_effects(self):
+        import imagegen
+        from photo_schedule import SchedulePhotoError
+        with patch.dict(os.environ, {"XIAOTIAN_TEST": ""}), \
+                patch.object(imagegen.subprocess, "run") as provider:
+            for generate in (imagegen.generate_local, imagegen.generate_macbook):
+                with self.assertRaises(SchedulePhotoError):
+                    generate("想象白天在海边", cfg={"imagegen":{}}, imagined=True)
+            provider.assert_not_called()
 
 
 class MidnightCarryover(unittest.TestCase):

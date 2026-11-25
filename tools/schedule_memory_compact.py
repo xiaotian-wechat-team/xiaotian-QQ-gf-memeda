@@ -100,7 +100,8 @@ def main():
         sm.attach_day_memory(anchor, core_events=cores_f, emotion_points=emos, week=wid)
     entry = sm.upsert_week_ledger(doc, wid, core_events=cores_f, emotion_points=emos, summary=args.summary)
     path = lc.DRAFT_FILE
-    path.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n")
+    from schedule_pipeline import save_schedule
+    save_schedule(doc, path)
     print(f"[compact] wrote {path} week={wid} cores={len(entry.get('core_events') or [])}")
 
     if args.mem0:

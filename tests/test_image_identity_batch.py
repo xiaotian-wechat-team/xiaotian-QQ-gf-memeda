@@ -80,13 +80,19 @@ def test_missing_required_reference_fails_before_generation(batch_env, missing):
 def test_real_pipeline_input_and_audit_keep_identity_on_retry(batch_env, monkeypatch, tmp_path, retry):
     import codex_session
     import hashlib
+    import life_calendar as lc
+    import datetime as dt
+    at = dt.datetime(2026,11,2,18)
+    monkeypatch.setattr(lc, "now_local", lambda: at)
+    monkeypatch.setattr(lc, "recorded_day", lambda day: {"date":day.isoformat(), "slots":[
+        dict(start="17:00", end="19:00", activity="餐馆门口", location="餐馆门口", photo_ok=True)]})
     cfg, profile = batch_env
     prompts, commands = [], []
     generated = tmp_path / 'model-result.png'
     generated.write_bytes(b'image fixture')
     monkeypatch.setattr(codex_session, 'current', lambda *a: None)
     monkeypatch.setattr(codex_session, 'save', lambda *a: None)
-    monkeypatch.setattr(imagegen, 'rollout_sizes', lambda: {})
+    monkeypatch.setattr(imagegen, 'rollout_sizes', lambda *a: {})
     monkeypatch.setattr(imagegen, '_from_rollouts', lambda *a: [])
     monkeypatch.setattr(imagegen, '_new_images', lambda *a:
                         [] if retry and len(commands) == 1 else [generated])
@@ -96,13 +102,16 @@ def test_real_pipeline_input_and_audit_keep_identity_on_retry(batch_env, monkeyp
         return SimpleNamespace(returncode=0, stdout='policy blocked' if retry and len(commands) == 1 else '', stderr='')
     monkeypatch.setattr(imagegen.subprocess, 'run', run)
     monkeypatch.setattr(imagegen, 'blocked', lambda text: 'policy blocked' in text)
+    # All provider/session/output boundaries above are fakes in tmp_path.
+    # Exercise the orchestration without disabling the production test guard.
+    monkeypatch.delenv('XIAOTIAN_TEST', raising=False)
     _, imgs = imagegen.generate_local('餐馆门口', cfg=cfg, n_images=2,
         shot_type='legs_focus', shot_types=['legs_focus', 'full_body'], _meta={'chat': True})
     assert imgs and len(commands) == (2 if retry else 1)
     for prompt, cmd in zip(prompts, commands):
         assert '本次生成 2 张' in prompt
-        assert '第 1 张：脸部五视图' in prompt and '第 2 张：身体五视图' in prompt
-        assert '第 3 张：腿部五视图' in prompt
+        assert 'Image 1：唯一脸部身份标准' in prompt and 'Image 2：身体比例标准' in prompt
+        assert 'Image 3：腿型、比例和肤色参考' in prompt
         assert '禁止把第 1 张当正脸身份模卡硬锁' not in prompt
         refs = [Path(cmd[i+1]) for i, arg in enumerate(cmd) if arg == '-i']
         assert refs[:2] == [profile/'canonical/sheet.png', profile/'canonical/body/sheet.png']
@@ -114,3 +123,9 @@ def test_real_pipeline_input_and_audit_keep_identity_on_retry(batch_env, monkeyp
     assert meta['prompt_sha256'] == hashlib.sha256(saved_prompt.encode()).hexdigest()
     assert meta['reference_sha256'][str(profile/'canonical/sheet.png')] == hashlib.sha256(b'reference fixture').hexdigest()
     assert meta['shot_types'] == ['legs_focus', 'full_body']
+    invocation = json.loads((output/'invocations.jsonl').read_text().splitlines()[-1])
+    assert invocation['argv'] == commands[-1]
+    assert [r['path'] for r in invocation['references']] == [
+        cmd[i+1] for i, arg in enumerate(cmd) if arg == '-i']
+    assert meta['actual_cli_references'] == invocation['references']
+    assert meta['tool_reference_evidence']['status'] == 'not_exposed'

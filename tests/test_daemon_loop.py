@@ -4,6 +4,10 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "src"))
 import daemon as D, ui_lock as UL, proactive_sender as S
 
 RC = dict(D.DEFAULT_RC)
+original_sleep_guard = D._sleep_guard
+original_memory, original_emotion, original_ingest = D.memory, D.emotion, D.ingest
+# The sleep-specific tests exercise the real guard with controlled dates.
+D._sleep_guard = lambda: None
 class Clock:
     def __init__(s): s.t = 0.0
     def __call__(s): return s.t
@@ -135,17 +139,6 @@ pend.write_text(str(os.getpid())); assert not UL.reply_pending(pend, now=time.ti
 # 9) 主动发送遇到回复优先 → HOLD，不发
 import copy, datetime, config
 on = copy.deepcopy(config.load()); on["proactive"].update(probability=1, transport="ui", image_share_min_ratio=0)
-# Public snapshot has no appearance assets; this section tests UI-lock priority,
-# not image generation. Disable the image floor so missing refs cannot DROP first.
-import proactive_media as _pmedia
-_orig_pm_required = _pmedia.required
-_orig_pm_prepare = _pmedia.prepare
-_pmedia.required = lambda *a, **k: False
-def _prep_no_img(beat, *a, **k):
-    b = dict(beat or {})
-    b.pop("image_required", None)
-    return b
-_pmedia.prepare = _prep_no_img
 class PIO(FakeIO):
     SIDEBAR_W, HEADER_H = 300, 60
     norm = staticmethod(lambda t: "".join((t or "").split()))
@@ -153,6 +146,12 @@ class PIO(FakeIO):
     def ocr(s): return [{"text": "小熊", "x": 400, "y": 20}]
     def read_messages(s): return [{"from": "me", "text": "x"}]
 def busy(role="proactive", path=None): raise UL.LockBusy("回复优先：有待回复消息")
+# Test lock priority with a deterministic text-only draft; image gates have separate coverage.
+real_tick = S.ps.tick
+def text_tick(now, *args, **kwargs):
+    return {"action":"DRAFT", "draft":"下课啦", "topic":"share_self", "reason":"offline text fixture",
+            "next_check":now+datetime.timedelta(minutes=10), "busy":0}
+S.ps.tick = text_tick
 S.ui_lock = busy; pio = PIO()
 r = S.run_once(datetime.datetime(2026, 10, 24, 20, 0), dry=False, io=pio, cfg_full=on, rows=[], st={}, rng=random.Random(0),
                draft_fn=lambda: "下课啦", qpath=tmp / "q.json")
@@ -164,8 +163,7 @@ r = S.run_once(datetime.datetime(2026, 10, 24, 20, 0), dry=False, io=pio, cfg_fu
                draft_fn=lambda: "下课啦", qpath=tmp / "q2.json")
 UL.reply_pending = real
 assert r["action"] == "HOLD" and pio.sent == [], r
-_pmedia.required = _orig_pm_required
-_pmedia.prepare = _orig_pm_prepare
+S.ps.tick = real_tick
 
 # 10) 连发放弃后 DB 已有未回 them：下一轮 theirs 为空但 need=True，仍须回复
 io, clk = FakeIO(), Clock(); calls = []
@@ -215,6 +213,14 @@ def _fake_send(pl, *, io=None, open_chat_first=True, **kw):
         io.send_image(path)
     return {"ok": True, "n_images": len(pl["paths"]), "paths": [str(x) for x in pl["paths"]]}
 _cm.send_prepared_images = _fake_send
+import schedule_fidelity as _sf
+real_photo_schedule = _sf.resolve_photo_schedule
+def known_photo_schedule(*args, **kwargs):
+    now = datetime.datetime(2026,10,24,20)
+    slot = {"start":"00:00", "end":"24:00", "location":"宿舍", "activity":"宿舍休息", "photo_ok":True}
+    return {"historical":False,"date":str(now.date()),"now":now,"slot":slot,
+            "today":{"date":str(now.date()),"slots":[slot]}}, None
+_sf.resolve_photo_schedule = known_photo_schedule
 old_last = getattr(_brain, "LAST", None)
 _brain.LAST = {"want_image": "测试场景"}
 # CFG.imagegen.hold_on 走真实配置；确保开着
@@ -229,6 +235,7 @@ try:
 finally:
     _cm.hold_on_line, _cm.plan_chat_images, _cm.send_prepared_images = real_hold, real_plan, real_send
     _brain.LAST = old_last
+    _sf.resolve_photo_schedule = real_photo_schedule
     D.CFG = old_cfg
     if hasattr(FakeIO, "send_image"):
         delattr(FakeIO, "send_image")
@@ -241,3 +248,6 @@ assert L.pending_unreplied is False, (L.pending_unreplied, io.sent, d)
 assert any("图片" in (f"{r}") for r in m.rows[-1:]), m.rows[-3:]
 
 print("test_daemon_loop OK")
+
+D._sleep_guard = original_sleep_guard
+D.memory, D.emotion, D.ingest = original_memory, original_emotion, original_ingest

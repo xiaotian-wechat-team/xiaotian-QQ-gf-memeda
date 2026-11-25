@@ -50,7 +50,7 @@ def test_actual_weather_result_produces_scoped_evidence(monkeypatch, why, status
     monkeypatch.setattr(weather, "call_tool", lambda args: calls.append(args) or {**CURRENT, "why": why})
     evidence = {}
     out = llm.complete_with_weather_tools("prompt", "查一下天气", evidence_sink=evidence)
-    assert calls == [{"place": "bda"}]
+    assert calls == [{"place": "bda", "date": "today"}]
     assert evidence == {"tool": "get_weather", "status": status, "place": "bda",
                         "text": CURRENT["text"], "why": why}
     assert (action_evidence.enforce(out, weather=evidence) == out) == (status == "ok")
@@ -80,7 +80,7 @@ def test_model_answer_without_tool_is_not_evidence_and_clears_previous_sink(monk
 def test_lookup_precedes_single_fresh_model_call(monkeypatch):
     model_calls = []
     def model(prompt, **kw):
-        assert calls == [{"place": "bda"}]
+        assert calls == [{"place": "bda", "date": "today"}]
         model_calls.append((prompt, kw))
         return "我查到了，北舞现在12度"
     monkeypatch.setattr(llm, "complete", model)
@@ -88,7 +88,7 @@ def test_lookup_precedes_single_fresh_model_call(monkeypatch):
     monkeypatch.setattr(weather, "call_tool", lambda args: calls.append(args) or CURRENT)
     evidence = {}
     llm.complete_with_weather_tools("prompt", "查一下北舞天气", evidence_sink=evidence)
-    assert calls == [{"place": "bda"}] and evidence["status"] == "ok"
+    assert calls == [{"place": "bda", "date": "today"}] and evidence["status"] == "ok"
     assert len(model_calls) == 1
     assert model_calls[0][1]["reuse_session"] is False
     assert CURRENT["text"] in model_calls[0][0]
@@ -157,7 +157,7 @@ def test_new_topic_does_not_replay_cancelled_weather_from_history(monkeypatch):
     assert len(prompts) == 1
     current = prompts[0].split('# 本轮新收到的消息（当前回复对象）')[1]
     assert '今天晚上什么安排' in current and '你学校冷不冷' not in current
-    assert '不把一句话硬拆' in prompts[0]
+    assert '一行一个完整意思，按自然停顿分条' in prompts[0]
 
 
 if __name__ == "__main__":

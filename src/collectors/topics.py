@@ -21,5 +21,18 @@ QUERIES = {
 
 def choose_topic(rng=None):
     rng = rng or random
-    band = rng.choices(list(BAND_TARGETS), weights=list(BAND_TARGETS.values()), k=1)[0]
-    return rng.choice(QUERIES[band])
+    from config import load
+    from personalization_runtime import band_targets, option
+    cfg = load()
+    targets, queries = BAND_TARGETS, dict(QUERIES)
+    if cfg.get("persona_version"):
+        targets = band_targets(cfg)
+        queries["light"] = ["有趣 日常", "自然风景", "创意 灵感"]
+        queries["other"] = ["艺术 创作", "生活 发现", "电影 幕后"]
+        institution = ((cfg.get("role_dossier") or {}).get("school") or {}).get("institution")
+        queries["school"] = [institution + " 校园"] if institution else ["公共文化 资讯"]
+        interests = option("content.interests", [], cfg=cfg) or []
+        if interests:
+            queries["other"] = interests
+    band = rng.choices(list(targets), weights=list(targets.values()), k=1)[0]
+    return rng.choice(queries[band])

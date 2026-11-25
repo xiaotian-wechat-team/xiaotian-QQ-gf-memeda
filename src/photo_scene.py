@@ -65,9 +65,16 @@ def user_asks_photo(text: str | None) -> bool:
     只用确定性正则（含 shot_modes 镜头短语），**不用** embedding 路由——
     否则「干嘛呢」会被 portrait 种子误命中，触发 hold_on+生图。
     """
-    t = (text or "").strip()
+    from photo_request import positive_text
+    t = positive_text(text).strip()
     if not t:
         return False
+    if re.search(r'(?:看过|发过|拍过|给我看过|已经发).*(?:了|啦)', t) and not re.search(r'再|还想|再发', t):
+        return False
+    if re.search(r"(?:拍|发|给我).{0,8}(?:[一二两三四五几多\d]+张).{0,40}(?:照片|照|图)", t):
+        return True
+    if re.search(r"(?:发|给我看|看看|想看).{0,30}(?:照片|自拍|图片)", t):
+        return True
     if _ASK_PHOTO_RE.search(t):
         return True
     from conversation_semantics import is_imagined_request
@@ -193,6 +200,13 @@ def _llm_hold_on(
             ),
         },
     ]
+    from config import load
+    cfg = load()
+    if cfg.get("persona_version"):
+        from personalization_runtime import option
+        messages[0]["content"] = (str(cfg.get("role_style") or "") + "\n对方正在等图片，先回应一句。"
+            "只输出简短聊天正文，不编学校、关系、拍摄经历或完成时间；没有生成回执前不声称图片已发送。\n"
+            + str(option("chat.photo_wait", "", cfg=cfg) or ""))
     if complete_fn is not None:
         raw = complete_fn(messages)
     else:

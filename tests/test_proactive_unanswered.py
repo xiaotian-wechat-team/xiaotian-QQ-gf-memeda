@@ -27,6 +27,7 @@ class Regression(unittest.TestCase):
   self.path=pathlib.Path(self.tmp.name); self.q=self.path/'queue.json'
   (self.path/'contacts/demo_contact').mkdir(parents=True)
   self.full=copy.deepcopy(config.load()); self.pc=self.full['proactive']
+  self.full.pop('shared_life_schedule', None)  # SLOTS is the isolated test calendar.
   # Keep legacy budgets separate from production rhythm tests.
   self.pc.pop('idle_contact', None)  # Deadline integration: test_idle_contact.py.
   self.pc.pop('daily_contact_range', None)
@@ -52,7 +53,7 @@ class Regression(unittest.TestCase):
    ('memory.ensure_defaults',{'return_value':None}),
    ('chat_media.plan_chat_images',{'side_effect':AssertionError('legacy text-only test must not generate images')}),
    ('sleep_chat.should_suppress_proactive',{'return_value':None}),
-   ('sleep_chat.refresh',{'side_effect':lambda st,now:('normal',None)}),
+   ('sleep_chat.refresh',{'side_effect':lambda st,now:('normal',dict(st.get('sleep_chat') or {}))}),
    ('proactive_scheduler.busy_value',{'return_value':80}),
    ('proactive_scheduler.resting',{'return_value':False}),
    ('schedule.is_sleeping',{'return_value':False}),
@@ -140,11 +141,16 @@ class Regression(unittest.TestCase):
   self.assertEqual(memory.read_state('demo_contact').get('proactive_count',0),0)
   from channels import onebot_qq
   ob=onebot_qq._load_outbox(); item=ob['items'][0]
-  self.assertIn('proactive_round',item)
+  self.assertIn('proactive_progress',item)
+  item.update(sent_bubbles=[item['text']], text='', status='sent', sent_at='2026-10-27 07:45:00')
   lim.record_outbox_success(item,D(2026,10,27,7,45))
   lim.record_outbox_success(item,D(2026,10,27,7,46))
   st=memory.read_state('demo_contact');self.assertEqual(st['proactive_count'],0)
   self.assertEqual(st['proactive_routine']['count'],1)
+  self.assertNotIn('schedule_brief',(st.get('proactive_beats') or {}).get('done',{}))
+  onebot_qq._save_outbox(ob)
+  self.run_sender(D(2026,10,27,7,46))
+  st=memory.read_state('demo_contact')
   self.assertIn('schedule_brief',st['proactive_beats']['done'])
  def test_ack_before_accounting_recovered_without_resend(self):
   now=D(2026,10,27,7,42)
@@ -276,6 +282,34 @@ class Regression(unittest.TestCase):
   self.assertFalse(ps.repeated_draft(text,[('them',text,DAY+' 16:30:00')],now))
   self.assertFalse(ps.repeated_draft(text,[('me',text,DAY+' 08:30:00')],now))
   self.assertFalse(ps.repeated_draft('今天排练还是没顺', [('me',text,DAY+' 16:30:00')],now))
+
+ def test_queued_meal_paraphrase_dropped_before_image_generation(self):
+  now=D(2026,10,27,12,49)
+  rows=[('me','食堂这土豆烧得有点咸',DAY+' 12:27:15','proactive')]
+  q={'items':[]}
+  sender.enqueue(q,'刚在食堂扒了两口饭，菜是真咸\n你忙完了吗\nWANT_IMAGE:食堂吃饭',
+                 'care_checkin',now)
+  sender.save_q(q,self.q)
+  with patch('chat_media.plan_chat_images') as provider:
+   result=sender.run_once(now,cfg_full=self.full,rows=rows,qpath=self.q,ui=False)
+  self.assertEqual(result['action'],'DROP',result)
+  provider.assert_not_called()
+  self.assertFalse(self.sent)
+
+ def test_planner_repeated_caption_dropped_before_transport(self):
+  now=D(2026,10,27,12,49)
+  rows=[('me','食堂这土豆烧得有点咸',DAY+' 12:27:15','proactive')]
+  q={'items':[]}
+  sender.enqueue(q,'给你看看这边的窗户\nWANT_IMAGE:食堂窗边', 'care_checkin',now)
+  sender.save_q(q,self.q)
+  image=self.path/'generated.png'; image.write_bytes(b'fixture')
+  with patch('chat_media.plan_chat_images',return_value={
+      'paths':[str(image)],'texts':['刚在食堂扒了两口饭，菜是真咸\n你忙完了吗']}) as provider:
+   result=sender.run_once(now,cfg_full=self.full,rows=rows,qpath=self.q,ui=False)
+  provider.assert_called_once()
+  self.assertEqual(result['action'],'DROP',result)
+  self.assertIn('最终配文',result['reason'])
+  self.assertFalse(self.sent)
 
  def test_calendar_covers_all_hours(self):
   import plistlib

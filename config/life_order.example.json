@@ -1,0 +1,20 @@
+{
+  "life_order": {
+    "enabled": false,
+    "dry_run": true,
+    "amount_cap_yuan": 50,
+    "confirm_expiry_sec": 180,
+    "allowed_contact_id": "demo_contact",
+    "allowed_peers": [
+      "wechat_ilink:demo@im.wechat",
+      "qq_onebot:10001"
+    ],
+    "confirm_words": ["好", "求你", "嗯", "下吧"],
+    "cancel_words": ["算了", "不要"],
+    "soft_confirm_phrases": ["你求求我嘛～", "那我给你下单了哦"],
+    "mcd_user_must_pay": true,
+    "didi_mode": "link_only",
+    "amap_mode": "read_only",
+    "_note": "Copy into config.json. AMAP_KEY comes from the environment only — never commit keys."
+  }
+}

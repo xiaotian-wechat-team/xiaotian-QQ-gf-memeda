@@ -21,6 +21,11 @@ _WANT = re.compile(r"(?im)^\s*WANT_IMAGE\s*[:：].*$")
 MAX_BUBBLES = 8
 MAX_BUBBLE_CHARS = 22
 
+
+def visible_chars(text: str | None) -> int:
+    """Bubble separators are formatting, not characters in the sent body."""
+    return sum(len(line.strip()) for line in (text or "").splitlines())
+
 # Prefer sentence / clause boundaries over raw char chops.
 _SENT_SPLIT = re.compile(r"(?<=[。！？!?…；;])")
 _CLAUSE_SPLIT = re.compile(r"(?<=[，,、~～])")

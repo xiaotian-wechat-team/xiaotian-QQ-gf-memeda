@@ -8,6 +8,7 @@ import pytest
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / 'src'))
 import brain
+import config
 import memory
 import reply_engagement as eng
 import sleep_chat as sc
@@ -35,13 +36,12 @@ def freeze_bridge(monkeypatch, now):
         def now(cls, tz=None):
             return now if tz is None else now.replace(tzinfo=eng.TZ).astimezone(tz)
     monkeypatch.setattr(bridge, 'datetime', SimpleNamespace(datetime=FrozenDatetime))
-    # bridge scheduling paths use timeutil.now_local (Asia/Shanghai); freeze it too
-    import timeutil as _tu
-    monkeypatch.setattr(_tu, 'now_local', lambda cfg=None: now)
 
 
 @pytest.fixture(autouse=True)
 def normal_chat(monkeypatch):
+    cfg = {**config.load(), 'shared_life_schedule': None}
+    monkeypatch.setattr(config, 'load', lambda: cfg)  # Synthetic STATE slots own this fixture.
     freeze_bridge(monkeypatch, NOW)
     monkeypatch.setattr(sc, 'peek_mode', lambda *a, **k: ('normal', {}))
     monkeypatch.setattr(sc, 'in_pre_sleep_window', lambda *a, **k: False)
@@ -326,7 +326,7 @@ def test_evening_precedes_work_lottery_and_low_message_count(monkeypatch, now, n
     assert not choice['selector_applied']
     assert (choice['response_mode'] == 'enthusiastic') == night
     if night:
-        assert eng.effective_sleep_style('asleep', choice) == 'normal'
+        assert eng.effective_sleep_style('asleep', choice) == 'asleep'
         assert eng.pacing(choice)['budget_floor'] == 8
 
 
@@ -358,10 +358,10 @@ def test_disabling_engagement_preserves_legacy_evening_sleep_style():
 
 
 @pytest.mark.parametrize('backend', ['deepseek', 'cursor_agent'])
-def test_evening_single_message_gets_substantive_prompt_and_no_sleep_truncation(monkeypatch, backend):
+def test_awake_evening_single_message_gets_substantive_prompt(monkeypatch, backend):
     import weather
     captured = []
-    monkeypatch.setattr(sc, 'peek_mode', lambda *a, **k: ('asleep', {}))
+    monkeypatch.setattr(sc, 'peek_mode', lambda *a, **k: ('normal', {}))
     monkeypatch.setattr(brain, 'CFG', {**brain.CFG, 'llm': {'backend': backend}})
     monkeypatch.setattr(brain, '_nick', lambda *a, **k: None)
     monkeypatch.setattr(brain, 'memory_block', lambda *a, **k: '')
@@ -379,7 +379,7 @@ def test_evening_single_message_gets_substantive_prompt_and_no_sleep_truncation(
 
 
 @pytest.mark.parametrize('channel', ['qq_onebot', 'wechat_ilink'])
-def test_evening_bridge_does_not_reapply_sleep_clamp_or_cancel_for_new_inbound(monkeypatch, channel):
+def test_evening_bridge_preserves_sleep_style_and_yields_to_new_input(monkeypatch, channel):
     now = NOW.replace(hour=23)
     freeze_bridge(monkeypatch, now)
     monkeypatch.setattr(bridge, 'resolve_contact_id', lambda *a: 'demo_contact')
@@ -392,7 +392,7 @@ def test_evening_bridge_does_not_reapply_sleep_clamp_or_cancel_for_new_inbound(m
     sent = []
     result = bridge.handle_inbound(messages(1, now, channel=channel)[0], dry=False,
         send=sent.append, reply_fn=reply, should_cancel=lambda: True)
-    assert not result.get('cancelled') and len(sent) == 4
+    assert result.get('cancelled') and not sent
     assert result['reply_engagement']['response_mode'] == 'enthusiastic'
 
 
@@ -439,8 +439,8 @@ def test_evening_signoff_and_continuation_control_actual_generated_budget(monkey
         assert brain.LAST['reply_bubble_budget'] <= 3 and len(answer.splitlines()) <= 3
         assert '自然回应收口' in str(captured[0])
     else:
-        assert brain.LAST['reply_bubble_budget'] == 8 and len(answer.splitlines()) == 4
-        assert '# 睡聊' not in str(captured[0])
+        assert brain.LAST['reply_bubble_budget'] <= 3 and len(answer.splitlines()) <= 3
+        assert '# 睡聊' in str(captured[0])
 
 
 def test_proactive_task_keeps_its_sleep_policy(monkeypatch):
@@ -454,9 +454,9 @@ def test_proactive_task_keeps_its_sleep_policy(monkeypatch):
     monkeypatch.setattr(weather, 'needs', lambda *a: False)
     monkeypatch.setitem(brain.BACKENDS, 'test_stub', lambda prompt: captured.append(prompt) or '[SKIP]')
     brain.reply('demo_contact', [], dry=True, now=NOW.replace(hour=23), task='主动分享日常')
-    assert brain.LAST['sleep_chat_style'] == 'asleep'
+    assert brain.LAST['sleep_suppressed']
     assert 'reply_engagement' not in brain.LAST
-    assert '本轮必须热情陪聊' not in str(captured[0])
+    assert not captured
 
 
 if __name__ == '__main__':

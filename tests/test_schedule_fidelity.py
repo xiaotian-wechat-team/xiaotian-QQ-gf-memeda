@@ -19,7 +19,7 @@ def test_ban_xiake_during_internship():
     assert sf.text_violates_slot("下课啦 今天排练排到腿软", INTERN)
     out = sf.enforce_outbound_text("下课啦 今天排练排到腿软", INTERN)
     assert "下课" not in out
-    assert out  # fallback kept
+    assert out == ""  # no canned replacement for an entirely invalid draft
 
 
 def test_keep_internship_claim():

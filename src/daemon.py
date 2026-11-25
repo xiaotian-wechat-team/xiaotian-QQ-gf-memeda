@@ -13,7 +13,7 @@ launchd：`com.xiaotian.wechat` 默认 RunAtLoad=false / disable-ocr。
 """
 import argparse, random, time, traceback, sys
 from config import load
-import importlib, memory, brain, emotion, schedule, chat_events
+import importlib, memory, brain, emotion, schedule, chat_events, sleep_chat
 CFG = load(); CID = CFG["contact"]["id"]
 # WeChat 真发主路径 = iLink（config.wechat_outbound=ilink）。OCR mac daemon 默认禁用，避免抢同一会话。
 OCR_DAEMON_ENABLED = bool(CFG.get("ocr_daemon_enabled", False)) and (CFG.get("wechat_outbound") or "ilink") == "ui"
@@ -33,6 +33,9 @@ def _refuse_ocr_send(context="daemon"):
 
 def _fp(sender, text, prev, msg_id_hint):
     return memory.fingerprint(CID, sender, text, prev, msg_id_hint)
+
+def _sleep_guard():
+    sleep_chat.check_reply_send(memory.read_state(CID), schedule.now_local())
 
 def plan_new(c, msgs):
     """Return visible msgs (dicts) not yet in DB, via sequence alignment against the DB tail."""
@@ -80,10 +83,19 @@ def tick(c, dry):
             if m.get("type") != "notice": emo, _ = emotion.appraise(emo, m["text"])
         memory.update_state(CID, emotion=emo, **{k: v for k, v in emotion.derived(emo).items() if k in ("mood", "energy")})
     if not theirs or (last and last["from"] == "me"): return None
+    try:
+        _sleep_guard()
+    except sleep_chat.ReplySleepBlocked:
+        memory.mark_replied(c, CID)
+        return None
     hist = memory.history(c, CID, CFG["history_for_prompt"])
     t0 = time.monotonic()
     text = brain.reply(CID, hist)
     scene = (brain.LAST or {}).get("want_image")
+    if not text and not scene:
+        if (brain.LAST or {}).get("sleep_suppressed"):
+            memory.mark_replied(c, CID)
+        return None
     _last_them = next(
         (m.get("text") for m in reversed(theirs or []) if isinstance(m, dict) and (m.get("text") or "").strip()),
         "",
@@ -92,9 +104,11 @@ def tick(c, dry):
         import photo_scene as _ps
         if scene and not _ps.allow_inbound_image_gen(_last_them):
             print(f"[reply] drop want_image (no explicit photo ask) text={_last_them!r:.40}", flush=True)
-            scene = None
+            return None
     except Exception as e:
         print(f"[reply] photo ask gate skip: {e!r}", file=sys.stderr)
+        if scene:
+            return None
     img_plan = None
     if scene:
         try:
@@ -117,22 +131,26 @@ def tick(c, dry):
                 try:
                     hold = chat_media.hold_on_line(user_text=_last_them, shot_type=_shot)
                     if hasattr(wechat_io, "open_chat"): wechat_io.open_chat()
+                    _sleep_guard()
                     wechat_io.send_message(hold)
                     print(f"[reply] hold_on: {hold}", flush=True)
                 except Exception as he:
                     print(f"[reply] hold_on send failed: {he!r}", file=sys.stderr)
             # 用户话术硬锁镜头（route_user_shot）→ shot_lock，禁止串卡
+            _sleep_guard()
             img_plan = chat_media.plan_chat_images(
                 scene, caption=text, now=_now, shot_type=_shot, shot_bits=_bits,
                 shot_lock=bool(_shot), user_text=_last_them, image_lane="demand",
             )
         except Exception as e:
-            print(f"[reply] want_image generate failed, text-only: {e!r}", file=sys.stderr); scene = None
+            print(f"[reply] photo turn cancelled: {e!r}", file=sys.stderr)
+            return None
     n_img = (img_plan or {}).get("n_images") or 0
     time.sleep(human_wait(time.monotonic() - t0, text or ("[图片]" if n_img else ""), RC))
+    _sleep_guard()
     if img_plan and img_plan.get("paths"):
         import chat_media
-        sent = chat_media.send_prepared_images(img_plan, io=wechat_io, open_chat_first=False, send_caption_first=True)
+        sent = chat_media.send_prepared_images(img_plan, io=wechat_io, open_chat_first=False, send_caption_first=True, before_send=_sleep_guard)
         # 模型配文已并入 texts[0]；多图时不再单独重发 text
         log_text = " ".join(t for t in (img_plan.get("texts") or []) if t)
         log_text = (log_text + " " if log_text else "") + f"[图片x{sent['n_images']}:{scene}]"
@@ -143,6 +161,7 @@ def tick(c, dry):
         for i, bub in enumerate(bubbles):
             if i:
                 time.sleep(bubble_gap_sec(bub))
+            _sleep_guard()
             wechat_io.send_message(bub)
         log_text = " / ".join(bubbles) if bubbles else text
     seq = c.execute("SELECT COALESCE(MAX(id),0) FROM messages").fetchone()[0]
@@ -296,9 +315,12 @@ class Loop:
         若 brain.LAST["want_image"]：锁外经 imagegen 生图，锁内先文字气泡再 send_image（chat_media，图注不糊一条）。"""
         said_all = list(theirs)
         for _ in range(s.rc["max_regenerate"] + 1):
+            _sleep_guard()
             t0 = s.clock(); text = s.reply_fn(memory.history(s.c, CID, CFG["history_for_prompt"]))
             import brain as _brain
             scene = (_brain.LAST or {}).get("want_image")
+            if not text and not scene:
+                return None
             _last_them = ""
             try:
                 for m in reversed(said_all or []):
@@ -316,9 +338,11 @@ class Loop:
                 import photo_scene as _ps
                 if scene and not _ps.allow_inbound_image_gen(_last_them):
                     s.log(f"[reply] drop want_image (no explicit photo ask) text={_last_them!r:.40}")
-                    scene = None
+                    return None
             except Exception as e:
                 s.log(f"[reply] photo ask gate skip: {e!r}", file=sys.stderr)
+                if scene:
+                    return None
             img_plan = None
             if scene:
                 try:
@@ -342,18 +366,20 @@ class Loop:
                             hold = chat_media.hold_on_line(user_text=_last_them, shot_type=_shot)
                             with s.lock():
                                 if hasattr(s.io, "open_chat"): s.io.open_chat()
+                                _sleep_guard()
                                 s.io.send_message(hold)
                             s.log(f"[reply] hold_on: {hold}")
                         except Exception as he:
                             s.log(f"[reply] hold_on send failed: {he!r}", file=sys.stderr)
                     # 用户话术硬锁镜头 → shot_lock，禁止串卡
+                    _sleep_guard()
                     img_plan = chat_media.plan_chat_images(
                         scene, caption=text, now=_now, shot_type=_shot, shot_bits=_bits,
                         shot_lock=bool(_shot), user_text=_last_them, image_lane="demand",
                     )
                 except Exception as e:
-                    s.log(f"[reply] want_image generate failed, text-only: {e!r}", file=sys.stderr)
-                    scene = None
+                    s.log(f"[reply] photo turn cancelled: {e!r}", file=sys.stderr)
+                    return None
             n_img = (img_plan or {}).get("n_images") or 0
             delay = human_wait(s.clock() - t0, text or ("[图片]" if n_img else ""), s.rc, think_fn=s.think_fn, typing_fn=s.typing_fn)
             if s.wait_watch(delay):
@@ -366,11 +392,12 @@ class Loop:
                 # hold_on 会把末条变成 me，need=False；若已有待发图仍应发出，勿整轮当「已被回过」取消
                 pending_imgs = bool(img_plan and img_plan.get("paths"))
                 if not ok or (not need and not pending_imgs): return None
+                _sleep_guard()
                 if pending_imgs:
                     import chat_media
                     if not hasattr(s.io, "send_image"):
                         raise RuntimeError("io missing send_image")
-                    sent = chat_media.send_prepared_images(img_plan, io=s.io, open_chat_first=False, send_caption_first=True)
+                    sent = chat_media.send_prepared_images(img_plan, io=s.io, open_chat_first=False, send_caption_first=True, before_send=_sleep_guard)
                     log_text = " ".join(t for t in (img_plan.get("texts") or []) if t)
                     log_text = (log_text + " " if log_text else "") + f"[图片x{sent['n_images']}:{scene}]"
                 else:
@@ -380,6 +407,7 @@ class Loop:
                     for i, bub in enumerate(bubbles):
                         if i:
                             s.sleep(bubble_gap_sec(bub))
+                        _sleep_guard()
                         s.io.send_message(bub)
                     log_text = " / ".join(bubbles) if bubbles else text
                 s.last_fp = s.fingerprint()
@@ -405,7 +433,12 @@ class Loop:
         with s.priority():
             theirs, need = s.absorb(s.read())
             # need=True 即使 theirs 空也要回：连发放弃后消息已在 DB，不能因 plan_new 为空就漏回
-            sent = s.respond(theirs) if need else None
+            try:
+                sent = s.respond(theirs) if need else None
+            except sleep_chat.ReplySleepBlocked:
+                memory.mark_replied(s.c, CID)
+                s.pending_unreplied = False
+                return s.backoff.update(False, s.clock())
             if sent or not need: s.pending_unreplied = False
             elif need and not sent: s.pending_unreplied = True
         # 画面变化 / 新消息 / 仍有未回 → 立刻回到最快；纯定时全检不重置退避

@@ -35,6 +35,8 @@ def build_payload(job_path, job):
             "result_path": job["result_path"], "prompt": job.get("prompt", ""), "scene": job.get("scene", ""),
             "outfit_text": job.get("outfit_text", ""), "realism_text": job.get("realism_text", ""),
             "reference_images": job.get("reference_images", []), "macbook_cmd": job.get("macbook_cmd", ""),
+            "photo_request": job.get("photo_request"), "prompt_recipe": job.get("prompt_recipe"),
+            "reasoning_effort": job.get("reasoning_effort"),
             "created_at": job.get("created_at"), "error": job.get("error", "")[:1000],
             "done_cmd": f"python -m src.imagegen --relay-done {job['job_id']} <image_path>"}
 

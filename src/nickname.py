@@ -2,7 +2,7 @@
 目标向量 = 基线 + STATE(mood/energy，有 life_* 时用 emotion_view_for 同槽 soft-bias) 调整 + 消息情绪调整；余弦相似度取 top-k，温度 softmax 采样，
 默认锁定 state["active_nickname"]（合语境则不换）；换新时排除 recent_nicknames。难过/认真时排除 tease 高的昵称。
 按性别过滤（只用 n + config.user_gender 的昵称）；role=tease 的调侃称呼只在调侃语境（tease_context）可选。
-tier=core（小熊/维尼/🐻）日常高权重；tier=extension 低概率；禁错误姓氏称呼。"""
+tier=core（演示联系人/小熊/小熊/维尼/🐻/演示联系人）日常高权重；tier=extension 低概率；禁王某某。"""
 import json, math, random, pathlib, re
 DIMS = ["sweet", "tease", "intimacy", "serious", "playful"]
 LIB = pathlib.Path(__file__).resolve().parents[1] / "data" / "nicknames.json"
@@ -20,7 +20,16 @@ _lib, _mtime = None, None
 META = {}  # name -> {"gender": n/m/f, "role": None|"tease"}
 TEASE_ROLE_MIN_TEASE, TEASE_ROLE_MIN_MOOD = .45, 6
 TEASE_ROLE_BONUS = .015  # 调侃语境下给调侃称呼一点加分，否则向量上几乎进不了 top-k
-BANNED_NAMES = {"王某某"}  # demo: 禁止误用的姓氏称呼（公开快照）
+BANNED_NAMES = {"王某某"}  # 用户姓杨，禁止此称呼
+XIAOTIAN_PARTNER_NAMES = {"演示联系人", "小熊", "小熊", "小熊", "维尼", "🐻", "演示联系人", "笨熊"}
+
+
+def relationship_banned():
+    from config import load
+    cfg = load()
+    if (cfg.get("persona") or {}).get("id") in (None, "xiaotian"):
+        return BANNED_NAMES
+    return BANNED_NAMES | XIAOTIAN_PARTNER_NAMES
 
 # tier：core=姓名/熊/维尼相关（日常高权重）；extension=甜称等（低概率）。勿与 TTS/avatar/schedule WEIGHTS 混淆。
 CORE_WEIGHT_FLOOR = 1.25
@@ -254,7 +263,7 @@ def tease_context(t, emo, state, now=None):
 def _nick_ok(name, vec, emo, tease_ok, ok_g):
     """active 昵称在本轮语境是否还能用（性别/调侃/难过过滤）。"""
     meta = META.get(name, {})
-    if name in BANNED_NAMES:
+    if name in relationship_banned():
         return False
     if meta.get("gender", "n") not in ok_g:
         return False
@@ -264,14 +273,41 @@ def _nick_ok(name, vec, emo, tease_ok, ok_g):
         return False
     return True
 
-def pick(message, state, rng=random, user_gender=None, sticky=True, now=None):
+def pick(message, state, rng=random, user_gender=None, sticky=True, now=None, cfg=None):
     """默认 sticky：复用 STATE.active_nickname，避免每轮换狗/猪/崽。
     sticky=False 或 active 不合语境时才重新采样（并避开 recent）。
     now：交给 soft-bias mood overlay（与聊天/生图同槽）。"""
     state = enrich_state_mood(state, now)
     t, emo, why = target(message, state, now=now)
     recent = set((state.get("recent_nicknames") or [])[-RECENT_N:])
+    from config import load
+    cfg = cfg if cfg is not None else load()
+    from personalization_runtime import option
+    sticky = sticky and option("nicknames.sticky", True, cfg=cfg)
+    preferred = option("nicknames.preferred", [], cfg=cfg) or []
+    if (cfg.get("identity_runtime") or {}).get("schema_version") == 2:
+        # Registered roles own their address book, including roles named
+        # xiaotian. Never load the legacy partner library or its metadata.
+        banned = BANNED_NAMES | set(option("nicknames.banned", [], cfg=cfg) or [])
+        names = [name for name in preferred if name not in banned]
+        if not names:
+            address = (cfg.get("contact") or {}).get("address") or (cfg.get("contact") or {}).get("name") or ""
+            return (address if address not in banned else ""), dict(zip(DIMS, t)), "当前关系的明确称呼"
+        import datetime as _dt
+        today = (now or _dt.datetime.now()).date().isoformat()
+        active = state.get("active_nickname")
+        if sticky and active in names and state.get("active_nickname_day") in (None, "", today):
+            return active, dict(zip(DIMS, t)), "当前关系沿用称呼"
+        return rng.choice([name for name in names if name not in recent] or names), dict(zip(DIMS, t)), "当前关系的自定义称呼"
     lib = library(); ok_g = allowed_genders(user_gender)
+    banned = relationship_banned() | set(option("nicknames.banned", [], cfg=cfg) or [])
+    if preferred:
+        current = dict(lib)
+        lib = [(name, current.get(name, [.32, .2, .36, .25, .55])) for name in preferred if name not in banned]
+    if not preferred and (cfg.get("persona") or {}).get("id") not in (None, "xiaotian"):
+        address = (cfg.get("contact") or {}).get("address") or (cfg.get("contact") or {}).get("name")
+        if address:
+            return address, dict(zip(DIMS, BASE)), "当前 partner.address 统一称呼"
     tease_ok = tease_context(t, emo, state, now=now)
     lib_d = dict(lib)
     active = (state.get("active_nickname") or "").strip() if sticky else ""
@@ -281,26 +317,30 @@ def pick(message, state, rng=random, user_gender=None, sticky=True, now=None):
     _now = now or _dt.datetime.now()
     today = (_now.date() if isinstance(_now, _dt.datetime) else _dt.date.today()).isoformat()
     # 同一天默认锁定称呼，避免一天换七八次；难过/认真时若 active 不合规再换
-    if active and active in lib_d and _nick_ok(active, lib_d[active], emo, tease_ok, ok_g):
+    if active and active not in banned and active in lib_d and _nick_ok(active, lib_d[active], emo, tease_ok, ok_g):
         if (not active_day) or active_day == today or emo in ("sad", "serious", "angry"):
             v = lib_d[active]
             reason = f"{'，'.join(why)}；锁定 active_nickname={active}（日={active_day or today}）"
             if META.get(active, {}).get("role") == "tease":
                 reason += "；调侃称呼(role=tease)"
             return active, dict(zip(DIMS, v)), reason
-    cand = [(n, v) for n, v in lib if n not in recent and n not in BANNED_NAMES and META.get(n, {}).get("gender", "n") in ok_g]
+    cand = [(n, v) for n, v in lib if n not in recent and n not in banned and META.get(n, {}).get("gender", "n") in ok_g]
     if not tease_ok:
         cand = [(n, v) for n, v in cand if META.get(n, {}).get("role") != "tease"]
     if emo in ("sad", "serious", "angry"):  # 不调侃
         cand = [(n, v) for n, v in cand if v[1] <= .25] or cand
     if not cand:
-        cand = [(n, v) for n, v in lib if META.get(n, {}).get("gender", "n") in ok_g]
+        cand = [(n, v) for n, v in lib if n not in banned and META.get(n, {}).get("gender", "n") in ok_g]
+        if not tease_ok:
+            cand = [(n, v) for n, v in cand if META.get(n, {}).get("role") != "tease" and v[1] <= .25]
+    if not cand:
+        return "", dict(zip(DIMS, t)), "当前无适用称呼"
     # 硬分界：多数时候只在 core 里采；小概率改走 extension（甜称等）
     has_core = any(META.get(n, {}).get("tier") == "core" for n, _ in cand)
     has_ext = any(META.get(n, {}).get("tier") == "extension" for n, _ in cand)
     pick_tier = None
     if has_core and has_ext:
-        pick_tier = "extension" if rng.random() < EXTENSION_PICK_P else "core"
+        pick_tier = "extension" if rng.random() < option("nicknames.extension_probability", EXTENSION_PICK_P, cfg=cfg) else "core"
         tiered = [(n, v) for n, v in cand if META.get(n, {}).get("tier") == pick_tier]
         if tiered:
             cand = tiered

@@ -1,0 +1,9 @@
+{
+  "name": "unknown-routes",
+  "steps": [
+    {"inject": {"text": "wrong bot", "self_id": 1, "message_id": 20001}, "expect_blocked": true},
+    {"inject": {"text": "wrong peer", "user_id": 1, "message_id": 20002}, "expect_blocked": true},
+    {"inject": {"text": "group", "message_type": "group", "message_id": 20003}, "expect_blocked": true},
+    {"inject": {"text": "friend", "message_type": "friend", "message_id": 20004}, "expect_blocked": true}
+  ]
+}

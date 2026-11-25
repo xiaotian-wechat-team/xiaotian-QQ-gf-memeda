@@ -27,6 +27,8 @@ NOW = dt.datetime(2026, 10, 27, 12, 0)
 @pytest.fixture(autouse=True)
 def isolated(tmp_path, monkeypatch):
     import classmate_memory, image_caption, voice_asr, mem, schedule_fidelity
+    # Transport/concurrency fixtures are awake, independent of the host clock.
+    monkeypatch.setattr('sleep_chat.scheduled_sleep', lambda *a, **k: False)
     monkeypatch.setattr(memory, "CFG", {**memory.CFG, "db_path": str(tmp_path / "chat.db")})
     monkeypatch.setattr(memory, "DL", tmp_path / "life")
     (memory.DL / "contacts" / "demo_contact").mkdir(parents=True)
@@ -238,10 +240,8 @@ def test_http_handler_failure_never_records_sent_or_marks_replied(monkeypatch, b
     payload = json.dumps(event).encode()
     handler.headers = {"Content-Length": str(len(payload))}
     handler.rfile = io.BytesIO(payload)
-    handler.server = SimpleNamespace(runner=SimpleNamespace(
-        dry=False, api_base="http://unused.invalid", token="", got=0,
-        reply_fn=lambda *a: "在的",
-    ))
+    handler.server = SimpleNamespace(runner=qq.OneBotHttpRunner(
+        '127.0.0.1:0', 'http://unused.invalid', dry=False, reply_fn=lambda *a: '在的'))
     handler.send_response = Mock()
     handler.end_headers = Mock()
     if business_failure:

@@ -30,6 +30,16 @@ def collect(first, drain, *, clock=time.monotonic, sleep=time.sleep, activity=No
 
 
 def combine(messages):
+    unique = []
+    seen = set()
+    for message in messages:
+        if message.msg_id:
+            key = (message.channel, message.bot_account_id, message.peer_id, str(message.msg_id))
+            if key in seen:
+                continue
+            seen.add(key)
+        unique.append(message)
+    messages = unique
     if len(messages) == 1:
         return messages[0]
     if len({m.alias_key for m in messages}) != 1:

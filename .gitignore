@@ -108,3 +108,14 @@ data/_deploy_bak_*/
 
 # local mem0/qdrant runtime (tests may create)
 data/qdrant/
+
+# Local console drafts, credentials, and browser artifacts
+data/persona_personalization/
+data/ui_schedule_overrides.json
+data/persona_locations.json
+data/llm_session.*.json
+data/imagegen/
+data/life_order_pending.json*
+node_modules/
+test-results/
+playwright-report/

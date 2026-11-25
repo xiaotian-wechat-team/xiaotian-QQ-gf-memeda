@@ -67,6 +67,9 @@ def complete(messages, *, model=None, timeout=None, temperature=0.7) -> str:
 
 def skill_system() -> str:
     global _SKILL_CACHE
+    cfg = load()
+    if cfg.get("persona_version"):
+        return cfg["role_style"]
     if _SKILL_CACHE is not None:
         return _SKILL_CACHE
     path = SKILL_DEEPSEEK if SKILL_DEEPSEEK.is_file() else SKILL_PATH

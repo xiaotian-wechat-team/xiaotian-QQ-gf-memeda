@@ -1,189 +1,196 @@
 #!/usr/bin/env python3
-"""本地假 OneBot v11 正向 WS（无真 QQ）——给 adapter --probe / --dry-run 冒烟。
-
-用法（仓库根）：
-  .venv/bin/python tools/onebot_mock_server.py --port 3001
-  # 另开终端：
-  .venv/bin/python tools/onebot_qq_run.py --probe --ws ws://127.0.0.1:3001
-  .venv/bin/python tools/onebot_qq_run.py --dry-run --once --ws ws://127.0.0.1:3001
-  # 向已连接客户端推一条私聊：
-  curl -s -X POST http://127.0.0.1:3002/inject -H 'content-type: application/json' \
-    -d '{"user_id":10001,"text":"mock 在吗"}'
-"""
+"""Isolated OneBot v11 simulator. Never forwards events to QQ or NapCat."""
 from __future__ import annotations
 
 import argparse
 import asyncio
 import json
-import sys
+import os
+import pathlib
 import time
 from typing import Set
 
 try:
-    import websockets
     from websockets.asyncio.server import serve
 except ImportError:
-    print("需要 websockets：.venv/bin/pip install websockets", file=sys.stderr)
-    raise SystemExit(2)
+    serve = None
 
 CLIENTS: Set = set()
+EVENTS: list[dict] = []
+ACK_MODE = "confirmed"
+BOT_ID = 9000000002
+PEER_ID = 9000000001
+EVIDENCE: pathlib.Path | None = None
+LLM_REPLY: str | None = None
+
+
+def record(direction: str, payload: dict) -> None:
+    row = {"ts": time.time(), "direction": direction, "payload": payload}
+    EVENTS.append(row)
+    if EVIDENCE:
+        EVIDENCE.parent.mkdir(parents=True, exist_ok=True)
+        with EVIDENCE.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
+def private_event(data: dict) -> dict:
+    text = str(data.get("text") or "")
+    uid = data.get("user_id") or PEER_ID
+    bot = data.get("self_id") or BOT_ID
+    mid = data.get("message_id") or int(time.time() * 1000)
+    event = dict(data.get("event") or {})
+    event.update({
+        "post_type": event.get("post_type") or "message",
+        "message_type": event.get("message_type") or data.get("message_type") or "private",
+        "self_id": bot,
+        "user_id": uid,
+        "message": event.get("message") or [{"type": "text", "data": {"text": text}}],
+        "raw_message": event.get("raw_message") or text,
+        "message_id": event.get("message_id") or mid,
+        "time": event.get("time") or data.get("time") or int(time.time()),
+        "sender": event.get("sender") or {"user_id": uid},
+    })
+    return event
+
+
+def acknowledgement(req: dict, mode: str) -> dict | None:
+    if mode == "unknown":
+        return None
+    if mode == "failed":
+        return {"status": "failed", "retcode": 100, "data": None,
+                "echo": req.get("echo"), "msg": "simulated failure"}
+    return {"status": "ok", "retcode": 0,
+            "data": {"message_id": int(time.time() * 1000) % 2_000_000_000},
+            "echo": req.get("echo")}
 
 
 async def ws_handler(ws):
     CLIENTS.add(ws)
-    peer = getattr(ws, "remote_address", None)
-    print(f"[mock] client + {peer} total={len(CLIENTS)}", flush=True)
+    record("client_connected", {"count": len(CLIENTS)})
     try:
-        await ws.send(
-            json.dumps(
-                {
-                    "post_type": "meta_event",
-                    "meta_event_type": "lifecycle",
-                    "sub_type": "connect",
-                    "time": int(time.time()),
-                }
-            )
-        )
         async for raw in ws:
-            try:
-                req = json.loads(raw)
-            except json.JSONDecodeError:
-                continue
+            req = json.loads(raw)
             action = req.get("action")
-            echo = req.get("echo")
             if action == "get_login_info":
-                await ws.send(
-                    json.dumps(
-                        {
-                            "status": "ok",
-                            "retcode": 0,
-                            "data": {"user_id": 900001, "nickname": "mock-xiaotian-qq"},
-                            "echo": echo,
-                        }
-                    )
-                )
+                response = {"status": "ok", "retcode": 0,
+                            "data": {"user_id": BOT_ID, "nickname": "fake-onebot"},
+                            "echo": req.get("echo")}
             elif action == "send_private_msg":
                 params = req.get("params") or {}
-                print(
-                    f"[mock] SEND private → {params.get('user_id')}: {params.get('message')!r}",
-                    flush=True,
-                )
-                await ws.send(
-                    json.dumps(
-                        {
-                            "status": "ok",
-                            "retcode": 0,
-                            "data": {"message_id": int(time.time()) % 10_000_000},
-                            "echo": echo,
-                        }
-                    )
-                )
+                record("outbound", req)
+                if str(params.get("user_id")) != str(PEER_ID):
+                    response = {"status": "failed", "retcode": 100, "data": None,
+                                "echo": req.get("echo"), "msg": "unexpected test peer"}
+                else:
+                    mode = str(req.get("mock_ack") or ACK_MODE)
+                    if mode == "delayed":
+                        await asyncio.sleep(1)
+                    response = acknowledgement(req, mode)
             else:
-                await ws.send(
-                    json.dumps(
-                        {"status": "failed", "retcode": 1404, "data": None, "echo": echo, "msg": f"no {action}"}
-                    )
-                )
+                response = {"status": "failed", "retcode": 1404, "data": None,
+                            "echo": req.get("echo"), "msg": f"unsupported {action}"}
+            if response is not None:
+                record("ack", response)
+                await ws.send(json.dumps(response, ensure_ascii=False))
     finally:
         CLIENTS.discard(ws)
-        print(f"[mock] client - {peer} total={len(CLIENTS)}", flush=True)
+        record("client_disconnected", {"count": len(CLIENTS)})
 
 
-async def broadcast_event(ev: dict):
-    dead = []
-    raw = json.dumps(ev, ensure_ascii=False)
-    for ws in list(CLIENTS):
-        try:
-            await ws.send(raw)
-        except Exception:
-            dead.append(ws)
-    for ws in dead:
-        CLIENTS.discard(ws)
+async def broadcast_event(event: dict) -> None:
+    record("inbound", event)
+    raw = json.dumps(event, ensure_ascii=False)
+    await asyncio.gather(*(ws.send(raw) for ws in list(CLIENTS)), return_exceptions=True)
 
 
-async def http_inject(reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
-    """极简 HTTP：POST /inject {"user_id":…,"text":…} 或 GET /health。"""
+def http_response(status: int, payload: dict) -> bytes:
+    body = json.dumps(payload, ensure_ascii=False).encode() + b"\n"
+    reason = {200: "OK", 400: "Bad Request", 404: "Not Found"}.get(status, "OK")
+    return (f"HTTP/1.1 {status} {reason}\r\nContent-Type: application/json\r\n"
+            f"Content-Length: {len(body)}\r\nConnection: close\r\n\r\n".encode() + body)
+
+
+async def http_control(reader: asyncio.StreamReader, writer: asyncio.StreamWriter):
+    global ACK_MODE
     try:
-        req_line = await reader.readline()
-        if not req_line:
-            writer.close()
-            return
-        parts = req_line.decode("latin1", errors="replace").split()
-        method = parts[0] if parts else "GET"
-        path = parts[1] if len(parts) > 1 else "/"
+        line = await reader.readline()
+        parts = line.decode("latin1", errors="replace").split()
+        method, path = parts[0], parts[1]
         headers = {}
         while True:
             line = await reader.readline()
             if line in (b"\r\n", b"\n", b""):
                 break
-            if b":" in line:
-                k, _, v = line.decode("latin1", errors="replace").partition(":")
-                headers[k.strip().lower()] = v.strip()
-        length = int(headers.get("content-length") or 0)
+            key, _, value = line.decode("latin1").partition(":")
+            headers[key.lower()] = value.strip()
+        length = min(int(headers.get("content-length") or 0), 1_000_000)
         body = await reader.readexactly(length) if length else b""
-
-        status = 200
-        resp_body = b"ok\n"
-        if path.startswith("/health"):
-            resp_body = json.dumps({"ok": True, "clients": len(CLIENTS)}).encode() + b"\n"
-        elif method == "POST" and path.startswith("/inject"):
-            try:
-                data = json.loads(body.decode("utf-8") or "{}")
-            except json.JSONDecodeError:
-                status = 400
-                resp_body = b'{"error":"bad json"}\n'
-            else:
-                uid = data.get("user_id") or 10001
-                text = data.get("text") or "hello"
-                ev = {
-                    "post_type": "message",
-                    "message_type": "private",
-                    "user_id": int(uid) if str(uid).isdigit() else uid,
-                    "message": [{"type": "text", "data": {"text": text}}],
-                    "raw_message": text,
-                    "message_id": int(time.time()) % 10_000_000,
-                    "time": int(time.time()),
-                    "sender": {"user_id": int(uid) if str(uid).isdigit() else uid},
-                }
-                await broadcast_event(ev)
-                print(f"[mock] inject → {len(CLIENTS)} client(s): {text!r}", flush=True)
-                resp_body = json.dumps({"ok": True, "clients": len(CLIENTS)}).encode() + b"\n"
+        if path == "/health":
+            status, payload = 200, {"ok": True, "clients": len(CLIENTS), "ack_mode": ACK_MODE,
+                                    "bot_id": BOT_ID, "peer_id": PEER_ID}
+        elif path == "/events":
+            status, payload = 200, {"events": EVENTS[-200:]}
+        elif method == "POST" and path == "/inject":
+            data = json.loads(body or b"{}")
+            event = private_event(data)
+            await broadcast_event(event)
+            status, payload = 200, {"ok": True, "clients": len(CLIENTS), "event": event}
+        elif method == "POST" and path == "/ack":
+            data = json.loads(body or b"{}")
+            mode = data.get("mode")
+            if mode not in ("confirmed", "failed", "unknown", "delayed"):
+                raise ValueError("invalid ACK mode")
+            ACK_MODE = mode
+            status, payload = 200, {"ok": True, "ack_mode": mode}
+        elif method == "POST" and path == "/v1/chat/completions" and LLM_REPLY is not None:
+            data = json.loads(body or b"{}")
+            if not isinstance(data.get("messages"), list):
+                raise ValueError("messages required")
+            record("model_request", data)
+            status, payload = 200, {"choices": [{"message": {"role": "assistant", "content": LLM_REPLY}}]}
+        elif method == "POST" and path == "/reset":
+            EVENTS.clear()
+            if EVIDENCE:
+                EVIDENCE.write_text("")
+            status, payload = 200, {"ok": True}
         else:
-            status = 404
-            resp_body = b"not found\n"
-
-        reason = {200: "OK", 400: "Bad Request", 404: "Not Found"}.get(status, "OK")
-        writer.write(
-            f"HTTP/1.1 {status} {reason}\r\nContent-Type: application/json\r\n"
-            f"Content-Length: {len(resp_body)}\r\nConnection: close\r\n\r\n".encode()
-            + resp_body
-        )
+            status, payload = 404, {"error": "not found"}
+        writer.write(http_response(status, payload))
+        await writer.drain()
+    except (ValueError, json.JSONDecodeError) as exc:
+        writer.write(http_response(400, {"error": str(exc)}))
         await writer.drain()
     finally:
-        try:
-            writer.close()
-            await writer.wait_closed()
-        except Exception:
-            pass
+        writer.close()
+        await writer.wait_closed()
 
 
-async def main_async(ws_port: int, http_port: int):
-    print(f"[mock] OneBot WS ws://127.0.0.1:{ws_port}", flush=True)
-    print(f"[mock] inject  HTTP http://127.0.0.1:{http_port}/inject", flush=True)
-    async with serve(ws_handler, "127.0.0.1", ws_port):
-        await asyncio.start_server(http_inject, "127.0.0.1", http_port)
+async def main_async(host: str, ws_port: int, http_port: int):
+    async with serve(ws_handler, host, ws_port):
+        await asyncio.start_server(http_control, host, http_port)
+        print(f"[fake-onebot] ws={host}:{ws_port} control={host}:{http_port}", flush=True)
         await asyncio.Future()
 
 
 def main(argv=None):
-    ap = argparse.ArgumentParser(description="Mock OneBot v11 WS for xiaotian smoke")
-    ap.add_argument("--port", type=int, default=3001, help="正向 WS 端口")
-    ap.add_argument("--http-port", type=int, default=3002, help="inject HTTP 端口")
+    global ACK_MODE, BOT_ID, PEER_ID, EVIDENCE, LLM_REPLY
+    ap = argparse.ArgumentParser(description="Fake OneBot v11 with no QQ forwarding")
+    ap.add_argument("--host", default=os.environ.get("FAKE_ONEBOT_HOST", "127.0.0.1"))
+    ap.add_argument("--port", type=int, default=int(os.environ.get("FAKE_ONEBOT_PORT", "3001")))
+    ap.add_argument("--http-port", type=int, default=int(os.environ.get("FAKE_ONEBOT_HTTP_PORT", "3002")))
+    ap.add_argument("--bot-id", default=os.environ.get("FAKE_ONEBOT_BOT_ID", str(BOT_ID)))
+    ap.add_argument("--peer-id", default=os.environ.get("FAKE_ONEBOT_PEER_ID", str(PEER_ID)))
+    ap.add_argument("--ack", choices=("confirmed", "failed", "unknown", "delayed"),
+                    default=os.environ.get("FAKE_ONEBOT_ACK", "confirmed"))
+    ap.add_argument("--evidence", default=os.environ.get("FAKE_ONEBOT_EVIDENCE", ""))
+    ap.add_argument("--llm-reply", default=None, help="enable local fake model endpoint; never calls an external model")
     args = ap.parse_args(argv)
-    try:
-        asyncio.run(main_async(args.port, args.http_port))
-    except KeyboardInterrupt:
-        print("[mock] stop", flush=True)
+    if serve is None:
+        raise RuntimeError("fake OneBot requires the 'websockets' package")
+    ACK_MODE, BOT_ID, PEER_ID = args.ack, args.bot_id, args.peer_id
+    EVIDENCE = pathlib.Path(args.evidence) if args.evidence else None
+    LLM_REPLY = args.llm_reply
+    asyncio.run(main_async(args.host, args.port, args.http_port))
     return 0
 
 

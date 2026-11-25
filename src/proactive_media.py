@@ -24,16 +24,16 @@ def required(state, now, cfg, beat=None):
     return ratio > 0 and images < math.ceil((total + 1) * ratio - 1e-9)
 
 
+def planned_scene(beat):
+    hint = (beat or {}).get("image") or {}
+    return str(hint.get("scene") or "").strip() if hint.get("mode") == "want_image" else ""
+
+
 def photo_slot(beat, now):
-    slot = dict(beat.get('ended') or beat.get('slot') or {})
+    slot = dict(beat.get('slot') or {})
     from schedule_execution import blocked
     if blocked(slot):
         return None
-    if beat.get('ended') and str(slot.get('outing_activity_id', '')).startswith('movie_'):
-        if now.strftime("%H:%M") < str(slot.get("end") or "24:00"):
-            return None
-        # Once the film has ended, a lobby photo is plausible; never photograph the screen.
-        slot.update(activity='电影散场后在大厅歇脚', photo_ok=True)
     if not slot or slot.get('bucket') == 'sleep' or slot.get('photo_ok') is False:
         return None
     if slot.get('leg') in ('outbound', 'return'):
@@ -45,7 +45,7 @@ def prepare(beat, state, now, cfg):
     """Attach a real schedule photo plan when the next round needs an image."""
     beat = dict(beat)
     from proactive_limiter import is_routine
-    if is_routine(beat):
+    if is_routine(beat) or beat.get("id") == "surf_share":
         beat.pop('image_required', None)
         return beat
     if not required(state, now, cfg, beat) and beat.get("id") != "life_photo":
@@ -68,7 +68,7 @@ def receipt_patch(state, item, now):
     if str(old.get('day') or '') > day:
         return {}
     images = int(old.get('images', 0)) if old.get('day') == day else 0
-    # Sender sets has_image only after a local file exists. This runs only on
-    # complete transport success, including the primary outbox retry receipt.
+    # Called only after an actual image receipt, including partial rounds and
+    # outbox continuations; the round receipt prevents double counting.
     images += bool((item.get('meta') or {}).get('has_image'))
     return {'proactive_media': {'day': day, 'images': images}}

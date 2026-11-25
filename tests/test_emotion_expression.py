@@ -6,6 +6,8 @@ import emotion
 import outfit
 import imagegen
 
+LEGACY_PROMPT_CONFIG = {"imagegen": {}}
+
 
 def _emo(p, a, d=0.55, intimacy=60, label="neutral"):
     return {"pad": {"pleasure": p, "arousal": a, "dominance": d},
@@ -48,12 +50,13 @@ def test_build_prompt_includes_emotion():
     plan = outfit.plan("咖啡店", scene="约会", emo=_emo(0.85, 0.4, label="coquet"),
                        campus_life=None, chat=[], weather=None)
     p = imagegen.build_prompt("在咖啡店等他", "黑色长直发", plan["text"],
-                              plan.get("realism_text", ""), emotion_text=plan["emotion_text"])
+                              plan.get("realism_text", ""), emotion_text=plan["emotion_text"],
+                              cfg=LEGACY_PROMPT_CONFIG)
     assert "表情：" in p and "撒娇" in p
     assert "忌僵硬" in p
     assert "$imagegen" in p
     # empty emotion_text must not break
-    p0 = imagegen.build_prompt("x", "d", emotion_text="")
+    p0 = imagegen.build_prompt("x", "d", emotion_text="", cfg=LEGACY_PROMPT_CONFIG)
     assert "表情：" not in p0
 
 
@@ -64,6 +67,7 @@ def test_face_sheet_identity_only_expression_follows_emotion():
     p = imagegen.build_prompt(
         "在咖啡店等他", "黑色长直发", plan["text"], plan.get("realism_text", ""),
         n_canonical=2, body_kind="sheet", emotion_text=plan["emotion_text"],
+        cfg=LEGACY_PROMPT_CONFIG,
     )
     assert "identity only" in p or "只锁长相" in p
     assert "中性" in p or "面瘫表情" in p

@@ -1,7 +1,7 @@
 """Persona/memory files in digital-life + SQLite chat log. Only contact demo_contact touches contacts/demo_contact."""
 import sqlite3, json, hashlib, datetime, pathlib, os, re, tempfile, fcntl, unicodedata, contextlib
-from config import load
-CFG = load()
+from config import load, ConfigProxy
+CFG = ConfigProxy()
 DL = pathlib.Path(CFG["digital_life_dir"])
 ALLOWED = {CFG["contact"]["id"]}
 
@@ -17,15 +17,37 @@ def persona():
 
 def contact_ctx(cid):
     d = cdir(cid)
-    return {"profile": _r(d/"PROFILE.md"), "memory": _r(d/"MEMORY.md"), "state": _r(d/"STATE.json")}
+    from personalization_runtime import option
+    return {"profile": _r(d/"PROFILE.md"), "memory": _r(d/"MEMORY.md") if option("memory.enabled", True) else "", "state": _r(d/"STATE.json")}
 
 def append_diary(cid, line):
-    d = cdir(cid) / "diary"; d.mkdir(exist_ok=True)
+    d = cdir(cid) / "diary"; d.mkdir(parents=True, exist_ok=True)
     f = d / f"{datetime.date.today()}.md"
     with _lock(cid), f.open("a") as fh: fh.write(f"- {datetime.datetime.now():%H:%M} {line}\n")
 
+
+def append_delivery_diary(cid, line, delivery_id, *, day=None):
+    """Replay a confirmed delivery without losing/duplicating its diary entry."""
+    d = cdir(cid) / 'diary'
+    d.mkdir(parents=True, exist_ok=True)
+    f = d / f'{day or datetime.date.today().isoformat()}.md'
+    marker = f'<!-- delivery:{hashlib.sha256(delivery_id.encode()).hexdigest()} -->'
+    with _lock(cid):
+        old = f.read_text() if f.exists() else ''
+        if marker in old:
+            return
+        fd, tmp = tempfile.mkstemp(dir=d, prefix='.diary-')
+        try:
+            with os.fdopen(fd, 'w') as out:
+                out.write(old + f'- {datetime.datetime.now():%H:%M} {line} {marker}\n')
+            os.replace(tmp, f)
+        finally:
+            if os.path.exists(tmp):
+                os.unlink(tmp)
+
 @contextlib.contextmanager
 def _lock(cid):
+    cdir(cid).mkdir(parents=True, exist_ok=True)
     with open(cdir(cid) / ".lock", "a") as lf:
         fcntl.flock(lf, fcntl.LOCK_EX)
         try: yield
@@ -171,7 +193,7 @@ def heal_proactive_from_queue(cid, now=None, queue_path=None):
     return kv
 
 def db():
-    p = pathlib.Path(CFG["db_path"]); p.parent.mkdir(exist_ok=True)
+    p = pathlib.Path(CFG["db_path"]); p.parent.mkdir(parents=True, exist_ok=True)
     c = sqlite3.connect(p)
     c.execute("""CREATE TABLE IF NOT EXISTS messages(id INTEGER PRIMARY KEY, contact TEXT, sender TEXT,
       text TEXT, fp TEXT UNIQUE, ts TEXT, replied INTEGER DEFAULT 0)""")

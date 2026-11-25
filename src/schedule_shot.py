@@ -61,11 +61,18 @@ _BUCKET_BIAS: dict[str, dict[str, float]] = {
 }
 
 def _weights_for_bucket(bucket: str) -> dict[str, float]:
-    w = dict(_DEFAULT_WEIGHTS)
+    from personalization_runtime import option
+    value = option("image.full_body_weight", FULL_BODY_WEIGHT)
+    full_body = FULL_BODY_WEIGHT if value is None else float(value)
+    w = _body_part_weights(full_body)
+    relative = {shot: float(option("image.shots." + shot, 1)) for shot in _PART_EQUAL}
+    total_relative = sum(relative.values())
+    if total_relative:
+        w.update({shot: (1 - full_body) * value / total_relative for shot, value in relative.items()})
     for k, delta in (_BUCKET_BIAS.get(bucket) or {}).items():
         w[k] = max(0.0, w.get(k, 0.0) + float(delta))
     # 保底：全身不低于底座的 85%
-    w[sm.SHOT_FULL_BODY] = max(w.get(sm.SHOT_FULL_BODY, 0.0), FULL_BODY_WEIGHT * 0.85)
+    w[sm.SHOT_FULL_BODY] = max(w.get(sm.SHOT_FULL_BODY, 0.0), full_body * 0.85)
     total = sum(w.values()) or 1.0
     return {k: v / total for k, v in w.items() if v > 0}
 

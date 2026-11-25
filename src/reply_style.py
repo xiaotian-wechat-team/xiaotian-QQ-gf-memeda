@@ -47,6 +47,19 @@ _PUNCT_RE = re.compile(r"[~～。.!！?？,，、…·\s\"'“”‘’「」【
 _LAUGH_RUN_RE = re.compile(r"[啊呵嘿]*[哈嘻]{1,}|呵呵+")
 
 
+def particle_pool():
+    from config import load
+    cfg = load()
+    if cfg.get("persona_version"):
+        return list((cfg.get("role_dossier") or {}).get("speech", {}).get("catchphrases") or [])
+    return list(TEASE_PARTICLES)
+
+
+def opener_pattern():
+    pool = set(particle_pool()) | set(TEASE_PARTICLES)
+    return re.compile(r"^(?P<p>" + "|".join(re.escape(p) for p in sorted(pool, key=len, reverse=True)) + r")(?P<rest>\s*[，,。.!！?？…~～]?|\s+|$)")
+
+
 def _near_dup_particle(a: str | None, b: str | None) -> bool:
     """对齐 photo_scene._near_dup_hold：同串或短包含即近重。"""
     a = (a or "").strip()
@@ -67,7 +80,7 @@ def extract_opener_particle(text: str | None) -> str | None:
     line = str(text).splitlines()[0].strip()
     if not line:
         return None
-    m = _OPENER_RE.match(line)
+    m = opener_pattern().match(line)
     return m.group("p") if m else None
 
 
@@ -103,7 +116,9 @@ def pick_particle(
     """轮换抽一个助词；避开 recent 近重。avoid 默认压「啧」连用。"""
     rng = rng or random.Random()
     recent = [str(x) for x in (recent or []) if x]
-    pool = list(TEASE_PARTICLES)
+    pool = particle_pool()
+    if not pool:
+        return ""
     # 近用过的降权：先滤掉近重
     cand = [p for p in pool if not any(_near_dup_particle(p, r) for r in recent)]
     if not cand:
@@ -127,6 +142,8 @@ def particle_prompt_tip(hist=None, rng: random.Random | None = None) -> str:
         if ze_n < 2:
             return ""
     hint = pick_particle(recent, rng, avoid="啧")
+    if not hint:
+        return ""
     return f"开场助词轮换偶用，勿总起啧；本轮可偏「{hint}」。"
 
 
@@ -134,27 +151,38 @@ def diversify_opener(
     text: str | None,
     hist=None,
     rng: random.Random | None = None,
+    *, user_text=None,
 ) -> str:
     """安全网：首泡是近用过的「啧」开场 → 换成同寄存器助词。不改其余内容。"""
     t = (text or "").strip()
     if not t:
         return t
+    if user_text:
+        from nickname import relationship_feedback
+        if relationship_feedback(user_text):
+            m = opener_pattern().match(t)
+            if m:
+                remainder = t[m.end():].lstrip(" ，,。.!！?？…~～\n")
+                return remainder or t
+            return t
     recent = recent_opener_particles(hist)
     if not any(_near_dup_particle(p, "啧") for p in recent):
         return t
     lines = t.splitlines()
     first = lines[0].strip()
-    m = _OPENER_RE.match(first)
+    m = opener_pattern().match(first)
     if not m or m.group("p") != "啧":
         return t
     # 整泡就是「啧」或「啧 + 轻标点」
     rest = first[m.end():].lstrip()
     alt = pick_particle(recent + ["啧"], rng, avoid="啧")
+    if not alt:
+        return t
     if first == "啧" or (not rest and m.group("p") == "啧"):
         lines[0] = alt
     else:
         # 「啧 脸皮挺厚」→「切 脸皮挺厚」
-        lines[0] = alt + (m.group("rest") if rest else " ") + rest
+        lines[0] = alt + first[m.end("p"):]
         lines[0] = re.sub(r" {2,}", " ", lines[0]).strip()
     return "\n".join(lines)
 

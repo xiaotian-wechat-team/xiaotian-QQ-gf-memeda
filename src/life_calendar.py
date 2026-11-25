@@ -31,7 +31,8 @@ import re
 from zoneinfo import ZoneInfo
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-DRAFT_FILE = ROOT / "data" / "life_schedule_2026q4.json"
+from runtime_scope import resource
+DRAFT_FILE = resource("life_schedule", ROOT / "data" / "life_schedule_2026q4.json")
 HOLIDAYS_FILE = ROOT / "data" / "cn_holidays.json"
 
 # 日程/作息/STATE 墙钟一律 Asia/Shanghai（东八区）；slot_at/now/生成勿用其它时区
@@ -165,7 +166,8 @@ ACTIVITY_REASONABLENESS = {
 def _load_draft():
     if not DRAFT_FILE.exists():
         return None
-    return json.loads(DRAFT_FILE.read_text())
+    from shared_schedule import calendar_view
+    return calendar_view(json.loads(DRAFT_FILE.read_text()))
 
 
 def _load_holidays():
@@ -286,6 +288,11 @@ def get_day(date: dt.date | None = None) -> dict | None:
     (WANT_IMAGE / material pick read the same field).
     """
     date = date or dt.date.today()
+    from ui_schedule import day_for
+    override = day_for(date)
+    if override is not None:
+        return stamp_meal_periods({"date": date.isoformat(), "source": "persona_console", "slots": override})
+    from shared_schedule import enabled
     doc = _load_draft()
     if doc:
         by = {d["date"]: d for d in doc["days"]}
@@ -293,11 +300,15 @@ def get_day(date: dt.date | None = None) -> dict | None:
             day = _project_sleep_carryover(by[date.isoformat()], doc, date)
             _bind_day_scene_probes(day)
             return stamp_meal_periods(day)
+        if enabled():
+            return None
         start, end = draft_range()
         if start and end and start <= date <= end:
             day = by.get(date.isoformat())
             _bind_day_scene_probes(day)
             return stamp_meal_periods(day)
+    if enabled():
+        return None
     day = generate_day(date)
     _bind_day_scene_probes(day)
     return stamp_meal_periods(day)
@@ -402,6 +413,11 @@ def slot_at(now: dt.datetime | None = None) -> dict | None:
     now = now or now_local()
     if getattr(now, "tzinfo", None) is not None:
         now = now.astimezone(TZ).replace(tzinfo=None)
+    import ui_schedule
+    override_slot = ui_schedule.slot_for(now)
+    if override_slot or ui_schedule.day_for(now.date()) is not None:
+        from schedule_execution import effective
+        return effective(override_slot)
     day = get_day(now.date())
     if not day:
         return None
@@ -426,6 +442,10 @@ def resolve_life_now(st: dict | None, now: dt.datetime | None = None) -> dict | 
     now = now or now_local()
     if getattr(now, "tzinfo", None) is not None:
         now = now.astimezone(TZ).replace(tzinfo=None)
+    from shared_schedule import enabled
+    import ui_schedule
+    if enabled() or ui_schedule.day_for(now.date()) is not None or ui_schedule.slot_for(now):
+        return slot_at(now)
     st = st or {}
     today = st.get("life_today") if isinstance(st.get("life_today"), dict) else None
     live = None
@@ -951,7 +971,8 @@ def state_lines(st: dict | None, now: dt.datetime | None = None, *,
     """
     now = now or now_local()
     st = st or {}
-    today = st.get("life_today") or get_day(now.date())
+    from shared_schedule import enabled
+    today = get_day(now.date()) if enabled() else st.get("life_today") or get_day(now.date())
     cur = resolve_life_now(st, now)
     lines = []
     if not lean and cur:
@@ -980,7 +1001,7 @@ def state_lines(st: dict | None, now: dt.datetime | None = None, *,
     attach_y = attach_yesterday or bool(st.get("attach_yesterday"))
     attach_m = attach_memory or bool(st.get("attach_schedule_memory"))
     if attach_y:
-        recent = st.get("life_recent") or []
+        recent = [today, get_day(now.date() - dt.timedelta(days=1))] if enabled() else st.get("life_recent") or []
         if len(recent) >= 2 and recent[1]:
             slots = recent[1].get("slots") or [{}]
             lines.append("昨日：" + slots[min(2, len(slots) - 1)].get("activity", ""))
@@ -1003,7 +1024,8 @@ def photo_context(st: dict | None = None, now: dt.datetime | None = None) -> dic
     now = now or now_local()
     st = st or {}
     cur = resolve_life_now(st, now)
-    today = st.get("life_today") or get_day(now.date())
+    from shared_schedule import enabled
+    today = get_day(now.date()) if enabled() else st.get("life_today") or get_day(now.date())
     bucket = (cur or {}).get("bucket") or (today or {}).get("photo_bias") or "campus_life"
     hints = list((cur or {}).get("scene_hints") or [])
     if not hints:
@@ -1040,3 +1062,17 @@ def reasonableness_meta(activity_id: str | None) -> dict:
     except Exception:
         pass
     return meta
+
+
+def recorded_day(date):
+    """Read an existing schedule only; never synthesize historical evidence."""
+    import copy
+    from ui_schedule import day_for
+    override = day_for(date)
+    if override is not None:
+        return {"date": date.isoformat(), "source": "persona_console", "slots": override}
+    doc = _load_draft() or {}
+    for day in doc.get('days', []):
+        if day.get('date') == date.isoformat():
+            return copy.deepcopy(day)
+    return None

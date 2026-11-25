@@ -1,0 +1,29 @@
+name: xiaosu-l4
+services:
+  fake-onebot:
+    build:
+      context: ../..
+      dockerfile: tools/fake-onebot/Dockerfile
+    image: xiaosu-fake-onebot:local
+    environment:
+      FAKE_ONEBOT_BOT_ID: "9000000002"
+      FAKE_ONEBOT_PEER_ID: "9000000001"
+      FAKE_ONEBOT_ACK: confirmed
+    ports:
+      - "127.0.0.1:3911:3001"
+      - "127.0.0.1:3912:3002"
+    volumes:
+      - fake-evidence:/evidence
+    networks:
+      - simulation
+    restart: "no"
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+networks:
+  simulation:
+    internal: false
+volumes:
+  fake-evidence:

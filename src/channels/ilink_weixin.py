@@ -110,9 +110,8 @@ def _outbox_is_goodnight(text: str) -> bool:
 
 
 def _is_night_hour(now=None) -> bool:
-    """Night/quiet window for stale-goodnight drop; reads proactive.quiet_hours."""
-    import timeutil as _tu
-    return _tu.in_quiet_hours(now)
+    from timeutil import in_quiet_hours
+    return in_quiet_hours(now)
 
 
 @_serialize_outbox("ilink")
@@ -144,6 +143,7 @@ def flush_ilink_outbox(
     from channels.outbox_send import (
         ProactiveSleepBlocked,
         check_proactive_sleep,
+        continuation_block,
         already_sent_count,
         bubbles_suffix,
         channel_tag,
@@ -154,7 +154,7 @@ def flush_ilink_outbox(
         split_outbound_bubbles,
     )
     fixed_now = now
-    send_now = lambda: fixed_now if fixed_now is not None else __import__("timeutil").now_local()
+    send_now = lambda: fixed_now if fixed_now is not None else _dt.datetime.now()
     now = send_now()
     in_chat = bool((after_inbound_text or "").strip())
     night = _is_night_hour(now)
@@ -176,6 +176,11 @@ def flush_ilink_outbox(
         except ProactiveSleepBlocked as exc:
             it.update(status="dropped", note=str(exc), dropped_at=send_now().isoformat(sep=" "))
             results.append({"id": it.get("id"), "ok": False, "dropped": True, "why": str(exc)})
+            changed = True
+            continue
+        blocked = continuation_block(it, items)
+        if blocked:
+            it.update(status=blocked[0], note=blocked[1])
             changed = True
             continue
         from proactive_limiter import retry_reason
@@ -211,7 +216,7 @@ def flush_ilink_outbox(
                 changed = True
                 continue
             image = None
-        if not text and not image:
+        if not text and not image and not it.get("link_url"):
             it["status"] = "dropped"
             it["note"] = "empty text"
             changed = True
@@ -240,12 +245,9 @@ def flush_ilink_outbox(
             results.append({"id": it.get("id"), "ok": False, "dropped": True, "why": "fidelity_error"})
             changed = True
             continue
-        if text and _outbox_is_goodnight(text) and (night or in_chat):
+        if _outbox_is_goodnight(it.get("orig_text") or text):
             it["status"] = "dropped"
-            it["note"] = (
-                f"stale goodnight dropped (night={night} in_chat={in_chat}); "
-                "current them already answered first"
-            )
+            it["note"] = "stale goodnight dropped: 旧晚安不补发"
             it["dropped_at"] = now.strftime("%Y-%m-%d %H:%M:%S")
             print(
                 f"[ilink] outbox drop stale goodnight id={it.get('id')} "
@@ -265,12 +267,16 @@ def flush_ilink_outbox(
 
         def _persist(bub: str, idx: int) -> None:
             persist_outbound_bubble(
-                cid, ch_tag, bub, occ=f"outbox:{oid}:{idx}", type_="outbox"
+                cid, ch_tag, bub, occ=f"outbox:{oid}:{idx}", type_="outbox", now=now
             )
-            pending = ((it.get("proactive_round") or {}).get("meta") or {}).get("pending_delivery")
+            original = it.get("proactive_round") or it.get("proactive_progress") or {}
+            pending = (original.get("meta") or {}).get("pending_delivery")
             if pending:
                 import brain
-                brain.commit_delivery(cid, pending, delivery_id=f"proactive:{oid}", sent_text=bub)
+                brain.commit_delivery(cid, pending, delivery_id=f"proactive:{original.get('id') or oid}", sent_text=bub)
+            if it.get("proactive_progress"):
+                from proactive_limiter import record_outbox_success
+                record_outbox_success(it, now)
             _save_outbox(data)
 
         # Image attachment path (surf_share / proactive HOLD).
@@ -310,9 +316,10 @@ def flush_ilink_outbox(
                 runner._send_image_checked(
                     peer_id, str(image), context_token, caption=None, before_send=_sleep_guard
                 )
+                it["image_sent"] = True
                 _persist("[图片]", "image")
                 it["status"] = "sent"
-                it["sent_at"] = __import__("timeutil").now_local().strftime("%Y-%m-%d %H:%M:%S")
+                it["sent_at"] = now.strftime("%Y-%m-%d %H:%M:%S")
                 it["note"] = f"outbox flush image={image}"
                 it["text"] = ""
                 print(
@@ -349,17 +356,10 @@ def flush_ilink_outbox(
             changed = True
             continue
 
-        # daytime residual: mark 补发 and send once with short prefix
-        prefix = ""
-        if it.get("status") == "补发" or (
-            _outbox_is_goodnight(text) and not night and not in_chat
-        ):
-            it["status"] = "补发"
-            prefix = "（补发）\n"
         base = it.get("orig_text")
         if base is None:
             base = text
-        full_for_split = (prefix + base) if prefix else base
+        full_for_split = base
         # Resume key must match the bubble list we actually send
         it["orig_text"] = full_for_split
         bubbles = split_outbound_bubbles(full_for_split) or ([full_for_split] if full_for_split else [])
@@ -455,7 +455,7 @@ def flush_ilink_outbox(
                     err = f"link send fail: {e!r}"
         if ok:
             it["status"] = "sent"
-            it["sent_at"] = __import__("timeutil").now_local().strftime("%Y-%m-%d %H:%M:%S")
+            it["sent_at"] = now.strftime("%Y-%m-%d %H:%M:%S")
             it["note"] = f"outbox flush mid={mids[-1] if mids else 'resume'}"
             it["text"] = ""
             print(
@@ -885,6 +885,9 @@ class ILinkWeixinRunner:
         disk_tok = self._refresh_ctx(out.peer_id)
         ctx = (out.meta or {}).get("context_token") or disk_tok
         image = (out.meta or {}).get("image_path")
+        if image:
+            from photo_schedule import check_file
+            check_file(image)
         voice = (out.meta or {}).get("voice_path")
         # classmate may send text; image/voice hard-rejected for non-couple (parity onebot)
         if voice:
@@ -1241,10 +1244,20 @@ class ILinkWeixinRunner:
         feed_th.start()
         try:
             while True:
-                msg = self._inbox.get()
+                if not self.dry:
+                    from .bridge import recover_pending
+                    recover_pending(CHANNEL, send=self._send)
+                try:
+                    msg = self._inbox.get(timeout=1)
+                except _queue.Empty:
+                    continue
                 if msg is None:
                     break
-                self.handle_one(msg, batch=True)
+                try:
+                    self.handle_one(msg, batch=True)
+                except Exception as exc:
+                    # Bridge persisted a retry before this event was consumed.
+                    print(f'[ilink] turn deferred: {type(exc).__name__}', file=sys.stderr, flush=True)
                 if self.once and self._got:
                     break
         except KeyboardInterrupt:
@@ -1276,24 +1289,33 @@ class ILinkWeixinRunner:
 
 def self_test() -> int:
     """离线：归一化 + persona 映射，不连网。"""
+    from config import load
+    cfg = load()
+    primary = str((cfg.get("persona") or {}).get("primary_contact_id") or "demo_contact")
+    aliases = (cfg.get("persona") or {}).get("contact_aliases") or {}
+    peer = next(
+        (key.split(":", 1)[1] for key, value in aliases.items()
+         if key.startswith(CHANNEL + ":") and not key.endswith(":*") and str(value) == primary),
+        None,
+    )
+    assert peer
     raw = {
         "message_type": 1,
-        "from_user_id": "demo@im.wechat",
+        "from_user_id": peer,
         "message_id": 99,
         "create_time_ms": 1700000000000,
         "context_token": "tok",
         "item_list": [{"type": 1, "text_item": {"text": "在吗"}}],
     }
     m = normalize_raw_msg(raw)
-    assert m and m.channel == CHANNEL and m.peer_id == "demo@im.wechat"
+    assert m and m.channel == CHANNEL and m.peer_id == peer
     assert m.text == "在吗" and m.msg_id == "99"
     assert normalize_raw_msg({"message_type": 2, "from_user_id": "x"}) is None
-    assert resolve_contact_id(CHANNEL, "demo@im.wechat")
-    # 语音 ASR
+    assert resolve_contact_id(CHANNEL, peer) == primary
     v = normalize_raw_msg(
         {
             "message_type": 1,
-            "from_user_id": "demo@im.wechat",
+            "from_user_id": peer,
             "item_list": [{"type": 3, "voice_item": {"text": "语音内容"}}],
         }
     )

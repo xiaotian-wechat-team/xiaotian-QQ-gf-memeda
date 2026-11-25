@@ -46,10 +46,22 @@ def detect(text: str) -> str | None:
     return None
 
 
-def prompt_hint(text: str) -> str:
+def prompt_hint(text: str, cfg=None) -> str:
     """非默认语言才挂一行提示；默认普通话不占每轮 token（短/长路径对称调用本函数）。"""
-    lang = detect(text)
-    if not lang:
+    pack = load()
+    if cfg is None:
+        from config import load as config_load
+        cfg = config_load()
+    from personalization_runtime import option
+    default = option("language.default", pack.get("default", "zh-CN"), cfg=cfg)
+    follow = option("language.follow", pack.get("match_user_language", True), cfg=cfg)
+    names = {"en": "英语", "fr": "法语", "yue": "粤语", "zh-CN": "普通话"}
+    supported = ((cfg.get("role_dossier") or {}).get("languages") or {}).get("speaks")
+    lang = detect(text) if follow else None
+    if lang and supported is not None and lang not in supported and names.get(lang) not in supported:
+        lang = None
+    if not lang and default in ("zh-CN", "普通话", None):
         return ""
-    names = {"en": "英语", "fr": "法语", "yue": "粤语"}
+    if not lang:
+        return f"语言设置：本轮使用默认语言{names.get(default, default)}，短句自然表达。"
     return f"语言包：对方这条偏{names.get(lang, lang)} → 可用同语言短回一句，别炫技。"

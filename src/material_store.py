@@ -27,6 +27,11 @@ CREATE TABLE IF NOT EXISTS media(
   sha256 TEXT NOT NULL UNIQUE, bytes INTEGER, width INTEGER, height INTEGER, duration REAL, source_url TEXT);
 CREATE INDEX IF NOT EXISTS ix_media_item ON media(item_id);
 CREATE INDEX IF NOT EXISTS ix_media_url ON media(source_url);
+CREATE TABLE IF NOT EXISTS item_media(
+  item_id INTEGER NOT NULL REFERENCES items(id) ON DELETE CASCADE,
+  media_id INTEGER NOT NULL REFERENCES media(id) ON DELETE CASCADE,
+  PRIMARY KEY(item_id, media_id));
+CREATE INDEX IF NOT EXISTS ix_item_media_asset ON item_media(media_id);
 CREATE VIRTUAL TABLE IF NOT EXISTS items_fts USING fts5(title, text, tags, content='items', content_rowid='id', tokenize='trigram');
 CREATE TRIGGER IF NOT EXISTS items_ai AFTER INSERT ON items BEGIN
   INSERT INTO items_fts(rowid,title,text,tags) VALUES(new.id,new.title,new.text,new.tags); END;
@@ -70,6 +75,13 @@ class Store:
         self.db.execute("PRAGMA journal_mode=WAL")
         self.db.execute("PRAGMA foreign_keys=ON")
         self.db.executescript(SCHEMA)
+        with self.db:
+            self.db.execute("INSERT OR IGNORE INTO item_media SELECT item_id,id FROM media")
+            # Recover associations made by older versions, while the asset exists.
+            for row in self.db.execute("SELECT id,extra FROM items"):
+                for sha in json.loads(row["extra"] or "{}").get("shared_media", []):
+                    self.db.execute("INSERT OR IGNORE INTO item_media SELECT ?,id FROM media WHERE sha256=?",
+                                    (row["id"], sha))
 
     def close(self):
         self.db.close()
@@ -103,8 +115,7 @@ class Store:
                 iid = cur["id"]
                 self.db.execute("""UPDATE items SET platform=?,author=?,title=?,text=?,tags=?,published_at=?,
                     fetched_at=?,expires_at=?,content_hash=?,lang=?,extra=?,embedding=? WHERE id=?""", row + (iid,))
-                old_files = [r["local_path"] for r in self.db.execute("SELECT local_path FROM media WHERE item_id=?", (iid,))]
-                self.db.execute("DELETE FROM media WHERE item_id=?", (iid,))
+                old_files = self._detach_media(iid)
             else:
                 iid = self.db.execute("""INSERT INTO items(platform,author,title,text,tags,published_at,fetched_at,
                     expires_at,content_hash,lang,extra,embedding,source_url) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)""",
@@ -120,11 +131,8 @@ class Store:
         murl = m.get("source_url")
         sha = _sha(src)
         ex = self.db.execute("SELECT id,item_id FROM media WHERE sha256=?", (sha,)).fetchone()
-        if ex:  # sha 去重：文件已存在；若属于其他条目则只记引用，不重复存
-            if ex["item_id"] != iid:
-                r = self.db.execute("SELECT extra FROM items WHERE id=?", (iid,)).fetchone()
-                e = json.loads(r["extra"] or "{}"); e.setdefault("shared_media", []).append(sha)
-                self.db.execute("UPDATE items SET extra=? WHERE id=?", (json.dumps(e, ensure_ascii=False), iid))
+        if ex:
+            self.db.execute("INSERT OR IGNORE INTO item_media VALUES(?,?)", (iid, ex["id"]))
             if move and src.exists() and str(src) != self._path_of(sha):
                 src.unlink()
             return
@@ -136,9 +144,20 @@ class Store:
             (shutil.move if move else shutil.copy2)(str(src), str(dst))
         elif move:
             src.unlink()
-        self.db.execute("""INSERT INTO media(item_id,kind,local_path,sha256,bytes,width,height,duration,source_url)
+        mid = self.db.execute("""INSERT INTO media(item_id,kind,local_path,sha256,bytes,width,height,duration,source_url)
             VALUES(?,?,?,?,?,?,?,?,?)""", (iid, m.get("kind") or _kind(src), str(dst), sha, dst.stat().st_size,
-                                          m.get("width"), m.get("height"), m.get("duration"), murl))
+                                          m.get("width"), m.get("height"), m.get("duration"), murl)).lastrowid
+        self.db.execute("INSERT INTO item_media VALUES(?,?)", (iid, mid))
+
+    def _detach_media(self, iid):
+        paths = [r[0] for r in self.db.execute(
+            "SELECT m.local_path FROM media m JOIN item_media im ON im.media_id=m.id WHERE im.item_id=?", (iid,))]
+        self.db.execute("DELETE FROM item_media WHERE item_id=?", (iid,))
+        # Keep the legacy owner FK valid before replacing/deleting an item.
+        self.db.execute("""UPDATE media SET item_id=(SELECT item_id FROM item_media WHERE media_id=media.id LIMIT 1)
+            WHERE item_id=? AND EXISTS(SELECT 1 FROM item_media WHERE media_id=media.id)""", (iid,))
+        self.db.execute("DELETE FROM media WHERE NOT EXISTS(SELECT 1 FROM item_media WHERE media_id=media.id)")
+        return paths
 
     def _path_of(self, sha):
         r = self.db.execute("SELECT local_path FROM media WHERE sha256=?", (sha,)).fetchone()
@@ -158,8 +177,8 @@ class Store:
         """删除 expires_at < now 的条目（媒体行级联删除）及不再被引用的媒体文件。"""
         now = now if now is not None else time.time()
         with self.db:
-            paths = [r[0] for r in self.db.execute(
-                "SELECT m.local_path FROM media m JOIN items i ON i.id=m.item_id WHERE i.expires_at<?", (now,))]
+            expired = [r[0] for r in self.db.execute("SELECT id FROM items WHERE expires_at<?", (now,))]
+            paths = [p for iid in expired for p in self._detach_media(iid)]
             n = self.db.execute("DELETE FROM items WHERE expires_at<?", (now,)).rowcount
         return {"items": n, "files": self._unlink_unreferenced(paths)}
 
@@ -169,7 +188,8 @@ class Store:
         for r in rows:
             d = dict(r); d.pop("embedding", None)
             d["tags"] = json.loads(d["tags"] or "[]"); d["extra"] = json.loads(d["extra"] or "{}")
-            d["media"] = [dict(m) for m in self.db.execute("SELECT * FROM media WHERE item_id=?", (d["id"],))]
+            d["media"] = [{**dict(m), "item_id": d["id"]} for m in self.db.execute(
+                "SELECT m.* FROM media m JOIN item_media im ON im.media_id=m.id WHERE im.item_id=? ORDER BY m.id", (d["id"],))]
             out.append(d)
         return out
 

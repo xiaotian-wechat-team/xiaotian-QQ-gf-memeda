@@ -71,3 +71,9 @@ A private deployment can supply LLM credentials, channel credentials, persona fi
 ## Verification scope
 
 The public test suite uses temporary directories, stub models, and simulated transports. It does not contact real QQ/WeChat accounts. `tools/onebot_mock_server.py` and `scripts/demo_onebot.sh` exercise the local QQ channel path without an external account; real-device and real-channel acceptance remain outside this public snapshot.
+
+## Local onboarding and persona workbench
+
+`tools/persona_console_server.py` serves `frontend/` and the same-origin console API on loopback. The browser shows the gallery, resumable onboarding and the nine workbench views. The backend keeps drafts and applied persona versions in `personalization_store`. Onboarding confirms task-bound model assets and a preview before creating a role. Subsequent workbench edits use the same draft, preview and apply flow.
+
+A newly created companion gets a separate Codex subscription directory and, when configured, a separate OneBot worker and relationship runtime. QQ setup verifies the self account before enabling the worker. The diagnostics view reports the selected persona version, the last version loaded by the worker and the state of its most recent receipt.

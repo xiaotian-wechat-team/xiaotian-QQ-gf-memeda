@@ -11,6 +11,9 @@ SOP：docs/common-scenes-sop.md
 from __future__ import annotations
 
 import json
+import hashlib
+import datetime
+from zoneinfo import ZoneInfo
 import os
 import pathlib
 import re
@@ -44,7 +47,7 @@ PACKS: dict[str, dict] = {
     },
     "canteen": {
         "zh": "食堂",
-        "aliases": ("食堂", "饭堂", "窗口", "午饭", "晚饭", "餐盘"),
+        "aliases": ("食堂", "饭堂", "学生餐厅"),
         "outfit_ids": ("campus-010",),
         "queries": (
             "北京舞蹈学院 食堂 内景 空景",
@@ -89,7 +92,7 @@ PACKS: dict[str, dict] = {
     },
     "classroom": {
         "zh": "教室",
-        "aliases": ("教室", "阶梯教室", "上课", "课桌", "大课"),
+        "aliases": ("教室", "阶梯教室", "课桌"),
         "outfit_ids": ("campus-011", "campus-001"),
         "queries": (
             "北京舞蹈学院 教室 内景 空景",
@@ -145,7 +148,8 @@ def load_pack_meta(pack_id: str, cfg=None) -> dict | None:
     if not p.is_file():
         return None
     try:
-        return json.loads(p.read_text(encoding="utf-8"))
+        doc = json.loads(p.read_text(encoding="utf-8"))
+        return doc if isinstance(doc, dict) else None
     except Exception:
         return None
 
@@ -155,25 +159,38 @@ def resolve_pack(text: str | None) -> Optional[str]:
     t = (text or "").strip()
     if not t:
         return None
-    for rx, pid in _PACK_PATTERNS:
-        if rx.search(t):
-            return pid
-    return None
+    matches = [(len(m.group()), -i, pid)
+               for i, (rx, pid) in enumerate(_PACK_PATTERNS)
+               for m in rx.finditer(t)]
+    return max(matches)[2] if matches else None
+
+
+def explicit_external_scene(scene):
+    return bool(scene and not resolve_pack(scene)
+                and re.search(r"校外|餐厅|餐馆|饭店|拉面店|咖啡店", scene))
 
 
 def resolve_pack_from_slot(slot: dict | None = None, scene: str | None = None) -> Optional[str]:
     slot = slot or {}
-    hints = " ".join(str(h) for h in (slot.get("scene_hints") or []))
-    blob = " ".join(
-        x for x in (
-            scene,
-            slot.get("activity"),
-            hints,
-            slot.get("bucket"),
-            slot.get("tone"),
-        ) if x
-    )
-    return resolve_pack(blob)
+    if slot:
+        from photo_schedule import location
+        place = location(slot)
+        return resolve_pack(place) if place else None
+    return resolve_pack(scene)
+
+
+def approved_image(path: pathlib.Path, pack_id: str, cfg=None, *, review=None) -> bool:
+    """Query similarity is not visual review. Bind approval to actual bytes."""
+    try:
+        doc = review if review is not None else json.loads((pack_dir(pack_id, cfg) / "visual_review.json").read_text())
+        item = doc["images"][path.name]
+        return (doc.get("version") == 1 and doc.get("pack_id") == pack_id
+                and item.get("approved") is True and bool(item.get("reviewer"))
+                and bool(item.get("evidence")) and item.get("scene_match") is True
+                and item.get("campus_match") is True and item.get("people_free") is True
+                and item.get("sha256") == hashlib.sha256(path.read_bytes()).hexdigest())
+    except (OSError, ValueError, KeyError, TypeError, AttributeError):
+        return False
 
 
 def list_pack_images(pack_id: str, cfg=None) -> list[pathlib.Path]:
@@ -191,22 +208,36 @@ def list_pack_images(pack_id: str, cfg=None) -> list[pathlib.Path]:
                 continue
             out.append(p)
     meta = load_pack_meta(pack_id, cfg) or {}
-    kept = set(meta.get("kept_files") or [])
-    if kept:
-        filtered = [p for p in out if p.name in kept or str(p) in kept]
-        if filtered:
-            return filtered
-    return out
+    names = meta.get("kept_files")
+    if not isinstance(names, list) or not all(isinstance(n, str) for n in names):
+        return []
+    kept = set(names)
+    try:
+        review = json.loads((pack_dir(pack_id, cfg) / "visual_review.json").read_text())
+    except (OSError, ValueError):
+        return []
+    # An absent/empty/mismatched allowlist never means "allow every file".
+    return [p for p in out if (p.name in kept or str(p) in kept)
+            and approved_image(p, pack_id, cfg, review=review)]
 
 
-def pick_common(pack_id: str, k: int = 2, cfg=None, *, rng=None) -> list[pathlib.Path]:
-    """从常用场景包取最多 k 张（稳定顺序；可选 rng 洗牌）。"""
+def pick_common(pack_id: str, k: int = 2, cfg=None, *, rng=None, date=None, rotate=False) -> list[pathlib.Path]:
+    """Daily stable preview; live generation rotates within approved candidates."""
     imgs = list_pack_images(pack_id, cfg)
     if not imgs or k <= 0:
         return []
     if rng is not None:
-        imgs = list(imgs)
         rng.shuffle(imgs)
+    else:
+        day = (datetime.date.fromisoformat(str(date)) if date else
+               datetime.datetime.now(ZoneInfo("Asia/Shanghai")).date())
+        identity = (cfg or {}).get("identity_runtime") or {}
+        seed = str(identity.get("persona_id") or "xiaotian") + ":" + pack_id
+        offset = (day.toordinal() + int(hashlib.sha256(seed.encode()).hexdigest()[:8], 16)) % len(imgs)
+        imgs = imgs[offset:] + imgs[:offset]
+    if rotate:
+        from scene_ref_rotation import select
+        return select(imgs, k, cfg or {}, "common:" + pack_id)
     return imgs[:k]
 
 

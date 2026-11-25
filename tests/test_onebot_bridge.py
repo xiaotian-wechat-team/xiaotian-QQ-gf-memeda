@@ -10,31 +10,27 @@ from channels.onebot_qq import (
 )
 from channels.bridge import handle_inbound
 from channels.types import Inbound, Outbound
+import brain
+original_last = dict(brain.LAST)
+brain.LAST.clear()
 
 # normalize
 ev = make_private_event("10001", "桥接测试")
 m = normalize_event(ev)
 assert m and m.channel == "qq_onebot" and m.peer_id == "10001" and m.text == "桥接测试"
 
-# inject + stub → 情侣白名单 peer 共享 demo_contact；陌生人走 classmate
+# inject + stub → 白名单 peer 共享 demo_contact；陌生人不得进入回复/发送
 r = inject_text("在吗", peer="10001", stub_reply="嗯我在", persist=False)
 assert r["contact_id"] == "demo_contact"
 assert r["reply"] == "嗯我在"
 assert r["persist"] is False
 assert r["dry"] is True
 
-# 非白名单 peer：normalize 丢弃；bridge 对 classmate contact 硬拦截（仅 demo_contact 运行时）
-assert normalize_event(make_private_event("10002", "在吗")) is None
-r_s = handle_inbound(
-    Inbound(channel="qq_onebot", peer_id="10002", text="在吗"),
-    dry=True,
-    reply_fn=lambda _cid, _hist: "同学占位",
-    persist=False,
-)
-assert r_s["contact_id"].startswith("classmate:")
-assert r_s.get("blocked") is True
-assert r_s.get("reason") == "contact_not_allowed"
-assert r_s.get("reply") == ""
+try:
+    inject_text("在吗", peer="999999", stub_reply="同学占位", persist=False)
+    raise SystemExit("stranger injection must be rejected")
+except AssertionError:
+    pass
 
 # handle_inbound persist=False + send 仍可调用 send（dry=False 路径）情侣
 sent = []
@@ -85,6 +81,8 @@ _obs.DB_PATH = _ob_dir / "outbox.db"
 _obs.LEGACY_JSON = {"onebot": _ob_dir / "nope.json", "ilink": _ob_dir / "nope2.json"}
 import memory
 memory.CFG = {**memory.CFG, "db_path": str(_ob_dir / "chat.db")}
+memory.DL = _ob_dir / "life"
+(memory.DL / "contacts" / "demo_contact").mkdir(parents=True)
 oid = ob.enqueue_outbox(peer="10001", text="补发测试", reason="unit")
 data = ob._load_outbox()
 assert any(x.get("id") == oid and x.get("status") == "pending" for x in data["items"])
@@ -154,3 +152,6 @@ assert res_s and res_s[0].get("dropped") is True
 assert flushed3 == []
 assert next(it for it in ob._load_outbox()["items"] if it["id"] == "surf1")["status"] == "dropped"
 print("OK")
+
+brain.LAST.clear()
+brain.LAST.update(original_last)

@@ -95,10 +95,16 @@ def test_body_orbit_pick_and_cap():
     assert all(str(p) in ii for p in s_fake)
 
     p = imagegen.build_prompt("图书馆", "d", n_canonical=2, body_kind="sheet", n_scene_refs=3, cfg=cfg)
-    assert "全身环视五视图（体型）" in p and "canonical/body/sheet" in p
-    assert "第 2 张" in p and imagegen._body_kind_from_refs(refs[0]) == "sheet"
+    assert "身体比例标准" in p and "四肢长度" in p
+    assert "Image 2：身体比例标准" in p and imagegen._body_kind_from_refs(refs[0]) == "sheet"
 
-    job = imagegen.write_pending("食堂", "inner", {"text": "t"}, cfg, {}, "err")
+    import photo_schedule
+    from unittest.mock import patch
+    slot = {"start": "00:00", "end": "24:00", "activity": "食堂午饭", "location": "食堂", "photo_ok": True}
+    snapshot = {"date": "2026-11-05", "historical": False,
+                "depiction_time": "2026-11-05T12:00:00", "slot": slot}
+    with patch.object(photo_schedule, "check", return_value=None):
+        job = imagegen.write_pending("食堂", "inner", {"text": "t", "photo_schedule": snapshot}, cfg, {}, "err")
     d = json.loads(job.read_text(encoding="utf-8"))
     assert d.get("body_ref") and d["body_ref"].endswith("body/sheet.png")
     assert d["canonical_refs"][0].endswith("sheet.png")
@@ -134,9 +140,9 @@ def test_build_prompt_outfit_not_model_card():
         "798看展", "黑长直", outfit_text="穿搭：针织衫长裙",
         n_canonical=2, n_scene_refs=3, body_kind="sheet",
     )
-    assert "identity" in p and "proportion" in p
-    assert "not grey tee" in p and "model-card" in p
+    assert "脸以 face 图为准，身形以 body 图为准" in p
+    assert "不复刻灰上衣黑短裤艺考模卡装" in p
     assert "灰上衣" in p or "模卡" in p
-    assert "Outfit MUST change" in p or "必须按" in p
-    assert "不是衣服" in p or "not a clothing" in p or "绝不是衣服" in p
+    assert "按当前穿搭换装" in p and "针织衫长裙" in p
+    assert "不借用衣服" in p and "模卡不提供服装或表情" in p
 

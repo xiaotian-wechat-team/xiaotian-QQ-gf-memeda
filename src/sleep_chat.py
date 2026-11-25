@@ -3,13 +3,13 @@
 Modes
   normal    日常密度
   pre_sleep 睡前/刚道晚安：字数↓ 气泡↓ 间隔↑
-  asleep    会话已睡：主动强压制；若被 ping 也极短回，直到醒来
+  asleep    会话已睡：所有出站静默，直到日程起床或睡眠区间结束
 
 Asleep detection (config.sleep_chat.asleep_after_sec, default 600s)
   (a) 他发晚安后，她 10 分钟内没回 → asleep
   (b) 她发晚安后，他 10 分钟内没回 → asleep
 
-晚安即停止主动，直到这次晚安之后的日程起床时间。夜里被 ping 仍可短回。
+日程睡眠优先于聊天热度；来信不能唤醒小甜或触发旧回复补发。
 Knobs: config.json → sleep_chat（见 docs/sleep-chat.md）。
 """
 from __future__ import annotations
@@ -35,7 +35,8 @@ DEFAULTS: dict[str, Any] = {
     "daytime_sleep_max_sec": 7200,
     "_note": (
         "睡前/已睡密度独立于日常。pre_sleep：短回少气泡长间隔；"
-        "asleep：压制主动 + 极简回复。asleep_after_sec=道晚安后对方无响应判睡秒数。"
+        "asleep：所有出站静默。日程睡眠和她已道晚安优先于聊天热度。"
+        "asleep_after_sec=道晚安后对方无响应判睡秒数。"
     ),
     "pre_sleep": {
         "max_bubbles": 3,
@@ -59,7 +60,7 @@ DEFAULTS: dict[str, Any] = {
         "gap_max_sec": 4.8,
         "suppress_proactive": True,
         "prompt_tip": (
-            "会话已睡/他夜里又戳：极短回一两句就停。「活动/还活动了」=还没睡，别问行程别追问活动；别发图别开新话题。"
+            "会话已睡：本轮静默，不回复、不发图，不因夜里来信恢复聊天。"
         ),
     },
 }
@@ -152,7 +153,8 @@ def next_wake_after(at: dt.datetime, st: dict | None = None) -> dt.datetime:
     import schedule
     for offset in (0, 1):
         day = at.date() + dt.timedelta(days=offset)
-        today = (st or {}).get("life_today") or {}
+        from shared_schedule import enabled
+        today = {} if enabled() else (st or {}).get("life_today") or {}
         if today.get("date") != day.isoformat():
             today = lc.get_day(day) or {}
         wake = (today.get("sleep_bounds") or {}).get("wake")
@@ -223,7 +225,8 @@ def in_pre_sleep_window(now: dt.datetime | None = None, st: dict | None = None) 
         import proactive_beats as pb
         from config import load
         today = st.get("life_today") if st and isinstance(st.get("life_today"), dict) else None
-        if not today or today.get("date") != now.date().isoformat():
+        from shared_schedule import enabled
+        if enabled() or not today or today.get("date") != now.date().isoformat():
             today = lc.get_day(now.date())
         cur = None
         if hasattr(lc, "resolve_life_now"):
@@ -274,7 +277,7 @@ def state_line(st: dict | None, now: dt.datetime | None = None) -> str:
     """One short line for brain state_block."""
     mode, _ = peek_mode(st, now)
     if mode == "asleep":
-        return "睡聊：已睡（少说话，主动停）"
+        return "睡聊：已睡（所有消息静默）"
     if mode == "pre_sleep":
         return "睡聊：睡前（短回、少气泡）"
     return ""
@@ -371,6 +374,12 @@ def note_inbound(
     if not sc.get("enabled", True):
         return "normal", blob(st), "normal"
     _, b = refresh(st, now)
+    if (b.get("goodnight_at") or b.get("asleep_since") or b.get("pending_goodnight")) and reply_suppression_reason(st, now):
+        # Retain bedtime and wake boundary. A ping (including "早安") is not
+        # evidence that her scheduled sleep has ended.
+        b["last_them_at"] = _iso(now)
+        b["last_eval_at"] = _iso(now)
+        return b.get("mode") or "asleep", b, "asleep"
     was_asleep = b.get("mode") == "asleep"
     b["last_them_at"] = _iso(now)
     b["last_eval_at"] = _iso(now)
@@ -451,6 +460,60 @@ def note_outbound(
         return "pre_sleep", b
     b["mode"] = "normal"
     return "normal", b
+
+
+def reply_suppression_reason(st: dict | None, now: dt.datetime | None = None) -> str | None:
+    """Hard silence for inbound replies too; never loosened by engagement.
+
+    Allow one goodnight acknowledgement before she has signed off, provided
+    her actual schedule is still awake. Errors fail closed, with no canned reply.
+    """
+    try:
+        now = _now(now)
+        if scheduled_sleep(st, now):
+            return "日程睡眠时段，消息静默"
+        if cfg().get("enabled", True):
+            mode, b = refresh(st, now)
+            interval = conversation_sleep_interval(st)
+            if mode == "asleep" and interval is None:
+                return "睡眠状态缺少有效边界，停止回复"
+            if interval and interval[0] <= now < interval[1]:
+                pending = b.get("pending_goodnight") or {}
+                last_me = _parse_ts(b.get("last_me_at"))
+                if daytime_sleep(interval[0], st) and (not last_me or last_me < interval[0]):
+                    return None  # His daytime nap does not put her to sleep.
+                if (mode == "asleep" or pending.get("from") == "me"
+                        or (last_me and last_me >= interval[0])):
+                    return "已道晚安，消息静默至睡眠结束"
+        return None
+    except Exception as exc:
+        return f"睡眠状态检查失败，停止回复：{type(exc).__name__}"
+
+
+def confirmed_outbound_patch(text: str, st: dict, now=None) -> dict:
+    """Only an acknowledged payload can close the conversation for sleep.
+
+    Replaying old bookkeeping must not roll a newer conversation state back.
+    Multiple bubbles acknowledged within the same second remain valid.
+    """
+    now = _now(now)
+    b = blob(st)
+    latest = [_parse_ts(b.get(key)) for key in ("last_me_at", "last_eval_at")]
+    if any(at and at > now for at in latest):
+        return {}
+    _, updated = note_outbound(text, st, now)
+    return {STATE_KEY: updated}
+
+
+class ReplySleepBlocked(RuntimeError):
+    """A known unsent reply, cancelled by sleep rather than queued for retry."""
+    delivery_status = "failed"
+
+
+def check_reply_send(st: dict | None, now=None) -> None:
+    reason = reply_suppression_reason(st, now)
+    if reason:
+        raise ReplySleepBlocked(reason)
 
 
 def should_suppress_proactive(st: dict | None, now: dt.datetime | None = None,
@@ -537,19 +600,15 @@ def tighten_text(text: str | None, mode: str, sc: dict | None = None) -> str:
                 pending = ""
     if pending.strip():
         groups.append(pending.strip())
-    body, had_text = [], False
+    body = []
     for group in groups:
         if _ITIN.search(group) and not re.search(r"(晚安|睡|困|熬)", group):
             continue
-        had_text = True
-        pieces, current, fits = [], "", True
+        pieces, current = [], ""
         for part in clauses(group):
             part = part.strip()
             if not part:
                 continue
-            if len(part) > max_c:
-                fits = False
-                break
             if current and len(current + part) > max_c:
                 pieces.append(current)
                 current = ""
@@ -557,11 +616,12 @@ def tighten_text(text: str | None, mode: str, sc: dict | None = None) -> str:
         if current:
             pieces.append(current)
         candidate = body + pieces
-        if fits and len(candidate) <= max_b and len("\n".join(candidate)) <= max_total:
+        from bubble_split import visible_chars
+        if len(candidate) <= max_b and visible_chars("\n".join(candidate)) <= max_total:
             body = candidate
-    # No complete thought fits: acknowledge without inventing a bedtime,
-    # sentiment, promise or a truncated explanation.
-    return "\n".join(body).strip() or ("我在呢" if had_text and max_c >= 3 and max_total >= 3 and max_b else "")
+    # Per-bubble length is a comfort target; keep a complete short thought.
+    # If no whole thought fits the total, silence beats invented filler.
+    return "\n".join(body).strip()
 
 
 def gap_params(mode: str, sc: dict | None = None) -> dict:

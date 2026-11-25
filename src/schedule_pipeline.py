@@ -21,8 +21,9 @@ import re
 from typing import Any
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
-SCHEDULE = ROOT / "data" / "life_schedule_2026q4.json"
-OVERRIDE_PENDING = ROOT / "data" / "schedule_override_pending.json"
+from runtime_scope import resource
+SCHEDULE = resource("life_schedule", ROOT / "data" / "life_schedule_2026q4.json")
+OVERRIDE_PENDING = resource("schedule_override_pending", ROOT / "data" / "schedule_override_pending.json")
 
 # 用户要约出门 / 改行程（小甜侧应确认具体时间路线；review Agent 不得代决）
 OVERRIDE_PATTERNS = [
@@ -46,12 +47,26 @@ def load_schedule(path: pathlib.Path | None = None) -> dict:
     p = path or SCHEDULE
     if not p.exists():
         return {"version": 1, "days": [], "frozen": None, "overrides": []}
-    return json.loads(p.read_text())
+    from shared_schedule import calendar_view
+    return calendar_view(json.loads(p.read_text()))
 
 
 def save_schedule(doc: dict, path: pathlib.Path | None = None) -> pathlib.Path:
     p = path or SCHEDULE
-    p.write_text(json.dumps(doc, ensure_ascii=False, indent=2) + "\n")
+    from shared_schedule import check_write
+    check_write(p)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    import os, tempfile
+    fd, temporary = tempfile.mkstemp(dir=p.parent, prefix=".schedule-")
+    try:
+        with os.fdopen(fd, "w") as out:
+            out.write(json.dumps(doc, ensure_ascii=False, indent=2) + "\n")
+            out.flush()
+            os.fsync(out.fileno())
+        os.replace(temporary, p)
+    finally:
+        if os.path.exists(temporary):
+            os.unlink(temporary)
     return p
 
 

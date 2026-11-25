@@ -15,6 +15,14 @@ from channels import onebot_qq
 
 
 def test_bridge_sets_image_path_for_ilink_and_onebot(tmp_path, monkeypatch):
+    import life_calendar as lc
+    import schedule_fidelity as sf
+    import datetime as dt
+    at = dt.datetime(2026,11,2,16)
+    monkeypatch.setattr(lc, "now_local", lambda: at)
+    monkeypatch.setattr(sf, "now_local", lambda *a: at)
+    monkeypatch.setattr(lc, "recorded_day", lambda day: {"date":day.isoformat(), "slots":[
+        dict(start="15:00", end="17:00", activity="操场散步", location="学校操场", photo_ok=True)]})
     img = tmp_path / "fake.png"
     img.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 16)
 
@@ -167,8 +175,18 @@ def test_bridge_casual_chat_no_hold_on_or_image(monkeypatch):
     assert r.get("want_image") in (None, ""), r
     assert called["hold"] == 0 and called["plan"] == 0, called
     assert all(not (o.meta or {}).get("image_path") for o in sent), sent
-    assert any("刷短视频" in (o.text or "") for o in sent), sent
+    # The scene and its unverified caption form one rejected media draft.
+    assert r.get("image_rejected") and r["reply"] == "" and sent == [], r
     assert not any("马上发你" in (o.text or "") or "急什么" in (o.text or "") for o in sent), sent
+
+    # A plain casual response without an unsolicited image still sends normally.
+    def text_reply(cid, hist):
+        brain.LAST = {}
+        return "刷短视频呢"
+    ordinary = handle_inbound(
+        Inbound(channel="qq_onebot", peer_id="10001", text="干嘛呢"),
+        dry=False, send=sent.append, reply_fn=text_reply, persist=False)
+    assert ordinary["reply"] == "刷短视频呢" and [o.text for o in sent] == ["刷短视频呢"]
 
 
 def test_bridge_dry_exposes_want_image_without_send(monkeypatch):

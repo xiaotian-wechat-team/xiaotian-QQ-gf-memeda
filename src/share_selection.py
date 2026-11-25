@@ -60,8 +60,18 @@ def distribution(scored, shares, now):
     Exposure decays with a 24h half-life over 7d. Last topic mass <=2% for 72h,
     even when it is the ONLY topic (remaining mass goes to SKIP).
     """
+    from config import load
+    from personalization_runtime import option, band_targets
+    cfg = load()
+    targets = band_targets(cfg) if cfg.get("persona_version") else BAND_TARGETS
+    platforms = option("content.platforms", None, cfg=cfg)
+    interests = option("content.interests", [], cfg=cfg) or []
     groups = defaultdict(list)
     for score, item, images in scored:
+        if platforms is not None and item.get("platform") not in platforms:
+            continue
+        if any(str(tag).lower() in (str(item.get("title", "")) + str(item.get("tags", ""))).lower() for tag in interests):
+            score += 1
         groups[topic(item)].append((math.exp(min(max(score, 0), 4) / 2), item, images))
     recent = []
     for s in shares:
@@ -79,7 +89,7 @@ def distribution(scored, shares, now):
     weights = {name: sum(v[0] for v in rows) / len(rows) * math.exp(-1.5 * exposure[name])
                for name, rows in groups.items()}
     probs = {}
-    for band, quota in BAND_TARGETS.items():
+    for band, quota in targets.items():
         names = [name for name in groups if topic_band(name) == band]
         total = sum(weights[name] for name in names)
         if total:

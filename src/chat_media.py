@@ -42,7 +42,7 @@ _WANT_INLINE = re.compile(
 _JSON_BLOB = re.compile(r"\{[^{}]*\}", re.S)
 
 ALLOWED_CONTACT_IDS = {"demo_contact"}
-ALLOWED_REMARKS = {"小熊"}
+ALLOWED_REMARKS = {"演示联系人-小熊"}
 
 
 def parse_image_intent(text: str | None):
@@ -101,14 +101,13 @@ def parse_image_intent(text: str | None):
 
 
 def assert_allowed_contact(cfg=None):
-    """硬白名单：只允许对 demo_contact / 小熊 发图。"""
+    """Allow only the fixed worker's configured partner, never a peer-supplied contact."""
     cfg = cfg or load()
     c = cfg.get("contact") or {}
-    cid, remark = str(c.get("id") or ""), (c.get("remark") or "").strip()
-    if cid not in ALLOWED_CONTACT_IDS or remark not in ALLOWED_REMARKS:
-        raise PermissionError(
-            f"chat_media: contact not whitelisted (id={cid!r} remark={remark!r})"
-        )
+    cid = str(c.get("id") or "")
+    primary = str((cfg.get("persona") or {}).get("primary_contact_id") or "")
+    if not cid or cid != primary or cid.startswith("classmate:"):
+        raise PermissionError(f"chat_media: contact not whitelisted (id={cid!r})")
     return c
 
 
@@ -362,7 +361,12 @@ def plan_chat_images(
     rng = rng or random.Random()
     lane = image_lane if image_lane in ("demand", "proactive") else "demand"
     ctx = dict(ctx)
+    relay_resume = ctx.pop("relay_resume", None)
     ctx["image_lane"] = lane
+    if not dry:
+        from photo_schedule import bind
+        ctx = bind(scene, dict(ctx, slot=slot, today=today, imagined=imagined))
+        slot, today = ctx.pop("slot"), ctx.pop("today")
     if imagined:
         # An imagined scene has no current real-world slot or location. Keep
         # the user's shot request, but do not graft current activity props or
@@ -381,6 +385,8 @@ def plan_chat_images(
         texts = [label] + [None] * (n - 1)
         if n > 1:
             texts[-1] = "你喜欢哪张"
+    elif (cfg.get("identity_runtime") or {}).get("schema_version") == 2:
+        texts = [(caption or "").strip() or None] + [None] * (n - 1)
     else:
         texts = multi_interaction_texts(n, caption, rng)
 
@@ -399,10 +405,12 @@ def plan_chat_images(
                 n, slot, today, beat_id=beat_id, rng=rng, locked_shot=ctx.get("shot_type"),
             )
         elif n > 1 and not shot_lock:
-            # 多图且未硬锁：独立抽 N 条；忽略单一 ctx.shot_type（避免复读同一卡）
+            # Keep the primary framing used by the caption; vary extra photos.
             shot_types = _ss.sample_shot_types_for_send(
-                n, slot, today, beat_id=beat_id, rng=rng, locked_shot=None,
+                n - bool(ctx.get("shot_type")), slot, today, beat_id=beat_id, rng=rng, locked_shot=None,
             )
+            if ctx.get("shot_type"):
+                shot_types.insert(0, _sm.normalize_shot(ctx["shot_type"]) or ctx["shot_type"])
         elif ctx.get("shot_type"):
             st = _sm.normalize_shot(ctx.get("shot_type")) or ctx.get("shot_type")
             shot_types = [st] * n
@@ -422,6 +430,9 @@ def plan_chat_images(
         }
     # 透传日程槽给 imagegen.pick_scene_refs（common pack resolve）
     gen_ctx = dict(ctx)
+    gen_ctx.setdefault("cfg", cfg)
+    if relay_resume is not None:
+        gen_ctx["relay_resume"] = relay_resume
     if isinstance(slot, dict):
         gen_ctx.setdefault("slot", slot)
     if today is not None:
@@ -444,16 +455,20 @@ def plan_chat_images(
         "slot": slot,
         "imagined": bool(imagined),
         "beat_id": beat_id,
+        "photo_schedule": ctx.get("photo_schedule"),
     }
 
 
-def send_prepared_images(plan, *, io=None, open_chat_first=True, cfg=None, send_caption_first=True):
+def send_prepared_images(plan, *, io=None, open_chat_first=True, cfg=None, send_caption_first=True, before_send=None):
     """锁内：按 plan 的 texts/paths 依次发配文+图（白名单）。"""
     assert_allowed_contact(cfg)
     paths = plan.get("paths") or []
     texts = plan.get("texts") or []
     if not paths:
         raise RuntimeError("send_prepared_images: empty paths")
+    if plan.get("photo_schedule"):
+        from photo_schedule import check
+        check(plan["photo_schedule"])
     io = io or __import__("mac_wechat_io")
     if open_chat_first and hasattr(io, "open_chat"):
         io.open_chat()
@@ -462,11 +477,19 @@ def send_prepared_images(plan, *, io=None, open_chat_first=True, cfg=None, send_
     for i, path in enumerate(paths):
         if i:
             time.sleep(bubble_gap_sec(texts[i] if i < len(texts) else None))
+        if plan.get("photo_schedule"):
+            check(plan["photo_schedule"])
+        from photo_schedule import check_file
+        check_file(path)
         line = texts[i] if i < len(texts) else None
         if line and send_caption_first and hasattr(io, "send_message"):
+            if before_send:
+                before_send()
             io.send_message(line)
             sent_caps += 1
             time.sleep(bubble_gap_sec(line))
+        if before_send:
+            before_send()
         send_chat_image(path, io=io, open_chat_first=False, cfg=cfg)
     return {
         "ok": True,
@@ -497,6 +520,8 @@ def send_chat_image(path, *, io=None, open_chat_first=True, cfg=None):
         io.open_chat()
     if not hasattr(io, "send_image"):
         raise RuntimeError("io has no send_image; extend adapter or upgrade mac_wechat_io")
+    from photo_schedule import check_file
+    check_file(path)
     io.send_image(str(path))
     return pathlib.Path(path)
 
@@ -570,6 +595,8 @@ def send_generated_image(
         io.open_chat()
     sent_caps = 0
     for i, path in enumerate(paths):
+        from photo_schedule import check_file
+        check_file(path)
         line = texts[i] if i < len(texts) else None
         if line and send_caption_first and hasattr(io, "send_message"):
             io.send_message(line)

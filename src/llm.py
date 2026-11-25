@@ -34,21 +34,26 @@ def complete(prompt, timeout=None, reuse_session=None, model=None):
 
     model: optional override (e.g. grok-4.7-low-fast for weather tool loop).
     """
-    llm = load()["llm"]
+    cfg = load()
+    llm = cfg["llm"]
     use = llm.get("reuse_session", True) if reuse_session is None else reuse_session
     if is_preview():
         use = False  # Never append a preview to the real daily conversation.
     timeout = timeout or llm.get("timeout", 120)
     if not use:
-        cmd = _base_cmd(llm, model=model)
-        cmd.append(prompt)
         with tempfile.TemporaryDirectory(prefix="xiaotian-llm-") as empty:
+            from personalization_runtime import managed_workspace
+            managed_workspace(cfg, empty)
+            cmd = _base_cmd(llm, empty if cfg.get("persona_version") else None, model=model)
+            cmd.append(prompt)
             r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, cwd=empty)
         if r.returncode != 0:
             raise RuntimeError(r.stderr[-500:])
         return r.stdout.strip()
 
     ws = llm_session.workspace(llm)
+    from personalization_runtime import managed_workspace
+    managed_workspace(cfg, ws)
     sid = llm_session.ensure(llm, llm["cmd"])
     cmd = _base_cmd(llm, ws, model=model) + ["--resume", sid, prompt]
     r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, cwd=str(ws))
@@ -169,22 +174,27 @@ def complete_with_weather_tools(prompt, user_text=None, *, timeout=None, reuse_s
     model = weather_tool_model(llm)
     if not wx.needs(user_text):
         return complete(prompt, timeout=timeout, reuse_session=False, model=model)
-    result = wx.call_tool({"place": wx.infer_place(user_text)})
+    result = wx.call_tool({"place": wx.infer_place(user_text), "date": wx.infer_day(user_text)})
     if evidence_sink is not None and isinstance(result, dict):
         usable = result.get("ok") is True and bool(str(result.get("text") or "").strip())
         why = result.get("why")
+        if why in ("cache-stale", "stale"):
+            status = "stale"
+        elif usable and why in ("ok", "cache", "forecast"):
+            status = "ok"
+        else:
+            status = "unavailable"
         evidence_sink.update({
             "tool": "get_weather",
-            "status": "ok" if usable and why in ("ok", "cache") else
-                      "stale" if usable and why == "cache-stale" else "unavailable",
+            "status": status,
             "place": result.get("place"), "text": result.get("text"), "why": why,
         })
     follow = (
         (prompt or "")
         + "\n\n【天气工具结果】"
-        + json.dumps(result, ensure_ascii=False)[:800]
-        + "\n据此自然回微信气泡；不要再写 CALL_TOOL；不要编造与结果冲突的气温。"
-        + "ok=false 或 why=cache-stale 时说明没拿到当前天气，旧缓存不能当现在的实况。"
+        + json.dumps(wx.model_view(result), ensure_ascii=False)[:800]
+        + "\n据此用自己的口气说人话，别像天气预报；不要再写 CALL_TOOL；不要编造与结果冲突的气温。"
+        + "ok=false、why=stale 或 why=cache-stale 时说明没拿到当前天气，旧缓存不能当现在的实况，也不要说还在下雨下雪。"
         + "先回应他关心的冷暖、下雨或出行；数字只挑有用的，不照读温度/体感/风力/AQI全表。"
         + "刚说过的同一地点天气，追问时自然承接，除非他明确要数字或数据变了，不重复报数。"
         + "把冷暖感受说完整：风吹着更凉、骑车迎风可能更冷；不要沿用历史里‘更吹’这类缺词病句。"

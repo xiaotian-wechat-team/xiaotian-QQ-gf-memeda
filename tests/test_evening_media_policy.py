@@ -53,7 +53,10 @@ def test_care_can_share_current_life_image_but_transit_sleep_and_movie_wait():
     for sl in ({'bucket':'sleep'}, {'bucket':'city_fun','photo_ok':False}, {'leg':'outbound'}):
         assert pm.prepare({'id':'life_photo','slot':sl},{},NOW,CFG) is None
     ended={'end':'17:50','bucket':'city_fun','photo_ok':False,'outing_activity_id':'movie_01','scene_id':'night-004'}
-    assert pm.prepare({'id':'activity_end','ended':ended},{},NOW,CFG)['image_slot']['photo_ok']
+    # An ended movie cannot invent a new photographable venue after the event.
+    assert pm.prepare({'id':'activity_end','ended':ended},{},NOW,CFG) is None
+    actual_slot = {'activity':'在学校操场散步','location':'学校操场','photo_ok':True,'bucket':'city_fun'}
+    assert pm.prepare({'id':'activity_end','ended':ended,'slot':actual_slot},{},NOW,CFG)['image_slot'] == actual_slot
     ended['end']='18:30'
     assert pm.prepare({'id':'activity_end','ended':ended},{},NOW,CFG) is None
 
@@ -103,10 +106,11 @@ class MediaTransport(SleepPriority):
         q={'items':[]}
         slot=self.state['life_today']['slots'][1]
         sender.enqueue(q,'今天这个颜色好看','beat:care_checkin',self.now,
-                       meta={'beat_meta':{'id':'care_checkin','slot':slot}})
+                       meta={'beat_meta':{'id':'care_checkin','slot':slot},
+                             'photo_intent':{'scene':'宿舍休息随手拍'}})
         path=self.tmp/'media-queue.json';sender.save_q(q,path);return path
 
-    def test_missing_tag_still_generates_and_records_actual_image(self):
+    def test_stored_photo_intent_generates_and_records_actual_image(self):
         image=self.tmp/'photo.png';image.write_bytes(b'pretend-image')
         path=self.queued()
         with patch('chat_media.plan_chat_images',return_value={'paths':[str(image)],'texts':['给你看看']}), \
@@ -116,7 +120,10 @@ class MediaTransport(SleepPriority):
         assert not self.state.get('proactive_count')  # enqueue/failure is not delivery
         from channels import onebot_qq
         items=onebot_qq._load_outbox()['items']
-        assert items and items[0]['proactive_round']['meta']['has_image']
+        assert items and items[0]['proactive_progress']['meta']['has_image']
+        assert 'proactive_round' not in items[0]
+        # Only actual transport confirmations can count this continuation.
+        items[0].update(image_sent=True, sent_bubbles=['给你看看'])
         lim.record_outbox_success(items[0],self.now)
         lim.record_outbox_success(items[0],self.now)
         assert self.state['proactive_count']==1
@@ -125,6 +132,6 @@ class MediaTransport(SleepPriority):
     def test_generation_failure_never_degrades_to_text(self):
         with patch('chat_media.plan_chat_images',return_value={'paths':[]}),patch.object(sender,'send_via_onebot') as send:
             result=sender.run_once(cfg_full=self.full,rows=[],ui=False,qpath=self.queued())
-        assert result['action']=='DROP' and '图片' in result['reason']
+        assert result['action']=='DROP' and '照片' in result['reason']
         send.assert_not_called()
         assert not self.state.get('proactive_count')
